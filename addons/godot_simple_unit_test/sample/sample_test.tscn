@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6xnoqy88vxeq"]
+
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_yi6wn"]
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/sample/test_suite_1.gd" id="2_ou246"]
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/sample/test_suite_2.gd" id="3_hql1q"]
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/sample/test_suite_3.gd" id="4_cbhc8"]
+
+[node name="Sample Test" type="Node"]
+script = ExtResource("1_yi6wn")
+
+[node name="Test Suite 1" type="Node" parent="."]
+script = ExtResource("2_ou246")
+
+[node name="Test Group" type="Node" parent="."]
+
+[node name="Test Suite 2" type="Node" parent="Test Group"]
+script = ExtResource("3_hql1q")
+
+[node name="Test Suite 3" type="Node" parent="Test Group"]
+script = ExtResource("4_cbhc8")

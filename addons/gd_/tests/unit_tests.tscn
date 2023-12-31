@@ -1,0 +1,52 @@
+[gd_scene load_steps=12 format=3 uid="uid://dmxle5r8u47a8"]
+
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_nwqc8"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_chunk_test.gd" id="2_i2yyx"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_compact_test.gd" id="3_oknqc"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_concat_test.gd" id="4_gg63d"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_difference_test.gd" id="5_wufwt"]
+[ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_count_by_test.gd" id="6_mj5tk"]
+[ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_filter_test.gd" id="7_262yh"]
+[ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_find_test.gd" id="8_gafav"]
+[ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_group_by_test.gd" id="9_o6fv0"]
+[ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_some_test.gd" id="10_4l7mv"]
+[ext_resource type="Script" path="res://addons/gd_/tests/util/GD_property_test.gd" id="11_4km8u"]
+
+[node name="Unit Tests" type="Node"]
+script = ExtResource("1_nwqc8")
+
+[node name="Array" type="Node" parent="."]
+
+[node name="Chunk" type="Node" parent="Array"]
+script = ExtResource("2_i2yyx")
+
+[node name="Compact" type="Node" parent="Array"]
+script = ExtResource("3_oknqc")
+
+[node name="Concat" type="Node" parent="Array"]
+script = ExtResource("4_gg63d")
+
+[node name="Difference" type="Node" parent="Array"]
+script = ExtResource("5_wufwt")
+
+[node name="Collection" type="Node" parent="."]
+
+[node name="Count By" type="Node" parent="Collection"]
+script = ExtResource("6_mj5tk")
+
+[node name="Filter" type="Node" parent="Collection"]
+script = ExtResource("7_262yh")
+
+[node name="Find" type="Node" parent="Collection"]
+script = ExtResource("8_gafav")
+
+[node name="Group" type="Node" parent="Collection"]
+script = ExtResource("9_o6fv0")
+
+[node name="Some" type="Node" parent="Collection"]
+script = ExtResource("10_4l7mv")
+
+[node name="Util" type="Node" parent="."]
+
+[node name="Property" type="Node" parent="Util"]
+script = ExtResource("11_4km8u")

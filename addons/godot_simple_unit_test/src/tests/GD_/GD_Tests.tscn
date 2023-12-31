@@ -1,0 +1,34 @@
+[gd_scene load_steps=8 format=3 uid="uid://dokmgrysiqxbj"]
+
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_0ylak"]
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/tests/GD_/GD_filter_test.gd" id="2_3xdle"]
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/tests/GD_/GD_find_test.gd" id="2_7cbqn"]
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/tests/GD_/GD_property_test.gd" id="2_b2a58"]
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/tests/GD_/GD_count_by_test.gd" id="4_rs07m"]
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/tests/GD_/GD_group_by_test.gd" id="5_1crmw"]
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/tests/GD_/GD_some_test.gd" id="6_xi458"]
+
+[node name="GdTests" type="Node"]
+script = ExtResource("1_0ylak")
+
+[node name="Collection Tests" type="Node" parent="."]
+
+[node name="Count By" type="Node" parent="Collection Tests"]
+script = ExtResource("4_rs07m")
+
+[node name="Filter" type="Node" parent="Collection Tests"]
+script = ExtResource("2_3xdle")
+
+[node name="Find" type="Node" parent="Collection Tests"]
+script = ExtResource("2_7cbqn")
+
+[node name="Group By" type="Node" parent="Collection Tests"]
+script = ExtResource("5_1crmw")
+
+[node name="Some" type="Node" parent="Collection Tests"]
+script = ExtResource("6_xi458")
+
+[node name="Util Tests" type="Node" parent="."]
+
+[node name="Property" type="Node" parent="Util Tests"]
+script = ExtResource("2_b2a58")
