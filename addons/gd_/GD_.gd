@@ -317,41 +317,50 @@ static func flatten(array):
 		printerr("GD_.flatten received a non-array type value")
 		return null
 		
-	var new_array = []
-	for item in array:
-		if item is Array:
-			for item2 in item:
-				new_array.append(item2)
-		else:
-			new_array.append(item)
-	return new_array
+	return flatten_depth(array, 1)
 	
 
 ## Flattens array a single level deep.
-## This attempts to replicate lodash's flatten_deep.
-## https://lodash.com/docs/4.17.15#flatten_deep
+## This attempts to replicate lodash's flattenDeep.
+## https://lodash.com/docs/4.17.15#flattenDeep
 static func flatten_deep(array):
+	if not(array is Array):
+		printerr("GD_.flatten_deep received a non-array type value")
+		return null
+
+	return flatten_depth(array, INF)
+	
+
+## Recursively flatten array up to depth times.
+## This attempts to replicate lodash's flattenDepth.
+## https://lodash.com/docs/4.17.15#flattenDepth
+static func flatten_depth(array, depth = 1):
 	if not(array is Array):
 		printerr("GD_.flatten_deep received a non-array type value")
 		return null
 		
 	var new_array = array.duplicate()
-	var is_flat = false
-	while not is_flat:
-		is_flat = true
+	var current_depth = 0
+
+	while current_depth < depth:
+		var is_flat = true
 		var tmp = []
-		
+
 		for item in new_array:
 			if item is Array:
-				tmp.append_array(GD_.flatten(item))
+				tmp.append_array(item)
 				is_flat = false
 			else:
 				tmp.append(item)
+		
 		new_array = tmp
+		if is_flat:
+			break
+		current_depth += 1
+
 	return new_array
 	
-		
-static func flatten_depth(a=0, b=0, c=0): not_implemented()
+	
 static func from_pairs(a=0, b=0, c=0): not_implemented()
 static func index_of(a=0, b=0, c=0): not_implemented()
 static func initial(a=0, b=0, c=0): not_implemented()
