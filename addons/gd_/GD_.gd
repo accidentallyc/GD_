@@ -240,7 +240,22 @@ static func drop_while(array, predicate = null):
 		
 	return new_array
 	
-static func fill(a=0, b=0, c=0): not_implemented()
+## Fills elements of array with value from start up to, but not including, end.
+## Note: This method mutates array.
+## This attempts to replicate lodash's fill.
+## https://lodash.com/docs/4.17.15#fill
+static func fill(array, value, start=0, end=-1):
+	if not(array is Array):
+		printerr("GD_.drop_right_while received a non-array type value")
+		return null
+		
+	if end == -1 or end > array.size():
+		end = array.size()
+
+	for i in range(start, end):
+		array[i] = value
+
+	return array
 static func find_index(a=0, b=0, c=0): not_implemented()
 static func find_last_index(a=0, b=0, c=0): not_implemented()
 static func first(a=0, b=0, c=0): not_implemented() #alias of head

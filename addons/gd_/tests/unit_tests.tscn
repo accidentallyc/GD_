@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=20 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_nwqc8"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_drop_right_while_test.gd" id="10_v6ugr"]
 [ext_resource type="Script" path="res://addons/gd_/tests/util/GD_property_test.gd" id="11_4km8u"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_drop_while.gd" id="11_s4udt"]
+[ext_resource type="Script" path="res://addons/gd_/tests/GD_fill_test.gd" id="12_b78cn"]
 [ext_resource type="Script" path="res://addons/gd_/tests/math/GD_floor_test.gd" id="12_r0d3c"]
 
 [node name="Unit Tests" type="Node"]
@@ -53,6 +54,9 @@ script = ExtResource("10_v6ugr")
 
 [node name="Drop While" type="Node" parent="Array"]
 script = ExtResource("11_s4udt")
+
+[node name="Fill" type="Node" parent="Array"]
+script = ExtResource("12_b78cn")
 
 [node name="Collection" type="Node" parent="."]
 
