@@ -294,8 +294,50 @@ static func find_last_index(array, predicate = null, from_index=-1):
 	
 static func first(a=0, b=0, c=0): not_implemented() #alias of head
 static func head(a=0, b=0, c=0): not_implemented()
-static func flatten(a=0, b=0, c=0): not_implemented()
-static func flatten_deep(a=0, b=0, c=0): not_implemented()
+
+
+## Flattens array a single level deep.
+## This attempts to replicate lodash's flatten.
+## https://lodash.com/docs/4.17.15#flatten
+static func flatten(array): 
+	if not(array is Array):
+		printerr("GD_.flatten received a non-array type value")
+		return null
+		
+	var new_array = []
+	for item in array:
+		if item is Array:
+			for item2 in item:
+				new_array.append(item2)
+		else:
+			new_array.append(item)
+	return new_array
+	
+
+## Flattens array a single level deep.
+## This attempts to replicate lodash's flatten_deep.
+## https://lodash.com/docs/4.17.15#flatten_deep
+static func flatten_deep(array):
+	if not(array is Array):
+		printerr("GD_.flatten_deep received a non-array type value")
+		return null
+		
+	var new_array = array.duplicate()
+	var is_flat = false
+	while not is_flat:
+		is_flat = true
+		var tmp = []
+		
+		for item in new_array:
+			if item is Array:
+				tmp.append_array(GD_.flatten(item))
+				is_flat = false
+			else:
+				tmp.append(item)
+		new_array = tmp
+	return new_array
+	
+		
 static func flatten_depth(a=0, b=0, c=0): not_implemented()
 static func from_pairs(a=0, b=0, c=0): not_implemented()
 static func index_of(a=0, b=0, c=0): not_implemented()
