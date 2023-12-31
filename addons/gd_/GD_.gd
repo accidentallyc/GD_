@@ -256,8 +256,42 @@ static func fill(array, value, start=0, end=-1):
 		array[i] = value
 
 	return array
-static func find_index(a=0, b=0, c=0): not_implemented()
-static func find_last_index(a=0, b=0, c=0): not_implemented()
+	
+	
+## This method is like GD_.find except that it returns the index of the first 
+## element predicate returns truthy for instead of the element itself.
+## This attempts to replicate lodash's find_index.
+## https://lodash.com/docs/4.17.15#find_index
+static func find_index(array, predicate = null, from_index = 0):
+	if not(array is Array):
+		printerr("GD_.drop_right_while received a non-array type value")
+		return null
+		
+	var iteratee = GD_.iteratee(predicate)
+	for i in range(from_index, array.size()):
+		if iteratee.call(array[i]):
+			return i
+	return -1
+	
+	
+## This method is like GD_.findIndex except that it iterates over 
+## elements of collection from right to left.
+## This attempts to replicate lodash's find_last_index.
+## https://lodash.com/docs/4.17.15#find_last_index
+static func find_last_index(array, predicate = null, from_index=-1):
+	if not(array is Array):
+		printerr("GD_.drop_right_while received a non-array type value")
+		return null
+		
+	if from_index == -1 or from_index >= array.size():
+		from_index = array.size() - 1
+
+	var iter_func = GD_.iteratee(predicate)
+	for i in range(from_index, -1, -1):
+		if iter_func.call(array[i]):
+			return i
+	return -1
+	
 static func first(a=0, b=0, c=0): not_implemented() #alias of head
 static func head(a=0, b=0, c=0): not_implemented()
 static func flatten(a=0, b=0, c=0): not_implemented()
@@ -668,27 +702,23 @@ static func identity(value, _unused = null):
 ## This attempts to replicate lodash's iteratee. 
 ## https://lodash.com/docs/4.17.15#iteratee
 static func iteratee(iteratee_val):
-	var iter_func
 	match typeof(iteratee_val):
 		TYPE_DICTIONARY:
-			iter_func = matches(iteratee_val)
+			return matches(iteratee_val)
 		TYPE_STRING:
-			iter_func = property(iteratee_val)
+			return property(iteratee_val)
 		TYPE_ARRAY:
 			var prop = _property(["0"],iteratee_val)
 			var val = _property(["1"],iteratee_val)
-			iter_func = matches_property(
-				prop,
-				val
-			)
+			return matches_property(prop,val)
 		TYPE_NIL:
-			iter_func = GD_.identity
+			return GD_.identity
 		TYPE_CALLABLE:
-			iter_func = iteratee_val
+			return iteratee_val
 				
 		_:
 			printerr("GD_.find called with unsupported signature %s. See docs for more info" % iteratee)
-	return iter_func
+	return null
 
 
 static func matches(dict:Dictionary) -> Callable:
