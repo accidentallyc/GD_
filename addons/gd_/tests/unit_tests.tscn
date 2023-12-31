@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=19 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_nwqc8"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -9,10 +9,14 @@
 [ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_count_by_test.gd" id="6_mj5tk"]
 [ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_filter_test.gd" id="7_262yh"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_difference_with.gd" id="7_y7tvx"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_drop_test.gd" id="8_0w7ci"]
 [ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_find_test.gd" id="8_gafav"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_drop_right.gd" id="9_alu6u"]
 [ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_group_by_test.gd" id="9_o6fv0"]
 [ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_some_test.gd" id="10_4l7mv"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_drop_right_while_test.gd" id="10_v6ugr"]
 [ext_resource type="Script" path="res://addons/gd_/tests/util/GD_property_test.gd" id="11_4km8u"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_drop_while.gd" id="11_s4udt"]
 [ext_resource type="Script" path="res://addons/gd_/tests/math/GD_floor_test.gd" id="12_r0d3c"]
 
 [node name="Unit Tests" type="Node"]
@@ -37,6 +41,18 @@ script = ExtResource("6_0ktat")
 
 [node name="Difference With" type="Node" parent="Array"]
 script = ExtResource("7_y7tvx")
+
+[node name="Drop" type="Node" parent="Array"]
+script = ExtResource("8_0w7ci")
+
+[node name="Drop Right" type="Node" parent="Array"]
+script = ExtResource("9_alu6u")
+
+[node name="Drop Right While" type="Node" parent="Array"]
+script = ExtResource("10_v6ugr")
+
+[node name="Drop While" type="Node" parent="Array"]
+script = ExtResource("11_s4udt")
 
 [node name="Collection" type="Node" parent="."]
 

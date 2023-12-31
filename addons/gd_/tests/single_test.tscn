@@ -1,10 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfu6aj4s0m5c0"]
+[gd_scene load_steps=6 format=3 uid="uid://cfu6aj4s0m5c0"]
 
 [ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_hmlwl"]
-[ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_count_by_test.gd" id="2_sylix"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_drop_test.gd" id="2_8gdyk"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_drop_right.gd" id="3_1iol4"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_drop_right_while_test.gd" id="4_1uci0"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_drop_while.gd" id="5_203c3"]
 
 [node name="Single Test" type="Node"]
 script = ExtResource("1_hmlwl")
 
-[node name="Count By" type="Node" parent="."]
-script = ExtResource("2_sylix")
+[node name="drop" type="Node" parent="."]
+script = ExtResource("2_8gdyk")
+
+[node name="drop right" type="Node" parent="."]
+script = ExtResource("3_1iol4")
+
+[node name="drop right while" type="Node" parent="."]
+script = ExtResource("4_1uci0")
+
+[node name="drop while" type="Node" parent="."]
+script = ExtResource("5_203c3")

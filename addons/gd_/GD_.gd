@@ -131,9 +131,9 @@ static func difference_by(array_left, array_right, iteratee = null):
 ## The comparator is invoked with two arguments: (arrVal, othVal).
 ## This attempts to replicate lodash's differenceWith.
 ## https://lodash.com/docs/4.17.15#differenceWith
-static func difference_with(array_left, array_right, comparator): 
+static func difference_with(array_left, array_right, comparator:Callable): 
 	if not(array_left is Array and array_right is Array):
-		printerr("GD_.difference_by received a non-array type value")
+		printerr("GD_.difference_with received a non-array type value")
 		return null
 		
 	var new_array = []
@@ -148,10 +148,98 @@ static func difference_with(array_left, array_right, comparator):
 		if not(has_match):
 			new_array.append(left_item)
 	return new_array
-static func drop(a=0, b=0, c=0): not_implemented()
-static func drop_right(a=0, b=0, c=0): not_implemented()
-static func drop_right_while(a=0, b=0, c=0): not_implemented()
-static func drop_while(a=0, b=0, c=0): not_implemented()
+	
+
+## Creates a slice of array with n elements dropped from the beginning.
+## This attempts to replicate lodash's drop.
+## https://lodash.com/docs/4.17.15#drop
+static func drop(array, n:int=1):
+	if not(array is Array):
+		printerr("GD_.drop received a non-array type value")
+		return null
+		
+	var size = array.size()
+	var new_array = []
+	var i = n
+	while i < size:
+		new_array.append(array[i])
+		i += 1
+		
+	return new_array
+	
+	
+## Creates a slice of array with n elements dropped from the beginning.
+## This attempts to replicate lodash's dropRight.
+## https://lodash.com/docs/4.17.15#dropRight
+static func drop_right(array, n:int=1):
+	if not(array is Array):
+		printerr("GD_.drop_right received a non-array type value")
+		return null
+		
+	var size = array.size() - n
+	var new_array = []
+	var i = 0
+	while i < size:
+		new_array.append(array[i])
+		i += 1
+		
+	return new_array
+	
+
+## Creates a slice of array excluding elements dropped from the end. 
+## Elements are dropped until predicate returns falsey. 
+## The predicate is invoked with two arguments: (value, index).
+## This attempts to replicate lodash's dropRightWhile.
+## https://lodash.com/docs/4.17.15#dropRightWhile
+static func drop_right_while(array, predicate = null):
+	if not(array is Array):
+		printerr("GD_.drop_right_while received a non-array type value")
+		return null
+		
+	var new_array = []
+	var n = array.size()
+	var iter_func = iteratee(predicate)
+	while n >= 0:
+		n -= 1
+		var result = iter_func.call(array[n],n)
+		if not(iter_func.call(array[n],n)):
+			break
+		
+	var i = 0
+	while i <= n:
+		new_array.append(array[i])
+		i += 1
+		
+	return new_array
+	
+	
+## Creates a slice of array excluding elements dropped from the beginning. 
+## Elements are dropped until predicate returns falsey. 
+## The predicate is invoked with two arguments: (value, index).
+## This attempts to replicate lodash's dropWhile.
+## https://lodash.com/docs/4.17.15#dropWhile
+static func drop_while(array, predicate = null):
+	if not(array is Array):
+		printerr("GD_.drop_right_while received a non-array type value")
+		return null
+		
+	var new_array = []
+	var size = array.size()
+	var n = -1
+	var iter_func = iteratee(predicate)
+	while n < size:
+		n += 1
+		var result = iter_func.call(array[n],n)
+		if not(iter_func.call(array[n],n)):
+			break
+		
+	var i = n
+	while i < size:
+		new_array.append(array[i])
+		i += 1
+		
+	return new_array
+	
 static func fill(a=0, b=0, c=0): not_implemented()
 static func find_index(a=0, b=0, c=0): not_implemented()
 static func find_last_index(a=0, b=0, c=0): not_implemented()
@@ -593,7 +681,7 @@ static func matches(dict:Dictionary) -> Callable:
 		var found = true
 		for key in dict:
 			var prop = value.get(key)
-			found = found and (prop and dict[key] == prop)
+			found = found and dict[key] == prop
 		return found
 		
 static func matches_property(string:String, v):
