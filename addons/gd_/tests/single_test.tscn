@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfu6aj4s0m5c0"]
+
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_hmlwl"]
+[ext_resource type="Script" path="res://addons/gd_/tests/GD_fill_test.gd" id="2_ebqi2"]
+
+[node name="Single Test" type="Node"]
+script = ExtResource("1_hmlwl")
+
+[node name="Fill" type="Node" parent="."]
+script = ExtResource("2_ebqi2")
