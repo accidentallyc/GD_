@@ -296,6 +296,7 @@ static func find_last_index(array, predicate = null, from_index=-1):
 ## This attempts to replicate lodash's first.
 ## https://lodash.com/docs/4.17.15#first
 static func first(array):
+	print("GD_.first is an alias, prefer GD_.head to avoid overhead")
 	return head(array)
 
 ## Gets the first element of array.
@@ -423,8 +424,28 @@ static func count_by(collection, iteratee = null):
 		counters[key] += 1
 	return counters
 
-static func each(a=0, b=0, c=0): not_implemented() # alias for forEach
-static func for_each(a=0, b=0, c=0): not_implemented()
+
+## Alias of for_each
+## This attempts to replicate lodash's each.
+## https://lodash.com/docs/4.17.15#each
+static func each(collection, iteratee): 
+	print("GD_.each is an alias, prefer GD_.for_each to avoid overhead")
+	return for_each(collection, iteratee)
+
+## Iterates over elements of collection and invokes iteratee for each element. 
+## The iteratee is invoked with two arguments: (value, index|key). 
+## Iteratee functions may exit iteration early by explicitly returning false.
+static func for_each(collection, iteratee): 
+	if not(_is_collection(collection)):
+		printerr("GD_.for_each received a non-collection type value")
+		return null
+		
+	var iter_func = iteratee(iteratee)
+	for key in keyed_iterable(collection):
+		var result = iter_func.call(collection[key],key)
+		# short circuit
+		if is_same(result,false): 
+			return
 
 static func each_right(a=0, b=0, c=0): not_implemented()
 static func every(a=0, b=0, c=0): not_implemented()
@@ -590,6 +611,7 @@ static func cast_array(v):
 		return v if v is Array else [v]
 	else:
 		return []
+	
 		
 static func clone(a=0, b=0, c=0): not_implemented()
 static func clone_deep(a=0, b=0, c=0): not_implemented()
@@ -848,6 +870,20 @@ static func times(a=0, b=0, c=0): not_implemented()
 static func to_path(a=0, b=0, c=0): not_implemented()
 static func unique_id(a=0, b=0, c=0): not_implemented()
 
+"""
+NON-LODASH FUNCS
+"""
+
+## Ensures that when it iterates through the item, it always iterates via keys
+## This does not have a lodash equivalent	
+static func keyed_iterable(thing):
+	if thing is Array:
+		return range(thing.size())
+	elif thing is Dictionary:
+		return thing
+		
+	printerr("_to_collection received a non-collection")
+	return []
 
 """
 INTERNAL
