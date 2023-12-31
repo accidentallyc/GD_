@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=15 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_nwqc8"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_difference_by_test.gd" id="6_0ktat"]
 [ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_count_by_test.gd" id="6_mj5tk"]
 [ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_filter_test.gd" id="7_262yh"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_difference_with.gd" id="7_y7tvx"]
 [ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_find_test.gd" id="8_gafav"]
 [ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_group_by_test.gd" id="9_o6fv0"]
 [ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_some_test.gd" id="10_4l7mv"]
@@ -34,6 +35,9 @@ script = ExtResource("5_wufwt")
 [node name="Difference By" type="Node" parent="Array"]
 script = ExtResource("6_0ktat")
 
+[node name="Difference With" type="Node" parent="Array"]
+script = ExtResource("7_y7tvx")
+
 [node name="Collection" type="Node" parent="."]
 
 [node name="Count By" type="Node" parent="Collection"]
@@ -45,7 +49,7 @@ script = ExtResource("7_262yh")
 [node name="Find" type="Node" parent="Collection"]
 script = ExtResource("8_gafav")
 
-[node name="Group" type="Node" parent="Collection"]
+[node name="Group By" type="Node" parent="Collection"]
 script = ExtResource("9_o6fv0")
 
 [node name="Some" type="Node" parent="Collection"]

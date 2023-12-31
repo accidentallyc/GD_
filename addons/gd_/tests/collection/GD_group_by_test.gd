@@ -19,7 +19,7 @@ func it_groups_using_truthiness():
 
 
 func it_groups_using_lambda():
-	var result = GD_.group_by(users, func(u): return u.user)
+	var result = GD_.group_by(users, func(u, _u): return u.user)
 	expect(result).to.equal({
 		"barney": [barney],
 		"fred": [fred],

@@ -1,14 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://cfu6aj4s0m5c0"]
+[gd_scene load_steps=3 format=3 uid="uid://cfu6aj4s0m5c0"]
 
 [ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_hmlwl"]
-[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_difference_by_test.gd" id="2_dhir1"]
-[ext_resource type="Script" path="res://addons/gd_/tests/math/GD_floor_test.gd" id="3_algkl"]
+[ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_count_by_test.gd" id="2_sylix"]
 
 [node name="Single Test" type="Node"]
 script = ExtResource("1_hmlwl")
 
-[node name="Floor" type="Node" parent="."]
-script = ExtResource("3_algkl")
-
-[node name="Difference By" type="Node" parent="."]
-script = ExtResource("2_dhir1")
+[node name="Count By" type="Node" parent="."]
+script = ExtResource("2_sylix")

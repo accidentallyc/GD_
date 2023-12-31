@@ -18,7 +18,7 @@ func it_counts_using_truthiness():
 
 
 func it_counts_using_lambda():
-	var result = GD_.count_by(users, func(u): return u.user)
+	var result = GD_.count_by(users, func(u,_u): return u.user)
 	expect(result).to.equal({
 		"barney": 1,
 		"fred": 1,

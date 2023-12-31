@@ -122,27 +122,32 @@ static func difference_by(array_left, array_right, iteratee = null):
 		var left_key = iter_func.call(left_item)
 		if not(keys_to_remove_map.has(left_key)):
 			new_array.append(left_item)
-		
-	#
-	#
-	#var j = array_right_max
-	#while j > 0:
-		#j -= 1
-		#print_debug(key_map_2[j])
-	#for array_item_1 in array_left:
-		#var item_1_value = iter_func.call(array_item_1)
-		#
-		#for array_item_2 in array_right:
-			#var item_2_value = iter_func.call(array_item_1)
-		#new_array.append(array_item_1)
-	#
-	#for array_item_2 in array_right:
-		#var processed = iter_func.call(array_item_2)
-		#if key_map.has(processed):
-			#new_array.erase(array_item_2)
-		#
+			
 	return new_array
-static func difference_with(a=0, b=0, c=0): not_implemented()
+	
+## This method is like GD_.difference except that it accepts comparator 
+## which is invoked to compare elements of array to values. 
+## The order and references of result values are determined by the first array. 
+## The comparator is invoked with two arguments: (arrVal, othVal).
+## This attempts to replicate lodash's differenceWith.
+## https://lodash.com/docs/4.17.15#differenceWith
+static func difference_with(array_left, array_right, comparator): 
+	if not(array_left is Array and array_right is Array):
+		printerr("GD_.difference_by received a non-array type value")
+		return null
+		
+	var new_array = []
+	var has_match = false
+	for left_item in array_left:
+		has_match = false
+		for right_item in array_right:
+			var res = comparator.call(left_item,right_item)
+			if comparator.call(left_item,right_item):
+				has_match = true
+				break
+		if not(has_match):
+			new_array.append(left_item)
+	return new_array
 static func drop(a=0, b=0, c=0): not_implemented()
 static func drop_right(a=0, b=0, c=0): not_implemented()
 static func drop_right_while(a=0, b=0, c=0): not_implemented()
@@ -210,7 +215,7 @@ Collections
 ## Creates a dictionary composed of keys generated from the results of 
 ## running each element of collection thru iteratee. The corresponding value 
 ## of each key is the number of times the key was returned by iteratee. 
-## The iteratee is invoked with one argument: (value).
+## The iteratee is invoked with one argument: (value, _UNUSED_).
 ## This attempts to replicate lodash's count_by. 
 ## See https://lodash.com/docs/4.17.15#countBy
 static func count_by(collection, iteratee = null):
@@ -281,7 +286,7 @@ static func for_each_right(a=0, b=0, c=0): not_implemented()
 ## running each element of collection thru iteratee. The order of grouped values is 
 ## determined by the order they occur in collection. The corresponding value 
 ## of each key is an array of elements responsible for generating the key. 
-## The iteratee is invoked with one argument: (value).
+## The iteratee is invoked with one argument: (value, _UNUSED_).
 ## See https://lodash.com/docs/4.17.15#groupBy
 static func group_by(collection, iteratee = null):
 	if not(_is_collection(collection)):
