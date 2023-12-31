@@ -1,6 +1,5 @@
-## Planning to make this into a port of Lodash?
-## Set it as GD_ instead of GD_ to mark that its
-## internal to this addon
+extends "res://addons/gd_/GD_indirect.gd"
+
 class_name GD_
 
 class Reference:
@@ -81,20 +80,68 @@ static func concat(array, a=_NULL_ARG_,b=_NULL_ARG_,c=_NULL_ARG_,d=_NULL_ARG_,e=
 ## are determined by the first array.
 ## This attempts to replicate lodash's difference.
 ## https://lodash.com/docs/4.17.15#difference
-static func difference(array_1, array_2): 
-	if not(array_1 is Array and array_2 is Array):
-		printerr("GD_.concat received a non-array type value")
+static func difference(array_left, array_right): 
+	if not(array_left is Array and array_right is Array):
+		printerr("GD_.difference received a non-array type value")
 		return null
 		
 	var new_array = []
-	new_array.append_array(array_1)
+	new_array.append_array(array_left)
 	
-	for array_item_2 in array_2:
+	for array_item_2 in array_right:
 		new_array.erase(array_item_2)
 		
 	return new_array
+
+
+## This method is like GD_.difference except that it accepts iteratee which 
+## is invoked for each element of array and values to generate the criterion 
+## by which they're compared using ==. The order and references of result 
+## values are determined by the first array. The iteratee is 
+## invoked with one argument: (value)
+## This attempts to replicate lodash's differenceBy.
+## https://lodash.com/docs/4.17.15#differenceBy
+static func difference_by(array_left, array_right, iteratee = null): 
+	if not(array_left is Array and array_right is Array):
+		printerr("GD_.difference_by received a non-array type value")
+		return null
+		
+	var iter_func = iteratee(iteratee)
 	
-static func difference_by(a=0, b=0, c=0): not_implemented()
+	# new return array
+	var new_array = []
+	
+	# store processed keyes here
+	var keys_to_remove_map = {}
+	for array_item_2 in array_right:
+		keys_to_remove_map[iter_func.call(array_item_2)] = true
+		
+	var array_right_max = array_left.size()
+	
+	for left_item in array_left:
+		var left_key = iter_func.call(left_item)
+		if not(keys_to_remove_map.has(left_key)):
+			new_array.append(left_item)
+		
+	#
+	#
+	#var j = array_right_max
+	#while j > 0:
+		#j -= 1
+		#print_debug(key_map_2[j])
+	#for array_item_1 in array_left:
+		#var item_1_value = iter_func.call(array_item_1)
+		#
+		#for array_item_2 in array_right:
+			#var item_2_value = iter_func.call(array_item_1)
+		#new_array.append(array_item_1)
+	#
+	#for array_item_2 in array_right:
+		#var processed = iter_func.call(array_item_2)
+		#if key_map.has(processed):
+			#new_array.erase(array_item_2)
+		#
+	return new_array
 static func difference_with(a=0, b=0, c=0): not_implemented()
 static func drop(a=0, b=0, c=0): not_implemented()
 static func drop_right(a=0, b=0, c=0): not_implemented()
@@ -171,7 +218,7 @@ static func count_by(collection, iteratee = null):
 		printerr("GD_.filter received a non-collection type value")
 		return null
 		
-	var iter_func = iteratee(iteratee, 1)
+	var iter_func = iteratee(iteratee)
 	var counters = {}
 	for item in collection:
 		var key = str(iter_func.call(item,null))
@@ -241,7 +288,7 @@ static func group_by(collection, iteratee = null):
 		printerr("GD_.filter received a non-collection type value")
 		return null
 		
-	var iter_func = iteratee(iteratee, 1)
+	var iter_func = iteratee(iteratee)
 	var counters = {}
 	for item in collection:
 		var key = str(iter_func.call(item,null))
@@ -410,7 +457,16 @@ MATH
 static func add(a=0, b=0, c=0): not_implemented()
 #static func ceil(a=0, b=0, c=0): not_implemented()
 static func divide(a=0, b=0, c=0): not_implemented()
-#static func floor(a=0, b=0, c=0): not_implemented()
+
+## Computes number rounded down to precision.
+## This is renamed to floor_ because it conflicts with
+## Godot's floor function.
+## This attempts to replicate lodash's some. 
+## See https://lodash.com/docs/4.17.15#some
+static func floor(number, precision = 0):
+	var scale = pow(10.0, precision)
+	return __floor(number * scale) / scale
+	
 #static func max(a=0, b=0, c=0): not_implemented()
 static func max_by(a=0, b=0, c=0): not_implemented()
 static func mean(a=0, b=0, c=0): not_implemented()
@@ -503,7 +559,7 @@ static func identity(value, _unused = null):
 ## Converts shorthands to callables for use in other funcs
 ## This attempts to replicate lodash's iteratee. 
 ## https://lodash.com/docs/4.17.15#iteratee
-static func iteratee(iteratee_val, args_count = 2):
+static func iteratee(iteratee_val):
 	var iter_func
 	match typeof(iteratee_val):
 		TYPE_DICTIONARY:
@@ -520,10 +576,7 @@ static func iteratee(iteratee_val, args_count = 2):
 		TYPE_NIL:
 			iter_func = GD_.identity
 		TYPE_CALLABLE:
-			match args_count:
-				1: iter_func = func(v,_unused): return iteratee_val.call(v)
-				2: iter_func = iteratee_val
-				_: assert(false,"Unsupported args count")
+			iter_func = iteratee_val
 				
 		_:
 			printerr("GD_.find called with unsupported signature %s. See docs for more info" % iteratee)
