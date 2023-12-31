@@ -292,9 +292,21 @@ static func find_last_index(array, predicate = null, from_index=-1):
 			return i
 	return -1
 	
-static func first(a=0, b=0, c=0): not_implemented() #alias of head
-static func head(a=0, b=0, c=0): not_implemented()
+## Alias to head
+## This attempts to replicate lodash's first.
+## https://lodash.com/docs/4.17.15#first
+static func first(array):
+	return head(array)
 
+## Gets the first element of array.
+## This attempts to replicate lodash's head.
+## https://lodash.com/docs/4.17.15#head
+static func head(array):
+	if not(array is Array):
+		printerr("GD_.head (alias first) received a non-array type value")
+		return null
+
+	return array[0] if array.size() else null
 
 ## Flattens array a single level deep.
 ## This attempts to replicate lodash's flatten.

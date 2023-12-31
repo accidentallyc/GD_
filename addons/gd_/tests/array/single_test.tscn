@@ -1,14 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://cfu6aj4s0m5c0"]
 
 [ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_da5ud"]
-[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_flatten_test.gd" id="2_gorwx"]
-[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_flatten_deep_test.gd" id="3_aoow8"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_head_test.gd" id="2_3imu3"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_first_test.gd" id="2_mdsch"]
 
 [node name="Single Test" type="Node"]
 script = ExtResource("1_da5ud")
 
-[node name="Flatten" type="Node" parent="."]
-script = ExtResource("2_gorwx")
+[node name="First > Head" type="Node" parent="."]
+script = ExtResource("2_mdsch")
 
-[node name="Flatten Deep" type="Node" parent="."]
-script = ExtResource("3_aoow8")
+[node name="Head" type="Node" parent="."]
+script = ExtResource("2_3imu3")
