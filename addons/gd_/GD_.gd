@@ -398,10 +398,103 @@ static func index_of(array, search, from_index = 0 ):
 	return -1
 	
 	
-static func initial(a=0, b=0, c=0): not_implemented()
-static func intersection(a=0, b=0, c=0): not_implemented()
-static func intersection_by(a=0, b=0, c=0): not_implemented()
-static func intersection_with(a=0, b=0, c=0): not_implemented()
+static func initial(array):
+	if not(array is Array):
+		printerr("GD_.to_pairs received a non-array type value")
+		return null
+		
+	var copy = array.duplicate() 
+	copy.pop_back()
+	return copy
+	
+	
+static func intersection(array_1,array_2,array_3 = null,array_4 = null,array_5 = null,array_6 = null,array_7 = null,array_8 = null,array_9 = null,array_10 = null,array_11 = null):
+	if not(array_1 is Array):
+		printerr("GD_.intersection received a non-array type value")
+		return null
+	if not array_2 is Array:
+		printerr("GD_.intersection received a non-array type value for array_2")
+		return null
+	return intersection_with(array_1,array_2,array_3,array_4,array_5,array_6,array_7,array_8,array_9,array_10,array_11)
+	
+	
+static func intersection_by(array_1, array_2, array_3 = null, array_4 = null, array_5 = null, array_6 = null, array_7 = null, array_8 = null, array_9 = null, array_10 = null, array_11 = null):
+	if not array_1 is Array:
+		printerr("GD_.intersection_by received a non-array type value for array_1")
+		return null
+	if not array_2 is Array:
+		printerr("GD_.intersection_by received a non-array type value for array_2")
+		return null
+
+	var arrays = [array_2, array_3, array_4, array_5, array_6, array_7, array_8, array_9, array_10, array_11]
+	var iteratee = GD_.identity
+	var max = 1
+
+	for i in arrays.size():
+		max = i
+		if arrays[i] == null:
+			# Previous is the iteratee
+			iteratee = iteratee(arrays[i - 1])
+			max -= 1
+			break
+
+	var left_array = array_1
+	for i in max:
+		var right_array = arrays[i]
+		var tmp = []
+		for left_value in left_array:
+			var transformed_left = iteratee.call(left_value)
+			for right_value in right_array:
+				var transformed_right = iteratee.call(right_value)
+				if transformed_left == transformed_right and left_value not in tmp:
+					tmp.append(left_value)
+					break
+		left_array = tmp
+	return left_array
+
+
+
+## This method is like GD_.intersection except that it accepts comparator 
+## which is invoked to compare elements of arrays. The order and references of 
+## result values are determined by the first array. The comparator is invoked 
+## with two arguments: (arrVal, othVal).
+## You can "intersect" with up to 10 values. Hopefully thats enough
+## This attempts to replicate lodash's intersection_with.
+## https://lodash.com/docs/4.17.15#intersection_with
+static func intersection_with(array_1,array_2,array_3 = null,array_4 = null,array_5 = null,array_6 = null,array_7 = null,array_8 = null,array_9 = null,array_10 = null,array_11 = null):
+	if not(array_1 is Array):
+		printerr("GD_.intersection_with received a non-array type value")
+		return null
+	if not(array_2 is Array):
+		printerr("GD_.intersection_with received a non-array type value")
+		return null
+		
+	var arrays = [array_2,array_3, array_4,array_5,array_6,array_7,
+			array_8,array_9,array_10,array_11 ]
+		
+	var comparator = GD_.is_equal
+	var max = 1
+	for i in arrays.size():
+		max = i
+		if arrays[i] is Callable:
+			comparator = arrays[i]
+			break
+		if arrays[i] == null:
+			break
+		
+
+	var left_array = array_1
+	for i in max:
+		var right_array = arrays[i]
+		var tmp = []
+		for left_value in left_array:
+			for right_value in right_array:
+				if comparator.call(left_value,right_value) and left_value not in tmp:
+					tmp.append(left_value)
+					break
+		left_array = tmp
+	return left_array
+	
 static func join(a=0, b=0, c=0): not_implemented()
 static func last(a=0, b=0, c=0): not_implemented()
 static func last_index_of(a=0, b=0, c=0): not_implemented()
@@ -675,7 +768,12 @@ static func is_buffer(a=0, b=0, c=0): not_implemented()
 static func is_date(a=0, b=0, c=0): not_implemented()
 static func is_element(a=0, b=0, c=0): not_implemented()
 static func is_empty(a=0, b=0, c=0): not_implemented()
-static func is_equal(a=0, b=0, c=0): not_implemented()
+
+## Basically a lambda wrapper for `==`
+static func is_equal(left,right): 
+	return left == right
+	
+	
 static func is_equal_with(a=0, b=0, c=0): not_implemented()
 static func is_error(a=0, b=0, c=0): not_implemented()
 #static func is_finite(a=0, b=0, c=0): not_implemented()

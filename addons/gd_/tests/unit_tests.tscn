@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=36 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_nwqc8"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -20,7 +20,7 @@
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_fill_test.gd" id="12_b78cn"]
 [ext_resource type="Script" path="res://addons/gd_/tests/math/GD_floor_test.gd" id="12_r0d3c"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_find_index_test.gd" id="13_5smr6"]
-[ext_resource type="Script" path="res://addons/gd_/tests/GD_find_last_index.gd" id="14_uv3rx"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_find_last_index.gd" id="14_uv3rx"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_flatten_test.gd" id="15_q8v00"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_first_test.gd" id="15_ssq0u"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_flatten_deep_test.gd" id="16_laf2r"]
@@ -29,7 +29,12 @@
 [ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_each_test.gd" id="20_dajlb"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_from_pairs_test.gd" id="20_krgqx"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_index_of_test.gd" id="21_ieppj"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_initial_test.gd" id="22_6b5nk"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_interesction_test.gd" id="23_pweau"]
 [ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_for_each_test.gd" id="23_vrhpe"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_intersection_by_test.gd" id="23_xn2a4"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_intersection_with_test.gd" id="25_xoir8"]
+[ext_resource type="Script" path="res://addons/gd_/tests/lang/GD_is_equal_test.gd" id="31_mx0yu"]
 
 [node name="Unit Tests" type="Node"]
 script = ExtResource("1_nwqc8")
@@ -96,6 +101,18 @@ script = ExtResource("20_krgqx")
 [node name="Index Of" type="Node" parent="Array"]
 script = ExtResource("21_ieppj")
 
+[node name="Initial" type="Node" parent="Array"]
+script = ExtResource("22_6b5nk")
+
+[node name="Intersection" type="Node" parent="Array"]
+script = ExtResource("23_pweau")
+
+[node name="Interesection By" type="Node" parent="Array"]
+script = ExtResource("23_xn2a4")
+
+[node name="Intersection With" type="Node" parent="Array"]
+script = ExtResource("25_xoir8")
+
 [node name="Collection" type="Node" parent="."]
 
 [node name="Count By" type="Node" parent="Collection"]
@@ -124,6 +141,9 @@ script = ExtResource("10_4l7mv")
 [node name="Function" type="Node" parent="."]
 
 [node name="Lang" type="Node" parent="."]
+
+[node name="Is Equal" type="Node" parent="Lang"]
+script = ExtResource("31_mx0yu")
 
 [node name="Math" type="Node" parent="."]
 
