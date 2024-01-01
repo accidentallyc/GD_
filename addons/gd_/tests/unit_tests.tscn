@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=31 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_nwqc8"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -27,6 +27,8 @@
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_head_test.gd" id="16_se155"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_flatten_depth_test.gd" id="19_ipemi"]
 [ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_each_test.gd" id="20_dajlb"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_from_pairs_test.gd" id="20_krgqx"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_index_of_test.gd" id="21_ieppj"]
 [ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_for_each_test.gd" id="23_vrhpe"]
 
 [node name="Unit Tests" type="Node"]
@@ -87,6 +89,12 @@ script = ExtResource("16_laf2r")
 
 [node name="Flatten Depth" type="Node" parent="Array"]
 script = ExtResource("19_ipemi")
+
+[node name="From Pairs" type="Node" parent="Array"]
+script = ExtResource("20_krgqx")
+
+[node name="Index Of" type="Node" parent="Array"]
+script = ExtResource("21_ieppj")
 
 [node name="Collection" type="Node" parent="."]
 

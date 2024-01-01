@@ -160,8 +160,7 @@ static func drop(array, n:int=1):
 		
 	var size = array.size()
 	var new_array = []
-	var i = n
-	while i < size:
+	for i in range(n,size):
 		new_array.append(array[i])
 		i += 1
 		
@@ -299,15 +298,6 @@ static func first(array):
 	print("GD_.first is an alias, prefer GD_.head to avoid overhead")
 	return head(array)
 
-## Gets the first element of array.
-## This attempts to replicate lodash's head.
-## https://lodash.com/docs/4.17.15#head
-static func head(array):
-	if not(array is Array):
-		printerr("GD_.head (alias first) received a non-array type value")
-		return null
-
-	return array[0] if array.size() else null
 
 ## Flattens array a single level deep.
 ## This attempts to replicate lodash's flatten.
@@ -360,9 +350,54 @@ static func flatten_depth(array, depth = 1):
 
 	return new_array
 	
+## The inverse of GD_.to_pairs.
+## This method returns an object composed from key-value pairs.
+## This attempts to replicate lodash's from_pairs.
+## https://lodash.com/docs/4.17.15#from_pairs
+static func from_pairs(array): 
+	if not(array is Array):
+		printerr("GD_.to_pairs received a non-array type value")
+		return null
+		
+	var obj = {}
+	for i in array:
+		if not(i is Array) or i.size() != 2:
+			printerr("GD_.to_pairs entry must follow this [k,v]. Received %s instead" % i )
+			continue
+			
+		obj[i[0]] = i[1]
+	return obj
 	
-static func from_pairs(a=0, b=0, c=0): not_implemented()
-static func index_of(a=0, b=0, c=0): not_implemented()
+	
+## Gets the first element of array.
+## This attempts to replicate lodash's head.
+## https://lodash.com/docs/4.17.15#head
+static func head(array):
+	if not(array is Array):
+		printerr("GD_.head received a non-array type value")
+		return null
+
+	return array[0] if array.size() else null
+	
+
+## Gets the index at which the first occurrence of value is found in array 
+## using == for equality comparisons. If fromIndex is negative, 
+## it's used as the offset from the end of array.
+static func index_of(array, search, from_index = 0 ): 
+	if not(array is Array):
+		printerr("GD_.to_pairs received a non-array type value")
+		return null
+		
+	var size = array.size()
+	if from_index < 0:
+		from_index = max(size + from_index, 0)
+	
+	for i in range(from_index, size):
+		if array[i] == search:
+			return i
+	return -1
+	
+	
 static func initial(a=0, b=0, c=0): not_implemented()
 static func intersection(a=0, b=0, c=0): not_implemented()
 static func intersection_by(a=0, b=0, c=0): not_implemented()
