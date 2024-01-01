@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=40 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_nwqc8"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -34,7 +34,11 @@
 [ext_resource type="Script" path="res://addons/gd_/tests/collection/GD_for_each_test.gd" id="23_vrhpe"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_intersection_by_test.gd" id="23_xn2a4"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_intersection_with_test.gd" id="25_xoir8"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_join_test.gd" id="26_yk8s6"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_last_test.gd" id="27_jcp5u"]
+[ext_resource type="Script" path="res://addons/gd_/tests/array/GD_last_index_of_test.gd" id="28_pxa4i"]
 [ext_resource type="Script" path="res://addons/gd_/tests/lang/GD_is_equal_test.gd" id="31_mx0yu"]
+[ext_resource type="Script" path="res://addons/gd_/tests/util/GD_default_to.gd" id="39_qcoaa"]
 
 [node name="Unit Tests" type="Node"]
 script = ExtResource("1_nwqc8")
@@ -113,6 +117,15 @@ script = ExtResource("23_xn2a4")
 [node name="Intersection With" type="Node" parent="Array"]
 script = ExtResource("25_xoir8")
 
+[node name="Join" type="Node" parent="Array"]
+script = ExtResource("26_yk8s6")
+
+[node name="Last" type="Node" parent="Array"]
+script = ExtResource("27_jcp5u")
+
+[node name="Last Index Of" type="Node" parent="Array"]
+script = ExtResource("28_pxa4i")
+
 [node name="Collection" type="Node" parent="."]
 
 [node name="Count By" type="Node" parent="Collection"]
@@ -160,3 +173,6 @@ script = ExtResource("12_r0d3c")
 
 [node name="Property" type="Node" parent="Util"]
 script = ExtResource("11_4km8u")
+
+[node name="Default To" type="Node" parent="Util"]
+script = ExtResource("39_qcoaa")

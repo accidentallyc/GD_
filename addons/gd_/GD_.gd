@@ -219,7 +219,7 @@ static func drop_right_while(array, predicate = null):
 ## https://lodash.com/docs/4.17.15#dropWhile
 static func drop_while(array, predicate = null):
 	if not(array is Array):
-		printerr("GD_.drop_right_while received a non-array type value")
+		printerr("GD_.drop_while received a non-array type value")
 		return null
 		
 	var new_array = []
@@ -245,7 +245,7 @@ static func drop_while(array, predicate = null):
 ## https://lodash.com/docs/4.17.15#fill
 static func fill(array, value, start=0, end=-1):
 	if not(array is Array):
-		printerr("GD_.drop_right_while received a non-array type value")
+		printerr("GD_.fill received a non-array type value")
 		return null
 		
 	if end == -1 or end > array.size():
@@ -263,7 +263,7 @@ static func fill(array, value, start=0, end=-1):
 ## https://lodash.com/docs/4.17.15#find_index
 static func find_index(array, predicate = null, from_index = 0):
 	if not(array is Array):
-		printerr("GD_.drop_right_while received a non-array type value")
+		printerr("GD_.find_index received a non-array type value")
 		return null
 		
 	var iteratee = GD_.iteratee(predicate)
@@ -279,7 +279,7 @@ static func find_index(array, predicate = null, from_index = 0):
 ## https://lodash.com/docs/4.17.15#find_last_index
 static func find_last_index(array, predicate = null, from_index=-1):
 	if not(array is Array):
-		printerr("GD_.drop_right_while received a non-array type value")
+		printerr("GD_.find_last_index received a non-array type value")
 		return null
 		
 	if from_index == -1 or from_index >= array.size():
@@ -383,9 +383,11 @@ static func head(array):
 ## Gets the index at which the first occurrence of value is found in array 
 ## using == for equality comparisons. If fromIndex is negative, 
 ## it's used as the offset from the end of array.
+## This attempts to replicate lodash's index_of.
+## https://lodash.com/docs/4.17.15#index_of
 static func index_of(array, search, from_index = 0 ): 
 	if not(array is Array):
-		printerr("GD_.to_pairs received a non-array type value")
+		printerr("GD_.index_of received a non-array type value")
 		return null
 		
 	var size = array.size()
@@ -397,17 +399,24 @@ static func index_of(array, search, from_index = 0 ):
 			return i
 	return -1
 	
-	
+## Gets all but the last element of array.
+## This attempts to replicate lodash's initial.
+## https://lodash.com/docs/4.17.15#initial
 static func initial(array):
 	if not(array is Array):
-		printerr("GD_.to_pairs received a non-array type value")
+		printerr("GD_.initial received a non-array type value")
 		return null
 		
 	var copy = array.duplicate() 
 	copy.pop_back()
 	return copy
 	
-	
+
+## Creates an array of unique values that are included in all given 
+## arrays using == for equality comparisons. The order and references of 
+## result values are determined by the first array.
+## This attempts to replicate lodash's intersection.
+## https://lodash.com/docs/4.17.15#intersection
 static func intersection(array_1,array_2,array_3 = null,array_4 = null,array_5 = null,array_6 = null,array_7 = null,array_8 = null,array_9 = null,array_10 = null,array_11 = null):
 	if not(array_1 is Array):
 		printerr("GD_.intersection received a non-array type value")
@@ -416,8 +425,15 @@ static func intersection(array_1,array_2,array_3 = null,array_4 = null,array_5 =
 		printerr("GD_.intersection received a non-array type value for array_2")
 		return null
 	return intersection_with(array_1,array_2,array_3,array_4,array_5,array_6,array_7,array_8,array_9,array_10,array_11)
+
 	
-	
+## This method is like GD_.intersection except that it accepts iteratee 
+## which is invoked for each element of each arrays to generate the 
+## criterion by which they're compared. The order and references of result 
+## values are determined by the first array. The iteratee is invoked 
+## with one argument: (value)
+## This attempts to replicate lodash's intersection_by.
+## https://lodash.com/docs/4.17.15#intersection_by
 static func intersection_by(array_1, array_2, array_3 = null, array_4 = null, array_5 = null, array_6 = null, array_7 = null, array_8 = null, array_9 = null, array_10 = null, array_11 = null):
 	if not array_1 is Array:
 		printerr("GD_.intersection_by received a non-array type value for array_1")
@@ -495,9 +511,48 @@ static func intersection_with(array_1,array_2,array_3 = null,array_4 = null,arra
 		left_array = tmp
 	return left_array
 	
-static func join(a=0, b=0, c=0): not_implemented()
-static func last(a=0, b=0, c=0): not_implemented()
-static func last_index_of(a=0, b=0, c=0): not_implemented()
+	
+## Converts all elements in array into a string separated by separator.
+## This attempts to replicate lodash's join.
+## https://lodash.com/docs/4.17.15#join
+static func join(array, separator=&','):
+	if not(array is Array):
+		printerr("GD_.join received a non-array type value")
+		return null
+		
+	return separator.join(array)
+		
+		
+## Gets the last element of array.		
+## This attempts to replicate lodash's last.
+## https://lodash.com/docs/4.17.15#last
+static func last(array):
+	if not(array is Array):
+		printerr("GD_.last received a non-array type value")
+		return null
+		
+	return array.back()
+	
+	
+## This method is like GD_.index_of except that it iterates 
+## over elements of array from right to left.
+## This attempts to replicate lodash's last_index_of.
+## https://lodash.com/docs/4.17.15#last_index_of
+static func last_index_of(array, search, from_index = null ): 
+	if not(array is Array):
+		printerr("GD_.last_index_of received a non-array type value")
+		return null
+		
+	var size = array.size()
+	from_index = GD_.default_to(from_index, size -1)
+	if from_index < 0:
+		from_index = max(size + from_index, 0)
+	
+	for i in range(from_index, -1, -1):
+		if array[i] == search:
+			return i
+	return -1
+	
 static func nth(a=0, b=0, c=0): not_implemented()
 static func pull(a=0, b=0, c=0): not_implemented()
 static func pull_all(a=0, b=0, c=0): not_implemented()
@@ -906,7 +961,18 @@ static func bind_all(a=0, b=0, c=0): not_implemented()
 static func cond(a=0, b=0, c=0): not_implemented()
 static func conforms(a=0, b=0, c=0): not_implemented()
 static func constant(a=0, b=0, c=0): not_implemented()
-static func default_to(a=0, b=0, c=0): not_implemented()
+
+
+## Checks value to determine whether a default value should be returned 
+## in its place. The defaultValue is returned if value is NaN or null
+## This attempts to replicate lodash's defaultTo. 
+## https://lodash.com/docs/4.17.15#defaultTo
+static func default_to(a,b): 
+	if a == null or is_nan(a) or is_same(a,_NULL_ARG_):
+		return b
+	return a
+	
+	
 static func flow(a=0, b=0, c=0): not_implemented()
 static func flow_right(a=0, b=0, c=0): not_implemented()
 
