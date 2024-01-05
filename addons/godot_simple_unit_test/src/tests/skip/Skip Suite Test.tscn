@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://drileks1womel"]
+
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_cf6ni"]
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/tests/skip/measure_skip_this_suite.gd" id="2_448gy"]
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/tests/skip/skip_suite_test.gd" id="3_7xbf8"]
+
+[node name="Skip Suite Test" type="Node"]
+script = ExtResource("1_cf6ni")
+
+[node name="[measure] skip this suite" type="Node" parent="."]
+script = ExtResource("2_448gy")
+
+[node name="Skip Suite Test" type="Node" parent="." node_paths=PackedStringArray("skipped_test")]
+script = ExtResource("3_7xbf8")
+skipped_test = NodePath("../[measure] skip this suite")

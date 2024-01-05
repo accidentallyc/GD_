@@ -1,13 +1,15 @@
 extends SimpleTest
 
 func test_measure_skip1():
-	pass
+	test_name('[measure] this should be skipped implicity because of _solo')
+	
 	
 func test_measure_skip2():
-	pass
+	test_name('[measure] this should be skipped implicity because of _solo')
+	
 	
 func test_measure_solo(_solo):
-	pass
+	test_name('[measure] this should not be skipped cause it has _solo')
 
 func test_for_actual_skip(_solo):
 	

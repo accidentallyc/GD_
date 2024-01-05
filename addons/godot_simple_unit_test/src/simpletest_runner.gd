@@ -7,17 +7,36 @@ extends SimpleTest
 ## Do not extend this. Use as is.
 class_name SimpleTest_Runner
 
-signal runner_ready(SimpleTest_Runner)
-
 static var SimpleTest_CanvasTscn := preload("./ui/simpletest_canvas.tscn")
 
+var _tests = []
 var _canvas
+var _solo_tests = []
+var _has_solo_test_suites = false
 
 func _ready():
 	_canvas = SimpleTest_CanvasTscn.instantiate()
-	_canvas.ready.connect(func (): runner_ready.emit(self))
+	_canvas.ready.connect(func (): _begin_test_runs())
 	add_child(_canvas)
 	
+func _begin_test_runs():
+	var entries = GD__.filter(_tests,"solo") if _has_solo_test_suites else _tests
+	entries = entries.filter(func(c): return !c.skip)
+	for entry in entries:
+		entry.test.__on_test_initialize(self)
+	
+func register_test(test:SimpleTest, request_solo_suite:bool,request_to_skip_suite:bool):
+	_has_solo_test_suites = _has_solo_test_suites or request_solo_suite
+	
+	if request_solo_suite and request_to_skip_suite:
+		printerr("Test(%s) has both solo and skip controls. SKIP will be ignored" % test.name)
+		request_to_skip_suite = false
+		
+	_tests.append({
+		"test":test,
+		"solo": request_solo_suite,
+		"skip": request_to_skip_suite
+	})
 
 """
 #########################

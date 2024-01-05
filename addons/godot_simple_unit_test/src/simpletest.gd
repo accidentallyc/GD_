@@ -66,6 +66,7 @@ var _curr_test_name = null
 ## Used in testing only
 var _test_case_line_item_map = {}
 var _runner
+var _cases
 
 """
 NOTE: This _has_ to be overriden by runner
@@ -75,7 +76,13 @@ func _enter_tree():
 
 
 func _ready():
-	owner.runner_ready.connect(__on_runner_ready,Object.CONNECT_ONE_SHOT)
+	_cases = SimpleTest_Utils.get_test_cases(self)
+	
+	var request_to_run_as_solo_suite = GD__.some(_cases,"solo_suite")
+	var request_to_skip_suite = GD__.some(_cases,"skip_suite")
+	owner.register_test(self,request_to_run_as_solo_suite, request_to_skip_suite)
+	
+	#owner.runner_ready.connect(__on_test_initialize,Object.CONNECT_ONE_SHOT)
 
 
 ## Override to run code before any of the tests in this suite
@@ -97,7 +104,7 @@ func _after_each():
 	pass
 	
 
-func __on_runner_ready(runner:SimpleTest_Runner):
+func __on_test_initialize(runner:SimpleTest_Runner):
 	_ln_item = SimpleTest_LineItemTscn.instantiate()
 	_ln_item.description = name
 
@@ -119,15 +126,13 @@ func __on_main_line_item_ready():
 	_ln_item.rerunButton.__method_name = "__run_all_tests"
 	_ln_item.rerunButton.__test = self
 	
-	var cases = SimpleTest_Utils.get_test_cases(self)
-	
-	if GD__.some(cases, 'solo'):
-		for case in cases:
+	if GD__.some(_cases, 'solo'):
+		for case in _cases:
 			case.skipped = not(case.solo)
 	
-	__set_run_state(cases.size())
+	__set_run_state(_cases.size())
 	
-	for case in cases:
+	for case in _cases:
 		var case_ln_item = SimpleTest_LineItemTscn.instantiate()
 		_test_case_line_item_map[case.fn] = case_ln_item
 		
@@ -235,7 +240,7 @@ func __run_single_test(method_name,ln_item):
 	
 func __run_all_tests():
 	_ln_item.queue_free()
-	__on_runner_ready(_runner)
+	__on_test_initialize(_runner)
 
 
 func __assert(result:bool, description, default):

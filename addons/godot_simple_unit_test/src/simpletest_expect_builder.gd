@@ -12,6 +12,8 @@ func _init(t, v:):
 // FLUENT BUILDER KEYWORDS //
 /////////////////////////////
 """
+var a := self
+var an := self
 var to := self
 var have := self
 var been := self
@@ -108,6 +110,47 @@ func called_n_times(n:int, description: String = &""):
 			&"v2": count
 		})
 	)
+	
+
+func value_in(thing, description: String = &""):
+	var result:bool
+	if thing is Dictionary:
+		var r = []
+		result = thing.values().find(thing)
+	else:
+		result = value in thing
+		
+	return test.__assert(
+		__to_notted(result),
+		description,
+		&"Expected {v1} {to} {v2}".format({
+			&"v1": value,
+			&"to": &"to be in" if __flag_not_notted else &"NOT to be in",
+			&"v2": thing
+		})
+	)
+	
+	
+func key_in(thing, description: String = &""):
+	var result:bool
+	if thing is Dictionary:
+		var r = []
+		result = thing.has(value)
+	elif thing is Array and value is int:
+		result = value < thing.size() and value >= 0
+	else:
+		result = value in thing
+		
+	return test.__assert(
+		__to_notted(result),
+		description,
+		&"Expected {v1} {to} {v2}".format({
+			&"v1": value,
+			&"to": &"to be key of" if __flag_not_notted else &"NOT to be key of",
+			&"v2": thing
+		})
+	)
+	
 """
 /////////////////////////////
 // INTERNAL STUFF //
