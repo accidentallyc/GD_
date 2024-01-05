@@ -8,6 +8,7 @@ class Reference:
 # Use this to differentiate betwen default null
 # and actual null values. Do not use outside of this class.
 static var _NULL_ARG_ = Reference.new()
+static var _EMPTY_ARRAY_ = []
 
 """
 Array
@@ -18,7 +19,7 @@ static func not_implemented():  assert(false, "Not implemented")
 ## If array can't be split evenly, the final chunk will be the remaining elements.
 ## This attempts to replicate lodash's chunk. 
 ## https://lodash.com/docs/4.17.15#chunk
-static func chunk(array,size=1): 
+static func chunk(array:Array,size=1): 
 	if not(array is Array):
 		printerr("GD_.chunk received a non-array type value")
 		return null
@@ -57,7 +58,7 @@ static func compact(array):
 ## This func can receive up to 10 concat values. Hopefully thats enough
 ## This attempts to replicate lodash's concat.
 ## https://lodash.com/docs/4.17.15#concat
-static func concat(array, a=_NULL_ARG_,b=_NULL_ARG_,c=_NULL_ARG_,d=_NULL_ARG_,e=_NULL_ARG_,f=_NULL_ARG_,g=_NULL_ARG_,h=_NULL_ARG_,i=_NULL_ARG_,j=_NULL_ARG_,k=_NULL_ARG_):
+static func concat(array:Array, a=_NULL_ARG_,b=_NULL_ARG_,c=_NULL_ARG_,d=_NULL_ARG_,e=_NULL_ARG_,f=_NULL_ARG_,g=_NULL_ARG_,h=_NULL_ARG_,i=_NULL_ARG_,j=_NULL_ARG_,k=_NULL_ARG_):
 	if not(array is Array):
 		printerr("GD_.concat received a non-array type value")
 		return null
@@ -153,7 +154,7 @@ static func difference_with(array_left, array_right, comparator:Callable):
 ## Creates a slice of array with n elements dropped from the beginning.
 ## This attempts to replicate lodash's drop.
 ## https://lodash.com/docs/4.17.15#drop
-static func drop(array, n:int=1):
+static func drop(array:Array, n:int=1):
 	if not(array is Array):
 		printerr("GD_.drop received a non-array type value")
 		return null
@@ -170,7 +171,7 @@ static func drop(array, n:int=1):
 ## Creates a slice of array with n elements dropped from the beginning.
 ## This attempts to replicate lodash's dropRight.
 ## https://lodash.com/docs/4.17.15#dropRight
-static func drop_right(array, n:int=1):
+static func drop_right(array:Array, n:int=1):
 	if not(array is Array):
 		printerr("GD_.drop_right received a non-array type value")
 		return null
@@ -190,7 +191,7 @@ static func drop_right(array, n:int=1):
 ## The predicate is invoked with two arguments: (value, index).
 ## This attempts to replicate lodash's dropRightWhile.
 ## https://lodash.com/docs/4.17.15#dropRightWhile
-static func drop_right_while(array, predicate = null):
+static func drop_right_while(array:Array, predicate = null):
 	if not(array is Array):
 		printerr("GD_.drop_right_while received a non-array type value")
 		return null
@@ -217,7 +218,7 @@ static func drop_right_while(array, predicate = null):
 ## The predicate is invoked with two arguments: (value, index).
 ## This attempts to replicate lodash's dropWhile.
 ## https://lodash.com/docs/4.17.15#dropWhile
-static func drop_while(array, predicate = null):
+static func drop_while(array:Array, predicate = null):
 	if not(array is Array):
 		printerr("GD_.drop_while received a non-array type value")
 		return null
@@ -243,7 +244,7 @@ static func drop_while(array, predicate = null):
 ## Note: This method mutates array.
 ## This attempts to replicate lodash's fill.
 ## https://lodash.com/docs/4.17.15#fill
-static func fill(array, value, start=0, end=-1):
+static func fill(array:Array, value, start=0, end=-1):
 	if not(array is Array):
 		printerr("GD_.fill received a non-array type value")
 		return null
@@ -261,7 +262,7 @@ static func fill(array, value, start=0, end=-1):
 ## element predicate returns truthy for instead of the element itself.
 ## This attempts to replicate lodash's find_index.
 ## https://lodash.com/docs/4.17.15#find_index
-static func find_index(array, predicate = null, from_index = 0):
+static func find_index(array:Array, predicate = null, from_index = 0):
 	if not(array is Array):
 		printerr("GD_.find_index received a non-array type value")
 		return null
@@ -277,7 +278,7 @@ static func find_index(array, predicate = null, from_index = 0):
 ## elements of collection from right to left.
 ## This attempts to replicate lodash's find_last_index.
 ## https://lodash.com/docs/4.17.15#find_last_index
-static func find_last_index(array, predicate = null, from_index=-1):
+static func find_last_index(array:Array, predicate = null, from_index=-1):
 	if not(array is Array):
 		printerr("GD_.find_last_index received a non-array type value")
 		return null
@@ -302,7 +303,7 @@ static func first(array):
 ## Flattens array a single level deep.
 ## This attempts to replicate lodash's flatten.
 ## https://lodash.com/docs/4.17.15#flatten
-static func flatten(array): 
+static func flatten(array:Array): 
 	if not(array is Array):
 		printerr("GD_.flatten received a non-array type value")
 		return null
@@ -313,7 +314,7 @@ static func flatten(array):
 ## Flattens array a single level deep.
 ## This attempts to replicate lodash's flattenDeep.
 ## https://lodash.com/docs/4.17.15#flattenDeep
-static func flatten_deep(array):
+static func flatten_deep(array:Array):
 	if not(array is Array):
 		printerr("GD_.flatten_deep received a non-array type value")
 		return null
@@ -324,7 +325,7 @@ static func flatten_deep(array):
 ## Recursively flatten array up to depth times.
 ## This attempts to replicate lodash's flattenDepth.
 ## https://lodash.com/docs/4.17.15#flattenDepth
-static func flatten_depth(array, depth = 1):
+static func flatten_depth(array:Array, depth = 1):
 	if not(array is Array):
 		printerr("GD_.flatten_deep received a non-array type value")
 		return null
@@ -354,7 +355,7 @@ static func flatten_depth(array, depth = 1):
 ## This method returns an object composed from key-value pairs.
 ## This attempts to replicate lodash's from_pairs.
 ## https://lodash.com/docs/4.17.15#from_pairs
-static func from_pairs(array): 
+static func from_pairs(array:Array): 
 	if not(array is Array):
 		printerr("GD_.to_pairs received a non-array type value")
 		return null
@@ -372,7 +373,7 @@ static func from_pairs(array):
 ## Gets the first element of array.
 ## This attempts to replicate lodash's head.
 ## https://lodash.com/docs/4.17.15#head
-static func head(array):
+static func head(array:Array):
 	if not(array is Array):
 		printerr("GD_.head received a non-array type value")
 		return null
@@ -385,7 +386,7 @@ static func head(array):
 ## it's used as the offset from the end of array.
 ## This attempts to replicate lodash's index_of.
 ## https://lodash.com/docs/4.17.15#index_of
-static func index_of(array, search, from_index = 0 ): 
+static func index_of(array:Array, search, from_index = 0 ): 
 	if not(array is Array):
 		printerr("GD_.index_of received a non-array type value")
 		return null
@@ -402,7 +403,7 @@ static func index_of(array, search, from_index = 0 ):
 ## Gets all but the last element of array.
 ## This attempts to replicate lodash's initial.
 ## https://lodash.com/docs/4.17.15#initial
-static func initial(array):
+static func initial(array:Array):
 	if not(array is Array):
 		printerr("GD_.initial received a non-array type value")
 		return null
@@ -417,7 +418,7 @@ static func initial(array):
 ## result values are determined by the first array.
 ## This attempts to replicate lodash's intersection.
 ## https://lodash.com/docs/4.17.15#intersection
-static func intersection(array_1,array_2,array_3 = null,array_4 = null,array_5 = null,array_6 = null,array_7 = null,array_8 = null,array_9 = null,array_10 = null,array_11 = null):
+static func intersection(array_1:Array,array_2:Array,array_3 = null,array_4 = null,array_5 = null,array_6 = null,array_7 = null,array_8 = null,array_9 = null,array_10 = null,array_11 = null):
 	if not(array_1 is Array):
 		printerr("GD_.intersection received a non-array type value")
 		return null
@@ -434,7 +435,7 @@ static func intersection(array_1,array_2,array_3 = null,array_4 = null,array_5 =
 ## with one argument: (value)
 ## This attempts to replicate lodash's intersection_by.
 ## https://lodash.com/docs/4.17.15#intersection_by
-static func intersection_by(array_1, array_2, array_3 = null, array_4 = null, array_5 = null, array_6 = null, array_7 = null, array_8 = null, array_9 = null, array_10 = null, array_11 = null):
+static func intersection_by(array_1:Array, array_2:Array, array_3 = null, array_4 = null, array_5 = null, array_6 = null, array_7 = null, array_8 = null, array_9 = null, array_10 = null, array_11 = null):
 	if not array_1 is Array:
 		printerr("GD_.intersection_by received a non-array type value for array_1")
 		return null
@@ -477,7 +478,7 @@ static func intersection_by(array_1, array_2, array_3 = null, array_4 = null, ar
 ## You can "intersect" with up to 10 values. Hopefully thats enough
 ## This attempts to replicate lodash's intersection_with.
 ## https://lodash.com/docs/4.17.15#intersection_with
-static func intersection_with(array_1,array_2,array_3 = null,array_4 = null,array_5 = null,array_6 = null,array_7 = null,array_8 = null,array_9 = null,array_10 = null,array_11 = null):
+static func intersection_with(array_1:Array,array_2:Array,array_3 = null,array_4 = null,array_5 = null,array_6 = null,array_7 = null,array_8 = null,array_9 = null,array_10 = null,array_11 = null):
 	if not(array_1 is Array):
 		printerr("GD_.intersection_with received a non-array type value")
 		return null
@@ -515,7 +516,7 @@ static func intersection_with(array_1,array_2,array_3 = null,array_4 = null,arra
 ## Converts all elements in array into a string separated by separator.
 ## This attempts to replicate lodash's join.
 ## https://lodash.com/docs/4.17.15#join
-static func join(array, separator=&','):
+static func join(array:Array, separator=&','):
 	if not(array is Array):
 		printerr("GD_.join received a non-array type value")
 		return null
@@ -526,7 +527,7 @@ static func join(array, separator=&','):
 ## Gets the last element of array.		
 ## This attempts to replicate lodash's last.
 ## https://lodash.com/docs/4.17.15#last
-static func last(array):
+static func last(array:Array):
 	if not(array is Array):
 		printerr("GD_.last received a non-array type value")
 		return null
@@ -538,7 +539,7 @@ static func last(array):
 ## over elements of array from right to left.
 ## This attempts to replicate lodash's last_index_of.
 ## https://lodash.com/docs/4.17.15#last_index_of
-static func last_index_of(array, search, from_index = null ): 
+static func last_index_of(array:Array, search, from_index = null ): 
 	if not(array is Array):
 		printerr("GD_.last_index_of received a non-array type value")
 		return null
@@ -553,44 +554,97 @@ static func last_index_of(array, search, from_index = null ):
 			return i
 	return -1
 	
-static func nth(a=0, b=0, c=0): not_implemented()
-static func pull(a=0, b=0, c=0): not_implemented()
-static func pull_all(a=0, b=0, c=0): not_implemented()
-static func pull_all_by(a=0, b=0, c=0): not_implemented()
-static func pull_all_with(a=0, b=0, c=0): not_implemented()
-static func pull_at(a=0, b=0, c=0): not_implemented()
-static func remove(a=0, b=0, c=0): not_implemented()
-static func reverse(a=0, b=0, c=0): not_implemented()
-static func slice(a=0, b=0, c=0): not_implemented()
-static func sorted_index(a=0, b=0, c=0): not_implemented()
-static func sorted_index_by(a=0, b=0, c=0): not_implemented()
-static func sorted_index_of(a=0, b=0, c=0): not_implemented()
-static func sorted_last_index(a=0, b=0, c=0): not_implemented()
-static func sorted_last_index_by(a=0, b=0, c=0): not_implemented()
-static func sorted_last_index_of(a=0, b=0, c=0): not_implemented()
-static func sorted_uniq(a=0, b=0, c=0): not_implemented()
-static func sorted_uniq_by(a=0, b=0, c=0): not_implemented()
-static func tail(a=0, b=0, c=0): not_implemented()
-static func take(a=0, b=0, c=0): not_implemented()
-static func take_right(a=0, b=0, c=0): not_implemented()
-static func take_right_while(a=0, b=0, c=0): not_implemented()
-static func take_while(a=0, b=0, c=0): not_implemented()
-static func union(a=0, b=0, c=0): not_implemented()
-static func union_by(a=0, b=0, c=0): not_implemented()
-static func union_with(a=0, b=0, c=0): not_implemented()
-static func uniq(a=0, b=0, c=0): not_implemented()
-static func uniq_by(a=0, b=0, c=0): not_implemented()
-static func uniq_with(a=0, b=0, c=0): not_implemented()
-static func unzip(a=0, b=0, c=0): not_implemented()
-static func unzip_with(a=0, b=0, c=0): not_implemented()
-static func without(a=0, b=0, c=0): not_implemented()
-static func xor(a=0, b=0, c=0): not_implemented()
-static func xor_by(a=0, b=0, c=0): not_implemented()
-static func xor_with(a=0, b=0, c=0): not_implemented()
-static func zip(a=0, b=0, c=0): not_implemented()
-static func zip_object(a=0, b=0, c=0): not_implemented()
-static func zip_object_deep(a=0, b=0, c=0): not_implemented()
-static func zip_with(a=0, b=0, c=0): not_implemented()
+
+## Gets the element at index n of array. 
+## If n is negative, the nth element from the end is returned.
+## This attempts to replicate lodash's nth.
+## https://lodash.com/docs/4.17.15#nth
+static func nth(array:Array, n=0):
+	if not(array is Array):
+		printerr("GD_.nth received a non-array type value")
+		return null
+		
+	var count = array.size()
+	var index =  count + n  if n < 0 else n
+	if index >= 0 and index < count:
+		return array[index]
+	return null
+		
+## Removes all given values from array using SameValueZero for equality comparisons.
+##
+## Note: Unlike _.without, this method mutates array. 
+## Use _.remove to remove elements from an array by predicate
+## This attempts to replicate lodash's pull.
+## https://lodash.com/docs/4.17.15#pull		
+static func pull(array:Array, a=_NULL_ARG_,b=_NULL_ARG_,c=_NULL_ARG_,d=_NULL_ARG_,e=_NULL_ARG_,f=_NULL_ARG_,g=_NULL_ARG_,h=_NULL_ARG_,i=_NULL_ARG_,j=_NULL_ARG_): 
+	if not(array is Array):
+		printerr("GD_.pull received a non-array type value")
+		return null
+		
+	var to_remove = GD_.filter([a,b,c,d,e,f,g,h,i,j], GD_._is_not_null_arg)
+	return pull_all(array, to_remove)
+	
+#static func pull_all(array:Array, b=0, c=0): not_implemented()
+
+## This method is like _.pull except that it accepts an array of values to remove.
+##
+## Note: Unlike _.difference, this method mutates array.
+## This attempts to replicate lodash's pull_all.
+## https://lodash.com/docs/4.17.15#pull_all			
+static func pull_all(array:Array, values_to_remove = _EMPTY_ARRAY_): 
+	if not(array is Array):
+		printerr("GD_.pull_all received a non-array type value")
+		return null
+		
+	values_to_remove = GD_.cast_array(values_to_remove)
+	
+	var index = 0
+	var max = array.size()
+	while index < max:
+		if array[index] in values_to_remove:
+			array.pop_at(index)
+			max -= 1
+		else:
+			# we only move 1 up  when theres no re-index inovlved 
+			# because items are shifted backward
+			index += 1
+						
+	return array
+static func pull_all_by(array:Array, b=0, c=0): not_implemented()
+static func pull_all_with(array:Array, b=0, c=0): not_implemented()
+static func pull_at(array:Array, b=0, c=0): not_implemented()
+static func remove(array:Array, b=0, c=0): not_implemented()
+static func reverse(array:Array, b=0, c=0): not_implemented()
+static func slice(array:Array, b=0, c=0): not_implemented()
+static func sorted_index(array:Array, b=0, c=0): not_implemented()
+static func sorted_index_by(array:Array, b=0, c=0): not_implemented()
+static func sorted_index_of(array:Array, b=0, c=0): not_implemented()
+static func sorted_last_index(array:Array, b=0, c=0): not_implemented()
+static func sorted_last_index_by(array:Array, b=0, c=0): not_implemented()
+static func sorted_last_index_of(array:Array, b=0, c=0): not_implemented()
+static func sorted_uniq(array:Array, b=0, c=0): not_implemented()
+static func sorted_uniq_by(array:Array, b=0, c=0): not_implemented()
+static func tail(array:Array, b=0, c=0): not_implemented()
+static func take(array:Array, b=0, c=0): not_implemented()
+static func take_right(array:Array, b=0, c=0): not_implemented()
+static func take_right_while(array:Array, b=0, c=0): not_implemented()
+static func take_while(array:Array, b=0, c=0): not_implemented()
+static func union(array:Array, b=0, c=0): not_implemented()
+static func union_by(array:Array, b=0, c=0): not_implemented()
+static func union_with(array:Array, b=0, c=0): not_implemented()
+static func uniq(array:Array, b=0, c=0): not_implemented()
+static func uniq_by(array:Array, b=0, c=0): not_implemented()
+static func uniq_with(array:Array, b=0, c=0): not_implemented()
+static func unzip(array:Array, b=0, c=0): not_implemented()
+static func unzip_with(array:Array, b=0, c=0): not_implemented()
+static func without(array:Array, b=0, c=0): not_implemented()
+static func xor(array:Array, b=0, c=0): not_implemented()
+static func xor_by(array:Array, b=0, c=0): not_implemented()
+static func xor_with(array:Array, b=0, c=0): not_implemented()
+static func zip(array:Array, b=0, c=0): not_implemented()
+static func zip_object(array:Array, b=0, c=0): not_implemented()
+static func zip_object_deep(array:Array, b=0, c=0): not_implemented()
+static func zip_with(array:Array, b=0, c=0): not_implemented()
 
 """
 Collections
@@ -1098,3 +1152,6 @@ INTERNAL
 """
 static func _is_collection(item):
 	return item is Array or item is Dictionary
+	
+static func _is_not_null_arg(i,_i):
+	return not(is_same(i, _NULL_ARG_))
