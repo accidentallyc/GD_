@@ -14,16 +14,19 @@ var _canvas
 var _solo_tests = []
 var _has_solo_test_suites = false
 
+
 func _ready():
 	_canvas = SimpleTest_CanvasTscn.instantiate()
 	_canvas.ready.connect(func (): _begin_test_runs())
 	add_child(_canvas)
+	
 	
 func _begin_test_runs():
 	var entries = GD__.filter(_tests,"solo") if _has_solo_test_suites else _tests
 	entries = entries.filter(func(c): return !c.skip)
 	for entry in entries:
 		entry.test.__on_test_initialize(self)
+	
 	
 func register_test(test:SimpleTest, request_solo_suite:bool,request_to_skip_suite:bool):
 	_has_solo_test_suites = _has_solo_test_suites or request_solo_suite
@@ -37,6 +40,7 @@ func register_test(test:SimpleTest, request_solo_suite:bool,request_to_skip_suit
 		"solo": request_solo_suite,
 		"skip": request_to_skip_suite
 	})
+
 
 """
 #########################
@@ -52,6 +56,7 @@ func _get_configuration_warnings():
 		return ["SimpleTest_Runner must be a root node"]
 	else:
 		return []
+	
 	
 func add_block(block:Control):
 	_canvas.add_block.call_deferred(block)

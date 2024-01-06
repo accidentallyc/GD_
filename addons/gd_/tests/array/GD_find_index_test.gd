@@ -7,7 +7,7 @@ var users = [
 ]
 
 func it_should_find_index_based_on_function():
-	var index = GD_.find_index(users, func(o): return o.user == 'barney')
+	var index = GD_.find_index(users, func(o, _i): return o.user == 'barney')
 	expect(index).to.equal(0)
 
 func it_should_find_index_with_matches_shorthand():

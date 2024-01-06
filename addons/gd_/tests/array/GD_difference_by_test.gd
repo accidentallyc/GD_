@@ -2,6 +2,8 @@ extends SimpleTest
 
 func it_returns_left_array_copy_with_right_bits_removed_using_iterator():
 	expect(GD_.difference_by([2.1, 1.2], [2.3, 3.4], GD_.floor)).equal([1.2])
+	
+	GD_.identity
 
 func it_returns_left_array_get_all_instances_removed():
 	expect(

@@ -1,6 +1,6 @@
 extends SimpleTest
 
-func it_should_fill_entire_array():
+func it_should_fill_entire_array_by_mutation():
 	var array = [1, 2, 3]
 	GD_.fill(array, 'a')
 	var expected = ['a', 'a', 'a']
