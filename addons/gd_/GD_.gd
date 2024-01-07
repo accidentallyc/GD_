@@ -1895,4 +1895,4 @@ static func _is_collection(item):
 static func _is_not_null_arg(i,_i):
 	return not(is_same(i, _NULL_ARG_))
 
-static func not_implemented():  assert(false, "Not implemented")
+static func not_implemented():  assert(false, "Not implemented yet. Do you need this function? If so, open an issue and I will prioritize it")
