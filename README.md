@@ -77,8 +77,5 @@ See [the api readme](https://github.com/accidentallyc/GD_/blob/master/api.md)
 
 Just do a pull request with the following requirements
 1. Add a unit test node for it at `res://addons/gd_/tests/unit_tests.tscn` scene
-1. Update the comment to reflect the lodash documentation
-1. Update this README.MD
-	1. Add an entry to the documentation list
-	1. Pop the function off the TODO
-	1. Update the tracking count
+1. Update the comments, it should match how the other comments are written because  👇
+1. Run the auto-markdown generator at `gd_/rebuild_docs.gd` which autogenerates api.md
