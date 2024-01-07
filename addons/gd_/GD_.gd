@@ -13,8 +13,7 @@ static var _EMPTY_ARRAY_ = []
 """
 Array
 """
-static func not_implemented():  assert(false, "Not implemented")
-	
+
 ## Creates an array of elements split into groups the length of size. 
 ## If array can't be split evenly, the final chunk will be the remaining elements.
 ## This attempts to replicate lodash's chunk. 
@@ -1841,7 +1840,7 @@ static func over_some(a=0, b=0, c=0): not_implemented()
 ## 		# => [2, 1]
 ## 
 ##		var node = Node2D.new()
-## 		node.global_position = Vector2(15,10)
+##		node.global_position = Vector2(15,10)
 ##		var fn = GD_.property("global_position:x")
 ##		fn.call(node) 
 ##		# => 15
@@ -1888,10 +1887,12 @@ static func keyed_iterable(thing):
 	return []
 
 """
-INTERNAL
+INTERNAL STUFF
 """
 static func _is_collection(item):
 	return item is Array or item is Dictionary
 	
 static func _is_not_null_arg(i,_i):
 	return not(is_same(i, _NULL_ARG_))
+
+static func not_implemented():  assert(false, "Not implemented")
