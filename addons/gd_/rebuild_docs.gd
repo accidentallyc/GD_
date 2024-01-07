@@ -3,6 +3,8 @@ extends EditorScript
 
 var _md:FileAccess
 var _script:FileAccess
+var total_count = 0
+var unfinished_count = 0
 
 func _run():
 	_script = FileAccess.open("res://addons/gd_/GD_.gd", FileAccess.READ)
@@ -18,6 +20,8 @@ func _run():
 		lines.append(line)
 		
 		if line.substr(0,11) == "static func":
+			total_count += 1
+			
 			var splits =  line.substr(12).split("(",true,1)
 			var func_name = splits[0]
 			var is_pending = splits.size() > 1 and splits[1].contains("not_implemented")
@@ -29,6 +33,7 @@ func _run():
 				
 			if is_pending:
 				write_ln( "> NOT YET IMPLEMENTED" )
+				unfinished_count += 1
 			else:
 				var i = index - 1
 				var buffer = []
@@ -81,7 +86,7 @@ func _run():
 	_script.close()
 	_md.close()
 	
-	print("done writing")
+	print("Succesful written to ./api.md %s/%s" % [total_count - unfinished_count, total_count])
 	
 func write_description_buffer(buffer: Array):
 	for ln in buffer:

@@ -1,4 +1,4 @@
-# GD_ (_50 of 272_ implemented)
+# GD_ (_49 of 272_ implemented)
 
 GD_ is an effort to bring [Lodash](https://lodash.com/) into Godot. This will attempt to replicate Lodash's behavior as close as possible (even if the implementation becomes round about).
 
@@ -66,7 +66,7 @@ This project is very much in its early stages, so it's very likely for the funct
 
 ## Documentation for existing functions
 
-See [the api readme]("./api.md)
+See [the api readme](https://github.com/accidentallyc/GD_/blob/master/api.md)
 
 
 **Contributing**
