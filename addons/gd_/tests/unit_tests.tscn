@@ -1,6 +1,6 @@
 [gd_scene load_steps=48 format=3 uid="uid://dmxle5r8u47a8"]
 
-[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_ft6jo"]
+[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_chunk_test.gd" id="2_i2yyx"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_compact_test.gd" id="3_oknqc"]
 [ext_resource type="Script" path="res://addons/gd_/tests/array/GD_concat_test.gd" id="4_gg63d"]
@@ -49,7 +49,7 @@
 [ext_resource type="Script" path="res://addons/gd_/tests/util/GD_matches_test.gd" id="47_bcfvp"]
 
 [node name="Unit Tests" type="Node"]
-script = ExtResource("1_ft6jo")
+script = ExtResource("1_b4vvq")
 
 [node name="Array" type="Node" parent="."]
 

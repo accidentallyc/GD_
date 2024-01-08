@@ -8,6 +8,7 @@ class Case:
 	var name:String
 	var fn:String
 	var args:Array
+	var last_run_errors:Array
 
 
 static func get_test_cases(script):

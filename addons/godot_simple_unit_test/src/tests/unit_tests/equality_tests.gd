@@ -5,12 +5,12 @@ func test_foundation_test():
 	test_name("FOUNDATION TEST - make sure this passes")
 	expect(100).to.equal(999)
 	assert(
-		_results.size() > 0 && _results[0] == "Expected 100(int) to loosely equal 999(int)",
+		_errors.size() > 0 && _errors[0] == "Expected 100(int) to loosely equal 999(int)",
 		"Canary test failed. All other tests should be considered fail."
 	)
 	
 	# Reset to have it look "passed"
-	_results.clear() 
+	_errors.clear() 
 	
 	
 func test_equals_fails_when_not_equal():
@@ -172,7 +172,7 @@ func try(callable:Callable):
 	callable.call()
 	
 func assert_fail_message(expected_error):
-	if _results.size() == 0:
+	if _errors.size() == 0:
 		var message = &"Expected the error to be \n{tabs}'{err1}'\n but passed instead".format({
 			&"tabs":__tabs,
 			&"err1":expected_error
@@ -180,12 +180,12 @@ func assert_fail_message(expected_error):
 		print(&"At `%s`:\n%s" % [_curr_test_name,message])
 		expect_fail(message)
 	else:
-		for r in _results:
+		for r in _errors:
 			if r == expected_error:
-				_results.erase(r)
+				_errors.erase(r)
 				return
 	
-		var error = _results[0]
+		var error = _errors[0]
 		var description = &"Expected the error to be \n{tabs}'{err1}' \nbut got \n{tabs}'{err2}'\ninstead ".format({
 			&"tabs":__tabs,
 			&"err1":expected_error,
@@ -198,10 +198,10 @@ func assert_fail_message(expected_error):
 		print(message)
 	
 func assert_passing():
-	if _results.size() == 0:
+	if _errors.size() == 0:
 		return
 	var errors = ""
-	for r in _results:
+	for r in _errors:
 		errors += str(&"\n",__tabs,r)
 	var description = &"Expected no error but instead got %s" % [errors]
 	expect_fail(description)

@@ -3,28 +3,36 @@
 [ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/ui/simpletest_line_item.gd" id="1_0ootq"]
 [ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/ui/simpletest_rerun_button.gd" id="2_aoudm"]
 
-[node name="VBoxContainer" type="VBoxContainer"]
+[node name="VBoxContainer - Line Item" type="VBoxContainer"]
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_0ootq")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer - Line Item" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Status" type="Label" parent="HBoxContainer"]
+[node name="Collapse Toggle" type="Button" parent="HBoxContainer - Line Item"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
+text = "  -  "
 
-[node name="Description" type="Label" parent="HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Rerun Button" type="Button" parent="HBoxContainer"]
+[node name="Rerun Button" type="Button" parent="HBoxContainer - Line Item"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 text = "▶"
 script = ExtResource("2_aoudm")
+
+[node name="Status" type="Label" parent="HBoxContainer - Line Item"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Pass"
+
+[node name="Description" type="Label" parent="HBoxContainer - Line Item"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "- Description"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -34,4 +42,5 @@ theme_override_constants/margin_left = 25
 unique_name_in_owner = true
 layout_mode = 2
 
-[connection signal="button_up" from="HBoxContainer/Rerun Button" to="HBoxContainer/Rerun Button" method="_on_button_up"]
+[connection signal="button_up" from="HBoxContainer - Line Item/Collapse Toggle" to="." method="toggle_collapse"]
+[connection signal="button_up" from="HBoxContainer - Line Item/Rerun Button" to="HBoxContainer - Line Item/Rerun Button" method="_on_button_up"]

@@ -17,9 +17,9 @@ func test_ln_item_can_display_description():
 	_ln_item.description = original_name
 
 func test_ln_item_reflects_failure():
-	assert(_results.size() == 0, "There should be no errors at the start of a test")
+	assert(_errors.size() == 0, "There should be no errors at the start of a test")
 	expect_fail()
-	assert(_results.size() == 1, "There should be exactly 1 error now")
+	assert(_errors.size() == 1, "There should be exactly 1 error now")
 	
 	# Clear results to make it "pass"
-	_results.clear()
+	_errors.clear()

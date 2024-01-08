@@ -16,6 +16,9 @@ var _has_solo_test_suites = false
 
 
 func _ready():
+	if Engine.is_editor_hint():
+		return
+		
 	_canvas = SimpleTest_CanvasTscn.instantiate()
 	_canvas.ready.connect(func (): _begin_test_runs())
 	add_child(_canvas)
@@ -24,10 +27,30 @@ func _ready():
 func _begin_test_runs():
 	var entries = GD__.filter(_tests,"solo") if _has_solo_test_suites else _tests
 	entries = entries.filter(func(c): return !c.skip)
+	
+	var failed_test_count = 0
+	var total_test_count = 0
 	for entry in entries:
-		entry.test.__on_test_initialize(self)
-	
-	
+		var test = entry.test
+		test.__on_test_initialize(self)
+		await test.on_finished_full_suite_run
+		total_test_count += test._cases_runnable.size()
+		failed_test_count += test._cases_failed.size()
+		
+	if total_test_count == 0:
+		_canvas.container.description = "No tests yet. Add a new node of type SimpleTest to start 😁"
+		return
+		
+	#@TODO unhide this, and make it rerun everything
+	_canvas.container.rerunButton.hide() 
+	_canvas.container.status = &"FAIL" if failed_test_count else &"PASS"
+	_canvas.container.description = &"{name} ({passing}/{total} passed)".format({
+		"name":name,
+		"passing":  total_test_count - failed_test_count,
+		"total": total_test_count,
+	})
+		
+		
 func register_test(test:SimpleTest, request_solo_suite:bool,request_to_skip_suite:bool):
 	_has_solo_test_suites = _has_solo_test_suites or request_solo_suite
 	
@@ -40,7 +63,6 @@ func register_test(test:SimpleTest, request_solo_suite:bool,request_to_skip_suit
 		"solo": request_solo_suite,
 		"skip": request_to_skip_suite
 	})
-
 
 """
 #########################
@@ -56,7 +78,6 @@ func _get_configuration_warnings():
 		return ["SimpleTest_Runner must be a root node"]
 	else:
 		return []
-	
 	
 func add_block(block:Control):
 	_canvas.add_block.call_deferred(block)

@@ -4,6 +4,7 @@ extends VBoxContainer
 @onready var descpNode:Label = %Description
 @onready var childContainerNode:Control = %"Children Container"
 @onready var rerunButton:Button = %"Rerun Button"
+@onready var collapse_toggle:Button = %"Collapse Toggle"
 
 var status = &"":
 	get:
@@ -24,8 +25,11 @@ var description = &"":
 var _is_ready = false
 var parent_ln_item
 var case
+const collapse_txt = &" ➖ "	
+const uncollapse_txt = &" ➕ "	
 
 func _ready():
+	collapse_toggle.text = collapse_txt
 	update_element()
 	_is_ready = true
 
@@ -57,8 +61,22 @@ func update_element():
 
 func add_block(block:Control):
 	childContainerNode.add_child.call_deferred(block)
+	# originally hidden, but adding 1 child means you can collapse it
+	collapse_toggle.show() 
 	
 func clear_blocks():
 	if childContainerNode:
 		for c in childContainerNode.get_children():
 			c.queue_free()
+			
+	# no children means cant collapse
+	collapse_toggle.hide()
+		
+
+func toggle_collapse():
+	if childContainerNode.visible:
+		childContainerNode.hide()
+		collapse_toggle.text = uncollapse_txt
+	else:
+		childContainerNode.show()
+		collapse_toggle.text = collapse_txt

@@ -12,7 +12,6 @@ func it_can_customize_display_name():
 
 func it_can_create_stubs():
 	var cb = stub()
-	
 	cb.callable()
 	
 	expect(cb).to.have.been.called()

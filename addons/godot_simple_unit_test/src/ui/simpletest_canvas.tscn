@@ -1,10 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://ca70orl8cydp2"]
+[gd_scene load_steps=3 format=3 uid="uid://ca70orl8cydp2"]
 
 [ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/ui/simpletest_canvas.gd" id="1_nrp21"]
+[ext_resource type="PackedScene" uid="uid://bxnxmnhnmodas" path="res://addons/godot_simple_unit_test/src/ui/simpletest_line_item.tscn" id="2_o7erm"]
 
 [node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("container")]
 script = ExtResource("1_nrp21")
-container = NodePath("ScrollContainer/Margin Container/VBoxContainer")
+container = NodePath("ScrollContainer/Margin Container/Root Line Item")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 anchors_preset = 15
@@ -22,5 +23,5 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/Margin Container"]
+[node name="Root Line Item" parent="ScrollContainer/Margin Container" instance=ExtResource("2_o7erm")]
 layout_mode = 2
