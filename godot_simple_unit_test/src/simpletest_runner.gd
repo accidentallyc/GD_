@@ -1,4 +1,4 @@
-@icon("res://addons/godot_simple_unit_test/src/ui/icon_runner.png")
+@icon("res://godot_simple_unit_test/src/ui/icon_runner.png")
 
 @tool
 extends SimpleTest

@@ -1365,7 +1365,7 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
 
 
 ## `matches `
- Creates a function that performs a partial deep comparison between a 
+ Creates a function that perform a comparison between a 
  given object and source, returning true if the given object has equivalent 
  property values, else false.
  This attempts to replicate lodash's matches. 
@@ -1386,6 +1386,27 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
 
 
 ## `matches_property `
+ Creates a function that performs a partial deep comparison between 
+ the value at path of a given object to srcValue, returning true if the 
+ object value is equivalent, else false. Note: Partial comparisons will 
+ match empty array and empty object srcValue values against any array 
+ or object value, respectively. 
+ This attempts to replicate lodash's matches_property. 
+ https://lodash.com/docs/4.17.15#matches_property
+ 
+### Arguments
+ *  path (Array|string): The path of the property to get.
+ *  srcValue (*): The value to match.
+### Example
+```gdscript
+ var objects = [
+   { 'a': 1, 'b': 2, 'c': 3 },
+   { 'a': 4, 'b': 5, 'c': 6 }
+ ];
+  
+ GD_.find(objects, GD_.matches_property('a', 4));
+ # => { 'a': 4, 'b': 5, 'c': 6 }
+```
 
 
 ## `method `
@@ -1453,4 +1474,17 @@ fn.call(node)
 ## `to_path `
 > NOT YET IMPLEMENTED
 ## `unique_id `
-> NOT YET IMPLEMENTED
+ Generates a unique ID. If prefix is given, the ID is appended to it.
+
+### Arguments
+ *  [prefix=''] (string): The value to prefix the ID with.
+### Example
+```gdscript
+ GD_.uniqueId('contact_');
+ # => 'contact_104'
+  
+ GD_.uniqueId();
+ # => '105'
+```
+
+

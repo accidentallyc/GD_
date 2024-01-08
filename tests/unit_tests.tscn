@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=50 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/src/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -48,6 +48,7 @@
 [ext_resource type="Script" path="res://tests/util/GD_identity_test.gd" id="45_7a3b1"]
 [ext_resource type="Script" path="res://tests/util/GD_matches_test.gd" id="47_bcfvp"]
 [ext_resource type="Script" path="res://tests/util/GD_matches_property_test.gd" id="48_8d001"]
+[ext_resource type="Script" path="res://tests/util/GD_unique_id_test.gd" id="49_onwvn"]
 
 [node name="Unit Tests" type="Node"]
 script = ExtResource("1_b4vvq")
@@ -212,3 +213,6 @@ script = ExtResource("47_bcfvp")
 
 [node name="Matches Property" type="Node" parent="Util"]
 script = ExtResource("48_8d001")
+
+[node name="Unique Id" type="Node" parent="Util"]
+script = ExtResource("49_onwvn")

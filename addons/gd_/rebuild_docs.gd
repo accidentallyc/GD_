@@ -27,9 +27,6 @@ func _run():
 			var is_pending = splits.size() > 1 and splits[1].contains("not_implemented")
 			var string = "## `%s `\n" % func_name 
 			write_ln( "## `%s `" % func_name )
-			
-			if func_name == "difference_with":
-				print("FOUND FUNC ",func_name)
 				
 			if is_pending:
 				write_ln( "> NOT YET IMPLEMENTED" )

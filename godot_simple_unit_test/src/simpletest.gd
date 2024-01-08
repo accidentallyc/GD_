@@ -1,4 +1,4 @@
-@icon("res://addons/godot_simple_unit_test/src/ui/icon_test.png")
+@icon("res://godot_simple_unit_test/src/ui/icon_test.png")
 extends Node
 
 ## Base class that all SimpleTests should extend from.

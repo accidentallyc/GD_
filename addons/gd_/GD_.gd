@@ -9,6 +9,7 @@ class Reference:
 # and actual null values. Do not use outside of this class.
 static var _NULL_ARG_ = Reference.new()
 static var _EMPTY_ARRAY_ = []
+static var id_ctr = 0
 
 """
 Array
@@ -1891,7 +1892,22 @@ static func stub_string(a=0, b=0, c=0): not_implemented()
 static func stub_true(a=0, b=0, c=0): not_implemented()
 static func times(a=0, b=0, c=0): not_implemented()
 static func to_path(a=0, b=0, c=0): not_implemented()
-static func unique_id(a=0, b=0, c=0): not_implemented()
+
+## Generates a unique ID. If prefix is given, the ID is appended to it.
+##
+## Arguments
+## 		[prefix=''] (string): The value to prefix the ID with.
+## Returns
+## 		(string): Returns the unique ID.
+## Example
+## 		GD_.uniqueId('contact_');
+## 		# => 'contact_104'
+## 		 
+## 		GD_.uniqueId();
+## 		# => '105'
+static func unique_id(prefix=&""): 
+	id_ctr += 1
+	return str(prefix,id_ctr)
 
 """
 NON-LODASH FUNCS
