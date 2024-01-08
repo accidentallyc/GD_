@@ -1778,7 +1778,7 @@ static func iteratee(iteratee_val):
 			printerr("GD_.find called with unsupported signature %s. See docs for more info" % iteratee)
 	return null
 
-## Creates a function that performs a partial deep comparison between a 
+## Creates a function that perform a comparison between a 
 ## given object and source, returning true if the given object has equivalent 
 ## property values, else false.
 ## This attempts to replicate lodash's matches. 
@@ -1803,7 +1803,29 @@ static func matches(dict:Dictionary) -> Callable:
 			var prop = value.get(key)
 			found = found and dict[key] == prop
 		return found
-		
+
+
+## Creates a function that performs a partial deep comparison between 
+## the value at path of a given object to srcValue, returning true if the 
+## object value is equivalent, else false. Note: Partial comparisons will 
+## match empty array and empty object srcValue values against any array 
+## or object value, respectively. 
+## This attempts to replicate lodash's matches_property. 
+## https://lodash.com/docs/4.17.15#matches_property
+## 
+## Arguments
+## 		path (Array|string): The path of the property to get.
+## 		srcValue (*): The value to match.
+## Returns
+## 		(Function): Returns the new spec function.
+## Example
+## 		var objects = [
+## 		  { 'a': 1, 'b': 2, 'c': 3 },
+## 		  { 'a': 4, 'b': 5, 'c': 6 }
+## 		];
+## 		 
+## 		GD_.find(objects, GD_.matches_property('a', 4));
+## 		# => { 'a': 4, 'b': 5, 'c': 6 }
 static func matches_property(string:String, v):
 	return func (value, _unused = null):
 		return GD_.get_prop(value,string) == v

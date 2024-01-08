@@ -90,8 +90,8 @@ func _enter_tree():
 func _ready():
 	__load_test_cases()
 
-	var request_to_run_as_solo_suite = GD__.some(_cases,"solo_suite")
-	var request_to_skip_suite = GD__.some(_cases,"skip_suite")
+	var request_to_run_as_solo_suite = GD_.some(_cases,"solo_suite")
+	var request_to_skip_suite = GD_.some(_cases,"skip_suite")
 	owner.register_test(self,request_to_run_as_solo_suite, request_to_skip_suite)
 	
 ## Override to run code before any of the tests in this suite
@@ -229,7 +229,7 @@ func __run_test_run(case, ln_item):
 	
 	var args = []
 	
-	for arg in GD__.cast_array(case.args):
+	for arg in GD_.cast_array(case.args):
 		if not(SimpleTest_Utils.argument_keywords.has(arg.name)):
 			printerr(
 				"Unsupported test argument({arg}) provided for {method} ".format({
@@ -271,16 +271,16 @@ func __run_all_tests():
 
 func __load_test_cases():
 	_cases = SimpleTest_Utils.get_test_cases(self)
-	_cases_solo = GD__.filter(_cases,'solo')
+	_cases_solo = GD_.filter(_cases,'solo')
 	
 	if _cases_solo.size():
 		for case in _cases:
 			case.skipped = not(case.solo)
 	
-	_cases_skip = GD__.filter(_cases,'skipped')
+	_cases_skip = GD_.filter(_cases,'skipped')
 	
 	_cases_runnable = _cases_solo if _cases_solo.size() else _cases
-	_cases_runnable = GD__.filter(_cases,{'skipped':false})
+	_cases_runnable = GD_.filter(_cases,{'skipped':false})
 
 func __assert(result:bool, description, default):
 	if !result:

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bcnadybqxw6qk"
-path="res://.godot/imported/icon_runner.png-1a10c8af0918fdc33bf90b6b5de6be0a.ctex"
+path="res://.godot/imported/icon_runner.png-bb27a48b511db34243a09cce1f7012ac.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godot_simple_unit_test/src/ui/icon_runner.png"
-dest_files=["res://.godot/imported/icon_runner.png-1a10c8af0918fdc33bf90b6b5de6be0a.ctex"]
+source_file="res://godot_simple_unit_test/src/ui/icon_runner.png"
+dest_files=["res://.godot/imported/icon_runner.png-bb27a48b511db34243a09cce1f7012ac.ctex"]
 
 [params]
 

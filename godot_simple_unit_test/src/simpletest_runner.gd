@@ -25,7 +25,7 @@ func _ready():
 	
 	
 func _begin_test_runs():
-	var entries = GD__.filter(_tests,"solo") if _has_solo_test_suites else _tests
+	var entries = GD_.filter(_tests,"solo") if _has_solo_test_suites else _tests
 	entries = entries.filter(func(c): return !c.skip)
 	
 	var failed_test_count = 0

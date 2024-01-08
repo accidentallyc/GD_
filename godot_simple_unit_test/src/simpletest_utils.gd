@@ -22,7 +22,7 @@ static func get_test_cases(script):
 				case.fn = method.name
 				case.args = args
 				
-				var arg_groups = GD__.group_by(args,'name')
+				var arg_groups = GD_.group_by(args,'name')
 				case.skipped = arg_groups.has('_skip')
 				case.solo = arg_groups.has('_solo')
 				case.solo_suite = arg_groups.has('_solo_suite')

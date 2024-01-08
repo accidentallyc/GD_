@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ca70orl8cydp2"]
 
-[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/ui/simpletest_canvas.gd" id="1_nrp21"]
-[ext_resource type="PackedScene" uid="uid://bxnxmnhnmodas" path="res://addons/godot_simple_unit_test/src/ui/simpletest_line_item.tscn" id="2_o7erm"]
+[ext_resource type="Script" path="res://godot_simple_unit_test/src/ui/simpletest_canvas.gd" id="1_nrp21"]
+[ext_resource type="PackedScene" uid="uid://bxnxmnhnmodas" path="res://godot_simple_unit_test/src/ui/simpletest_line_item.tscn" id="2_o7erm"]
 
 [node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("container")]
 script = ExtResource("1_nrp21")

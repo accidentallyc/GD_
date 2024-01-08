@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bxnxmnhnmodas"]
 
-[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/ui/simpletest_line_item.gd" id="1_0ootq"]
-[ext_resource type="Script" path="res://addons/godot_simple_unit_test/src/ui/simpletest_rerun_button.gd" id="2_aoudm"]
+[ext_resource type="Script" path="res://godot_simple_unit_test/src/ui/simpletest_line_item.gd" id="1_0ootq"]
+[ext_resource type="Script" path="res://godot_simple_unit_test/src/ui/simpletest_rerun_button.gd" id="2_aoudm"]
 
 [node name="VBoxContainer - Line Item" type="VBoxContainer"]
 offset_right = 40.0
