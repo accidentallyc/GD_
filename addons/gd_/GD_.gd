@@ -1,4 +1,4 @@
-extends "res://addons/gd_/GD_indirect.gd"
+extends "res://addons/gd_/GD_base.gd"
 
 class_name GD_
 
@@ -986,7 +986,7 @@ static func pull(array:Array, a=_NULL_ARG_,b=_NULL_ARG_,c=_NULL_ARG_,d=_NULL_ARG
 		return null
 		
 	var to_remove = GD_.filter([a,b,c,d,e,f,g,h,i,j], GD_._is_not_null_arg)
-	return pull_all(array, to_remove)
+	return pull_all_by(array, to_remove)
 	
 
 ## This method is like _.pull except that it accepts an array of values to remove.
@@ -1005,18 +1005,49 @@ static func pull(array:Array, a=_NULL_ARG_,b=_NULL_ARG_,c=_NULL_ARG_,d=_NULL_ARG
 ## 		GD_.pull_all(array, ['a', 'c'])
 ## 		print(array)
 ## 		# => ['b', 'b']
-static func pull_all(array:Array, values_to_remove = _EMPTY_ARRAY_): 
+static func pull_all(array:Array, values_to_remove:Array = _EMPTY_ARRAY_): 
 	if not(array is Array):
 		printerr("GD_.pull_all received a non-array type value")
+		return null
+						
+	return pull_all_by(array, values_to_remove)
+	
+## This method is like GD_.pull_all except that it accepts iteratee 
+## which is invoked for each element of array and values to generate 
+## the criterion by which they're compared. The iteratee is invoked 
+## with one argument: (value).
+## Note: Unlike GD_.difference_by, this method mutates array.	
+## This attempts to replicate lodash's pullAllBy.
+## https://lodash.com/docs/4.17.15#pullAllBy
+##
+## Arguments
+## 		array (Array): The array to modify.
+## 		values (Array): The values to remove.
+## 		[iteratee=_.identity] (Function): The iteratee invoked per element.
+## Returns
+## 		(Array): Returns array.
+## Example
+## 		var array = [{ 'x': 1 }, { 'x': 2 }, { 'x': 3 }, { 'x': 1 }];
+## 		 
+## 		GD_.pull_all_by(array, [{ 'x': 1 }, { 'x': 3 }], 'x');
+## 		# => [{ 'x': 2 }]
+static func pull_all_by(array:Array, values_to_remove = _EMPTY_ARRAY_, iteratee = GD_.identity):
+	if not(array is Array):
+		printerr("GD_.pull_all_by received a non-array type value")
 		return null
 		
 	values_to_remove = GD_.cast_array(values_to_remove)
 	
+	var iter_func = iteratee(iteratee)
+	values_to_remove = values_to_remove \
+			if iter_func == GD_.identity \
+			else GD_.map(values_to_remove,iter_func)
+	
 	var index = 0
 	var max = array.size()
 	while index < max:
-		if array[index] in values_to_remove:
-			array.pop_at(index)
+		if iter_func.call(array[index], null) in values_to_remove:
+			array.remove_at(index)
 			max -= 1
 		else:
 			# we only move 1 up  when theres no re-index inovlved 
@@ -1024,9 +1055,90 @@ static func pull_all(array:Array, values_to_remove = _EMPTY_ARRAY_):
 			index += 1
 						
 	return array
-static func pull_all_by(array:Array, b=0, c=0): not_implemented()
-static func pull_all_with(array:Array, b=0, c=0): not_implemented()
-static func pull_at(array:Array, b=0, c=0): not_implemented()
+	
+## This method is like GD_.pull_all except that it accepts comparator which 
+## is invoked to compare elements of array to values. The comparator is 
+## invoked with two arguments: (arrVal, othVal).
+## Note: Unlike GD_.difference_with, this method mutates array.
+## This attempts to replicate lodash's pullAllWith.
+## https://lodash.com/docs/4.17.15#pullAllWith
+##
+## Arguments
+## 		array (Array): The array to modify.
+## 		values (Array): The values to remove.
+## 		[comparator] (Function): The comparator invoked per element.
+## Returns
+## 		(Array): Returns array.
+## Example
+## 		var array = [{ 'x': 1, 'y': 2 }, { 'x': 3, 'y': 4 }, { 'x': 5, 'y': 6 }];
+## 		 
+## 		GD_.pull_all_with(array, [{ 'x': 3, 'y': 4 }], GD_.is_equal);
+## 		print(array);
+## 		# => [{ 'x': 1, 'y': 2 }, { 'x': 5, 'y': 6 }]
+static func pull_all_with(array:Array, values_to_remove, comparator:Callable = GD_.is_equal):
+	if not(array is Array):
+		printerr("GD_.pull_all_with received a non-array type value")
+		return null
+		
+	values_to_remove = GD_.cast_array(values_to_remove)
+	
+	var index = 0
+	var max = array.size()
+	while index < max:
+		var should_remove = false
+		
+		for removable in values_to_remove:
+			if comparator.call(array[index], removable):
+				should_remove = true
+				break
+				
+		if should_remove:
+				array.remove_at(index)
+				max -= 1
+		else:
+			# we only move 1 up  when theres no re-index inovlved 
+			# because items are shifted backward
+			index += 1
+						
+	return array
+	
+
+## Removes elements from array corresponding to indexes and returns 
+## an array of removed elements.
+## 
+## Note: Unlike GD_.at, this method mutates array.
+## This attempts to replicate lodash's pullAt.
+## https://lodash.com/docs/4.17.15#pullAt
+## 
+## Arguments
+## 		array (Array): The array to modify.
+## 		[indexes] (...(number|number[])): The indexes of elements to remove.
+## Returns
+## 		(Array): Returns the new array of removed elements.
+## Example
+## 		var array = ['a', 'b', 'c', 'd'];
+## 		var pulled = GD_.pull_at(array, [1, 3]);
+## 		 
+## 		print(array);
+## 		# => ['a', 'c']
+## 		 
+## 		print(pulled);
+## 		# => ['b', 'd']
+static func pull_at(array:Array, values_to_remove:Array):
+	var max = array.size()
+	var array_size = array.size()
+	var removed_array = []
+	for i in range( values_to_remove.size() - 1, -1, -1):
+		var index_to_remove = values_to_remove[i]
+		if not(index_to_remove is int \
+			and index_to_remove < array_size \
+			and index_to_remove >= 0) :
+			continue
+		
+		removed_array.append(array.pop_at(index_to_remove))
+	removed_array.reverse()
+	return removed_array
+	
 static func remove(array:Array, b=0, c=0): not_implemented()
 static func reverse(array:Array, b=0, c=0): not_implemented()
 static func slice(array:Array, b=0, c=0): not_implemented()
@@ -1365,11 +1477,9 @@ static func some(collection, iteratee = null):
 		return null
 		
 	var iter_func = iteratee(iteratee)
-	var index = 0
-	for item in collection:
-		if iter_func.call(item,index):
+	for key in keyed_iterable(collection):
+		if iter_func.call(collection[key],key):
 			return true
-		index += 1
 	return false
 	
 	
@@ -1438,7 +1548,7 @@ Lang
 ## 		# => []
 ## 		 
 ## 		var array = [1, 2, 3]
-## 		console.log(GD_.castArray(array) === array)
+## 		print(GD_.castArray(array) === array)
 ## 		# => true
 static func cast_array(v = _NULL_ARG_):
 	if is_same(v, _NULL_ARG_):

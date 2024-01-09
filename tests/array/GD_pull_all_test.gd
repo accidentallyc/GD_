@@ -20,11 +20,3 @@ func it_removes_all_occurences():
  
 	GD_.pull_all(array, ['a','c']); 
 	expect(array).to.equal(['b','b'])
-
-
-func it_accepts_edge_case_of_non_array():
-	var array = ['a', 'b'];
-	var returned = GD_.pull_all(array, 'a'); 
-	
-	expect(array).to.equal(['b'])
-	expect(array).strictly.equal(returned)

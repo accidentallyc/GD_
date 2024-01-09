@@ -630,11 +630,73 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
 
 
 ## `pull_all_by `
-> NOT YET IMPLEMENTED
+ This method is like GD_.pull_all except that it accepts iteratee 
+ which is invoked for each element of array and values to generate 
+ the criterion by which they're compared. The iteratee is invoked 
+ with one argument: (value).
+ Note: Unlike GD_.difference_by, this method mutates array.	
+ This attempts to replicate lodash's pullAllBy.
+ https://lodash.com/docs/4.17.15#pullAllBy
+
+### Arguments
+ *  array (Array): The array to modify.
+ *  values (Array): The values to remove.
+ *  [iteratee=_.identity] (Function): The iteratee invoked per element.
+### Example
+```gdscript
+ var array = [{ 'x': 1 }, { 'x': 2 }, { 'x': 3 }, { 'x': 1 }];
+  
+ GD_.pull_all_by(array, [{ 'x': 1 }, { 'x': 3 }], 'x');
+ # => [{ 'x': 2 }]
+```
+
+
 ## `pull_all_with `
-> NOT YET IMPLEMENTED
+ This method is like GD_.pull_all except that it accepts comparator which 
+ is invoked to compare elements of array to values. The comparator is 
+ invoked with two arguments: (arrVal, othVal).
+ Note: Unlike GD_.difference_with, this method mutates array.
+ This attempts to replicate lodash's pullAllWith.
+ https://lodash.com/docs/4.17.15#pullAllWith
+
+### Arguments
+ *  array (Array): The array to modify.
+ *  values (Array): The values to remove.
+ *  [comparator] (Function): The comparator invoked per element.
+### Example
+```gdscript
+ var array = [{ 'x': 1, 'y': 2 }, { 'x': 3, 'y': 4 }, { 'x': 5, 'y': 6 }];
+  
+ GD_.pull_all_with(array, [{ 'x': 3, 'y': 4 }], GD_.is_equal);
+ print(array);
+ # => [{ 'x': 1, 'y': 2 }, { 'x': 5, 'y': 6 }]
+```
+
+
 ## `pull_at `
-> NOT YET IMPLEMENTED
+ Removes elements from array corresponding to indexes and returns 
+ an array of removed elements.
+ 
+ Note: Unlike GD_.at, this method mutates array.
+ This attempts to replicate lodash's pullAt.
+ https://lodash.com/docs/4.17.15#pullAt
+ 
+### Arguments
+ *  array (Array): The array to modify.
+ *  [indexes] (...(number|number[])): The indexes of elements to remove.
+### Example
+```gdscript
+ var array = ['a', 'b', 'c', 'd'];
+ var pulled = GD_.pull_at(array, [1, 3]);
+  
+ print(array);
+ # => ['a', 'c']
+  
+ print(pulled);
+ # => ['b', 'd']
+```
+
+
 ## `remove `
 > NOT YET IMPLEMENTED
 ## `reverse `
@@ -1020,7 +1082,7 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
  # => []
   
  var array = [1, 2, 3]
- console.log(GD_.castArray(array) === array)
+ print(GD_.castArray(array) === array)
  # => true
 ```
 
