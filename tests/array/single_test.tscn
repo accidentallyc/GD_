@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=3 uid="uid://cfu6aj4s0m5c0"]
+
+[ext_resource type="Script" path="res://godot_simple_unit_test/src/simpletest_runner.gd" id="1_bar3o"]
+[ext_resource type="Script" path="res://tests/array/GD_pull_all_by_test.gd" id="2_jg3bf"]
+[ext_resource type="Script" path="res://tests/array/GD_pull_test.gd" id="3_molyn"]
+[ext_resource type="Script" path="res://tests/array/GD_pull_all_test.gd" id="4_yhmso"]
+[ext_resource type="Script" path="res://tests/array/GD_pull_all_with_test.gd" id="5_nqjkp"]
+[ext_resource type="Script" path="res://tests/array/GD_pull_at_test.gd" id="6_vw5j1"]
+
+[node name="Single Test" type="Node"]
+script = ExtResource("1_bar3o")
+
+[node name="Pull" type="Node" parent="."]
+script = ExtResource("3_molyn")
+
+[node name="Pull All" type="Node" parent="."]
+script = ExtResource("4_yhmso")
+
+[node name="Pull All By" type="Node" parent="."]
+script = ExtResource("2_jg3bf")
+
+[node name="Pull All With" type="Node" parent="."]
+script = ExtResource("5_nqjkp")
+
+[node name="Pull At" type="Node" parent="."]
+script = ExtResource("6_vw5j1")

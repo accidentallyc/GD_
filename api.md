@@ -630,11 +630,73 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
 
 
 ## `pull_all_by `
-> NOT YET IMPLEMENTED
+ This method is like GD_.pull_all except that it accepts iteratee 
+ which is invoked for each element of array and values to generate 
+ the criterion by which they're compared. The iteratee is invoked 
+ with one argument: (value).
+ Note: Unlike GD_.difference_by, this method mutates array.	
+ This attempts to replicate lodash's pullAllBy.
+ https://lodash.com/docs/4.17.15#pullAllBy
+
+### Arguments
+ *  array (Array): The array to modify.
+ *  values (Array): The values to remove.
+ *  [iteratee=_.identity] (Function): The iteratee invoked per element.
+### Example
+```gdscript
+ var array = [{ 'x': 1 }, { 'x': 2 }, { 'x': 3 }, { 'x': 1 }];
+  
+ GD_.pull_all_by(array, [{ 'x': 1 }, { 'x': 3 }], 'x');
+ # => [{ 'x': 2 }]
+```
+
+
 ## `pull_all_with `
-> NOT YET IMPLEMENTED
+ This method is like GD_.pull_all except that it accepts comparator which 
+ is invoked to compare elements of array to values. The comparator is 
+ invoked with two arguments: (arrVal, othVal).
+ Note: Unlike GD_.difference_with, this method mutates array.
+ This attempts to replicate lodash's pullAllWith.
+ https://lodash.com/docs/4.17.15#pullAllWith
+
+### Arguments
+ *  array (Array): The array to modify.
+ *  values (Array): The values to remove.
+ *  [comparator] (Function): The comparator invoked per element.
+### Example
+```gdscript
+ var array = [{ 'x': 1, 'y': 2 }, { 'x': 3, 'y': 4 }, { 'x': 5, 'y': 6 }];
+  
+ GD_.pull_all_with(array, [{ 'x': 3, 'y': 4 }], GD_.is_equal);
+ print(array);
+ # => [{ 'x': 1, 'y': 2 }, { 'x': 5, 'y': 6 }]
+```
+
+
 ## `pull_at `
-> NOT YET IMPLEMENTED
+ Removes elements from array corresponding to indexes and returns 
+ an array of removed elements.
+ 
+ Note: Unlike GD_.at, this method mutates array.
+ This attempts to replicate lodash's pullAt.
+ https://lodash.com/docs/4.17.15#pullAt
+ 
+### Arguments
+ *  array (Array): The array to modify.
+ *  [indexes] (...(number|number[])): The indexes of elements to remove.
+### Example
+```gdscript
+ var array = ['a', 'b', 'c', 'd'];
+ var pulled = GD_.pull_at(array, [1, 3]);
+  
+ print(array);
+ # => ['a', 'c']
+  
+ print(pulled);
+ # => ['b', 'd']
+```
+
+
 ## `remove `
 > NOT YET IMPLEMENTED
 ## `reverse `
@@ -1020,7 +1082,7 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
  # => []
   
  var array = [1, 2, 3]
- console.log(GD_.castArray(array) === array)
+ print(GD_.castArray(array) === array)
  # => true
 ```
 
@@ -1365,7 +1427,7 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
 
 
 ## `matches `
- Creates a function that performs a partial deep comparison between a 
+ Creates a function that perform a comparison between a 
  given object and source, returning true if the given object has equivalent 
  property values, else false.
  This attempts to replicate lodash's matches. 
@@ -1386,6 +1448,27 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
 
 
 ## `matches_property `
+ Creates a function that performs a partial deep comparison between 
+ the value at path of a given object to srcValue, returning true if the 
+ object value is equivalent, else false. Note: Partial comparisons will 
+ match empty array and empty object srcValue values against any array 
+ or object value, respectively. 
+ This attempts to replicate lodash's matches_property. 
+ https://lodash.com/docs/4.17.15#matches_property
+ 
+### Arguments
+ *  path (Array|string): The path of the property to get.
+ *  srcValue (*): The value to match.
+### Example
+```gdscript
+ var objects = [
+   { 'a': 1, 'b': 2, 'c': 3 },
+   { 'a': 4, 'b': 5, 'c': 6 }
+ ];
+  
+ GD_.find(objects, GD_.matches_property('a', 4));
+ # => { 'a': 4, 'b': 5, 'c': 6 }
+```
 
 
 ## `method `
@@ -1453,4 +1536,17 @@ fn.call(node)
 ## `to_path `
 > NOT YET IMPLEMENTED
 ## `unique_id `
-> NOT YET IMPLEMENTED
+ Generates a unique ID. If prefix is given, the ID is appended to it.
+
+### Arguments
+ *  [prefix=''] (string): The value to prefix the ID with.
+### Example
+```gdscript
+ GD_.uniqueId('contact_');
+ # => 'contact_104'
+  
+ GD_.uniqueId();
+ # => '105'
+```
+
+
