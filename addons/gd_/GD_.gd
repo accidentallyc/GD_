@@ -63,6 +63,7 @@ static func chunk(array:Array,size=1):
 ## 		(Array): Returns the new array of chunks.
 ## Example
 ## 		GD_.compact([0, 1, false, 2, '', 3])
+## 		# => [1, 2, 3]
 static func compact(array:Array):
 	if not(array is Array):
 		printerr("GD_.compact received a non-array type value")
