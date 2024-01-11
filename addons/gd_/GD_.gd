@@ -1125,23 +1125,95 @@ static func pull_all_with(array:Array, values_to_remove, comparator:Callable = G
 ## 		print(pulled);
 ## 		# => ['b', 'd']
 static func pull_at(array:Array, values_to_remove:Array):
-	var max = array.size()
 	var array_size = array.size()
 	var removed_array = []
 	for i in range( values_to_remove.size() - 1, -1, -1):
 		var index_to_remove = values_to_remove[i]
-		if not(index_to_remove is int \
+		if index_to_remove is int \
 			and index_to_remove < array_size \
-			and index_to_remove >= 0) :
-			continue
-		
-		removed_array.append(array.pop_at(index_to_remove))
+			and index_to_remove >= 0:
+			removed_array.append(array.pop_at(index_to_remove))
 	removed_array.reverse()
 	return removed_array
 	
-static func remove(array:Array, b=0, c=0): not_implemented()
-static func reverse(array:Array, b=0, c=0): not_implemented()
-static func slice(array:Array, b=0, c=0): not_implemented()
+## Removes all elements from array that predicate returns truthy for 
+## and returns an array of the removed elements. The predicate is invoked 
+## with two arguments: (value, index).
+## Note: Unlike GD_.filter, this method mutates array. 
+## Use GD_.pull to pull elements from an array by value.
+## 
+## This attempts to replicate lodash's remove.
+## https://lodash.com/docs/4.17.15#remove
+## 
+## Arguments
+## 		array (Array): The array to modify.
+## 		[predicate=GD_.identity] (Function): The function invoked per iteration.
+## Returns
+## 		(Array): Returns the new array of removed elements.
+## Example
+## 		var array = [1, 2, 3, 4];
+## 		var evens = GD_.remove(array, func(n, _i):
+## 			return n % 2 == 0
+## 		)
+##  	
+## 		print(array);
+## 		# => [1, 3]
+## 		 
+## 		print(evens);
+## 		# => [2, 4]
+static func remove(array:Array, predicate = GD_.identity):
+	var array_size = array.size()
+	var removed_array = []
+	var iter_func = iteratee(predicate)
+	
+	for i in range( array_size - 1, -1, -1):
+		var item = array[i]
+		if iter_func.call(item,i):
+			removed_array.append(array.pop_at(i))
+	removed_array.reverse()
+	return removed_array
+	
+## Reverses array so that the first element becomes the last, the second element 
+## becomes the second to last, and so on.
+## Note: This is a wrapper on Godot's Array.reverse()
+##
+## This attempts to replicate lodash's reverse.
+## https://lodash.com/docs/4.17.15#reverse
+##
+## Arguments
+## 		array (Array): The array to modify.
+## Returns
+## 		(Array): Returns array.
+## Example
+## 		var array = [1, 2, 3];
+## 		 
+## 		GD_.reverse(array);
+## 		# => [3, 2, 1]
+## 		 
+## 		print(array);
+## 		# => [3, 2, 1]
+static func reverse(array:Array):
+	array.reverse()
+	return array
+
+## Creates a slice of array from start up to, but not including, end.
+## 
+## Note: This method is a wrapper for Godot's Array.slice
+## 
+## Arguments
+## 		array (Array): The array to slice.
+## 		[start=0] (number): The start position.
+## 		[end=array.length] (number): The end position.
+## Returns
+## 		(Array): Returns the slice of array.
+## Example
+##		var array = [0,1,2,3,4]
+##		var slice = GD_.slice(array,1,4)
+##
+##		print(slice)
+##		# => [1,2,3]
+static func slice(array:Array, start=0,end = array.size()):
+	return array.slice(start,end)
 static func sorted_index(array:Array, b=0, c=0): not_implemented()
 static func sorted_index_by(array:Array, b=0, c=0): not_implemented()
 static func sorted_index_of(array:Array, b=0, c=0): not_implemented()
@@ -1724,7 +1796,7 @@ static func get_prop(thing, path, default_value = null):
 	elif path is Array:
 		splits = path
 	else:
-		printerr("GD_.get_prop received a non-collection type value")
+		printerr("GD_.get_prop received a non-collection type PATH")
 		return default_value
 	
 	var curr_prop = thing
