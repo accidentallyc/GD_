@@ -2,7 +2,7 @@
 
 **Wanna jump into it? See [the api readme](https://github.com/accidentallyc/GD_/blob/master/api.md)**
 
-
+**Visit it in the [asset library](https://godotengine.org/asset-library/asset/2486)**
 
 GD_ is an effort to bring [Lodash](https://lodash.com/) into Godot. This will attempt to replicate Lodash's behavior as close as possible (even if the implementation becomes round about).
 
