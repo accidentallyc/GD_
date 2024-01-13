@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=56 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/src/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -44,6 +44,9 @@
 [ext_resource type="Script" path="res://tests/array/GD_pull_all_by_test.gd" id="32_vgfyn"]
 [ext_resource type="Script" path="res://tests/array/GD_pull_all_with_test.gd" id="33_awyjy"]
 [ext_resource type="Script" path="res://tests/array/GD_pull_at_test.gd" id="34_6y62u"]
+[ext_resource type="Script" path="res://tests/array/GD_remove_test.gd" id="35_kdud5"]
+[ext_resource type="Script" path="res://tests/array/GD_reverse_test.gd" id="36_sci6b"]
+[ext_resource type="Script" path="res://tests/array/GD_slice_test.gd" id="37_y147e"]
 [ext_resource type="Script" path="res://tests/array/GD_map_test.gd" id="38_jhbuw"]
 [ext_resource type="Script" path="res://tests/util/GD_default_to.gd" id="39_qcoaa"]
 [ext_resource type="Script" path="res://tests/object/GD_get_prop_test.gd" id="43_lm35f"]
@@ -156,6 +159,15 @@ script = ExtResource("33_awyjy")
 
 [node name="Pull At" type="Node" parent="Array"]
 script = ExtResource("34_6y62u")
+
+[node name="Remove" type="Node" parent="Array"]
+script = ExtResource("35_kdud5")
+
+[node name="Reverse" type="Node" parent="Array"]
+script = ExtResource("36_sci6b")
+
+[node name="Slice" type="Node" parent="Array"]
+script = ExtResource("37_y147e")
 
 [node name="Collection" type="Node" parent="."]
 

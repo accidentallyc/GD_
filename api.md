@@ -698,11 +698,74 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
 
 
 ## `remove `
-> NOT YET IMPLEMENTED
+ Removes all elements from array that predicate returns truthy for 
+ and returns an array of the removed elements. The predicate is invoked 
+ with two arguments: (value, index).
+ Note: Unlike GD_.filter, this method mutates array. 
+ Use GD_.pull to pull elements from an array by value.
+ 
+ This attempts to replicate lodash's remove.
+ https://lodash.com/docs/4.17.15#remove
+ 
+### Arguments
+ *  array (Array): The array to modify.
+ *  [predicate=GD_.identity] (Function): The function invoked per iteration.
+### Example
+```gdscript
+ var array = [1, 2, 3, 4];
+ var evens = GD_.remove(array, func(n, _i):
+ 	return n % 2 == 0
+ )
+  	
+ print(array);
+ # => [1, 3]
+  
+ print(evens);
+ # => [2, 4]
+```
+
+
 ## `reverse `
-> NOT YET IMPLEMENTED
+ Reverses array so that the first element becomes the last, the second element 
+ becomes the second to last, and so on.
+ Note: This is a wrapper on Godot's Array.reverse()
+
+ This attempts to replicate lodash's reverse.
+ https://lodash.com/docs/4.17.15#reverse
+
+### Arguments
+ *  array (Array): The array to modify.
+### Example
+```gdscript
+ var array = [1, 2, 3];
+  
+ GD_.reverse(array);
+ # => [3, 2, 1]
+  
+ print(array);
+ # => [3, 2, 1]
+```
+
+
 ## `slice `
-> NOT YET IMPLEMENTED
+ Creates a slice of array from start up to, but not including, end.
+ 
+ Note: This method is a wrapper for Godot's Array.slice
+ 
+### Arguments
+ *  array (Array): The array to slice.
+ *  [start=0] (number): The start position.
+ *  [end=array.length] (number): The end position.
+### Example
+```gdscript
+var array = [0,1,2,3,4]
+var slice = GD_.slice(array,1,4)
+
+print(slice)
+# => [1,2,3]
+```
+
+
 ## `sorted_index `
 > NOT YET IMPLEMENTED
 ## `sorted_index_by `
