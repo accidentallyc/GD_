@@ -1,4 +1,4 @@
-# GD_ (_56 of 272_ implemented)
+# GD_ (_63 of 272_ implemented)
 
 **Wanna jump into it? See [the api readme](https://github.com/accidentallyc/GD_/blob/master/api.md)**
 
