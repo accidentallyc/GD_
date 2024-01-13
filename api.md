@@ -30,6 +30,7 @@
 ### Example
 ```gdscript
  GD_.compact([0, 1, false, 2, '', 3])
+ # => [1, 2, 3]
 ```
 
 
@@ -751,6 +752,8 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
  Creates a slice of array from start up to, but not including, end.
  
  Note: This method is a wrapper for Godot's Array.slice
+ This attempts to replicate lodash's slice.
+ https://lodash.com/docs/4.17.15#slice
  
 ### Arguments
  *  array (Array): The array to slice.
@@ -767,9 +770,48 @@ print(slice)
 
 
 ## `sorted_index `
-> NOT YET IMPLEMENTED
+ Uses a binary search to determine the lowest index at which 
+ value should be inserted into array in order to maintain its sort order.
+ 
+ This attempts to replicate lodash's sortedIndex.
+ https://lodash.com/docs/4.17.15#sortedIndex
+ 
+### Arguments
+ *  array (Array): The sorted array to inspect.
+ *  value (*): The value to evaluate.
+### Example
+```gdscript
+ GD_.sorted_index([30, 50], 40);
+ # => 1
+```
+
+
 ## `sorted_index_by `
-> NOT YET IMPLEMENTED
+ This method is like _.sortedIndex except that it accepts iteratee 
+ which is invoked for value and each element of array to compute 
+ their sort ranking. The iteratee is invoked 
+ with two arguments: (value, _UNUSED_).
+
+ This attempts to replicate lodash's sortedIndexBy.
+ https://lodash.com/docs/4.17.15#sortedIndexBy
+
+### Arguments
+ *  array (Array): The sorted array to inspect.
+ *  value (*): The value to evaluate.
+ *  [iteratee=_.identity] (Function): The iteratee invoked per element.
+### Example
+```gdscript
+ var objects = [{ 'x': 4 }, { 'x': 5 }];
+  
+ GD_.sorted_index_by(objects, { 'x': 4 }, func(o): return o.x);
+ # => 0
+  
+ # The `GD_.property` iteratee shorthand.
+ GD_.sorted_index_by(objects, { 'x': 4 }, 'x');
+ # => 0 
+```
+
+
 ## `sorted_index_of `
 > NOT YET IMPLEMENTED
 ## `sorted_last_index `
@@ -1145,7 +1187,7 @@ print(slice)
  # => []
   
  var array = [1, 2, 3]
- print(GD_.castArray(array) === array)
+ print(GD_.castArray(array) == array)
  # => true
 ```
 
@@ -1161,11 +1203,55 @@ print(slice)
 ## `conforms_to `
 > NOT YET IMPLEMENTED
 ## `eq `
-> NOT YET IMPLEMENTED
+ Basically a lambda wrapper for `==`. Because of the way dicts and
+ arrays implement the "==" operators, it results in a deep comparison.
+ So GD_.is_equal, GD_.eq, and ==, have all the same results
+ This attempts to replicate lodash's eq. 
+ See https://lodash.com/docs/4.17.15#eq
+
+
 ## `gt `
-> NOT YET IMPLEMENTED
+ Checks if value is greater than other.
+ This attempts to replicate lodash's gt. 
+ See https://lodash.com/docs/4.17.15#gt
+
+### Arguments
+ *  value (*): The value to compare.
+ *  other (*): The other value to compare.
+### Example
+```gdscript
+ GD_.gt(3, 1);
+ # => true
+ GD 
+ GD_.gt(3, 3);
+ # => false
+ GD 
+ GD_.gt(1, 3);
+ # => false
+```
+
+
 ## `gte `
-> NOT YET IMPLEMENTED
+ Checks if value is greater than other.
+ This attempts to replicate lodash's gte. 
+ See https://lodash.com/docs/4.17.15#gte
+
+### Arguments
+ *  value (*): The value to compare.
+ *  other (*): The other value to compare.
+### Example
+```gdscript
+ GD_.gte(3, 1);
+ # => true
+  
+ GD_.gte(3, 3);
+ # => true
+  
+ GD_.gte(1, 3);
+ # => false
+```
+
+
 ## `is_arguments `
 > NOT YET IMPLEMENTED
 ## `is_array `
@@ -1187,7 +1273,9 @@ print(slice)
 ## `is_empty `
 > NOT YET IMPLEMENTED
 ## `is_equal `
- Basically a lambda wrapper for `==`
+ Basically a lambda wrapper for `==`. Because of the way dicts and
+ arrays implement the "==" operators, it results in a deep comparison.
+ So GD_.is_equal, GD_.eq, and ==, have all the same results
  This attempts to replicate lodash's isEqual. 
  See https://lodash.com/docs/4.17.15#isEqual
 
@@ -1241,9 +1329,47 @@ print(slice)
 ## `is_weak_set `
 > NOT YET IMPLEMENTED
 ## `lt `
-> NOT YET IMPLEMENTED
+ Checks if value is less than other.
+ This attempts to replicate lodash's lt. 
+ See https://lodash.com/docs/4.17.15#lt
+### Arguments
+ *  value (*): The value to compare.
+ *  other (*): The other value to compare.
+### Example
+```gdscript
+ GD_.lt(1, 3);
+ # => true
+  
+ GD_.lt(3, 3);
+ # => false
+  
+ GD_.lt(3, 1);
+ # => false
+```
+
+
 ## `lte `
-> NOT YET IMPLEMENTED
+ Checks if value is less than other.
+ This attempts to replicate lodash's lt. 
+ See https://lodash.com/docs/4.17.15#lt
+### Arguments
+ *  value (*): The value to compare.
+ *  other (*): The other value to compare.
+### Example
+```gdscript
+ GD_.lt(1, 3);
+ # => true
+  
+ GD_.lt(3, 3);
+ # => false
+  
+ GD_.lt(3, 1);
+ # => false
+atic func lt(a, b):
+eturn a < b
+```
+
+
 ## `to_array `
 > NOT YET IMPLEMENTED
 ## `to_finite `

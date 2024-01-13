@@ -32,10 +32,6 @@ Array
 ## 		GD_.chunk(['a', 'b', 'c', 'd'], 3)
 ## 		# => [['a', 'b', 'c'], ['d']]
 static func chunk(array:Array,size=1): 
-	if not(array is Array):
-		printerr("GD_.chunk received a non-array type value")
-		return null
-	
 	# Thanks to cyberreality for the quick code they offered to the 
 	# community. https://www.reddit.com/r/godot/comments/e6ae27/comment/f9p3c2e/?utm_source=share&utm_medium=web2x&context=3
 	var new_array = []
@@ -65,10 +61,6 @@ static func chunk(array:Array,size=1):
 ## 		GD_.compact([0, 1, false, 2, '', 3])
 ## 		# => [1, 2, 3]
 static func compact(array:Array):
-	if not(array is Array):
-		printerr("GD_.compact received a non-array type value")
-		return null
-		
 	var new_array = []
 	for item in array:
 		if item:
@@ -97,10 +89,6 @@ static func compact(array:Array):
 ## 		print(array)
 ## 		# => [1]
 static func concat(array:Array, a=_NULL_ARG_,b=_NULL_ARG_,c=_NULL_ARG_,d=_NULL_ARG_,e=_NULL_ARG_,f=_NULL_ARG_,g=_NULL_ARG_,h=_NULL_ARG_,i=_NULL_ARG_,j=_NULL_ARG_,k=_NULL_ARG_):
-	if not(array is Array):
-		printerr("GD_.concat received a non-array type value")
-		return null
-		
 	var new_array = []
 	new_array.append_array(array)
 	for arg in [a,b,c,d,e,f,g,h,i,j,k]:
@@ -128,11 +116,7 @@ static func concat(array:Array, a=_NULL_ARG_,b=_NULL_ARG_,c=_NULL_ARG_,d=_NULL_A
 ## Example
 ##			GD_.difference([2, 1], [2, 3])
 ##			# => [1]
-static func difference(array_left:Array, array_right:Array): 
-	if not(array_left is Array and array_right is Array):
-		printerr("GD_.difference received a non-array type value")
-		return null
-		
+static func difference(array_left:Array, array_right:Array): 	
 	var new_array = []
 	new_array.append_array(array_left)
 	
@@ -164,10 +148,6 @@ static func difference(array_left:Array, array_right:Array):
 ## 		GD_.difference_by([{ 'x': 2 }, { 'x': 1 }], [{ 'x': 1 }], 'x')
 ## 		# => [{ 'x': 2 }]
 static func difference_by(array_left, array_right, iteratee = GD_.identity): 
-	if not(array_left is Array and array_right is Array):
-		printerr("GD_.difference_by received a non-array type value")
-		return null
-		
 	var iter_func = iteratee(iteratee)
 	
 	# new return array
@@ -207,10 +187,6 @@ static func difference_by(array_left, array_right, iteratee = GD_.identity):
 ## 		GD_.difference_with(objects, [{ 'x': 1, 'y': 2 }], GD_.is_equal)
 ## 		# => [{ 'x': 2, 'y': 1 }]
 static func difference_with(array_left, array_right, comparator:Callable): 
-	if not(array_left is Array and array_right is Array):
-		printerr("GD_.difference_with received a non-array type value")
-		return null
-		
 	var new_array = []
 	var has_match = false
 	for left_item in array_left:
@@ -247,10 +223,6 @@ static func difference_with(array_left, array_right, comparator:Callable):
 ## 		GD_.drop([1, 2, 3], 0)
 ## 		# => [1, 2, 3]
 static func drop(array:Array, n:int=1):
-	if not(array is Array):
-		printerr("GD_.drop received a non-array type value")
-		return null
-		
 	var size = array.size()
 	var new_array = []
 	for i in range(n,size):
@@ -282,10 +254,6 @@ static func drop(array:Array, n:int=1):
 ## 		GD_.drop_right([1, 2, 3], 0)
 ## 		# => [1, 2, 3]
 static func drop_right(array:Array, n:int=1):
-	if not(array is Array):
-		printerr("GD_.drop_right received a non-array type value")
-		return null
-		
 	var size = array.size() - n
 	var new_array = []
 	var i = 0
@@ -329,10 +297,6 @@ static func drop_right(array:Array, n:int=1):
 ## 		GD_.drop_right_while(users, 'active')
 ## 		# => objects for ['barney', 'fred', 'pebbles']
 static func drop_right_while(array:Array, predicate = GD_.identity):
-	if not(array is Array):
-		printerr("GD_.drop_right_while received a non-array type value")
-		return null
-		
 	var new_array = []
 	var n = array.size()
 	var iter_func = iteratee(predicate)
@@ -383,10 +347,6 @@ static func drop_right_while(array:Array, predicate = GD_.identity):
 ## 		GD_.drop_while(users, 'active')
 ## 		# => objects for ['barney', 'fred', 'pebbles']
 static func drop_while(array:Array, predicate = GD_.identity):
-	if not(array is Array):
-		printerr("GD_.drop_while received a non-array type value")
-		return null
-		
 	var new_array = []
 	var size = array.size()
 	var n = -1
@@ -430,10 +390,6 @@ static func drop_while(array:Array, predicate = GD_.identity):
 ## 		GD_.fill([4, 6, 8, 10], '*', 1, 3)
 ## 		# => [4, '*', '*', 10]
 static func fill(array:Array, value, start=0, end=-1):
-	if not(array is Array):
-		printerr("GD_.fill received a non-array type value")
-		return null
-		
 	if end == -1 or end > array.size():
 		end = array.size()
 
@@ -476,10 +432,6 @@ static func fill(array:Array, value, start=0, end=-1):
 ## 		GD_.find_index(users, 'active')
 ## 		# => 2
 static func find_index(array:Array, predicate = GD_.identity, from_index = 0):
-	if not(array is Array):
-		printerr("GD_.find_index received a non-array type value")
-		return null
-		
 	var iteratee = GD_.iteratee(predicate)
 	for i in range(from_index, array.size()):
 		if iteratee.call(array[i], null):
@@ -520,10 +472,6 @@ static func find_index(array:Array, predicate = GD_.identity, from_index = 0):
 ## 		GD_.find_last_index(users, 'active')
 ## 		# => 0
 static func find_last_index(array:Array, predicate = GD_.identity, from_index=-1):
-	if not(array is Array):
-		printerr("GD_.find_last_index received a non-array type value")
-		return null
-		
 	if from_index == -1 or from_index >= array.size():
 		from_index = array.size() - 1
 
@@ -554,10 +502,6 @@ static func first(array):
 ## 		GD_.flatten([1, [2, [3, [4]], 5]])
 ## 		# => [1, 2, [3, [4]], 5]
 static func flatten(array:Array): 
-	if not(array is Array):
-		printerr("GD_.flatten received a non-array type value")
-		return null
-		
 	return flatten_depth(array, 1)
 	
 
@@ -573,10 +517,6 @@ static func flatten(array:Array):
 ##		GD_.flatten_deep([1, [2, [3, [4]], 5]])
 ##		# => [1, 2, 3, 4, 5]
 static func flatten_deep(array:Array):
-	if not(array is Array):
-		printerr("GD_.flatten_deep received a non-array type value")
-		return null
-
 	return flatten_depth(array, INF)
 	
 
@@ -598,10 +538,6 @@ static func flatten_deep(array:Array):
 ## 		GD_.flatten_depth(array, 2)
 ## 		# => [1, 2, 3, [4], 5]
 static func flatten_depth(array:Array, depth = 1):
-	if not(array is Array):
-		printerr("GD_.flatten_deep received a non-array type value")
-		return null
-		
 	var new_array = array.duplicate()
 	var current_depth = 0
 
@@ -637,10 +573,6 @@ static func flatten_depth(array:Array, depth = 1):
 ##		GD_.from_pairs([['a', 1], ['b', 2]])
 ##		# => { 'a': 1, 'b': 2 }
 static func from_pairs(array:Array): 
-	if not(array is Array):
-		printerr("GD_.from_pairs received a non-array type value")
-		return null
-		
 	var obj = {}
 	for i in array:
 		if not(i is Array) or i.size() != 2:
@@ -668,10 +600,6 @@ static func from_pairs(array:Array):
 ##		GD_.head([])
 ##		# => undefined
 static func head(array:Array):
-	if not(array is Array):
-		printerr("GD_.head received a non-array type value")
-		return null
-
 	return array[0] if array.size() else null
 	
 
@@ -695,10 +623,6 @@ static func head(array:Array):
 ##		GD_.index_of([1, 2, 1, 2], 2, 2)
 ##		# => 3
 static func index_of(array:Array, search, from_index = 0 ): 
-	if not(array is Array):
-		printerr("GD_.index_of received a non-array type value")
-		return null
-		
 	var size = array.size()
 	if from_index < 0:
 		from_index = max(size + from_index, 0)
@@ -720,10 +644,6 @@ static func index_of(array:Array, search, from_index = 0 ):
 ##		GD_.initial([1, 2, 3])
 ##		# => [1, 2]
 static func initial(array:Array):
-	if not(array is Array):
-		printerr("GD_.initial received a non-array type value")
-		return null
-		
 	var copy = array.duplicate() 
 	copy.pop_back()
 	return copy
@@ -873,10 +793,6 @@ static func intersection_with(array_1:Array,array_2:Array,array_3 = null,array_4
 ## 		GD_.join(['a', 'b', 'c'], '~')
 ## 		# => 'a~b~c'
 static func join(array:Array, separator=&','):
-	if not(array is Array):
-		printerr("GD_.join received a non-array type value")
-		return null
-		
 	return separator.join(array)
 		
 		
@@ -892,10 +808,6 @@ static func join(array:Array, separator=&','):
 ## 		GD_.last([1, 2, 3])
 ## 		# => 3
 static func last(array:Array):
-	if not(array is Array):
-		printerr("GD_.last received a non-array type value")
-		return null
-		
 	return array.back()
 	
 	
@@ -918,10 +830,6 @@ static func last(array:Array):
 ## 		GD_.last_index_of([1, 2, 1, 2], 2, 2)
 ## 		# => 1
 static func last_index_of(array:Array, search, from_index = null ): 
-	if not(array is Array):
-		printerr("GD_.last_index_of received a non-array type value")
-		return null
-		
 	var size = array.size()
 	from_index = GD_.default_to(from_index, size -1)
 	if from_index < 0:
@@ -952,10 +860,6 @@ static func last_index_of(array:Array, search, from_index = null ):
 ## 		GD_.nth(array, -2)
 ## 		# => 'c'
 static func nth(array:Array, n=0):
-	if not(array is Array):
-		printerr("GD_.nth received a non-array type value")
-		return null
-		
 	var count = array.size()
 	var index =  count + n  if n < 0 else n
 	if index >= 0 and index < count:
@@ -982,10 +886,6 @@ static func nth(array:Array, n=0):
 ## 		print(array)
 ## 		# => ['b', 'b']
 static func pull(array:Array, a=_NULL_ARG_,b=_NULL_ARG_,c=_NULL_ARG_,d=_NULL_ARG_,e=_NULL_ARG_,f=_NULL_ARG_,g=_NULL_ARG_,h=_NULL_ARG_,i=_NULL_ARG_,j=_NULL_ARG_): 
-	if not(array is Array):
-		printerr("GD_.pull received a non-array type value")
-		return null
-		
 	var to_remove = GD_.filter([a,b,c,d,e,f,g,h,i,j], GD_._is_not_null_arg)
 	return pull_all_by(array, to_remove)
 	
@@ -1006,11 +906,7 @@ static func pull(array:Array, a=_NULL_ARG_,b=_NULL_ARG_,c=_NULL_ARG_,d=_NULL_ARG
 ## 		GD_.pull_all(array, ['a', 'c'])
 ## 		print(array)
 ## 		# => ['b', 'b']
-static func pull_all(array:Array, values_to_remove:Array = _EMPTY_ARRAY_): 
-	if not(array is Array):
-		printerr("GD_.pull_all received a non-array type value")
-		return null
-						
+static func pull_all(array:Array, values_to_remove:Array = _EMPTY_ARRAY_): 				
 	return pull_all_by(array, values_to_remove)
 	
 ## This method is like GD_.pull_all except that it accepts iteratee 
@@ -1033,10 +929,6 @@ static func pull_all(array:Array, values_to_remove:Array = _EMPTY_ARRAY_):
 ## 		GD_.pull_all_by(array, [{ 'x': 1 }, { 'x': 3 }], 'x');
 ## 		# => [{ 'x': 2 }]
 static func pull_all_by(array:Array, values_to_remove = _EMPTY_ARRAY_, iteratee = GD_.identity):
-	if not(array is Array):
-		printerr("GD_.pull_all_by received a non-array type value")
-		return null
-		
 	values_to_remove = GD_.cast_array(values_to_remove)
 	
 	var iter_func = iteratee(iteratee)
@@ -1077,10 +969,6 @@ static func pull_all_by(array:Array, values_to_remove = _EMPTY_ARRAY_, iteratee 
 ## 		print(array);
 ## 		# => [{ 'x': 1, 'y': 2 }, { 'x': 5, 'y': 6 }]
 static func pull_all_with(array:Array, values_to_remove, comparator:Callable = GD_.is_equal):
-	if not(array is Array):
-		printerr("GD_.pull_all_with received a non-array type value")
-		return null
-		
 	values_to_remove = GD_.cast_array(values_to_remove)
 	
 	var index = 0
@@ -1200,6 +1088,8 @@ static func reverse(array:Array):
 ## Creates a slice of array from start up to, but not including, end.
 ## 
 ## Note: This method is a wrapper for Godot's Array.slice
+## This attempts to replicate lodash's slice.
+## https://lodash.com/docs/4.17.15#slice
 ## 
 ## Arguments
 ## 		array (Array): The array to slice.
@@ -1215,8 +1105,71 @@ static func reverse(array:Array):
 ##		# => [1,2,3]
 static func slice(array:Array, start=0,end = array.size()):
 	return array.slice(start,end)
-static func sorted_index(array:Array, b=0, c=0): not_implemented()
-static func sorted_index_by(array:Array, b=0, c=0): not_implemented()
+	
+
+## Uses a binary search to determine the lowest index at which 
+## value should be inserted into array in order to maintain its sort order.
+## 
+## This attempts to replicate lodash's sortedIndex.
+## https://lodash.com/docs/4.17.15#sortedIndex
+## 
+## Arguments
+## 		array (Array): The sorted array to inspect.
+## 		value (*): The value to evaluate.
+## Returns
+## 		(number): Returns the index at which value should be inserted into array.
+## Example
+## 		GD_.sorted_index([30, 50], 40);
+## 		# => 1
+static func sorted_index(array:Array, value):
+	if not(_is_numeric_type(value)):
+		printerr("GD_.sorted_index received a non-number value")
+		return null
+		
+	return sorted_index_by(array,value)
+
+
+## This method is like _.sortedIndex except that it accepts iteratee 
+## which is invoked for value and each element of array to compute 
+## their sort ranking. The iteratee is invoked 
+## with two arguments: (value, _UNUSED_).
+##
+## This attempts to replicate lodash's sortedIndexBy.
+## https://lodash.com/docs/4.17.15#sortedIndexBy
+##
+## Arguments
+## 		array (Array): The sorted array to inspect.
+## 		value (*): The value to evaluate.
+## 		[iteratee=_.identity] (Function): The iteratee invoked per element.
+## Returns
+## 		(number): Returns the index at which value should be inserted into array.
+## Example
+## 		var objects = [{ 'x': 4 }, { 'x': 5 }];
+## 		 
+## 		GD_.sorted_index_by(objects, { 'x': 4 }, func(o): return o.x);
+## 		# => 0
+## 		 
+## 		# The `GD_.property` iteratee shorthand.
+## 		GD_.sorted_index_by(objects, { 'x': 4 }, 'x');
+## 		# => 0 
+static func sorted_index_by(array:Array, value, iteratee = GD_.identity): 
+	var iter_func = iteratee(iteratee)
+	var ceil = array.size()
+	var mid = floor(ceil / 2)
+	var floor = 0
+	var actual_value = iter_func.call(value)
+	for _i in range(0, ceil): # we use a for loop cause its faster
+		if floor >= ceil:
+			break
+		
+		if iter_func.call(array[mid]) < actual_value:
+			floor = mid + 1
+		else:
+			ceil = mid
+		mid = floor((floor + ceil)/2)
+	return floor
+		
+	
 static func sorted_index_of(array:Array, b=0, c=0): not_implemented()
 static func sorted_last_index(array:Array, b=0, c=0): not_implemented()
 static func sorted_last_index_by(array:Array, b=0, c=0): not_implemented()
@@ -1621,7 +1574,7 @@ Lang
 ## 		# => []
 ## 		 
 ## 		var array = [1, 2, 3]
-## 		print(GD_.castArray(array) === array)
+## 		print(GD_.castArray(array) == array)
 ## 		# => true
 static func cast_array(v = _NULL_ARG_):
 	if is_same(v, _NULL_ARG_):
@@ -1635,9 +1588,61 @@ static func clone_deep(a=0, b=0, c=0): not_implemented()
 static func clone_deep_with(a=0, b=0, c=0): not_implemented()
 static func clone_with(a=0, b=0, c=0): not_implemented()
 static func conforms_to(a=0, b=0, c=0): not_implemented()
-static func eq(a=0, b=0, c=0): not_implemented()
-static func gt(a=0, b=0, c=0): not_implemented()
-static func gte(a=0, b=0, c=0): not_implemented()
+
+
+## Basically a lambda wrapper for `==`. Because of the way dicts and
+## arrays implement the "==" operators, it results in a deep comparison.
+## So GD_.is_equal, GD_.eq, and ==, have all the same results
+## This attempts to replicate lodash's eq. 
+## See https://lodash.com/docs/4.17.15#eq
+static func eq(a,b):
+	return a == b
+
+
+## Checks if value is greater than other.
+## This attempts to replicate lodash's gt. 
+## See https://lodash.com/docs/4.17.15#gt
+##
+## Arguments
+## 		value (*): The value to compare.
+## 		other (*): The other value to compare.
+## Returns
+## 		(boolean): Returns true if value is greater than other, else false.
+## Example
+## 		GD_.gt(3, 1);
+## 		# => true
+## 		GD 
+## 		GD_.gt(3, 3);
+## 		# => false
+## 		GD 
+## 		GD_.gt(1, 3);
+## 		# => false
+static func gt(a, b):
+	return a > b
+	
+	
+## Checks if value is greater than other.
+## This attempts to replicate lodash's gte. 
+## See https://lodash.com/docs/4.17.15#gte
+##
+## Arguments
+## 		value (*): The value to compare.
+## 		other (*): The other value to compare.
+## Returns
+## 		(boolean): Returns true if value is greater than or equal to other, else false.
+## Example
+## 		GD_.gte(3, 1);
+## 		# => true
+## 		 
+## 		GD_.gte(3, 3);
+## 		# => true
+## 		 
+## 		GD_.gte(1, 3);
+## 		# => false
+static func gte(a,b):
+	return a >= b
+	
+	
 static func is_arguments(a=0, b=0, c=0): not_implemented()
 static func is_array(a=0, b=0, c=0): not_implemented()
 static func is_array_buffer(a=0, b=0, c=0): not_implemented()
@@ -1649,7 +1654,9 @@ static func is_date(a=0, b=0, c=0): not_implemented()
 static func is_element(a=0, b=0, c=0): not_implemented()
 static func is_empty(a=0, b=0, c=0): not_implemented()
 
-## Basically a lambda wrapper for `==`
+## Basically a lambda wrapper for `==`. Because of the way dicts and
+## arrays implement the "==" operators, it results in a deep comparison.
+## So GD_.is_equal, GD_.eq, and ==, have all the same results
 ## This attempts to replicate lodash's isEqual. 
 ## See https://lodash.com/docs/4.17.15#isEqual
 static func is_equal(left,right): 
@@ -1682,8 +1689,28 @@ static func is_typed_array(a=0, b=0, c=0): not_implemented()
 static func is_undefined(a=0, b=0, c=0): not_implemented()
 static func is_weak_map(a=0, b=0, c=0): not_implemented()
 static func is_weak_set(a=0, b=0, c=0): not_implemented()
-static func lt(a=0, b=0, c=0): not_implemented()
-static func lte(a=0, b=0, c=0): not_implemented()
+
+## Checks if value is less than other.
+## This attempts to replicate lodash's lt. 
+## See https://lodash.com/docs/4.17.15#lt
+## Arguments
+## 		value (*): The value to compare.
+## 		other (*): The other value to compare.
+## Returns
+## 		(boolean): Returns true if value is less than other, else false.
+## Example
+## 		GD_.lt(1, 3);
+## 		# => true
+## 		 
+## 		GD_.lt(3, 3);
+## 		# => false
+## 		 
+## 		GD_.lt(3, 1);
+## 		# => false
+static func lt(a, b):
+	return a < b
+static func lte(a=0, b=0, c=0):
+	return a <= b
 static func to_array(a=0, b=0, c=0): not_implemented()
 static func to_finite(a=0, b=0, c=0): not_implemented()
 static func to_integer(a=0, b=0, c=0): not_implemented()
@@ -2110,6 +2137,9 @@ static func keyed_iterable(thing):
 """
 INTERNAL STUFF
 """
+static func _is_numeric_type(v):
+	return v is int or v is float
+
 static func _is_collection(item):
 	return item is Array or item is Dictionary
 	
