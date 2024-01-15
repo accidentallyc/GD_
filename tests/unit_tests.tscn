@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=67 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/src/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -49,8 +49,12 @@
 [ext_resource type="Script" path="res://tests/array/GD_slice_test.gd" id="37_y147e"]
 [ext_resource type="Script" path="res://tests/array/GD_map_test.gd" id="38_jhbuw"]
 [ext_resource type="Script" path="res://tests/array/GD_sorted_index_test.gd" id="38_mr7uf"]
-[ext_resource type="Script" path="res://tests/array/GD_sorted_index_by.gd" id="39_0aabk"]
+[ext_resource type="Script" path="res://tests/array/GD_sorted_index_by_test.gd" id="39_0aabk"]
 [ext_resource type="Script" path="res://tests/util/GD_default_to.gd" id="39_qcoaa"]
+[ext_resource type="Script" path="res://tests/array/GD_sorted_index_of_test.gd" id="40_oydtk"]
+[ext_resource type="Script" path="res://tests/array/GD_sorted_last_index.gd" id="41_qj6w8"]
+[ext_resource type="Script" path="res://tests/array/GD_sorted_last_index_by.gd" id="42_1k5t4"]
+[ext_resource type="Script" path="res://tests/array/GD_sorted_last_index_of.gd" id="43_hnf27"]
 [ext_resource type="Script" path="res://tests/object/GD_get_prop_test.gd" id="43_lm35f"]
 [ext_resource type="Script" path="res://tests/lang/GD_cast_array_test.gd" id="44_b6wmo"]
 [ext_resource type="Script" path="res://tests/util/GD_identity_test.gd" id="45_7a3b1"]
@@ -181,6 +185,18 @@ script = ExtResource("38_mr7uf")
 
 [node name="Sorted Index By" type="Node" parent="Array"]
 script = ExtResource("39_0aabk")
+
+[node name="Sorted Index Of" type="Node" parent="Array"]
+script = ExtResource("40_oydtk")
+
+[node name="Sorted Last Index" type="Node" parent="Array"]
+script = ExtResource("41_qj6w8")
+
+[node name="Sorted Last Index By" type="Node" parent="Array"]
+script = ExtResource("42_1k5t4")
+
+[node name="Sorted Last Index Of" type="Node" parent="Array"]
+script = ExtResource("43_hnf27")
 
 [node name="Collection" type="Node" parent="."]
 
