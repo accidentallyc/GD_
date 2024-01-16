@@ -924,9 +924,9 @@ static func pull_all(array:Array, values_to_remove:Array = _EMPTY_ARRAY_):
 ## Returns
 ## 		(Array): Returns array.
 ## Example
-## 		var array = [{ 'x': 1 }, { 'x': 2 }, { 'x': 3 }, { 'x': 1 }];
+## 		var array = [{ 'x': 1 }, { 'x': 2 }, { 'x': 3 }, { 'x': 1 }]
 ## 		 
-## 		GD_.pull_all_by(array, [{ 'x': 1 }, { 'x': 3 }], 'x');
+## 		GD_.pull_all_by(array, [{ 'x': 1 }, { 'x': 3 }], 'x')
 ## 		# => [{ 'x': 2 }]
 static func pull_all_by(array:Array, values_to_remove = _EMPTY_ARRAY_, iteratee = GD_.identity):
 	values_to_remove = GD_.cast_array(values_to_remove)
@@ -963,10 +963,10 @@ static func pull_all_by(array:Array, values_to_remove = _EMPTY_ARRAY_, iteratee 
 ## Returns
 ## 		(Array): Returns array.
 ## Example
-## 		var array = [{ 'x': 1, 'y': 2 }, { 'x': 3, 'y': 4 }, { 'x': 5, 'y': 6 }];
+## 		var array = [{ 'x': 1, 'y': 2 }, { 'x': 3, 'y': 4 }, { 'x': 5, 'y': 6 }]
 ## 		 
-## 		GD_.pull_all_with(array, [{ 'x': 3, 'y': 4 }], GD_.is_equal);
-## 		print(array);
+## 		GD_.pull_all_with(array, [{ 'x': 3, 'y': 4 }], GD_.is_equal)
+## 		print(array)
 ## 		# => [{ 'x': 1, 'y': 2 }, { 'x': 5, 'y': 6 }]
 static func pull_all_with(array:Array, values_to_remove, comparator:Callable = GD_.is_equal):
 	values_to_remove = GD_.cast_array(values_to_remove)
@@ -1005,13 +1005,13 @@ static func pull_all_with(array:Array, values_to_remove, comparator:Callable = G
 ## Returns
 ## 		(Array): Returns the new array of removed elements.
 ## Example
-## 		var array = ['a', 'b', 'c', 'd'];
-## 		var pulled = GD_.pull_at(array, [1, 3]);
+## 		var array = ['a', 'b', 'c', 'd']
+## 		var pulled = GD_.pull_at(array, [1, 3])
 ## 		 
-## 		print(array);
+## 		print(array)
 ## 		# => ['a', 'c']
 ## 		 
-## 		print(pulled);
+## 		print(pulled)
 ## 		# => ['b', 'd']
 static func pull_at(array:Array, values_to_remove:Array):
 	var array_size = array.size()
@@ -1040,15 +1040,15 @@ static func pull_at(array:Array, values_to_remove:Array):
 ## Returns
 ## 		(Array): Returns the new array of removed elements.
 ## Example
-## 		var array = [1, 2, 3, 4];
+## 		var array = [1, 2, 3, 4]
 ## 		var evens = GD_.remove(array, func(n, _i):
 ## 			return n % 2 == 0
 ## 		)
 ##  	
-## 		print(array);
+## 		print(array)
 ## 		# => [1, 3]
 ## 		 
-## 		print(evens);
+## 		print(evens)
 ## 		# => [2, 4]
 static func remove(array:Array, predicate = GD_.identity):
 	var array_size = array.size()
@@ -1074,12 +1074,12 @@ static func remove(array:Array, predicate = GD_.identity):
 ## Returns
 ## 		(Array): Returns array.
 ## Example
-## 		var array = [1, 2, 3];
+## 		var array = [1, 2, 3]
 ## 		 
-## 		GD_.reverse(array);
+## 		GD_.reverse(array)
 ## 		# => [3, 2, 1]
 ## 		 
-## 		print(array);
+## 		print(array)
 ## 		# => [3, 2, 1]
 static func reverse(array:Array):
 	array.reverse()
@@ -1119,7 +1119,7 @@ static func slice(array:Array, start=0,end = array.size()):
 ## Returns
 ## 		(number): Returns the index at which value should be inserted into array.
 ## Example
-## 		GD_.sorted_index([30, 50], 40);
+## 		GD_.sorted_index([30, 50], 40)
 ## 		# => 1
 static func sorted_index(array:Array, value):
 	if not(_is_numeric_type(value)):
@@ -1144,13 +1144,13 @@ static func sorted_index(array:Array, value):
 ## Returns
 ## 		(number): Returns the index at which value should be inserted into array.
 ## Example
-## 		var objects = [{ 'x': 4 }, { 'x': 5 }];
+## 		var objects = [{ 'x': 4 }, { 'x': 5 }]
 ## 		 
-## 		GD_.sorted_index_by(objects, { 'x': 4 }, func(o): return o.x);
+## 		GD_.sorted_index_by(objects, { 'x': 4 }, func(o): return o.x)
 ## 		# => 0
 ## 		 
 ## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.sorted_index_by(objects, { 'x': 4 }, 'x');
+## 		GD_.sorted_index_by(objects, { 'x': 4 }, 'x')
 ## 		# => 0 
 static func sorted_index_by(array:Array, value, iteratee = GD_.identity): 
 	var iter_func = iteratee(iteratee)
@@ -1168,12 +1168,149 @@ static func sorted_index_by(array:Array, value, iteratee = GD_.identity):
 			ceil = mid
 		mid = floor((floor + ceil)/2)
 	return floor
+
+
+## This method is like _.indexOf except that it performs a binary 
+## search on a sorted array.
+## 
+## This attempts to replicate lodash's sortedIndexOf.
+## https://lodash.com/docs/4.17.15#sortedIndexOf
+## 
+## Arguments
+## 		array (Array): The array to inspect.
+## 		value (*): The value to search for.
+## Returns
+## 		(number): Returns the index of the matched value, else -1.
+## Example
+## 		GD _.sorted_index_of([4, 5, 5, 5, 6], 5)
+## 		# => 1	
+static func sorted_index_of(array:Array, value):
+	if not(_is_numeric_type(value)):
+		printerr("GD_.sorted_index_of received a non-number value")
+		return -1
 		
+	var ceil = array.size()
+	var mid = floor(ceil / 2)
+	var floor = 0
+	var mid_val
 	
-static func sorted_index_of(array:Array, b=0, c=0): not_implemented()
-static func sorted_last_index(array:Array, b=0, c=0): not_implemented()
-static func sorted_last_index_by(array:Array, b=0, c=0): not_implemented()
-static func sorted_last_index_of(array:Array, b=0, c=0): not_implemented()
+	for _i in range(0, ceil): # we use a for loop cause its faster
+		if floor >= ceil:
+			break
+		mid_val = array[mid]
+			
+		if mid_val == value:
+			return mid
+		elif mid_val < value:
+			floor = mid + 1
+		else:
+			ceil = mid
+		mid = floor((floor + ceil)/2)
+	return -1
+	
+
+## This method is like GD_.sorted_index except that it returns the 
+## highest index at which value should be inserted into array in 
+## order to maintain its sort order.
+## 
+## This attempts to replicate lodash's sortedLastIndex.
+## https://lodash.com/docs/4.17.15#sortedLastIndex
+## 
+## Arguments
+## 		array (Array): The sorted array to inspect.
+## 		value (*): The value to evaluate.
+## Returns
+## 		(number): Returns the index at which value should be inserted into array.
+## Example
+## 		GD_.sorted_last_index([4, 5, 5, 5, 6], 5)
+## 		# => 4
+static func sorted_last_index(array:Array, value):
+	if not(_is_numeric_type(value)):
+		printerr("GD_.sorted_index received a non-number value")
+		return null
+		
+	return sorted_last_index_by(array,value)
+	
+
+## This method is like GD_.sorted_last_index except that it accepts iteratee 
+## which is invoked for value and each element of array to compute 
+## their sort ranking. The iteratee is invoked 
+## with two arguments: (value, _UNUSED_).
+##
+## This attempts to replicate lodash's sortedLastIndexBy.
+## https://lodash.com/docs/4.17.15#sortedLastIndexBy
+## 
+## Arguments
+## 		array (Array): The sorted array to inspect.
+## 		value (*): The value to evaluate.
+## 		[iteratee=GD_.identity] (Function): The iteratee invoked per element.
+## Returns
+## 		(number): Returns the index at which value should be inserted into array.
+## Example
+## 		var objects = [{ 'x': 4 }, { 'x': 5 }]
+## 		GD_.sorted_last_index_by(objects, { 'x': 4 }, func(o,_u): return o.x)
+## 		# => 1
+## 		 
+## 		# The `GD_.property` iteratee shorthand.
+## 		GD_.sorted_last_index_by(objects, { 'x': 4 }, 'x')
+## 		# => 1
+static func sorted_last_index_by(array:Array, value, iteratee = GD_.identity): 
+	var iter_func = iteratee(iteratee)
+	var ceil = array.size()
+	var mid = floor(ceil / 2)
+	var floor = 0
+	var actual_value = iter_func.call(value)
+	for _i in range(0, ceil): # we use a for loop cause its faster
+		if floor >= ceil:
+			break
+		
+		if iter_func.call(array[mid]) > actual_value:
+			ceil = mid
+		else:
+			floor = mid + 1
+		mid = floor((floor + ceil)/2)
+	return floor
+
+
+## This method is like _.lastIndexOf except that it performs a binary search on a sorted array.
+##
+## This attempts to replicate lodash's sortedLastIndexBy.
+## https://lodash.com/docs/4.17.15#sortedLastIndexBy
+## 
+## Arguments
+## 		array (Array): The array to inspect.
+## 		value (*): The value to search for.
+## Returns
+## 		(number): Returns the index of the matched value, else -1.
+## Example
+## 		GD_.sorted_last_index_of([4, 5, 5, 5, 6], 5);
+## 		# => 3
+static func sorted_last_index_of(array:Array, value): 
+	if not(_is_numeric_type(value)):
+		printerr("GD_.sorted_last_index_of received a non-number value")
+		return -1
+		
+	var ceil = array.size()
+	var mid = floor(ceil / 2)
+	var floor = 0
+	var mid_val
+	var last_index = -1
+	
+	for _i in range(0, ceil): # we use a for loop cause its faster
+		if floor >= ceil:
+			break
+		mid_val = array[mid]
+			
+		if mid_val == value:
+			last_index = mid
+			floor = mid + 1
+		elif mid_val < value:
+			floor = mid + 1
+		else:
+			ceil = mid
+		mid = floor((floor + ceil)/2)
+	return last_index
+	
 static func sorted_uniq(array:Array, b=0, c=0): not_implemented()
 static func sorted_uniq_by(array:Array, b=0, c=0): not_implemented()
 static func tail(array:Array, b=0, c=0): not_implemented()
@@ -1609,13 +1746,13 @@ static func eq(a,b):
 ## Returns
 ## 		(boolean): Returns true if value is greater than other, else false.
 ## Example
-## 		GD_.gt(3, 1);
+## 		GD_.gt(3, 1)
 ## 		# => true
 ## 		GD 
-## 		GD_.gt(3, 3);
+## 		GD_.gt(3, 3)
 ## 		# => false
 ## 		GD 
-## 		GD_.gt(1, 3);
+## 		GD_.gt(1, 3)
 ## 		# => false
 static func gt(a, b):
 	return a > b
@@ -1631,13 +1768,13 @@ static func gt(a, b):
 ## Returns
 ## 		(boolean): Returns true if value is greater than or equal to other, else false.
 ## Example
-## 		GD_.gte(3, 1);
+## 		GD_.gte(3, 1)
 ## 		# => true
 ## 		 
-## 		GD_.gte(3, 3);
+## 		GD_.gte(3, 3)
 ## 		# => true
 ## 		 
-## 		GD_.gte(1, 3);
+## 		GD_.gte(1, 3)
 ## 		# => false
 static func gte(a,b):
 	return a >= b
@@ -1699,13 +1836,13 @@ static func is_weak_set(a=0, b=0, c=0): not_implemented()
 ## Returns
 ## 		(boolean): Returns true if value is less than other, else false.
 ## Example
-## 		GD_.lt(1, 3);
+## 		GD_.lt(1, 3)
 ## 		# => true
 ## 		 
-## 		GD_.lt(3, 3);
+## 		GD_.lt(3, 3)
 ## 		# => false
 ## 		 
-## 		GD_.lt(3, 1);
+## 		GD_.lt(3, 1)
 ## 		# => false
 static func lt(a, b):
 	return a < b
@@ -2033,9 +2170,9 @@ static func matches(dict:Dictionary) -> Callable:
 ## 		var objects = [
 ## 		  { 'a': 1, 'b': 2, 'c': 3 },
 ## 		  { 'a': 4, 'b': 5, 'c': 6 }
-## 		];
+## 		]
 ## 		 
-## 		GD_.find(objects, GD_.matches_property('a', 4));
+## 		GD_.find(objects, GD_.matches_property('a', 4))
 ## 		# => { 'a': 4, 'b': 5, 'c': 6 }
 static func matches_property(string:String, v):
 	return func (value, _unused = null):
@@ -2110,10 +2247,10 @@ static func to_path(a=0, b=0, c=0): not_implemented()
 ## Returns
 ## 		(string): Returns the unique ID.
 ## Example
-## 		GD_.uniqueId('contact_');
+## 		GD_.uniqueId('contact_')
 ## 		# => 'contact_104'
 ## 		 
-## 		GD_.uniqueId();
+## 		GD_.uniqueId()
 ## 		# => '105'
 static func unique_id(prefix=&""): 
 	id_ctr += 1

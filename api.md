@@ -645,9 +645,9 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
  *  [iteratee=_.identity] (Function): The iteratee invoked per element.
 ### Example
 ```gdscript
- var array = [{ 'x': 1 }, { 'x': 2 }, { 'x': 3 }, { 'x': 1 }];
+ var array = [{ 'x': 1 }, { 'x': 2 }, { 'x': 3 }, { 'x': 1 }]
   
- GD_.pull_all_by(array, [{ 'x': 1 }, { 'x': 3 }], 'x');
+ GD_.pull_all_by(array, [{ 'x': 1 }, { 'x': 3 }], 'x')
  # => [{ 'x': 2 }]
 ```
 
@@ -666,10 +666,10 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
  *  [comparator] (Function): The comparator invoked per element.
 ### Example
 ```gdscript
- var array = [{ 'x': 1, 'y': 2 }, { 'x': 3, 'y': 4 }, { 'x': 5, 'y': 6 }];
+ var array = [{ 'x': 1, 'y': 2 }, { 'x': 3, 'y': 4 }, { 'x': 5, 'y': 6 }]
   
- GD_.pull_all_with(array, [{ 'x': 3, 'y': 4 }], GD_.is_equal);
- print(array);
+ GD_.pull_all_with(array, [{ 'x': 3, 'y': 4 }], GD_.is_equal)
+ print(array)
  # => [{ 'x': 1, 'y': 2 }, { 'x': 5, 'y': 6 }]
 ```
 
@@ -687,13 +687,13 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
  *  [indexes] (...(number|number[])): The indexes of elements to remove.
 ### Example
 ```gdscript
- var array = ['a', 'b', 'c', 'd'];
- var pulled = GD_.pull_at(array, [1, 3]);
+ var array = ['a', 'b', 'c', 'd']
+ var pulled = GD_.pull_at(array, [1, 3])
   
- print(array);
+ print(array)
  # => ['a', 'c']
   
- print(pulled);
+ print(pulled)
  # => ['b', 'd']
 ```
 
@@ -713,15 +713,15 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
  *  [predicate=GD_.identity] (Function): The function invoked per iteration.
 ### Example
 ```gdscript
- var array = [1, 2, 3, 4];
+ var array = [1, 2, 3, 4]
  var evens = GD_.remove(array, func(n, _i):
  	return n % 2 == 0
  )
   	
- print(array);
+ print(array)
  # => [1, 3]
   
- print(evens);
+ print(evens)
  # => [2, 4]
 ```
 
@@ -738,12 +738,12 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
  *  array (Array): The array to modify.
 ### Example
 ```gdscript
- var array = [1, 2, 3];
+ var array = [1, 2, 3]
   
- GD_.reverse(array);
+ GD_.reverse(array)
  # => [3, 2, 1]
   
- print(array);
+ print(array)
  # => [3, 2, 1]
 ```
 
@@ -781,7 +781,7 @@ print(slice)
  *  value (*): The value to evaluate.
 ### Example
 ```gdscript
- GD_.sorted_index([30, 50], 40);
+ GD_.sorted_index([30, 50], 40)
  # => 1
 ```
 
@@ -801,25 +801,93 @@ print(slice)
  *  [iteratee=_.identity] (Function): The iteratee invoked per element.
 ### Example
 ```gdscript
- var objects = [{ 'x': 4 }, { 'x': 5 }];
+ var objects = [{ 'x': 4 }, { 'x': 5 }]
   
- GD_.sorted_index_by(objects, { 'x': 4 }, func(o): return o.x);
+ GD_.sorted_index_by(objects, { 'x': 4 }, func(o): return o.x)
  # => 0
   
  # The `GD_.property` iteratee shorthand.
- GD_.sorted_index_by(objects, { 'x': 4 }, 'x');
+ GD_.sorted_index_by(objects, { 'x': 4 }, 'x')
  # => 0 
 ```
 
 
 ## `sorted_index_of `
-> NOT YET IMPLEMENTED
+ This method is like _.indexOf except that it performs a binary 
+ search on a sorted array.
+ 
+ This attempts to replicate lodash's sortedIndexOf.
+ https://lodash.com/docs/4.17.15#sortedIndexOf
+ 
+### Arguments
+ *  array (Array): The array to inspect.
+ *  value (*): The value to search for.
+### Example
+```gdscript
+ GD _.sorted_index_of([4, 5, 5, 5, 6], 5)
+ # => 1	
+```
+
+
 ## `sorted_last_index `
-> NOT YET IMPLEMENTED
+ This method is like GD_.sorted_index except that it returns the 
+ highest index at which value should be inserted into array in 
+ order to maintain its sort order.
+ 
+ This attempts to replicate lodash's sortedLastIndex.
+ https://lodash.com/docs/4.17.15#sortedLastIndex
+ 
+### Arguments
+ *  array (Array): The sorted array to inspect.
+ *  value (*): The value to evaluate.
+### Example
+```gdscript
+ GD_.sorted_last_index([4, 5, 5, 5, 6], 5)
+ # => 4
+```
+
+
 ## `sorted_last_index_by `
-> NOT YET IMPLEMENTED
+ This method is like GD_.sorted_last_index except that it accepts iteratee 
+ which is invoked for value and each element of array to compute 
+ their sort ranking. The iteratee is invoked 
+ with two arguments: (value, _UNUSED_).
+
+ This attempts to replicate lodash's sortedLastIndexBy.
+ https://lodash.com/docs/4.17.15#sortedLastIndexBy
+ 
+### Arguments
+ *  array (Array): The sorted array to inspect.
+ *  value (*): The value to evaluate.
+ *  [iteratee=GD_.identity] (Function): The iteratee invoked per element.
+### Example
+```gdscript
+ var objects = [{ 'x': 4 }, { 'x': 5 }]
+ GD_.sorted_last_index_by(objects, { 'x': 4 }, func(o,_u): return o.x)
+ # => 1
+  
+ # The `GD_.property` iteratee shorthand.
+ GD_.sorted_last_index_by(objects, { 'x': 4 }, 'x')
+ # => 1
+```
+
+
 ## `sorted_last_index_of `
-> NOT YET IMPLEMENTED
+ This method is like _.lastIndexOf except that it performs a binary search on a sorted array.
+
+ This attempts to replicate lodash's sortedLastIndexBy.
+ https://lodash.com/docs/4.17.15#sortedLastIndexBy
+ 
+### Arguments
+ *  array (Array): The array to inspect.
+ *  value (*): The value to search for.
+### Example
+```gdscript
+ GD_.sorted_last_index_of([4, 5, 5, 5, 6], 5);
+ # => 3
+```
+
+
 ## `sorted_uniq `
 > NOT YET IMPLEMENTED
 ## `sorted_uniq_by `
@@ -1220,13 +1288,13 @@ print(slice)
  *  other (*): The other value to compare.
 ### Example
 ```gdscript
- GD_.gt(3, 1);
+ GD_.gt(3, 1)
  # => true
  GD 
- GD_.gt(3, 3);
+ GD_.gt(3, 3)
  # => false
  GD 
- GD_.gt(1, 3);
+ GD_.gt(1, 3)
  # => false
 ```
 
@@ -1241,13 +1309,13 @@ print(slice)
  *  other (*): The other value to compare.
 ### Example
 ```gdscript
- GD_.gte(3, 1);
+ GD_.gte(3, 1)
  # => true
   
- GD_.gte(3, 3);
+ GD_.gte(3, 3)
  # => true
   
- GD_.gte(1, 3);
+ GD_.gte(1, 3)
  # => false
 ```
 
@@ -1337,13 +1405,13 @@ print(slice)
  *  other (*): The other value to compare.
 ### Example
 ```gdscript
- GD_.lt(1, 3);
+ GD_.lt(1, 3)
  # => true
   
- GD_.lt(3, 3);
+ GD_.lt(3, 3)
  # => false
   
- GD_.lt(3, 1);
+ GD_.lt(3, 1)
  # => false
 ```
 
@@ -1357,13 +1425,13 @@ print(slice)
  *  other (*): The other value to compare.
 ### Example
 ```gdscript
- GD_.lt(1, 3);
+ GD_.lt(1, 3)
  # => true
   
- GD_.lt(3, 3);
+ GD_.lt(3, 3)
  # => false
   
- GD_.lt(3, 1);
+ GD_.lt(3, 1)
  # => false
 atic func lt(a, b):
 eturn a < b
@@ -1653,9 +1721,9 @@ eturn a < b
  var objects = [
    { 'a': 1, 'b': 2, 'c': 3 },
    { 'a': 4, 'b': 5, 'c': 6 }
- ];
+ ]
   
- GD_.find(objects, GD_.matches_property('a', 4));
+ GD_.find(objects, GD_.matches_property('a', 4))
  # => { 'a': 4, 'b': 5, 'c': 6 }
 ```
 
@@ -1731,10 +1799,10 @@ fn.call(node)
  *  [prefix=''] (string): The value to prefix the ID with.
 ### Example
 ```gdscript
- GD_.uniqueId('contact_');
+ GD_.uniqueId('contact_')
  # => 'contact_104'
   
- GD_.uniqueId();
+ GD_.uniqueId()
  # => '105'
 ```
 

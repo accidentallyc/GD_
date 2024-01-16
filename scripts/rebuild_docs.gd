@@ -8,7 +8,6 @@ var unfinished_count = 0
 
 func _run():
 	_script = FileAccess.open("res://addons/gd_/GD_.gd", FileAccess.READ)
-	#_script = FileAccess.open("res://addons/gd_/test.gd", FileAccess.READ)
 	_md = FileAccess.open("./api.md", FileAccess.WRITE)
 	
 	var lines = []
