@@ -1,6 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://cfu6aj4s0m5c0"]
+[gd_scene load_steps=7 format=3 uid="uid://cfu6aj4s0m5c0"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/src/simpletest_runner.gd" id="1_bar3o"]
+[ext_resource type="Script" path="res://tests/array/GD_sorted_uniq.gd" id="2_83q78"]
+[ext_resource type="Script" path="res://tests/array/GD_uniq_test.gd" id="2_lgci2"]
+[ext_resource type="Script" path="res://tests/array/GD_sorted_uniq_by_test.gd" id="3_domcv"]
+[ext_resource type="Script" path="res://tests/array/GD_uniq_by_test.gd" id="3_s1rqh"]
+[ext_resource type="Script" path="res://tests/array/GD_uniq_with_test.gd" id="4_3eesg"]
 
 [node name="Single Test" type="Node"]
 script = ExtResource("1_bar3o")
+
+[node name="Sorted Uniq" type="Node" parent="."]
+script = ExtResource("2_83q78")
+
+[node name="Sorted Uniq By" type="Node" parent="."]
+script = ExtResource("3_domcv")
+
+[node name="Uniq" type="Node" parent="."]
+script = ExtResource("2_lgci2")
+
+[node name="Uniq By" type="Node" parent="."]
+script = ExtResource("3_s1rqh")
+
+[node name="Uniq With" type="Node" parent="."]
+script = ExtResource("4_3eesg")

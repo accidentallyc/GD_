@@ -418,7 +418,7 @@ GD_.head([1, 2, 3])
 # => 1
  
 GD_.head([])
-# => undefined
+# => null
 ```
 
 
@@ -883,15 +883,44 @@ print(slice)
  *  value (*): The value to search for.
 ### Example
 ```gdscript
- GD_.sorted_last_index_of([4, 5, 5, 5, 6], 5);
+ GD_.sorted_last_index_of([4, 5, 5, 5, 6], 5)
  # => 3
 ```
 
 
 ## `sorted_uniq `
-> NOT YET IMPLEMENTED
+ This method is like GD_.uniq except that it's designed 
+ and optimized for sorted arrays.
+
+ This attempts to replicate lodash's sortedUniq.
+ https://lodash.com/docs/4.17.15#sortedUniq
+
+### Arguments
+ *  array (Array): The array to inspect.
+### Example
+```gdscript
+ GD_.sorted_uniq([1, 1, 2])
+ # => [1, 2]
+```
+
+
 ## `sorted_uniq_by `
-> NOT YET IMPLEMENTED
+ This method is like GD_.uniq_by except that it's designed and 
+ optimized for sorted arrays.
+ 
+ This attempts to replicate lodash's sortedUniqBy.
+ https://lodash.com/docs/4.17.15#sortedUniqBy
+ 
+### Arguments
+ *  array (Array): The array to inspect.
+ *  [iteratee] (Function): The iteratee invoked per element.
+### Example
+```gdscript
+ GD_.sorted_uniq_by([1.1, 1.2, 2.3, 2.4], Math.floor)
+ # => [1.1, 2.3]
+```
+
+
 ## `tail `
 > NOT YET IMPLEMENTED
 ## `take `
@@ -909,11 +938,67 @@ print(slice)
 ## `union_with `
 > NOT YET IMPLEMENTED
 ## `uniq `
-> NOT YET IMPLEMENTED
+ Creates a duplicate-free version of an array, using == for equality 
+ comparisons, in which only the first occurrence of each element is kept. 
+ The order of result values is determined by the order 
+ they occur in the array.
+
+ This attempts to replicate lodash's uniq.
+ https://lodash.com/docs/4.17.15#uniq
+ 
+### Arguments
+ *  array (Array): The array to inspect.
+### Example
+```gdscript
+ GD_.uniq([2, 1, 2])
+ # => [2, 1]
+```
+
+
 ## `uniq_by `
-> NOT YET IMPLEMENTED
+ This method is like GD_.uniq except that it accepts iteratee which 
+ is invoked for each element in array to generate the criterion by 
+ which uniqueness is computed. The order of result values is determined 
+ by the order they occur in the array. The iteratee is invoked 
+ with two arguments : (value, _UNUSED_).
+ 
+ This attempts to replicate lodash's uniq.
+ https://lodash.com/docs/4.17.15#uniq
+ 
+### Arguments
+ *  array (Array): The array to inspect.
+ *  [iteratee=GD_.identity] (Function): The iteratee invoked per element.
+### Example
+```gdscript
+ GD_.uniq_by([2.1, 1.2, 2.3], Math.floor)
+ # => [2.1, 1.2]
+  
+ # The `GD_.property` iteratee shorthand.
+ GD_.uniq_by([{ 'x': 1 }, { 'x': 2 }, { 'x': 1 }], 'x')
+ # => [{ 'x': 1 }, { 'x': 2 }]
+```
+
+
 ## `uniq_with `
-> NOT YET IMPLEMENTED
+ This method is like GD_.uniq except that it accepts comparator 
+ which is invoked to compare elements of array. The order of result values 
+ is determined by the order they occur in the array. The 
+ comparator is invoked with two arguments: (arrVal, othVal).
+ 
+ This attempts to replicate lodash's uniq.
+ https://lodash.com/docs/4.17.15#uniq
+ 
+### Arguments
+ *  array (Array): The array to inspect.
+ *  [comparator] (Function): The comparator invoked per element.
+### Example
+```gdscript
+ var objects = [{'x':1,'y':2},{'x':2,'y':1},{'x':1,'y':2}]
+ GD_.uniq_with(objects, GD_.is_equal)
+ # => [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]	
+```
+
+
 ## `unzip `
 > NOT YET IMPLEMENTED
 ## `unzip_with `
@@ -1248,8 +1333,8 @@ print(slice)
  GD_.castArray(null)
  # => [null]
   
- GD_.castArray(undefined)
- # => [undefined]
+ GD_.castArray(null)
+ # => [null]
   
  GD_.castArray()
  # => []
@@ -1535,7 +1620,7 @@ eturn a < b
 ## `functions_in `
 > NOT YET IMPLEMENTED
 ## `get_prop `
- Gets the value at path of object. If the resolved value is undefined, 
+ Gets the value at path of object. If the resolved value is null, 
  the defaultValue is returned in its place.
  This is similar to lodash's get but renamed due to name clashes.
  This attempts to replicate lodash's get. 
@@ -1544,7 +1629,7 @@ eturn a < b
 ### Arguments
  *  object (Object): The object to query.
  *  path (Array|string): The path of the property to get.
- *  [defaultValue] (*): The value returned for undefined resolved values.
+ *  [defaultValue] (*): The value returned for null resolved values.
 ### Example
 ```gdscript
  var object = { 'a': [{ 'b': { 'c': 3 } }] }
@@ -1630,7 +1715,7 @@ eturn a < b
  GD_.default_to(1, 10)
  # => 1
   
- GD_.default_to(undefined, 10)
+ GD_.default_to(null, 10)
  # => 10
 ```
 
@@ -1737,6 +1822,16 @@ eturn a < b
 ## `no_conflict `
 > NOT YET IMPLEMENTED
 ## `noop `
+ This method returns null.
+
+ This attempts to replicate lodash's noop. 
+ https://lodash.com/docs/4.17.15#noop
+
+### Example
+```gdscript
+ GD_.times(2, GD_.noop);
+ # => [null, null]
+```
 
 
 ## `nth_arg `
@@ -1749,6 +1844,7 @@ eturn a < b
 > NOT YET IMPLEMENTED
 ## `property `
  Creates a function that returns the value at path of a given object.	
+
  This attempts to replicate lodash's iteratee. 
  https://lodash.com/docs/4.17.15#iteratee
 
@@ -1789,11 +1885,32 @@ fn.call(node)
 ## `stub_true `
 > NOT YET IMPLEMENTED
 ## `times `
-> NOT YET IMPLEMENTED
+ Invokes the iteratee n times, returning an array of the results of 
+ each invocation. The iteratee is invoked with two args; (index, _UNUSED_)
+ 
+ This attempts to replicate lodash's times. 
+ https://lodash.com/docs/4.17.15#times
+ 
+### Arguments
+ *  n (number): The number of times to invoke iteratee.
+ *  [iteratee=GD_.identity] (Function): The function invoked per iteration.
+### Example
+```gdscript
+ GD_.times(3, String);
+ # => ['0', '1', '2']
+  
+  GD_.times(4, func (a,b): return 0);
+ # => [0, 0, 0, 0]
+```
+
+
 ## `to_path `
 > NOT YET IMPLEMENTED
 ## `unique_id `
  Generates a unique ID. If prefix is given, the ID is appended to it.
+
+ This attempts to replicate lodash's uniqueId. 
+ https://lodash.com/docs/4.17.15#uniqueId
 
 ### Arguments
  *  [prefix=''] (string): The value to prefix the ID with.

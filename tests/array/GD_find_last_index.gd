@@ -7,7 +7,7 @@ var users = [
 ]
 
 func it_should_find_last_index_based_on_function():
-	var index = GD_.find_last_index(users, func(o): return o.user == 'pebbles')
+	var index = GD_.find_last_index(users, func(o,_o): return o.user == 'pebbles')
 	expect(index).to.equal(2)
 
 
