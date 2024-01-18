@@ -1,10 +1,10 @@
-# GD_ (_67 of 272_ implemented)
+# GD_ (_73 of 272_ implemented)
 
 **Wanna jump into it? See [the api readme](https://github.com/accidentallyc/GD_/blob/master/api.md)**
 
 **Visit it in the [asset library](https://godotengine.org/asset-library/asset/2486)**
 
-GD_ is an effort gto bring [Lodash](https://lodash.com/) into Godot. This will attempt to replicate Lodash's behavior as close as possible (even if the implementation becomes round about).
+GD_ is an effort to bring [Lodash](https://lodash.com/) into Godot. This will attempt to replicate Lodash's behavior as close as possible (even if the implementation becomes round about).
 
 ```gdscript
 # Map Example
@@ -76,6 +76,6 @@ See [the api readme](https://github.com/accidentallyc/GD_/blob/master/api.md)
 **Contributing**
 
 Just do a pull request with the following requirements
-1. Add a unit test node for it at `res://addons/gd_/tests/unit_tests.tscn` scene
+1. Add a unit test node for it at `res://tests/unit_tests.tscn` scene
 1. Update the comments, it should match how the other comments are written because  👇
-1. Run the auto-markdown generator at `gd_/rebuild_docs.gd` which autogenerates api.md
+1. Run the auto-markdown generator at `scripts/rebuild_docs.gd` which autogenerates api.md

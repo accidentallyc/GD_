@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=72 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/src/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -57,10 +57,15 @@
 [ext_resource type="Script" path="res://tests/array/GD_sorted_last_index_of.gd" id="43_hnf27"]
 [ext_resource type="Script" path="res://tests/object/GD_get_prop_test.gd" id="43_lm35f"]
 [ext_resource type="Script" path="res://tests/lang/GD_cast_array_test.gd" id="44_b6wmo"]
+[ext_resource type="Script" path="res://tests/array/GD_sorted_uniq.gd" id="44_fcreb"]
 [ext_resource type="Script" path="res://tests/util/GD_identity_test.gd" id="45_7a3b1"]
+[ext_resource type="Script" path="res://tests/array/GD_sorted_uniq_by_test.gd" id="45_lximv"]
+[ext_resource type="Script" path="res://tests/array/GD_uniq_test.gd" id="46_h31sh"]
 [ext_resource type="Script" path="res://tests/util/GD_matches_test.gd" id="47_bcfvp"]
+[ext_resource type="Script" path="res://tests/array/GD_uniq_by_test.gd" id="47_ktx34"]
 [ext_resource type="Script" path="res://tests/util/GD_matches_property_test.gd" id="48_8d001"]
 [ext_resource type="Script" path="res://tests/lang/GD_eq_test.gd" id="48_qqvla"]
+[ext_resource type="Script" path="res://tests/array/GD_uniq_with_test.gd" id="48_svqxo"]
 [ext_resource type="Script" path="res://tests/lang/GD_gt_test.gd" id="49_jic8v"]
 [ext_resource type="Script" path="res://tests/util/GD_unique_id_test.gd" id="49_onwvn"]
 [ext_resource type="Script" path="res://tests/lang/GD_gte_test.gd" id="50_0gb33"]
@@ -197,6 +202,21 @@ script = ExtResource("42_1k5t4")
 
 [node name="Sorted Last Index Of" type="Node" parent="Array"]
 script = ExtResource("43_hnf27")
+
+[node name="Sorted Uniq" type="Node" parent="Array"]
+script = ExtResource("44_fcreb")
+
+[node name="Sorted Uniq By" type="Node" parent="Array"]
+script = ExtResource("45_lximv")
+
+[node name="Uniq" type="Node" parent="Array"]
+script = ExtResource("46_h31sh")
+
+[node name="Uniq By" type="Node" parent="Array"]
+script = ExtResource("47_ktx34")
+
+[node name="Uniq With" type="Node" parent="Array"]
+script = ExtResource("48_svqxo")
 
 [node name="Collection" type="Node" parent="."]
 

@@ -60,16 +60,24 @@ func _run():
 							buffer.push_front(tmp)
 					i -= 1
 					
+				var has_text = false
 				if descp_buffer:
+					has_text = true
 					write_description_buffer(descp_buffer)
 					
 				if arguments_buffer:
 					write_arguments_buffer(arguments_buffer)
+					has_text = true
 					
 				if example_buffer:
 					write_example_buffer(example_buffer)
+					has_text = true
+					
+				if !has_text: 
+					print("Function %s is missing documentation " % func_name)
 					
 				write_ln("\n")
+				
 		
 		if line == "NON-LODASH FUNCS":
 			break

@@ -156,12 +156,12 @@ static func difference_by(array_left, array_right, iteratee = GD_.identity):
 	# store processed keyes here
 	var keys_to_remove_map = {}
 	for array_item_2 in array_right:
-		keys_to_remove_map[iter_func.call(array_item_2)] = true
+		keys_to_remove_map[iter_func.call(array_item_2, null)] = true
 		
 	var array_right_max = array_left.size()
 	
 	for left_item in array_left:
-		var left_key = iter_func.call(left_item)
+		var left_key = iter_func.call(left_item, null)
 		if not(keys_to_remove_map.has(left_key)):
 			new_array.append(left_item)
 			
@@ -477,7 +477,7 @@ static func find_last_index(array:Array, predicate = GD_.identity, from_index=-1
 
 	var iter_func = GD_.iteratee(predicate)
 	for i in range(from_index, -1, -1):
-		if iter_func.call(array[i]):
+		if iter_func.call(array[i],null):
 			return i
 	return -1
 	
@@ -598,7 +598,7 @@ static func from_pairs(array:Array):
 ##		# => 1
 ##		 
 ##		GD_.head([])
-##		# => undefined
+##		# => null
 static func head(array:Array):
 	return array[0] if array.size() else null
 	
@@ -717,9 +717,9 @@ static func intersection_by(array_1:Array, array_2:Array, array_3 = null, array_
 		var right_array = arrays[i]
 		var tmp = []
 		for left_value in left_array:
-			var transformed_left = iteratee.call(left_value)
+			var transformed_left = iteratee.call(left_value,null)
 			for right_value in right_array:
-				var transformed_right = iteratee.call(right_value)
+				var transformed_right = iteratee.call(right_value,null)
 				if transformed_left == transformed_right and left_value not in tmp:
 					tmp.append(left_value)
 					break
@@ -1157,12 +1157,12 @@ static func sorted_index_by(array:Array, value, iteratee = GD_.identity):
 	var ceil = array.size()
 	var mid = floor(ceil / 2)
 	var floor = 0
-	var actual_value = iter_func.call(value)
+	var actual_value = iter_func.call(value,null)
 	for _i in range(0, ceil): # we use a for loop cause its faster
 		if floor >= ceil:
 			break
 		
-		if iter_func.call(array[mid]) < actual_value:
+		if iter_func.call(array[mid],null) < actual_value:
 			floor = mid + 1
 		else:
 			ceil = mid
@@ -1259,12 +1259,12 @@ static func sorted_last_index_by(array:Array, value, iteratee = GD_.identity):
 	var ceil = array.size()
 	var mid = floor(ceil / 2)
 	var floor = 0
-	var actual_value = iter_func.call(value)
+	var actual_value = iter_func.call(value,null)
 	for _i in range(0, ceil): # we use a for loop cause its faster
 		if floor >= ceil:
 			break
 		
-		if iter_func.call(array[mid]) > actual_value:
+		if iter_func.call(array[mid],null) > actual_value:
 			ceil = mid
 		else:
 			floor = mid + 1
@@ -1283,7 +1283,7 @@ static func sorted_last_index_by(array:Array, value, iteratee = GD_.identity):
 ## Returns
 ## 		(number): Returns the index of the matched value, else -1.
 ## Example
-## 		GD_.sorted_last_index_of([4, 5, 5, 5, 6], 5);
+## 		GD_.sorted_last_index_of([4, 5, 5, 5, 6], 5)
 ## 		# => 3
 static func sorted_last_index_of(array:Array, value): 
 	if not(_is_numeric_type(value)):
@@ -1311,8 +1311,51 @@ static func sorted_last_index_of(array:Array, value):
 		mid = floor((floor + ceil)/2)
 	return last_index
 	
-static func sorted_uniq(array:Array, b=0, c=0): not_implemented()
-static func sorted_uniq_by(array:Array, b=0, c=0): not_implemented()
+## This method is like GD_.uniq except that it's designed 
+## and optimized for sorted arrays.
+##
+## This attempts to replicate lodash's sortedUniq.
+## https://lodash.com/docs/4.17.15#sortedUniq
+##
+## Arguments
+## 		array (Array): The array to inspect.
+## Returns
+## 		(Array): Returns the new duplicate free array.
+## Example
+## 		GD_.sorted_uniq([1, 1, 2])
+## 		# => [1, 2]
+static func sorted_uniq(array:Array):
+	return sorted_uniq_by(array)
+	
+
+## This method is like GD_.uniq_by except that it's designed and 
+## optimized for sorted arrays.
+## 
+## This attempts to replicate lodash's sortedUniqBy.
+## https://lodash.com/docs/4.17.15#sortedUniqBy
+## 
+## Arguments
+## 		array (Array): The array to inspect.
+## 		[iteratee] (Function): The iteratee invoked per element.
+## Returns
+## 		(Array): Returns the new duplicate free array.
+## Example
+## 		GD_.sorted_uniq_by([1.1, 1.2, 2.3, 2.4], Math.floor)
+## 		# => [1.1, 2.3]
+static func sorted_uniq_by(array:Array, iteratee = GD_.identity): 
+	var iter_func = iteratee(iteratee)
+	var unique_array = []
+	
+	var prev_element = null
+
+	for element in array:
+		var curr_element = iter_func.call(element,null)
+		if curr_element != prev_element:
+			unique_array.append(element)
+			prev_element = iter_func.call(element,null)
+
+	return unique_array
+	
 static func tail(array:Array, b=0, c=0): not_implemented()
 static func take(array:Array, b=0, c=0): not_implemented()
 static func take_right(array:Array, b=0, c=0): not_implemented()
@@ -1321,9 +1364,93 @@ static func take_while(array:Array, b=0, c=0): not_implemented()
 static func union(array:Array, b=0, c=0): not_implemented()
 static func union_by(array:Array, b=0, c=0): not_implemented()
 static func union_with(array:Array, b=0, c=0): not_implemented()
-static func uniq(array:Array, b=0, c=0): not_implemented()
-static func uniq_by(array:Array, b=0, c=0): not_implemented()
-static func uniq_with(array:Array, b=0, c=0): not_implemented()
+
+## Creates a duplicate-free version of an array, using == for equality 
+## comparisons, in which only the first occurrence of each element is kept. 
+## The order of result values is determined by the order 
+## they occur in the array.
+##
+## This attempts to replicate lodash's uniq.
+## https://lodash.com/docs/4.17.15#uniq
+## 
+## Arguments
+## 		array (Array): The array to inspect.
+## Returns
+## 		(Array): Returns the new duplicate free array.
+## Example
+## 		GD_.uniq([2, 1, 2])
+## 		# => [2, 1]
+static func uniq(array:Array):
+	return uniq_by(array)
+
+
+## This method is like GD_.uniq except that it accepts iteratee which 
+## is invoked for each element in array to generate the criterion by 
+## which uniqueness is computed. The order of result values is determined 
+## by the order they occur in the array. The iteratee is invoked 
+## with two arguments : (value, _UNUSED_).
+## 
+## This attempts to replicate lodash's uniq.
+## https://lodash.com/docs/4.17.15#uniq
+## 
+## Arguments
+## 		array (Array): The array to inspect.
+## 		[iteratee=GD_.identity] (Function): The iteratee invoked per element.
+## Returns
+## 		(Array): Returns the new duplicate free array.
+## Example
+## 		GD_.uniq_by([2.1, 1.2, 2.3], Math.floor)
+## 		# => [2.1, 1.2]
+## 		 
+## 		# The `GD_.property` iteratee shorthand.
+## 		GD_.uniq_by([{ 'x': 1 }, { 'x': 2 }, { 'x': 1 }], 'x')
+## 		# => [{ 'x': 1 }, { 'x': 2 }]
+static func uniq_by(array:Array, iteratee = GD_.identity):
+	var cache = {}
+	var new_array = []
+	var iter_func = iteratee(iteratee)
+	for _item in array:
+		var item = iter_func.call(_item, null)
+		if item in cache: continue
+		
+		cache[item] = true
+		new_array.append(_item)
+	return new_array
+
+
+## This method is like GD_.uniq except that it accepts comparator 
+## which is invoked to compare elements of array. The order of result values 
+## is determined by the order they occur in the array. The 
+## comparator is invoked with two arguments: (arrVal, othVal).
+## 
+## This attempts to replicate lodash's uniq.
+## https://lodash.com/docs/4.17.15#uniq
+## 
+## Arguments
+## 		array (Array): The array to inspect.
+## 		[comparator] (Function): The comparator invoked per element.
+## Returns
+## 		(Array): Returns the new duplicate free array.
+## Example
+## 		var objects = [{'x':1,'y':2},{'x':2,'y':1},{'x':1,'y':2}]
+## 		GD_.uniq_with(objects, GD_.is_equal)
+## 		# => [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]	
+static func uniq_with(array:Array, comparator:Callable):
+	var new_array = []
+	for old_item in array:
+		
+		var should_insert = true
+		
+		for new_item in new_array:
+			if comparator.call(old_item,new_item):
+				should_insert = false
+				break
+				
+		if should_insert:
+			new_array.append(old_item)
+			
+	return new_array	
+	
 static func unzip(array:Array, b=0, c=0): not_implemented()
 static func unzip_with(array:Array, b=0, c=0): not_implemented()
 static func without(array:Array, b=0, c=0): not_implemented()
@@ -1468,7 +1595,7 @@ static func filter(collection, iteratee = null):
 ## 		[predicate=GD_.identity] (Function): The function invoked per iteration.
 ## 		[fromIndex=0] (number): The index to search from.
 ## Returns
-## 		(*): Returns the matched element, else undefined.
+## 		(*): Returns the matched element, else null.
 ## Example
 ## 		var users = [
 ## 		  { 'user': 'barney',  'age': 36, 'active': true },
@@ -1704,8 +1831,8 @@ Lang
 ## 		GD_.castArray(null)
 ## 		# => [null]
 ## 		 
-## 		GD_.castArray(undefined)
-## 		# => [undefined]
+## 		GD_.castArray(null)
+## 		# => [null]
 ## 		 
 ## 		GD_.castArray()
 ## 		# => []
@@ -1883,8 +2010,8 @@ static func divide(a=0, b=0, c=0): not_implemented()
 ## 		 
 ## 		GD_.floor(4060, -2)
 ## 		# => 4000
-static func floor(number, precision = 0):
-	var scale = pow(10.0, precision)
+static func floor(number, precision = null):
+	var scale = pow(10.0, default_to(precision,0))
 	return __floor(number * scale) / scale
 	
 #static func max(a=0, b=0, c=0): not_implemented()
@@ -1931,7 +2058,7 @@ static func functions(a=0, b=0, c=0): not_implemented()
 static func functions_in(a=0, b=0, c=0): not_implemented()
 
 
-## Gets the value at path of object. If the resolved value is undefined, 
+## Gets the value at path of object. If the resolved value is null, 
 ## the defaultValue is returned in its place.
 ## This is similar to lodash's get but renamed due to name clashes.
 ## This attempts to replicate lodash's get. 
@@ -1940,7 +2067,7 @@ static func functions_in(a=0, b=0, c=0): not_implemented()
 ## Arguments
 ## 		object (Object): The object to query.
 ## 		path (Array|string): The path of the property to get.
-## 		[defaultValue] (*): The value returned for undefined resolved values.
+## 		[defaultValue] (*): The value returned for null resolved values.
 ## Returns
 ## 		(*): Returns the resolved value.
 ## Example
@@ -2053,7 +2180,7 @@ static func constant(a=0, b=0, c=0): not_implemented()
 ## 		GD_.default_to(1, 10)
 ## 		# => 1
 ## 		 
-## 		GD_.default_to(undefined, 10)
+## 		GD_.default_to(null, 10)
 ## 		# => 10
 static func default_to(a,b): 
 	if a == null or is_nan(a) or is_same(a,_NULL_ARG_):
@@ -2184,8 +2311,17 @@ static func method_of(a=0, b=0, c=0): not_implemented()
 static func mixin(a=0, b=0, c=0): not_implemented()
 static func no_conflict(a=0, b=0, c=0): not_implemented()
 
+
+## This method returns null.
+##
+## This attempts to replicate lodash's noop. 
+## https://lodash.com/docs/4.17.15#noop
+##
+## Example
+## 		GD_.times(2, GD_.noop);
+## 		# => [null, null]
 static func noop(a=0,b=0,c=0,d=0,e=0,f=0,g=0,h=0,i=0,j=0,k=0,l=0,m=0,n=0,o=0,p=0): 
-	pass
+	return null
 			
 static func nth_arg(a=0, b=0, c=0): not_implemented()
 static func over(a=0, b=0, c=0): not_implemented()
@@ -2193,6 +2329,7 @@ static func over_every(a=0, b=0, c=0): not_implemented()
 static func over_some(a=0, b=0, c=0): not_implemented()
 
 ## Creates a function that returns the value at path of a given object.	
+##
 ## This attempts to replicate lodash's iteratee. 
 ## https://lodash.com/docs/4.17.15#iteratee
 ##
@@ -2237,10 +2374,40 @@ static func stub_false(a=0, b=0, c=0): not_implemented()
 static func stub_object(a=0, b=0, c=0): not_implemented()
 static func stub_string(a=0, b=0, c=0): not_implemented()
 static func stub_true(a=0, b=0, c=0): not_implemented()
-static func times(a=0, b=0, c=0): not_implemented()
+
+
+## Invokes the iteratee n times, returning an array of the results of 
+## each invocation. The iteratee is invoked with two args; (index, _UNUSED_)
+## 
+## This attempts to replicate lodash's times. 
+## https://lodash.com/docs/4.17.15#times
+## 
+## Arguments
+## 		n (number): The number of times to invoke iteratee.
+## 		[iteratee=GD_.identity] (Function): The function invoked per iteration.
+## Returns
+## 		(Array): Returns the array of results.
+## Example
+## 		GD_.times(3, String);
+## 		# => ['0', '1', '2']
+## 		 
+## 		 GD_.times(4, func (a,b): return 0);
+## 		# => [0, 0, 0, 0]
+static func times(n=0, iteratee = GD_.identity): 
+	var ary = []
+	var iter_func = iteratee(iteratee)
+	
+	for i in range(n):
+		ary.append(iter_func.call(i,null))
+		
+	return ary
+	
 static func to_path(a=0, b=0, c=0): not_implemented()
 
 ## Generates a unique ID. If prefix is given, the ID is appended to it.
+##
+## This attempts to replicate lodash's uniqueId. 
+## https://lodash.com/docs/4.17.15#uniqueId
 ##
 ## Arguments
 ## 		[prefix=''] (string): The value to prefix the ID with.
