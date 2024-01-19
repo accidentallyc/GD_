@@ -1,3 +1,4 @@
+## @TODO Reuse tests from lodash repo
 extends SimpleTest
 
 func it_returns_an_object_composed_form_key_value_pairs():

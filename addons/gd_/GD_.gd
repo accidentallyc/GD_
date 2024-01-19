@@ -867,7 +867,7 @@ static func nth(array:Array, n=0):
 	return null
 		
 		
-## Removes all given values from array using SameValueZero for equality comparisons.
+## Removes all given values from array using == for equality comparisons.
 ##
 ## Note: Unlike _.without, this method mutates array. 
 ## Use _.remove to remove elements from an array by predicate
@@ -1122,7 +1122,7 @@ static func slice(array:Array, start=0,end = array.size()):
 ## 		GD_.sorted_index([30, 50], 40)
 ## 		# => 1
 static func sorted_index(array:Array, value):
-	if not(_is_numeric_type(value)):
+	if not(GD_.is_number(value)):
 		printerr("GD_.sorted_index received a non-number value")
 		return null
 		
@@ -1185,7 +1185,7 @@ static func sorted_index_by(array:Array, value, iteratee = GD_.identity):
 ## 		GD _.sorted_index_of([4, 5, 5, 5, 6], 5)
 ## 		# => 1	
 static func sorted_index_of(array:Array, value):
-	if not(_is_numeric_type(value)):
+	if not(GD_.is_number(value)):
 		printerr("GD_.sorted_index_of received a non-number value")
 		return -1
 		
@@ -1225,7 +1225,7 @@ static func sorted_index_of(array:Array, value):
 ## 		GD_.sorted_last_index([4, 5, 5, 5, 6], 5)
 ## 		# => 4
 static func sorted_last_index(array:Array, value):
-	if not(_is_numeric_type(value)):
+	if not(GD_.is_number(value)):
 		printerr("GD_.sorted_index received a non-number value")
 		return null
 		
@@ -1286,7 +1286,7 @@ static func sorted_last_index_by(array:Array, value, iteratee = GD_.identity):
 ## 		GD_.sorted_last_index_of([4, 5, 5, 5, 6], 5)
 ## 		# => 3
 static func sorted_last_index_of(array:Array, value): 
-	if not(_is_numeric_type(value)):
+	if not(GD_.is_number(value)):
 		printerr("GD_.sorted_last_index_of received a non-number value")
 		return -1
 		
@@ -1356,9 +1356,54 @@ static func sorted_uniq_by(array:Array, iteratee = GD_.identity):
 
 	return unique_array
 	
-static func tail(array:Array, b=0, c=0): not_implemented()
-static func take(array:Array, b=0, c=0): not_implemented()
-static func take_right(array:Array, b=0, c=0): not_implemented()
+## Gets all but the first element of array.
+## 
+## This attempts to replicate lodash's tail.
+## https://lodash.com/docs/4.17.15#tail
+## 
+## Arguments
+## 		array (Array): The array to query.
+## Returns
+## 		(Array): Returns the slice of array.
+## Example
+## 		GD_.tail([1, 2, 3])
+## 		# => [2, 3]
+static func tail(array:Array, _UNUSED_ = null): 
+	return array.slice(1)
+	
+
+## Creates a slice of array with n elements taken from the beginning.
+## 
+## This attempts to replicate lodash's take.
+## https://lodash.com/docs/4.17.15#take
+##
+## Arguments
+## 		array (Array): The array to query.
+## 		[n=1] (number): The number of elements to take.
+## Returns
+## 		(Array): Returns the slice of array.
+## Example
+## 		GD_.take([1, 2, 3])
+## 		# => [1]
+## 		 
+## 		GD_.take([1, 2, 3], 2)
+## 		# => [1, 2]
+## 		 
+## 		GD_.take([1, 2, 3], 5)
+## 		# => [1, 2, 3]
+## 		 
+## 		GD_.take([1, 2, 3], 0)
+## 		# => []
+static func take(array:Array, n = null):
+	var size = array.size()
+	if n == null:
+		n = 1
+	if size == 0 or not(GD_.is_number(n)) or n < 0:
+		return []
+	return array.slice(0, min(n,size))
+	
+	
+static func take_right(array:Array, n = 1): not_implemented()
 static func take_right_while(array:Array, b=0, c=0): not_implemented()
 static func take_while(array:Array, b=0, c=0): not_implemented()
 static func union(array:Array, b=0, c=0): not_implemented()
@@ -1940,7 +1985,33 @@ static func is_match_with(a=0, b=0, c=0): not_implemented()
 static func is_native(a=0, b=0, c=0): not_implemented()
 static func is_nil(a=0, b=0, c=0): not_implemented()
 static func is_null(a=0, b=0, c=0): not_implemented()
-static func is_number(a=0, b=0, c=0): not_implemented()
+
+## Checks if value is classified as a Number primitive 
+## Note: To exclude Infinity, -Infinity, and NaN, which are classified 
+## as numbers, use the _.isFinite method.
+## 
+## This attempts to replicate lodash's isNumber. 
+## See https://lodash.com/docs/4.17.15#isNumber
+## 
+## Arguments
+## 		value (*): The value to check.
+## Returns
+## 		(boolean): Returns true if value is a number, else false.
+## Example
+## 		GD_.is_number(3)
+## 		# => true
+## 		 
+## 		GD_.is_number(Number.MIN_VALUE)
+## 		# => true
+## 		 
+## 		GD_.is_number(Infinity)
+## 		# => true
+## 		 
+## 		GD_.is_number('3')
+## 		# => false
+static func is_number(a = null, _UNUSED_=null):
+	return a is int or a is float
+	
 static func is_object(a=0, b=0, c=0): not_implemented()
 static func is_object_like(a=0, b=0, c=0): not_implemented()
 static func is_plain_object(a=0, b=0, c=0): not_implemented()
@@ -2168,6 +2239,7 @@ static func constant(a=0, b=0, c=0): not_implemented()
 
 ## Checks value to determine whether a default value should be returned 
 ## in its place. The defaultValue is returned if value is NaN or null
+
 ## This attempts to replicate lodash's defaultTo. 
 ## https://lodash.com/docs/4.17.15#defaultTo
 ## 
@@ -2183,8 +2255,15 @@ static func constant(a=0, b=0, c=0): not_implemented()
 ## 		GD_.default_to(null, 10)
 ## 		# => 10
 static func default_to(a,b): 
-	if a == null or is_nan(a) or is_same(a,_NULL_ARG_):
-		return b
+	match typeof(a):
+		TYPE_NIL:
+			return b
+		TYPE_INT:
+			return b if is_nan(a) else a
+		TYPE_FLOAT:
+			return b if is_nan(a) else a
+		TYPE_OBJECT:
+			return b if is_same(a,_NULL_ARG_) or not(a) else a
 	return a
 	
 	
@@ -2247,6 +2326,10 @@ static func iteratee(iteratee_val):
 		TYPE_NIL:
 			return GD_.identity
 		TYPE_CALLABLE:
+			# These functions have weird lodash behaviors as iteratee's
+			# Visit each function for an explanation
+			if iteratee_val == GD_.take: 
+				return GD_.__iteratee_take
 			return iteratee_val
 				
 		_:
@@ -2318,7 +2401,7 @@ static func no_conflict(a=0, b=0, c=0): not_implemented()
 ## https://lodash.com/docs/4.17.15#noop
 ##
 ## Example
-## 		GD_.times(2, GD_.noop);
+## 		GD_.times(2, GD_.noop)
 ## 		# => [null, null]
 static func noop(a=0,b=0,c=0,d=0,e=0,f=0,g=0,h=0,i=0,j=0,k=0,l=0,m=0,n=0,o=0,p=0): 
 	return null
@@ -2377,7 +2460,7 @@ static func stub_true(a=0, b=0, c=0): not_implemented()
 
 
 ## Invokes the iteratee n times, returning an array of the results of 
-## each invocation. The iteratee is invoked with two args; (index, _UNUSED_)
+## each invocation. The iteratee is invoked with two args (index, _UNUSED_)
 ## 
 ## This attempts to replicate lodash's times. 
 ## https://lodash.com/docs/4.17.15#times
@@ -2388,10 +2471,10 @@ static func stub_true(a=0, b=0, c=0): not_implemented()
 ## Returns
 ## 		(Array): Returns the array of results.
 ## Example
-## 		GD_.times(3, String);
+## 		GD_.times(3, String)
 ## 		# => ['0', '1', '2']
 ## 		 
-## 		 GD_.times(4, func (a,b): return 0);
+## 		 GD_.times(4, func (a,b): return 0)
 ## 		# => [0, 0, 0, 0]
 static func times(n=0, iteratee = GD_.identity): 
 	var ary = []
@@ -2441,8 +2524,18 @@ static func keyed_iterable(thing):
 """
 INTERNAL STUFF
 """
-static func _is_numeric_type(v):
-	return v is int or v is float
+
+
+## Weird unexplainable case in lodash
+## Try running the 2:
+## 
+## _.map([[1, 2, 3], [4, 5, 6], [7, 8, 9]], _.take)
+## _.mapValues({a:[1, 2, 3], b:[4, 5, 6], c:[7, 8, 9]},_.take)
+## 
+## This only works if the _.take is actually NOT invoked with
+## a second argument.
+static func __iteratee_take(array, _UNUSED_):
+	return GD_.take(array, null)
 
 static func _is_collection(item):
 	return item is Array or item is Dictionary

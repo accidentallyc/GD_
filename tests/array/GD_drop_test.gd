@@ -1,3 +1,4 @@
+## @TODO Reuse tests from lodash repo
 extends SimpleTest
 
 func it_should_drop_item_1_by_default():

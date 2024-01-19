@@ -1,3 +1,4 @@
+## @TODO Reuse tests from lodash repo
 extends SimpleTest
 
 var barney = { 'user': 'barney',  'age': 36, 'active': true, 'gender':'m' }

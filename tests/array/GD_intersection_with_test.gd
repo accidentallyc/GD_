@@ -1,3 +1,4 @@
+## @TODO Reuse tests from lodash repo
 extends SimpleTest
 
 var comparator = GD_.is_equal

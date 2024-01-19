@@ -1,3 +1,4 @@
+## @TODO Reuse tests from lodash repo
 extends SimpleTest
 
 func it_should_return_correct_index_for_insertion_in_sorted_array():

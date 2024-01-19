@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=75 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/src/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -50,7 +50,7 @@
 [ext_resource type="Script" path="res://tests/array/GD_map_test.gd" id="38_jhbuw"]
 [ext_resource type="Script" path="res://tests/array/GD_sorted_index_test.gd" id="38_mr7uf"]
 [ext_resource type="Script" path="res://tests/array/GD_sorted_index_by_test.gd" id="39_0aabk"]
-[ext_resource type="Script" path="res://tests/util/GD_default_to.gd" id="39_qcoaa"]
+[ext_resource type="Script" path="res://tests/util/GD_default_to_test.gd" id="39_qcoaa"]
 [ext_resource type="Script" path="res://tests/array/GD_sorted_index_of_test.gd" id="40_oydtk"]
 [ext_resource type="Script" path="res://tests/array/GD_sorted_last_index.gd" id="41_qj6w8"]
 [ext_resource type="Script" path="res://tests/array/GD_sorted_last_index_by.gd" id="42_1k5t4"]
@@ -66,11 +66,14 @@
 [ext_resource type="Script" path="res://tests/util/GD_matches_property_test.gd" id="48_8d001"]
 [ext_resource type="Script" path="res://tests/lang/GD_eq_test.gd" id="48_qqvla"]
 [ext_resource type="Script" path="res://tests/array/GD_uniq_with_test.gd" id="48_svqxo"]
+[ext_resource type="Script" path="res://tests/array/GD_tail_test.gd" id="49_7kv02"]
 [ext_resource type="Script" path="res://tests/lang/GD_gt_test.gd" id="49_jic8v"]
 [ext_resource type="Script" path="res://tests/util/GD_unique_id_test.gd" id="49_onwvn"]
 [ext_resource type="Script" path="res://tests/lang/GD_gte_test.gd" id="50_0gb33"]
+[ext_resource type="Script" path="res://tests/array/GD_take_test.gd" id="50_vcc8d"]
 [ext_resource type="Script" path="res://tests/lang/GD_lt_test.gd" id="51_iwkgm"]
 [ext_resource type="Script" path="res://tests/lang/GD_lte_test.gd" id="52_1x46s"]
+[ext_resource type="Script" path="res://tests/array/GD_is_number_test.gd" id="63_vhodk"]
 
 [node name="Unit Tests" type="Node"]
 script = ExtResource("1_b4vvq")
@@ -218,6 +221,12 @@ script = ExtResource("47_ktx34")
 [node name="Uniq With" type="Node" parent="Array"]
 script = ExtResource("48_svqxo")
 
+[node name="Tail" type="Node" parent="Array"]
+script = ExtResource("49_7kv02")
+
+[node name="Take" type="Node" parent="Array"]
+script = ExtResource("50_vcc8d")
+
 [node name="Collection" type="Node" parent="."]
 
 [node name="Count By" type="Node" parent="Collection"]
@@ -264,6 +273,9 @@ script = ExtResource("50_0gb33")
 
 [node name="Is Equal" type="Node" parent="Lang"]
 script = ExtResource("31_mx0yu")
+
+[node name="Is Number" type="Node" parent="Lang"]
+script = ExtResource("63_vhodk")
 
 [node name="Lt" type="Node" parent="Lang"]
 script = ExtResource("51_iwkgm")
