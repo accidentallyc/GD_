@@ -1,4 +1,6 @@
+## @TODO Reuse tests from lodash repo
 extends SimpleTest
+
 
 var array = ['a','b','c','d']
 

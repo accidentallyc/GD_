@@ -591,7 +591,7 @@ GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
 
 
 ## `pull `
- Removes all given values from array using SameValueZero for equality comparisons.
+ Removes all given values from array using == for equality comparisons.
 
  Note: Unlike _.without, this method mutates array. 
  Use _.remove to remove elements from an array by predicate
@@ -922,9 +922,45 @@ print(slice)
 
 
 ## `tail `
-> NOT YET IMPLEMENTED
+ Gets all but the first element of array.
+ 
+ This attempts to replicate lodash's tail.
+ https://lodash.com/docs/4.17.15#tail
+ 
+### Arguments
+ *  array (Array): The array to query.
+### Example
+```gdscript
+ GD_.tail([1, 2, 3])
+ # => [2, 3]
+```
+
+
 ## `take `
-> NOT YET IMPLEMENTED
+ Creates a slice of array with n elements taken from the beginning.
+ 
+ This attempts to replicate lodash's take.
+ https://lodash.com/docs/4.17.15#take
+
+### Arguments
+ *  array (Array): The array to query.
+ *  [n=1] (number): The number of elements to take.
+### Example
+```gdscript
+ GD_.take([1, 2, 3])
+ # => [1]
+  
+ GD_.take([1, 2, 3], 2)
+ # => [1, 2]
+  
+ GD_.take([1, 2, 3], 5)
+ # => [1, 2, 3]
+  
+ GD_.take([1, 2, 3], 0)
+ # => []
+```
+
+
 ## `take_right `
 > NOT YET IMPLEMENTED
 ## `take_right_while `
@@ -1456,7 +1492,31 @@ print(slice)
 ## `is_null `
 > NOT YET IMPLEMENTED
 ## `is_number `
-> NOT YET IMPLEMENTED
+ Checks if value is classified as a Number primitive 
+ Note: To exclude Infinity, -Infinity, and NaN, which are classified 
+ as numbers, use the _.isFinite method.
+ 
+ This attempts to replicate lodash's isNumber. 
+ See https://lodash.com/docs/4.17.15#isNumber
+ 
+### Arguments
+ *  value (*): The value to check.
+### Example
+```gdscript
+ GD_.is_number(3)
+ # => true
+  
+ GD_.is_number(Number.MIN_VALUE)
+ # => true
+  
+ GD_.is_number(Infinity)
+ # => true
+  
+ GD_.is_number('3')
+ # => false
+```
+
+
 ## `is_object `
 > NOT YET IMPLEMENTED
 ## `is_object_like `
@@ -1702,8 +1762,6 @@ eturn a < b
 ## `constant `
 > NOT YET IMPLEMENTED
 ## `default_to `
- Checks value to determine whether a default value should be returned 
- in its place. The defaultValue is returned if value is NaN or null
  This attempts to replicate lodash's defaultTo. 
  https://lodash.com/docs/4.17.15#defaultTo
  
@@ -1829,7 +1887,7 @@ eturn a < b
 
 ### Example
 ```gdscript
- GD_.times(2, GD_.noop);
+ GD_.times(2, GD_.noop)
  # => [null, null]
 ```
 
@@ -1886,7 +1944,7 @@ fn.call(node)
 > NOT YET IMPLEMENTED
 ## `times `
  Invokes the iteratee n times, returning an array of the results of 
- each invocation. The iteratee is invoked with two args; (index, _UNUSED_)
+ each invocation. The iteratee is invoked with two args (index, _UNUSED_)
  
  This attempts to replicate lodash's times. 
  https://lodash.com/docs/4.17.15#times
@@ -1896,10 +1954,10 @@ fn.call(node)
  *  [iteratee=GD_.identity] (Function): The function invoked per iteration.
 ### Example
 ```gdscript
- GD_.times(3, String);
+ GD_.times(3, String)
  # => ['0', '1', '2']
   
-  GD_.times(4, func (a,b): return 0);
+  GD_.times(4, func (a,b): return 0)
  # => [0, 0, 0, 0]
 ```
 
