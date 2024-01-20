@@ -2531,9 +2531,13 @@ INTERNAL STUFF
 ## 
 ## _.map([[1, 2, 3], [4, 5, 6], [7, 8, 9]], _.take)
 ## _.mapValues({a:[1, 2, 3], b:[4, 5, 6], c:[7, 8, 9]},_.take)
-## 
-## This only works if the _.take is actually NOT invoked with
-## a second argument.
+## 		vs
+## _.map([[1, 2, 3], [4, 5, 6], [7, 8, 9]], (a,b)=> _.take(a,b))
+## _.mapValues({a:[1, 2, 3], b:[4, 5, 6], c:[7, 8, 9]},(a,b) => _.take(a,b))
+##
+## Passing down the _.take as iterattes behaves like map 
+## was NOT invoked it with 2 arguments but with only 1.
+## This doesnt make sense because map invokes callbacks with 2 args (val,key)
 static func __iteratee_take(array, _UNUSED_):
 	return GD_.take(array, null)
 

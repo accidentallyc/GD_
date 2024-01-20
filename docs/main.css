@@ -1,0 +1,106 @@
+body {
+    font-family: Segoe UI,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    min-height: 100%;
+    overflow: hidden;
+    color:#FFF;
+    margin:0;
+    padding:0;
+}
+
+h1 {
+    font-size: 1.5rem;
+}
+
+h2 {
+    font-size: 1.15rem;
+}
+
+#logo {
+    border-radius: 3px;
+    height: 5vh;
+    padding: 0.25em;
+}
+
+.bg-panel {
+    background: #333b4f;
+}
+
+.bg-dark {
+    background: #202531;
+}
+
+#app {
+    display: flex;
+}
+
+.panel-container {
+    padding: 0.25em;
+    position: relative;
+}
+
+#app .panel-container:nth-of-type(1) {
+    flex-grow: 0;
+}
+
+#app .panel-container:nth-of-type(2) {
+    flex-grow: 1;
+}
+
+
+.panel {
+    padding:0.25em;
+}
+
+#directory {
+    height: 92vh;
+    min-width: 20rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#directory ul  {
+    width: auto;
+}
+
+#directory a,#directory a:hover, #directory a:active, #directory a:visited {
+    color: inherit;
+    text-decoration: none;
+}
+
+#directory input {
+    width: 100%;
+    padding: 1em 0.5em;
+    outline: none;
+    color: #FFF;
+    border: 0;
+}
+#directory:before {
+    content:'🔍';
+    right: 0.5em;
+    top: 0.75em;
+    position: absolute;
+}
+
+#directory .is_pending {
+    color: #838383;
+}
+
+
+
+#contents {
+    height: 92vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#contents i {color:#15ff73}
+
+.pad-1 {
+    padding: 1em;
+}
+
+.left-2 {
+    margin-left: 2em;
+}
