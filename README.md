@@ -1,6 +1,6 @@
 # GD_ (_76 of 272_ implemented)
 
-**Wanna jump into it? See [the api readme](https://github.com/accidentallyc/GD_/blob/master/api.md)**
+**Wanna jump into it? See [the api readme](https://accidentallyc.github.io/GD_/)**
 
 **Visit it in the [asset library](https://godotengine.org/asset-library/asset/2486)**
 
