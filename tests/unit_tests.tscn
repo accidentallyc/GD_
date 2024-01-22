@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=77 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/src/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -74,6 +74,8 @@
 [ext_resource type="Script" path="res://tests/lang/GD_lt_test.gd" id="51_iwkgm"]
 [ext_resource type="Script" path="res://tests/lang/GD_lte_test.gd" id="52_1x46s"]
 [ext_resource type="Script" path="res://tests/array/GD_is_number_test.gd" id="63_vhodk"]
+[ext_resource type="Script" path="res://tests/object/GD_at_test.gd" id="68_m3ofe"]
+[ext_resource type="Script" path="res://tests/util/GD_constant_test.gd" id="70_5dmw3"]
 
 [node name="Unit Tests" type="Node"]
 script = ExtResource("1_b4vvq")
@@ -292,6 +294,9 @@ script = ExtResource("12_r0d3c")
 
 [node name="Object" type="Node" parent="."]
 
+[node name="At" type="Node" parent="Object"]
+script = ExtResource("68_m3ofe")
+
 [node name="Get Prop" type="Node" parent="Object"]
 script = ExtResource("43_lm35f")
 
@@ -299,8 +304,8 @@ script = ExtResource("43_lm35f")
 
 [node name="Util" type="Node" parent="."]
 
-[node name="Property" type="Node" parent="Util"]
-script = ExtResource("11_4km8u")
+[node name="Constant" type="Node" parent="Util"]
+script = ExtResource("70_5dmw3")
 
 [node name="Default To" type="Node" parent="Util"]
 script = ExtResource("39_qcoaa")
@@ -313,6 +318,9 @@ script = ExtResource("47_bcfvp")
 
 [node name="Matches Property" type="Node" parent="Util"]
 script = ExtResource("48_8d001")
+
+[node name="Property" type="Node" parent="Util"]
+script = ExtResource("11_4km8u")
 
 [node name="Unique Id" type="Node" parent="Util"]
 script = ExtResource("49_onwvn")

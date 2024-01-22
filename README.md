@@ -1,6 +1,6 @@
-# GD_ (_76 of 272_ implemented)
+# GD_ (_79 of 288_ implemented)
 
-**Wanna jump into it? See [the api readme](https://accidentallyc.github.io/GD_/)**
+**Wanna jump into it? See [the api docs](https://accidentallyc.github.io/GD_/)**
 
 **Visit it in the [asset library](https://godotengine.org/asset-library/asset/2486)**
 
@@ -78,4 +78,4 @@ See [the api readme](https://github.com/accidentallyc/GD_/blob/master/api.md)
 Just do a pull request with the following requirements
 1. Add a unit test node for it at `res://tests/unit_tests.tscn` scene
 1. Update the comments, it should match how the other comments are written because  👇
-1. Run the auto-markdown generator at `scripts/rebuild_docs.gd` which autogenerates api.md
+1. Run the auto-markdown generator at `scripts/rebuild_webdocs.gd` which autogenerates api.md

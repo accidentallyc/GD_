@@ -26,9 +26,11 @@ h2 {
 .bg-panel {
     background: #333b4f;
 }
-
+.bg-gray {
+    background: #252a34;
+}
 .bg-dark {
-    background: #202531;
+    background: #1d232a;
 }
 
 #app {
@@ -46,11 +48,6 @@ h2 {
 
 #app .panel-container:nth-of-type(2) {
     flex-grow: 1;
-}
-
-
-.panel {
-    padding:0.25em;
 }
 
 #directory {
@@ -71,20 +68,24 @@ h2 {
 
 #directory input {
     width: 100%;
-    padding: 1em 0.5em;
+    padding: 1em 0.5em 1em 2.5em;
     outline: none;
     color: #FFF;
     border: 0;
 }
 #directory:before {
     content:'🔍';
-    right: 0.5em;
+    left: 0.75em;
     top: 0.75em;
     position: absolute;
 }
 
 #directory .is_pending {
     color: #838383;
+}
+
+input#search {
+    margin-bottom: 1em;
 }
 
 
@@ -95,10 +96,16 @@ h2 {
     overflow-x: hidden;
 }
 
-#contents i {color:#15ff73}
+.green {color:#15ff73}
+.magenta {color: #ff53c0}
+.gray {color:#c3c3c3}
 
 .pad-1 {
     padding: 1em;
+}
+
+.pad-p5 {
+    padding: .5em;
 }
 
 .left-2 {
