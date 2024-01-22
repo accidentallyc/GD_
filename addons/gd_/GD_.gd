@@ -11,8 +11,9 @@ static var _NULL_ARG_ = Reference.new()
 static var _EMPTY_ARRAY_ = []
 static var id_ctr = 0
 
+
 """
-Array
+CATEGORY: Array
 """
 
 ## Creates an array of elements split into groups the length of size. 
@@ -1508,7 +1509,7 @@ static func zip_object_deep(array:Array, b=0, c=0): not_implemented()
 static func zip_with(array:Array, b=0, c=0): not_implemented()
 
 """
-Collections
+CATEGORY: Collections
 """
 
 ## Creates a dictionary composed of keys generated from the results of 
@@ -1821,11 +1822,11 @@ static func some(collection, iteratee = null):
 static func sort_by(a=0, b=0, c=0): not_implemented()
 
 """
-Date
+CATEGORY: Date
 """
 static func now(a=0, b=0, c=0): not_implemented()
 """
-Function
+CATEGORY: Function
 """
 static func after(a=0, b=0, c=0): not_implemented()
 static func ary(a=0, b=0, c=0): not_implemented()
@@ -1851,7 +1852,7 @@ static func throttle(a=0, b=0, c=0): not_implemented()
 static func unary(a=0, b=0, c=0): not_implemented()
 static func wrap_func(a=0, b=0, c=0): not_implemented()
 """
-Lang
+CATEGORY: Lang
 """
 
 
@@ -2056,7 +2057,7 @@ static func to_safe_integer(a=0, b=0, c=0): not_implemented()
 #static func to_string(a=0, b=0, c=0): not_implemented()
 
 """
-MATH
+CATEGORY: MATH
 """
 static func add(a=0, b=0, c=0): not_implemented()
 #static func ceil(a=0, b=0, c=0): not_implemented()
@@ -2064,6 +2065,7 @@ static func divide(a=0, b=0, c=0): not_implemented()
 
 ## Computes number rounded down to precision. This uses Godot's floor
 ## internally but precision can be added.
+##
 ## This attempts to replicate lodash's floor. 
 ## See https://lodash.com/docs/4.17.15#floor
 ##
@@ -2099,7 +2101,7 @@ static func sum_by(a=0, b=0, c=0): not_implemented()
 
 
 """
-NUMBER
+CATEGORY: NUMBER
 """
 
 #static func clamp(a=0, b=0, c=0): not_implemented()
@@ -2107,13 +2109,51 @@ static func in_range(a=0, b=0, c=0): not_implemented()
 static func random(a=0, b=0, c=0): not_implemented()
 
 """
-OBJECT
+CATEGORY: OBJECT
 """
 static func assign(a=0, b=0, c=0): not_implemented()
 static func assign_in(a=0, b=0, c=0): not_implemented()
 static func assign_in_with(a=0, b=0, c=0): not_implemented()
 static func assign_with(a=0, b=0, c=0): not_implemented()
-static func at(a=0, b=0, c=0): not_implemented()
+
+## Creates an array of values corresponding to paths of object.
+## 
+## This attempts to replicate lodash's at. 
+## See https://lodash.com/docs/4.17.15#at
+## 
+## Arguments
+## 		object (Object): The object to iterate over.
+## 		[paths] (...(string|string[])): The property paths to pick.
+## Returns
+## 		(Array): Returns the picked values.
+## Example
+## 		var object = { 'a': [{ 'b': { 'c': 3 } }, 4] }
+## 		 
+## 		GD_.at(object, ['a[0].b.c', 'a[1]'])
+## 		# => [3, 4]
+##
+##		GD_.at(['a', 'b', 'c'], 0,2)
+##		# => ['a','c']
+##
+## JS Comparison
+##		>> Ellipsis arguments
+##			In js you can call an infinite amount of args using ellipses 
+##			E.g. "_.at([]. 1,2,3,4,5,6,7,"as many as you want",10)
+##
+##			But in GD_ you can call at most up to 10 args
+##			E.g. "GD_.at([], 1,2,4,5,6,7,8,9)
+static func at(obj, a,b=_NULL_ARG_,c=_NULL_ARG_,d=_NULL_ARG_,e=_NULL_ARG_,f=_NULL_ARG_,g=_NULL_ARG_,h=_NULL_ARG_,i=_NULL_ARG_,j=_NULL_ARG_):
+	var array = []
+	var paths
+	for arg in [a,b,c,d,e,f,g,h,i,j]:
+		if is_same(arg, _NULL_ARG_):
+			continue
+		for p in GD_.cast_array(arg):
+			array.append(GD_.get_prop(obj, p))
+		
+	return array
+	
+
 static func create(a=0, b=0, c=0): not_implemented()
 static func defaults(a=0, b=0, c=0): not_implemented()
 static func defaults_deep(a=0, b=0, c=0): not_implemented()
@@ -2132,6 +2172,7 @@ static func functions_in(a=0, b=0, c=0): not_implemented()
 ## Gets the value at path of object. If the resolved value is null, 
 ## the defaultValue is returned in its place.
 ## This is similar to lodash's get but renamed due to name clashes.
+##
 ## This attempts to replicate lodash's get. 
 ## See https://lodash.com/docs/4.17.15#get
 ##
@@ -2152,31 +2193,80 @@ static func functions_in(a=0, b=0, c=0): not_implemented()
 ## 		 
 ## 		GD_.get_prop(object, 'a:b:c', 'default')
 ## 		# => 'default'
+##
+##		GD_.get_prop([1,2,[3]], '2:1') 
+##		# => 3
+##	
+## JS Comparison
+##		>> Regarding integer keys
+##			In js ["0", -0, 0] are "the same keys" when applied to an object
+##			e.g. declaring {"0":"hello",0:"world"} in JS results in  {0:"world"}
+##			But in gdscript ["0"] is a different key from [-0,0]
+##			e.g. declaring {"0":"hello",0:"world"} in GODOT in {"0":"hello",0:"world"} 
+## 		
+##			Meaning in js
+##			_.get( thing, "0") == _.get( thing, -0) == _.get( thing, 0)
+##			And in godot
+##			_.get( thing, "0") != (_.get( thing, -0) == _.get( thing, 0))
+##
+##		>> Regarding complex paths
+##			In js you are able to do complex paths like
+##			_.get({...}, "a["[\\"b\\"]"].c[\'[\\\'d\\\']\']). To keep performance
+##			hits to a minimum, that behavior is not replicated. This only accepts
+##			basic paths
+##
+##		>> Regarding function returns
+##			In js you can fetch a function like this _.get([],"push")
+##			But in gdscript you can't really do this without knowing that
+##			The said thing is a Callable or a property
 static func get_prop(thing, path, default_value = null):
 	var splits
+	var last_exec_type
 	if path is String:
+		path = __string_to_path(path)
+		var result = GD_.get_prop(thing, [path], null)
+		if result:
+			return result
 		splits = path.split(&":")
 	elif path is Array:
 		splits = path
+	elif GD_.is_number(path):
+		splits = [path]
 	else:
 		printerr("GD_.get_prop received a non-collection type PATH")
+		print_stack()
+		return default_value
+		
+	if not(splits):
 		return default_value
 	
 	var curr_prop = thing
 	for split in splits:
 		if curr_prop is Object:
-			var attempt = curr_prop.get(split)
-			if attempt != null:
-				curr_prop = attempt
-				continue
+			last_exec_type = TYPE_OBJECT
+			var innnn = split in curr_prop
+			if split in curr_prop:
+				var attempt = curr_prop.get(split)
+				if attempt != null:
+					curr_prop = attempt
+					continue
+				else:
+					return null
 			else:
-				return null
+				return default_value # which is null
 		if curr_prop is Dictionary:
+			last_exec_type = TYPE_DICTIONARY
 			if curr_prop.has(split):
 				curr_prop = curr_prop[split]
 				continue
+			elif split is String and split.is_valid_int():
+				curr_prop = curr_prop[int(split)]
+				continue
+			elif split is int and split in curr_prop:
+				curr_prop = curr_prop[split]
+				continue
 			else:
-				return null
+				return default_value # which is null
 		if curr_prop is Array and (
 				(split is String and split.is_valid_int())
 				or
@@ -2198,7 +2288,9 @@ static func get_prop(thing, path, default_value = null):
 				continue
 			
 		return default_value
-	return default_to if curr_prop == null else curr_prop
+	return curr_prop
+	
+	
 static func has(a=0, b=0, c=0): not_implemented()
 static func has_in(a=0, b=0, c=0): not_implemented()
 static func invert(a=0, b=0, c=0): not_implemented()
@@ -2226,15 +2318,73 @@ static func update_with(a=0, b=0, c=0): not_implemented()
 static func values(a=0, b=0, c=0): not_implemented()
 static func values_in(a=0, b=0, c=0): not_implemented()
 
+
 """
-UTILS
+CATEGORY: STRING
+"""
+static func camel_case(): not_implemented()
+static func capitalize(): not_implemented()
+static func deburr(): not_implemented()
+static func ends_with(): not_implemented()
+static func escape(): not_implemented()
+static func escape_reg_exp(): not_implemented()
+static func kebab_case(): not_implemented()
+
+###
+static func lower_case(a:String, _UNUSED_ = null): not_implemented()
+static func lower_first(): not_implemented()
+static func pad(): not_implemented()
+static func pad_end(): not_implemented()
+static func pad_start(): not_implemented()
+static func parse_int(): not_implemented()
+static func repeat(): not_implemented()
+static func replace(): not_implemented()
+static func snake_case(): not_implemented()
+static func split(): not_implemented()
+static func start_case(): not_implemented()
+static func starts_with(): not_implemented()
+static func template(): not_implemented()
+static func to_lower(a:String, _UNUSED_ = null): 
+	return a.to_lower()
+static func to_upper(): not_implemented()
+static func trim(): not_implemented()
+static func trim_end(): not_implemented()
+static func trim_start(): not_implemented()
+static func truncate(): not_implemented()
+static func unescape(): not_implemented()
+static func upper_case(): not_implemented()
+static func upper_first(): not_implemented()
+static func words(): not_implemented()
+
+"""
+CATEGORY: UTILS
 """
 
 static func attempt(a=0, b=0, c=0): not_implemented()
 static func bind_all(a=0, b=0, c=0): not_implemented()
 static func cond(a=0, b=0, c=0): not_implemented()
 static func conforms(a=0, b=0, c=0): not_implemented()
-static func constant(a=0, b=0, c=0): not_implemented()
+
+## Creates a function that returns value.
+## 
+## This attempts to replicate lodash's constant. 
+## See https://lodash.com/docs/4.17.15#constant
+## 
+## Arguments
+## 		value (*): The value to return from the new function.
+## Returns
+## 		(Function): Returns the new constant function.
+## Example
+## 		var objects = GD_.map([0,0], GD_.constant({ 'a': 1 }))
+## 		 
+## 		print(objects);
+## 		# => [{ 'a': 1 }, { 'a': 1 }]
+## 		 
+## 		print(objects[0] === objects[1]);
+## 		# => true
+## 
+static func constant(value = null, _UNUSED_ = null):
+	return func (a = null, b = null): return value
 
 
 ## Checks value to determine whether a default value should be returned 
@@ -2524,7 +2674,22 @@ static func keyed_iterable(thing):
 """
 INTERNAL STUFF
 """
-
+static func __string_to_path(str: String):
+	var key = &""
+	
+	var c
+	for i in range(str.length()):
+		c = str[i]
+		match c:
+			&"[":
+				if i != 0:
+					key += &":"
+			&"]":
+				pass
+			_:
+				key += c
+				
+	return key
 
 ## Weird unexplainable case in lodash
 ## Try running the 2:
