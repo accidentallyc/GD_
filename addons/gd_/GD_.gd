@@ -1407,9 +1407,89 @@ static func take(array:Array, n = null):
 static func take_right(array:Array, n = 1): not_implemented()
 static func take_right_while(array:Array, b=0, c=0): not_implemented()
 static func take_while(array:Array, b=0, c=0): not_implemented()
-static func union(array:Array, b=0, c=0): not_implemented()
-static func union_by(array:Array, b=0, c=0): not_implemented()
-static func union_with(array:Array, b=0, c=0): not_implemented()
+
+
+## Creates an array of unique values, in order, from all given arrays using 
+## == for equality comparisons.
+## 
+## This attempts to replicate lodash's union.
+## https://lodash.com/docs/4.17.15#union
+## 
+## Arguments
+## 		[arrays] (...Array): The arrays to inspect.
+## Returns
+## 		(Array): Returns the new array of combined values.
+## Example
+## 		GD_.union([2], [1, 2])
+## 		# => [2, 1]
+##
+## 		GD_.union([1],[2],[3],[4],[5])
+## 		# => [1,2,3,4,5]
+## JS Comparison
+##		>> Ellipsis arguments
+##			In js you can call an infinite amount of args using ellipses 
+##			E.g. "GD_.union([1],[2],[3],[4],[5],[6],[7],["as many as you want"],[10])
+##
+##			But in GD_ you can call at most up to 10 args
+##			E.g. "GD_.union([1],[2],[3],[4],[5],[6],[7],[8],[9],[10])
+static func union(a:Array, b:Array, c=_NULL_ARG_,d=_NULL_ARG_,e=_NULL_ARG_,f=_NULL_ARG_,g=_NULL_ARG_,h=_NULL_ARG_,i=_NULL_ARG_,j=_NULL_ARG_):
+	var array = a.duplicate()
+	for arg in [b,c,d,e,f,g,h,i,j]:
+		if arg is Array:
+			array.append_array(arg)
+	return GD_.uniq_by(array)
+	
+	
+## This method is like GD_.union except that it accepts iteratee which 
+## is invoked for each element of each arrays to generate the criterion 
+## by which uniqueness is computed. Result values are chosen from 
+## the first array in which the value occurs. 
+## The iteratee is invoked with two arguments: (value , _UNUSED_).
+## 
+## This attempts to replicate lodash's unionBy.
+## https://lodash.com/docs/4.17.15#unionBy
+## 
+## Arguments
+## 		[arrays] (...Array): The arrays to inspect.
+## 		[iteratee=_.identity] (Function): The iteratee invoked per element.
+## Returns
+## 		(Array): Returns the new array of combined values.
+## Example
+## 		GD_.union_by([2.1], [1.2, 2.3], GD_.floor)
+## 		# => [2.1, 1.2]
+## 		 
+## 		# The `GD_.property` iteratee shorthand.
+## 		GD_.union_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
+## 		# => [{ 'x': 1 }, { 'x': 2 }]
+static func union_by(array_a:Array, array_b:Array, iteratee = GD_.identity):
+	var array_c = array_a.duplicate()
+	array_c.append_array(array_b)
+	return GD_.uniq_by(array_c, iteratee)
+
+
+## This method is like GD_.union except that it accepts comparator 
+## which is invoked to compare elements of arrays. Result values are chosen 
+## from the first array in which the value occurs. The comparator is invoked 
+## with two arguments: (arrVal, othVal).
+## 
+## This attempts to replicate lodash's unionWith.
+## https://lodash.com/docs/4.17.15#unionWith
+## 
+## Arguments
+## 		[arrays] (...Array): The arrays to inspect.
+## 		[comparator] (Function): The comparator invoked per element.
+## Returns
+## 		(Array): Returns the new array of combined values.
+## Example
+## 		var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]
+## 		var others = [{ 'x': 1, 'y': 1 }, { 'x': 1, 'y': 2 }]
+##  
+## 		GD_.union_with(objects, others, GD_.is_equal)
+## 		# => [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }, { 'x': 1, 'y': 1 }]		
+static func union_with(array_a:Array, array_b:Array, comparator:Callable):
+	var array_c = array_a.duplicate()
+	array_c.append_array(array_b)
+	return GD_.uniq_with(array_c, comparator)
 
 ## Creates a duplicate-free version of an array, using == for equality 
 ## comparisons, in which only the first occurrence of each element is kept. 
@@ -1499,11 +1579,11 @@ static func uniq_with(array:Array, comparator:Callable):
 	
 static func unzip(array:Array, b=0, c=0): not_implemented()
 static func unzip_with(array:Array, b=0, c=0): not_implemented()
-static func without(array:Array, b=0, c=0): not_implemented()
+static func without(array:Array, b=0, c=0): not_implemented() ## @TODO from 0.1.0
 static func xor(array:Array, b=0, c=0): not_implemented()
 static func xor_by(array:Array, b=0, c=0): not_implemented()
 static func xor_with(array:Array, b=0, c=0): not_implemented()
-static func zip(array:Array, b=0, c=0): not_implemented()
+static func zip(array:Array, b=0, c=0): not_implemented() ## @TODO from 0.1.0
 static func zip_object(array:Array, b=0, c=0): not_implemented()
 static func zip_object_deep(array:Array, b=0, c=0): not_implemented()
 static func zip_with(array:Array, b=0, c=0): not_implemented()
@@ -1584,7 +1664,7 @@ static func for_each(collection, iteratee):
 			return
 
 static func each_right(a=0, b=0, c=0): not_implemented()
-static func every(a=0, b=0, c=0): not_implemented()
+static func every(a=0, b=0, c=0): not_implemented() ## @TODO from 0.1.0
 
 ## Iterates over elements of collection, returning an array of all elements predicate returns truthy for. 
 ## The predicate is invoked with two arguments (value, index|key).
@@ -1719,7 +1799,7 @@ static func group_by(collection, iteratee = GD_.identity):
 	return counters
 	
 	
-static func includes(a=0, b=0, c=0): not_implemented()
+static func includes(a=0, b=0, c=0): not_implemented() ## @TODO from 0.1.0
 static func invoke_map(a=0, b=0, c=0): not_implemented()
 static func key_by(a=0, b=0, c=0): not_implemented()
 
@@ -1768,7 +1848,7 @@ static func map(collection, iteratee = GD_.identity):
 	
 static func order_by(a=0, b=0, c=0): not_implemented()
 static func partition(a=0, b=0, c=0): not_implemented()
-static func reduce(a=0, b=0, c=0): not_implemented()
+static func reduce(a=0, b=0, c=0): not_implemented() ## @TODO fro 0.1.0
 static func reduce_right(a=0, b=0, c=0): not_implemented()
 static func reject(a=0, b=0, c=0): not_implemented()
 static func sample(a=0, b=0, c=0): not_implemented()
@@ -2138,10 +2218,10 @@ static func assign_with(a=0, b=0, c=0): not_implemented()
 ## JS Comparison
 ##		>> Ellipsis arguments
 ##			In js you can call an infinite amount of args using ellipses 
-##			E.g. "_.at([]. 1,2,3,4,5,6,7,"as many as you want",10)
+##			E.g. "_.at([], 1,2,3,4,5,6,7,"as many as you want",10)
 ##
 ##			But in GD_ you can call at most up to 10 args
-##			E.g. "GD_.at([], 1,2,4,5,6,7,8,9)
+##			E.g. "GD_.at([], 1,2,3,4,5,6,7,8,9)
 static func at(obj, a,b=_NULL_ARG_,c=_NULL_ARG_,d=_NULL_ARG_,e=_NULL_ARG_,f=_NULL_ARG_,g=_NULL_ARG_,h=_NULL_ARG_,i=_NULL_ARG_,j=_NULL_ARG_):
 	var array = []
 	var paths
@@ -2377,10 +2457,10 @@ static func conforms(a=0, b=0, c=0): not_implemented()
 ## Example
 ## 		var objects = GD_.map([0,0], GD_.constant({ 'a': 1 }))
 ## 		 
-## 		print(objects);
+## 		print(objects)
 ## 		# => [{ 'a': 1 }, { 'a': 1 }]
 ## 		 
-## 		print(objects[0] === objects[1]);
+## 		print(objects[0] === objects[1])
 ## 		# => true
 ## 
 static func constant(value = null, _UNUSED_ = null):
