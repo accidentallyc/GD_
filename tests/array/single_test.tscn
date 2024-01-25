@@ -1,10 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfu6aj4s0m5c0"]
+[gd_scene load_steps=2 format=3 uid="uid://cfu6aj4s0m5c0"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/src/simpletest_runner.gd" id="1_bar3o"]
-[ext_resource type="Script" path="res://tests/object/GD_at_test.gd" id="2_4v4js"]
 
 [node name="Single Test" type="Node"]
 script = ExtResource("1_bar3o")
-
-[node name="At" type="Node" parent="."]
-script = ExtResource("2_4v4js")

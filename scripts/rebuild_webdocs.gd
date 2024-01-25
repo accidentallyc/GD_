@@ -103,13 +103,14 @@ func _run():
 	var keys = GD_.map(data.keys(), GD_.to_lower)
 	var final_shape = []
 	
+	
 	for k in keys:
 		final_shape.append({
 			"category": k,
 			"items": data[k]
 		})
 	
-	var template = FileAccess.get_file_as_string("./docs/index.template.htgdml")
+	var template = FileAccess.get_file_as_string("./docs/index.template.html")
 	var content = template.replace("{/*%%insert json%%*/}", JSON.stringify(final_shape))
 	
 	_html.store_string(content)

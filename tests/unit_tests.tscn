@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=81 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/src/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -71,11 +71,15 @@
 [ext_resource type="Script" path="res://tests/util/GD_unique_id_test.gd" id="49_onwvn"]
 [ext_resource type="Script" path="res://tests/lang/GD_gte_test.gd" id="50_0gb33"]
 [ext_resource type="Script" path="res://tests/array/GD_take_test.gd" id="50_vcc8d"]
+[ext_resource type="Script" path="res://tests/array/GD_union_by_test.gd" id="51_01hcw"]
 [ext_resource type="Script" path="res://tests/lang/GD_lt_test.gd" id="51_iwkgm"]
 [ext_resource type="Script" path="res://tests/lang/GD_lte_test.gd" id="52_1x46s"]
+[ext_resource type="Script" path="res://tests/array/GD_union_with.gd" id="52_o6bxo"]
+[ext_resource type="Script" path="res://tests/array/GD_union.gd" id="53_xewci"]
 [ext_resource type="Script" path="res://tests/array/GD_is_number_test.gd" id="63_vhodk"]
 [ext_resource type="Script" path="res://tests/object/GD_at_test.gd" id="68_m3ofe"]
 [ext_resource type="Script" path="res://tests/util/GD_constant_test.gd" id="70_5dmw3"]
+[ext_resource type="Script" path="res://tests/util/GD_times_test.gd" id="77_fp70i"]
 
 [node name="Unit Tests" type="Node"]
 script = ExtResource("1_b4vvq")
@@ -229,6 +233,15 @@ script = ExtResource("49_7kv02")
 [node name="Take" type="Node" parent="Array"]
 script = ExtResource("50_vcc8d")
 
+[node name="Union" type="Node" parent="Array"]
+script = ExtResource("53_xewci")
+
+[node name="Union By" type="Node" parent="Array"]
+script = ExtResource("51_01hcw")
+
+[node name="Union With" type="Node" parent="Array"]
+script = ExtResource("52_o6bxo")
+
 [node name="Collection" type="Node" parent="."]
 
 [node name="Count By" type="Node" parent="Collection"]
@@ -324,3 +337,6 @@ script = ExtResource("11_4km8u")
 
 [node name="Unique Id" type="Node" parent="Util"]
 script = ExtResource("49_onwvn")
+
+[node name="Times" type="Node" parent="Util"]
+script = ExtResource("77_fp70i")
