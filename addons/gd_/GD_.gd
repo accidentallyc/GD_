@@ -1428,10 +1428,10 @@ static func take_while(array:Array, b=0, c=0): not_implemented()
 ## JS Comparison
 ##		>> Ellipsis arguments
 ##			In js you can call an infinite amount of args using ellipses 
-##			E.g. "_.union([1],[2],[3],[4],[5],[6],[7],["as many as you want"],[10])
+##			E.g. "GD_.union([1],[2],[3],[4],[5],[6],[7],["as many as you want"],[10])
 ##
 ##			But in GD_ you can call at most up to 10 args
-##			E.g. "GD_.at([1],[2],[3],[4],[5],[6],[7],[8],[9],[10])
+##			E.g. "GD_.union([1],[2],[3],[4],[5],[6],[7],[8],[9],[10])
 static func union(a:Array, b:Array, c=_NULL_ARG_,d=_NULL_ARG_,e=_NULL_ARG_,f=_NULL_ARG_,g=_NULL_ARG_,h=_NULL_ARG_,i=_NULL_ARG_,j=_NULL_ARG_):
 	var array = a.duplicate()
 	for arg in [b,c,d,e,f,g,h,i,j]:

@@ -1,6 +1,15 @@
 const {createApp, ref} = Vue
 
 function main() {
+    for(var group of window.data) {
+        
+        for(var item of group.items) {
+            item.display_args = item.arguments 
+                ? item.arguments.map(a => a[0].split(" ")[0]).join(", ")
+                : ""
+        }
+    }
+
     const app = createApp({
         setup() {
             const directoryItems = ref(window.data);
@@ -47,7 +56,7 @@ function main() {
                 <div v-for="(group) in data" :key="group.category" :id="group.category">
                     <h1 class="pad-p5">"<i class="magenta">{{ group.category }}</i>" methods</h1>
                     <template v-for="(d) in group.items" :key="d.name" >
-                        <h1 :id="d.name" class="bg-gray pad-p5">GD_.{{ d.name }}</h1>
+                        <h1 :id="d.name" class="bg-gray pad-p5">GD_.{{ d.name }}<span class="gray">( {{ d.display_args }} )</span></h1>
                     
                         <ContentComponent v-if="!d.is_pending" :d="d" />
                         <div v-if="d.is_pending" class="pad-1">
