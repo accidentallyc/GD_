@@ -1,4 +1,4 @@
-# GD_ (_82 of 288_ implemented)
+# GD_ (_83 of 288_ implemented)
 
 **Wanna jump into it? See [the api docs](https://accidentallyc.github.io/GD_/)**
 
@@ -28,6 +28,13 @@ var everything_everywhere_all_at_once = {
 GD_.get_prop(everything_everywhere_all_at_once, "array:1:global_position:y")
 # => 123
 ```
+
+## 2 Ways to install
+
+* Install it through the [asset library](https://godotengine.org/asset-library/asset/2486)
+* Copy `addons\GD_.gd` and `addons\GD_base.gd` to your project
+  * _note_: these 2 must be in the same folder
+
 
 ## Special callouts
 

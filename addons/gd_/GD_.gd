@@ -1,13 +1,13 @@
-extends "res://addons/gd_/GD_base.gd"
+extends "./GD_base.gd"
 
 class_name GD_
 
-class Reference:
+class Undefined:
 	pass
 
 # Use this to differentiate betwen default null
 # and actual null values. Do not use outside of this class.
-static var _NULL_ARG_ = Reference.new()
+static var _UNDEF_ = Undefined.new()
 static var _EMPTY_ARRAY_ = []
 static var id_ctr = 0
 
@@ -89,12 +89,12 @@ static func compact(array:Array):
 ## 		 
 ## 		print(array)
 ## 		# => [1]
-static func concat(array:Array, a=_NULL_ARG_,b=_NULL_ARG_,c=_NULL_ARG_,d=_NULL_ARG_,e=_NULL_ARG_,f=_NULL_ARG_,g=_NULL_ARG_,h=_NULL_ARG_,i=_NULL_ARG_,j=_NULL_ARG_,k=_NULL_ARG_):
+static func concat(array:Array, a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_,k=_UNDEF_):
 	var new_array = []
 	new_array.append_array(array)
 	for arg in [a,b,c,d,e,f,g,h,i,j,k]:
-		# stop after first occurence of _NULL_ARG_
-		if is_same(arg,_NULL_ARG_):
+		# stop after first occurence of _UNDEF_
+		if is_same(arg,_UNDEF_):
 			break
 		if arg is Array:
 			new_array.append_array(arg)
@@ -886,7 +886,7 @@ static func nth(array:Array, n=0):
 ## 		GD_.pull(array, 'a', 'c')
 ## 		print(array)
 ## 		# => ['b', 'b']
-static func pull(array:Array, a=_NULL_ARG_,b=_NULL_ARG_,c=_NULL_ARG_,d=_NULL_ARG_,e=_NULL_ARG_,f=_NULL_ARG_,g=_NULL_ARG_,h=_NULL_ARG_,i=_NULL_ARG_,j=_NULL_ARG_): 
+static func pull(array:Array, a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
 	var to_remove = GD_.filter([a,b,c,d,e,f,g,h,i,j], GD_._is_not_null_arg)
 	return pull_all_by(array, to_remove)
 	
@@ -1430,9 +1430,9 @@ static func take_while(array:Array, b=0, c=0): not_implemented()
 ##			In js you can call an infinite amount of args using ellipses 
 ##			E.g. "GD_.union([1],[2],[3],[4],[5],[6],[7],["as many as you want"],[10])
 ##
-##			But in GD_ you can call at most up to 10 args
+##			But in GD_ you can call at most up to 10 argsTODO
 ##			E.g. "GD_.union([1],[2],[3],[4],[5],[6],[7],[8],[9],[10])
-static func union(a:Array, b:Array, c=_NULL_ARG_,d=_NULL_ARG_,e=_NULL_ARG_,f=_NULL_ARG_,g=_NULL_ARG_,h=_NULL_ARG_,i=_NULL_ARG_,j=_NULL_ARG_):
+static func union(a:Array, b:Array, c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_):
 	var array = a.duplicate()
 	for arg in [b,c,d,e,f,g,h,i,j]:
 		if arg is Array:
@@ -1579,7 +1579,43 @@ static func uniq_with(array:Array, comparator:Callable):
 	
 static func unzip(array:Array, b=0, c=0): not_implemented()
 static func unzip_with(array:Array, b=0, c=0): not_implemented()
-static func without(array:Array, b=0, c=0): not_implemented() ## @TODO from 0.1.0
+
+## Creates an array excluding all given values using == for equality comparisons.
+## 
+## Note: Unlike GD_.pull, this method returns a new array.
+## 
+## This attempts to replicate lodash's uniq.
+## https://lodash.com/docs/4.17.15#uniq
+## 
+## Arguments
+## 		array (Array): The array to inspect.
+## 		[values] (...*): The values to exclude.
+## Returns
+## 		(Array): Returns the new array of filtered values.
+## Example
+## 		GD_.without([2, 1, 2, 3], 1, 2)
+## 		# => [3]
+static func without(array:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_):
+	var without_list = []
+	for arg in [b,c,d,e,f,g,h,i,j]:
+		if arg is Undefined: continue
+		without_list.append(arg)
+		
+	var new_array = []
+	var should_add
+	for tmp in array:
+		should_add = true
+		for to_remove in without_list:
+			if is_same(tmp, to_remove):
+				should_add = false
+				break
+				
+		if should_add:
+			new_array.append(tmp)
+		
+	return new_array
+		
+	
 static func xor(array:Array, b=0, c=0): not_implemented()
 static func xor_by(array:Array, b=0, c=0): not_implemented()
 static func xor_with(array:Array, b=0, c=0): not_implemented()
@@ -1966,8 +2002,8 @@ CATEGORY: Lang
 ## 		var array = [1, 2, 3]
 ## 		print(GD_.castArray(array) == array)
 ## 		# => true
-static func cast_array(v = _NULL_ARG_):
-	if is_same(v, _NULL_ARG_):
+static func cast_array(v = _UNDEF_):
+	if is_same(v, _UNDEF_):
 		return []
 	else:
 		return v if v is Array else [v]
@@ -2222,11 +2258,11 @@ static func assign_with(a=0, b=0, c=0): not_implemented()
 ##
 ##			But in GD_ you can call at most up to 10 args
 ##			E.g. "GD_.at([], 1,2,3,4,5,6,7,8,9)
-static func at(obj, a,b=_NULL_ARG_,c=_NULL_ARG_,d=_NULL_ARG_,e=_NULL_ARG_,f=_NULL_ARG_,g=_NULL_ARG_,h=_NULL_ARG_,i=_NULL_ARG_,j=_NULL_ARG_):
+static func at(obj, a,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_):
 	var array = []
 	var paths
 	for arg in [a,b,c,d,e,f,g,h,i,j]:
-		if is_same(arg, _NULL_ARG_):
+		if is_same(arg, _UNDEF_):
 			continue
 		for p in GD_.cast_array(arg):
 			array.append(GD_.get_prop(obj, p))
@@ -2493,7 +2529,7 @@ static func default_to(a,b):
 		TYPE_FLOAT:
 			return b if is_nan(a) else a
 		TYPE_OBJECT:
-			return b if is_same(a,_NULL_ARG_) or not(a) else a
+			return b if is_same(a,_UNDEF_) or not(a) else a
 	return a
 	
 	
@@ -2542,7 +2578,7 @@ static func identity(value, _unused = null):
 ## 		GD_.map(users, GD_.iteratee('user'))
 ## 		# => ['barney', 'fred']
 static func iteratee(iteratee_val):
-	if is_same(iteratee_val, _NULL_ARG_):
+	if is_same(iteratee_val, _UNDEF_):
 		return GD_.identity
 	match typeof(iteratee_val):
 		TYPE_DICTIONARY:
@@ -2770,6 +2806,9 @@ static func __string_to_path(str: String):
 				key += c
 				
 	return key
+	
+static func _is_nundefined(a): return a == null or a is Undefined
+static func _is_undefined(a): return a is Undefined
 
 ## Weird unexplainable case in lodash
 ## Try running the 2:
@@ -2790,6 +2829,6 @@ static func _is_collection(item):
 	return item is Array or item is Dictionary
 	
 static func _is_not_null_arg(i,_i):
-	return not(is_same(i, _NULL_ARG_))
+	return not(is_same(i, _UNDEF_))
 
 static func not_implemented():  assert(false, "Not implemented yet. Do you need this function? If so, open an issue and I will prioritize it")

@@ -37,8 +37,8 @@ function main() {
         <div class="panel-container bg-panel" id="directory">
             <div class="panel">
                 <input type="text" id="search" @keyup="onSearchDirectory()" v-model="needle" class="bg-dark" placeholder="Search method name..."/>
-                <div v-for="group in directoryItems" class="pad-p5">
-                    <template v-if="group.items.length > 0">
+                <template v-for="group in directoryItems">
+                    <div class="pad-p5"  v-if="group.items.length > 0">
                         <b>{{ group.category }}</b>
                         <ul>
                             <li v-for="(d) in group.items" :key="d.name" :class="{ 'is_pending': d.is_pending }">
@@ -47,8 +47,8 @@ function main() {
                                 </a>
                             </li>
                         </ul>
-                    </template>
-                </div>
+                    </div>
+                </template>
             </div>
         </div>
         <div class="panel-container bg-panel" id="contents">
