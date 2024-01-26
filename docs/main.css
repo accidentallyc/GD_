@@ -75,8 +75,8 @@ h2 {
 }
 #directory:before {
     content:'🔍';
-    left: 0.75em;
-    top: 0.75em;
+    left: 0.52em;
+    top: 0.55em;
     position: absolute;
 }
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=82 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/src/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -76,6 +76,7 @@
 [ext_resource type="Script" path="res://tests/lang/GD_lte_test.gd" id="52_1x46s"]
 [ext_resource type="Script" path="res://tests/array/GD_union_with.gd" id="52_o6bxo"]
 [ext_resource type="Script" path="res://tests/array/GD_union.gd" id="53_xewci"]
+[ext_resource type="Script" path="res://tests/array/GD_without_test.gd" id="54_2kyht"]
 [ext_resource type="Script" path="res://tests/array/GD_is_number_test.gd" id="63_vhodk"]
 [ext_resource type="Script" path="res://tests/object/GD_at_test.gd" id="68_m3ofe"]
 [ext_resource type="Script" path="res://tests/util/GD_constant_test.gd" id="70_5dmw3"]
@@ -241,6 +242,9 @@ script = ExtResource("51_01hcw")
 
 [node name="Union With" type="Node" parent="Array"]
 script = ExtResource("52_o6bxo")
+
+[node name="Without" type="Node" parent="Array"]
+script = ExtResource("54_2kyht")
 
 [node name="Collection" type="Node" parent="."]
 
