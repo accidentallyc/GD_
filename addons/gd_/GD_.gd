@@ -2,16 +2,6 @@ extends "./GD_base.gd"
 
 class_name GD_
 
-class Undefined:
-	pass
-
-# Use this to differentiate betwen default null
-# and actual null values. Do not use outside of this class.
-static var _UNDEF_ = Undefined.new()
-static var _EMPTY_ARRAY_ = []
-static var id_ctr = 0
-
-
 """
 CATEGORY: Array
 """
@@ -1426,11 +1416,11 @@ static func take_while(array:Array, b=0, c=0): not_implemented()
 ## 		GD_.union([1],[2],[3],[4],[5])
 ## 		# => [1,2,3,4,5]
 ## JS Comparison
-##		>> Ellipsis arguments
+##		>> Variable Arguments
 ##			In js you can call an infinite amount of args using ellipses 
 ##			E.g. "GD_.union([1],[2],[3],[4],[5],[6],[7],["as many as you want"],[10])
 ##
-##			But in GD_ you can call at most up to 10 argsTODO
+##			But in GD_ you can call at most up to 10 args
 ##			E.g. "GD_.union([1],[2],[3],[4],[5],[6],[7],[8],[9],[10])
 static func union(a:Array, b:Array, c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_):
 	var array = a.duplicate()
@@ -1598,7 +1588,7 @@ static func unzip_with(array:Array, b=0, c=0): not_implemented()
 static func without(array:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_):
 	var without_list = []
 	for arg in [b,c,d,e,f,g,h,i,j]:
-		if arg is Undefined: continue
+		if arg is UNDEFINED: continue
 		without_list.append(arg)
 		
 	var new_array = []
@@ -1619,11 +1609,129 @@ static func without(array:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDE
 static func xor(array:Array, b=0, c=0): not_implemented()
 static func xor_by(array:Array, b=0, c=0): not_implemented()
 static func xor_with(array:Array, b=0, c=0): not_implemented()
-static func zip(array:Array, b=0, c=0): not_implemented() ## @TODO from 0.1.0
-static func zip_object(array:Array, b=0, c=0): not_implemented()
-static func zip_object_deep(array:Array, b=0, c=0): not_implemented()
-static func zip_with(array:Array, b=0, c=0): not_implemented()
 
+
+## Creates an array of grouped elements, the first of which contains the first elements of the 
+## given arrays, the second of which contains the second elements of the given arrays, and so on.
+## 
+## This attempts to replicate lodash's zip.
+## https://lodash.com/docs/4.17.15#zip
+## 
+## Arguments
+##		[arrays] (...Array): The arrays to process.
+## Returns
+## 		(Array): Returns the new array of grouped elements.
+## Example
+## 		GD_.zip(['a', 'b'], [1, 2], [true, false])
+## 		# => [['a', 1, true], ['b', 2, false]]
+## JS Comparison
+##		>> Variable Arguments
+##			In js you can call an infinite amount of args using ellipses 
+##			E.g. _.zip([1], [2], [3],[4],  ... , [100], [101])
+##
+##			But in GD_ you can call at most up to 10 args
+##			E.g. GD_.zip([1], [2], [3], ... , [10])
+static func zip(a:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
+	return GD_.zip_with(a,b,c,d,e,f,g,h,i,j)
+
+
+## This method is like _.fromPairs except that it accepts two arrays, one of property identifiers and one of corresponding values.
+## 
+## This attempts to replicate lodash's zipObject.
+## https://lodash.com/docs/4.17.15#zipObject
+## 
+## Arguments
+## 		[props=[]] (Array): The property identifiers.
+## 		[values=[]] (Array): The property values.
+## Returns
+## 		(Object): Returns the new object.
+## Example
+## 		GD_.zip_object(['a', 'b'], [1, 2])
+## 		# => { 'a': 1, 'b': 2 }
+## JS Comparison
+##		>> Numbers as keys
+##			In js you can call an infinite amount of args using ellipses 
+##			E.g. _.zip([1], [2], [3],[4],  ... , [100], [101])
+##
+##			But in GD_ you can call at most up to 10 args
+##			E.g. GD_.zip([1], [2], [3], ... , [10])
+static func zip_object(keys:Array, values:Array):
+	var dict = {}
+	for i in range(0, keys.size()):
+		dict[keys[i]] = __INTERNAL__.get_index(values,i)
+	return dict
+	
+## This method is like _.zipObject except that it supports property paths.
+## 
+## This attempts to replicate lodash's zipObjectDeep.
+## https://lodash.com/docs/4.17.15#zipObjectDeep
+## 
+## Arguments
+## 		[props=[]] (Array): The property identifiers.
+## 		[values=[]] (Array): The property values.
+## Returns
+## 		(Object): Returns the new object.
+## Example
+##		GD_.zip_object_deep(['a:b[0]:c', 'a:b[1]:d'], [1, 2])
+##		# => { 'a': { 'b': {0:{'c':1},1:{'d':2}} } }
+## JS Comparison
+##		>> Regarding integer keys
+##			In js ["0", -0, 0] are "the same keys" when applied to an object
+##			e.g. declaring {"0":"hello",0:"world"} in JS results in  {0:"world"}
+##			But in gdscript ["0"] is a different key from [-0,0]
+##			e.g. declaring {"0":"hello",0:"world"} in GODOT in {"0":"hello",0:"world"} 
+## 		
+##			Meaning in js
+##			_.zipObjectDeep( ["0"], ["foo"]) == _.zipObjectDeep( [-0],  ["foo"]) == _.zipObjectDeep( [0], ["foo"])
+##			And in godot
+##			_.zip_object_deep( ["0"], ["foo"]) != _.zip_object_deep( [-0],  ["foo"]) == _.zip_object_deep( [0], ["foo"])
+##
+##			You can specify if you want a numeric key to act as a string by wrapping
+##			it in a quoate (e.g.  in th_.zip_object_deep( ["0"], ["foo"]) )
+static func zip_object_deep(keys:Array, values:Array):
+	var dict = {}
+	for i in range(0, keys.size()):
+		var key = __INTERNAL__.string_to_path(keys[i])
+		var value = __INTERNAL__.get_index(values,i)
+		__INTERNAL__.set_dict_deep(dict, key, value)
+	return dict
+
+## This method is like GD_.zip except that it accepts iteratee to 
+## specify how grouped values should be combined. The iteratee is 
+## invoked with the elements of each group: (...group).
+## 
+## This attempts to replicate lodash's zipWith.
+## https://lodash.com/docs/4.17.15#zipWith
+## 
+## Arguments
+## 		[arrays] (...Array): The arrays to process.
+## 		[iteratee=_.identity] (Function): The function to combine grouped values.
+## Returns
+## 		(Array): Returns the new array of grouped elements.
+## Example
+##		var iteratee = func(a,b,c): return a + b + c
+## 		GD_.zip_with([1, 2], [10, 20], [100, 200], iteratee)
+## 		# => [111, 222]
+static func zip_with(a:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
+	var args = __INTERNAL__.to_clean_args(a,b,c,d,e,f,g,h,i,j)
+	var has_callable_arg = args[-1] is Callable
+	var iter_func = iteratee(args.pop_back()) if has_callable_arg else __INTERNAL__.to_clean_args
+	
+	var cursor = -1
+	var result = []
+	for array_arg in args:
+		var size = array_arg.size()
+		if cursor == size -1 : continue
+		
+		for index in range(max(cursor,0), array_arg.size()):
+			cursor = index
+			var arg_set = args.map(func (tmp): return tmp[cursor] if cursor < tmp.size() else null  )
+			var tmp = iter_func.callv(arg_set)
+			result.append(tmp)
+		cursor += 1
+	return result
+			
+	
 """
 CATEGORY: Collections
 """
@@ -2252,12 +2360,12 @@ static func assign_with(a=0, b=0, c=0): not_implemented()
 ##		# => ['a','c']
 ##
 ## JS Comparison
-##		>> Ellipsis arguments
+##		>> Variable Arguments
 ##			In js you can call an infinite amount of args using ellipses 
-##			E.g. "_.at([], 1,2,3,4,5,6,7,"as many as you want",10)
+##			E.g. _.at([], 1,2,3,4,5,6,7,"as many as you want",10)
 ##
 ##			But in GD_ you can call at most up to 10 args
-##			E.g. "GD_.at([], 1,2,3,4,5,6,7,8,9)
+##			E.g. GD_.at([], 1,2,3,4,5,6,7,8,9)
 static func at(obj, a,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_):
 	var array = []
 	var paths
@@ -2292,6 +2400,9 @@ static func functions_in(a=0, b=0, c=0): not_implemented()
 ## This attempts to replicate lodash's get. 
 ## See https://lodash.com/docs/4.17.15#get
 ##
+## When using string paths, delimit them with the ":" key e.g."a:b:c"
+## Or use the index access notation "a['b']['c']"
+##
 ## Arguments
 ## 		object (Object): The object to query.
 ## 		path (Array|string): The path of the property to get.
@@ -2299,20 +2410,23 @@ static func functions_in(a=0, b=0, c=0): not_implemented()
 ## Returns
 ## 		(*): Returns the resolved value.
 ## Example
-## 		var object = { 'a': [{ 'b': { 'c': 3 } }] }
-## 		 
-## 		GD_.get_prop(object, 'a:3:b:c')
+## 		GD_.get_prop({ 'a': [{ 'b': { 'c': 3 } }] }, 'a:0:b:c')
 ## 		# => 3
 ## 		 
-## 		GD_.get_prop(object, ['a', '0', 'b', 'c'])
+## 		GD_.get_prop({ 'a': [{ 'b': { 'c': 3 } }] }, ['a', 0, 'b', 'c'])
 ## 		# => 3
 ## 		 
-## 		GD_.get_prop(object, 'a:b:c', 'default')
+## 		GD_.get_prop({ 'a': {}, 'a:b:c', 'default')
 ## 		# => 'default'
 ##
 ##		GD_.get_prop([1,2,[3]], '2:1') 
 ##		# => 3
-##	
+##
+##		GD_.get_prop([ {'120':'string', 120: 'number'} ], '0[120]')
+##		# => number
+##
+##		GD_.get_prop([ {'120':'string', 120: 'number'} ], '0['120']')
+##		# => string
 ## JS Comparison
 ##		>> Regarding integer keys
 ##			In js ["0", -0, 0] are "the same keys" when applied to an object
@@ -2325,25 +2439,17 @@ static func functions_in(a=0, b=0, c=0): not_implemented()
 ##			And in godot
 ##			_.get( thing, "0") != (_.get( thing, -0) == _.get( thing, 0))
 ##
-##		>> Regarding complex paths
-##			In js you are able to do complex paths like
-##			_.get({...}, "a["[\\"b\\"]"].c[\'[\\\'d\\\']\']). To keep performance
-##			hits to a minimum, that behavior is not replicated. This only accepts
-##			basic paths
-##
 ##		>> Regarding function returns
 ##			In js you can fetch a function like this _.get([],"push")
 ##			But in gdscript you can't really do this without knowing that
 ##			The said thing is a Callable or a property
 static func get_prop(thing, path, default_value = null):
 	var splits
-	var last_exec_type
 	if path is String:
-		path = __string_to_path(path)
 		var result = GD_.get_prop(thing, [path], null)
 		if result:
 			return result
-		splits = path.split(&":")
+		splits = __INTERNAL__.string_to_path(path)
 	elif path is Array:
 		splits = path
 	elif GD_.is_number(path):
@@ -2359,7 +2465,6 @@ static func get_prop(thing, path, default_value = null):
 	var curr_prop = thing
 	for split in splits:
 		if curr_prop is Object:
-			last_exec_type = TYPE_OBJECT
 			var innnn = split in curr_prop
 			if split in curr_prop:
 				var attempt = curr_prop.get(split)
@@ -2371,9 +2476,15 @@ static func get_prop(thing, path, default_value = null):
 			else:
 				return default_value # which is null
 		if curr_prop is Dictionary:
-			last_exec_type = TYPE_DICTIONARY
-			if curr_prop.has(split):
+			if split in curr_prop: 
 				curr_prop = curr_prop[split]
+				continue
+			# As of 4.2 theres a bug where `&"" in {"":1}` results in a false
+			# If we rewrap with str it becomes usable again
+			# See https://github.com/godotengine/godot/issues/77894
+			# See https://github.com/godotengine/godot/pull/70096
+			elif split is StringName and str(split) in curr_prop: 
+				curr_prop = curr_prop[str(split)]
 				continue
 			elif split is String and split.is_valid_int():
 				curr_prop = curr_prop[int(split)]
@@ -2383,13 +2494,11 @@ static func get_prop(thing, path, default_value = null):
 				continue
 			else:
 				return default_value # which is null
-		if curr_prop is Array and (
-				(split is String and split.is_valid_int())
-				or
-				(split is int)
-			) and int(split) < curr_prop.size():
-			curr_prop = curr_prop[int(split)]
-			continue
+		if curr_prop is Array \
+			and __INTERNAL__.is_int_like(split) \
+			and int(split) < curr_prop.size():
+				curr_prop = __INTERNAL__.get_index(curr_prop,int(split))
+				continue
 		
 		# Expensive but atleast it follows, Lodash behavior
 		print("Warning: '%s' accesses a non-`Object`'s property which is expensive (e.g. Vector2 is a non-Object). Consider a different strategy" % &":".join(splits))
@@ -2500,7 +2609,8 @@ static func conforms(a=0, b=0, c=0): not_implemented()
 ## 		# => true
 ## 
 static func constant(value = null, _UNUSED_ = null):
-	return func (a = null, b = null): return value
+	return func (ab=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
+		return value
 
 
 ## Checks value to determine whether a default value should be returned 
@@ -2786,49 +2896,3 @@ static func keyed_iterable(thing):
 		
 	printerr("_to_collection received a non-collection")
 	return []
-
-"""
-INTERNAL STUFF
-"""
-static func __string_to_path(str: String):
-	var key = &""
-	
-	var c
-	for i in range(str.length()):
-		c = str[i]
-		match c:
-			&"[":
-				if i != 0:
-					key += &":"
-			&"]":
-				pass
-			_:
-				key += c
-				
-	return key
-	
-static func _is_nundefined(a): return a == null or a is Undefined
-static func _is_undefined(a): return a is Undefined
-
-## Weird unexplainable case in lodash
-## Try running the 2:
-## 
-## _.map([[1, 2, 3], [4, 5, 6], [7, 8, 9]], _.take)
-## _.mapValues({a:[1, 2, 3], b:[4, 5, 6], c:[7, 8, 9]},_.take)
-## 		vs
-## _.map([[1, 2, 3], [4, 5, 6], [7, 8, 9]], (a,b)=> _.take(a,b))
-## _.mapValues({a:[1, 2, 3], b:[4, 5, 6], c:[7, 8, 9]},(a,b) => _.take(a,b))
-##
-## Passing down the _.take as iterattes behaves like map 
-## was NOT invoked it with 2 arguments but with only 1.
-## This doesnt make sense because map invokes callbacks with 2 args (val,key)
-static func __iteratee_take(array, _UNUSED_):
-	return GD_.take(array, null)
-
-static func _is_collection(item):
-	return item is Array or item is Dictionary
-	
-static func _is_not_null_arg(i,_i):
-	return not(is_same(i, _UNDEF_))
-
-static func not_implemented():  assert(false, "Not implemented yet. Do you need this function? If so, open an issue and I will prioritize it")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=87 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/src/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -77,13 +77,21 @@
 [ext_resource type="Script" path="res://tests/array/GD_union_with.gd" id="52_o6bxo"]
 [ext_resource type="Script" path="res://tests/array/GD_union.gd" id="53_xewci"]
 [ext_resource type="Script" path="res://tests/array/GD_without_test.gd" id="54_2kyht"]
+[ext_resource type="Script" path="res://tests/array/GD_zip_test.gd" id="55_8ajws"]
+[ext_resource type="Script" path="res://tests/array/GD_zip_object_test.gd" id="56_thnxy"]
+[ext_resource type="Script" path="res://tests/array/GD_zip_with_test.gd" id="57_ajste"]
+[ext_resource type="Script" path="res://tests/array/GD_zip_object_deep.gd" id="58_qeg5f"]
 [ext_resource type="Script" path="res://tests/array/GD_is_number_test.gd" id="63_vhodk"]
 [ext_resource type="Script" path="res://tests/object/GD_at_test.gd" id="68_m3ofe"]
 [ext_resource type="Script" path="res://tests/util/GD_constant_test.gd" id="70_5dmw3"]
 [ext_resource type="Script" path="res://tests/util/GD_times_test.gd" id="77_fp70i"]
+[ext_resource type="Script" path="res://tests/__base_test.gd" id="86_csbig"]
 
 [node name="Unit Tests" type="Node"]
 script = ExtResource("1_b4vvq")
+
+[node name="__INTERNAL__" type="Node" parent="."]
+script = ExtResource("86_csbig")
 
 [node name="Array" type="Node" parent="."]
 
@@ -245,6 +253,18 @@ script = ExtResource("52_o6bxo")
 
 [node name="Without" type="Node" parent="Array"]
 script = ExtResource("54_2kyht")
+
+[node name="Zip" type="Node" parent="Array"]
+script = ExtResource("55_8ajws")
+
+[node name="Zip Object" type="Node" parent="Array"]
+script = ExtResource("56_thnxy")
+
+[node name="Zip With" type="Node" parent="Array"]
+script = ExtResource("57_ajste")
+
+[node name="Zip Object Deep" type="Node" parent="Array"]
+script = ExtResource("58_qeg5f")
 
 [node name="Collection" type="Node" parent="."]
 
