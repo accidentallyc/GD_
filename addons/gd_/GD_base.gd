@@ -14,8 +14,12 @@ static var _UNDEF_ = UNDEFINED.new()
 static var _EMPTY_ARRAY_ = []
 static var id_ctr = 0
 
-
-
+static var __INTERNAL__:Internal = Internal.new():
+	get:
+		# We gotta do this because static is null in EditorScripts 
+		if __INTERNAL__ == null:
+			__INTERNAL__ = Internal.new()
+		return __INTERNAL__
 
 """
 Reference to original functions
@@ -24,13 +28,26 @@ Reference to original functions
 ## Original floor to use in GD_.floor
 static func __floor(n): return floor(n)
 
+static func disable_warnings():
+	__INTERNAL__.is_warning_enabled = false
+
+static func enable_warnings():
+	__INTERNAL__.is_warning_enabled = true
+
+static func gd_warn(str:String):
+	__INTERNAL__.last_warning = str
+	if __INTERNAL__.is_warning_enabled:
+		printerr(str)
 """
 Internal utility function
 """
 
 ## Wrapping it in a class o we can hide the implementation from being visible
 ## when accessing GD_.
-class Internals:
+class Internal:
+	# Used for testing purposes
+	var last_warning
+	var is_warning_enabled = true
 	var string_to_path_rx:RegEx
 	
 	func _init():
@@ -116,36 +133,41 @@ class Internals:
 		if index >= 0 and index < array.size():
 			return array[index]
 		return default_value
+		
+	# For functions with weird and special behaviors when used as n iteratee.
 	
+	func get_iteratee(callable: Callable):
+		# These functions have weird lodash behaviors as iteratee's
+		# Visit each function for an explanation
+		match callable:
+			GD_.take: return iteratee_drop_second_arg(GD_.take)
+			GD_.every: return iteratee_drop_second_arg(GD_.every)
+		return callable
+		
+	## Some iteratees completely drop the second argument when used in a map
+	## For example: 
+	##
+	## _.map([[1, 2, 3], [4, 5, 6], [7, 8, 9]], _.take)
+	## _.mapValues({a:[1, 2, 3], b:[4, 5, 6], c:[7, 8, 9]},_.take)
+	## 		vs
+	## _.map([[1, 2, 3], [4, 5, 6], [7, 8, 9]], (a,b)=> _.take(a,b))
+	## _.mapValues({a:[1, 2, 3], b:[4, 5, 6], c:[7, 8, 9]},(a,b) => _.take(a,b))
+	func iteratee_drop_second_arg(callable:Callable):
+		return func (arg1, _UNUSED_):
+			return callable.call(arg1, null)
 
 """
 INTERNAL STUFF
 """
 
 
-## Weird unexplainable case in lodash
-## Try running the 2:
-## 
-## _.map([[1, 2, 3], [4, 5, 6], [7, 8, 9]], _.take)
-## _.mapValues({a:[1, 2, 3], b:[4, 5, 6], c:[7, 8, 9]},_.take)
-## 		vs
-## _.map([[1, 2, 3], [4, 5, 6], [7, 8, 9]], (a,b)=> _.take(a,b))
-## _.mapValues({a:[1, 2, 3], b:[4, 5, 6], c:[7, 8, 9]},(a,b) => _.take(a,b))
-##
-## Passing down the _.take as iterattes behaves like map 
-## was NOT invoked it with 2 arguments but with only 1.
-## This doesnt make sense because map invokes callbacks with 2 args (val,key)
-static func __iteratee_take(array, _UNUSED_):
-	return GD_.take(array, null)
+
 	
 static func _is_collection(item):
-	return item is Array or item is Dictionary
+	return item is Array or item is Dictionary or GD_.is_string_like(item)
 	
 static func _is_not_null_arg(i,_i):
 	return not(is_same(i, _UNDEF_))
 	
 static func not_implemented():  
 	assert(false, "Not implemented yet. Do you need this function? If so, open an issue and I will prioritize it")
-
-
-static var __INTERNAL__:Internals = Internals.new()

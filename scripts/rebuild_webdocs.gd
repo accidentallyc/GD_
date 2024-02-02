@@ -74,7 +74,7 @@ func _run():
 							def.arguments = fixed
 							has_text = true
 							buffer = []
-						"js comparison":
+						"notes":
 							def.comparison = buffer
 							has_text = true
 							buffer = []

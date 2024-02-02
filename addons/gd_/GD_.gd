@@ -477,7 +477,7 @@ static func find_last_index(array:Array, predicate = GD_.identity, from_index=-1
 ## This attempts to replicate lodash's first.
 ## https://lodash.com/docs/4.17.15#first
 static func first(array):
-	print("GD_.first is an alias, prefer GD_.head to avoid overhead")
+	gd_warn("GD_.first is an alias, prefer GD_.head to avoid overhead")
 	return head(array)
 
 
@@ -567,7 +567,7 @@ static func from_pairs(array:Array):
 	var obj = {}
 	for i in array:
 		if not(i is Array) or i.size() != 2:
-			printerr("GD_.from_pairs entry must follow this [k,v]. Received %s instead" % i )
+			gd_warn("GD_.from_pairs entry must follow this [k,v]. Received %s instead" % i )
 			continue
 			
 		obj[i[0]] = i[1]
@@ -655,10 +655,10 @@ static func initial(array:Array):
 ## 		# => [2]
 static func intersection(array_1:Array,array_2:Array,array_3 = null,array_4 = null,array_5 = null,array_6 = null,array_7 = null,array_8 = null,array_9 = null,array_10 = null,array_11 = null):
 	if not(array_1 is Array):
-		printerr("GD_.intersection received a non-array type value")
+		gd_warn("GD_.intersection received a non-array type value")
 		return null
 	if not array_2 is Array:
-		printerr("GD_.intersection received a non-array type value for array_2")
+		gd_warn("GD_.intersection received a non-array type value for array_2")
 		return null
 	return intersection_with(array_1,array_2,array_3,array_4,array_5,array_6,array_7,array_8,array_9,array_10,array_11)
 
@@ -685,10 +685,10 @@ static func intersection(array_1:Array,array_2:Array,array_3 = null,array_4 = nu
 ##		# => [{ 'x': 1 }]
 static func intersection_by(array_1:Array, array_2:Array, array_3 = null, array_4 = null, array_5 = null, array_6 = null, array_7 = null, array_8 = null, array_9 = null, array_10 = null):
 	if not array_1 is Array:
-		printerr("GD_.intersection_by received a non-array type value for array_1")
+		gd_warn("GD_.intersection_by received a non-array type value for array_1")
 		return null
 	if not array_2 is Array:
-		printerr("GD_.intersection_by received a non-array type value for array_2")
+		gd_warn("GD_.intersection_by received a non-array type value for array_2")
 		return null
 
 	var arrays = [array_2, array_3, array_4, array_5, array_6, array_7, array_8, array_9, array_10]
@@ -739,10 +739,10 @@ static func intersection_by(array_1:Array, array_2:Array, array_3 = null, array_
 ## 		# => [{ 'x': 1, 'y': 2 }]
 static func intersection_with(array_1:Array,array_2:Array,array_3 = null,array_4 = null,array_5 = null,array_6 = null,array_7 = null,array_8 = null,array_9 = null,array_10 = null,array_11 = null):
 	if not(array_1 is Array):
-		printerr("GD_.intersection_with received a non-array type value")
+		gd_warn("GD_.intersection_with received a non-array type value")
 		return null
 	if not(array_2 is Array):
-		printerr("GD_.intersection_with received a non-array type value")
+		gd_warn("GD_.intersection_with received a non-array type value")
 		return null
 		
 	var arrays = [array_2,array_3, array_4,array_5,array_6,array_7,
@@ -1114,7 +1114,7 @@ static func slice(array:Array, start=0,end = array.size()):
 ## 		# => 1
 static func sorted_index(array:Array, value):
 	if not(GD_.is_number(value)):
-		printerr("GD_.sorted_index received a non-number value")
+		gd_warn("GD_.sorted_index received a non-number value")
 		return null
 		
 	return sorted_index_by(array,value)
@@ -1177,7 +1177,7 @@ static func sorted_index_by(array:Array, value, iteratee = GD_.identity):
 ## 		# => 1	
 static func sorted_index_of(array:Array, value):
 	if not(GD_.is_number(value)):
-		printerr("GD_.sorted_index_of received a non-number value")
+		gd_warn("GD_.sorted_index_of received a non-number value")
 		return -1
 		
 	var ceil = array.size()
@@ -1217,7 +1217,7 @@ static func sorted_index_of(array:Array, value):
 ## 		# => 4
 static func sorted_last_index(array:Array, value):
 	if not(GD_.is_number(value)):
-		printerr("GD_.sorted_index received a non-number value")
+		gd_warn("GD_.sorted_index received a non-number value")
 		return null
 		
 	return sorted_last_index_by(array,value)
@@ -1278,7 +1278,7 @@ static func sorted_last_index_by(array:Array, value, iteratee = GD_.identity):
 ## 		# => 3
 static func sorted_last_index_of(array:Array, value): 
 	if not(GD_.is_number(value)):
-		printerr("GD_.sorted_last_index_of received a non-number value")
+		gd_warn("GD_.sorted_last_index_of received a non-number value")
 		return -1
 		
 	var ceil = array.size()
@@ -1415,7 +1415,7 @@ static func take_while(array:Array, b=0, c=0): not_implemented()
 ##
 ## 		GD_.union([1],[2],[3],[4],[5])
 ## 		# => [1,2,3,4,5]
-## JS Comparison
+## Notes
 ##		>> Variable Arguments
 ##			In js you can call an infinite amount of args using ellipses 
 ##			E.g. "GD_.union([1],[2],[3],[4],[5],[6],[7],["as many as you want"],[10])
@@ -1624,7 +1624,7 @@ static func xor_with(array:Array, b=0, c=0): not_implemented()
 ## Example
 ## 		GD_.zip(['a', 'b'], [1, 2], [true, false])
 ## 		# => [['a', 1, true], ['b', 2, false]]
-## JS Comparison
+## Notes
 ##		>> Variable Arguments
 ##			In js you can call an infinite amount of args using ellipses 
 ##			E.g. _.zip([1], [2], [3],[4],  ... , [100], [101])
@@ -1648,7 +1648,7 @@ static func zip(a:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UN
 ## Example
 ## 		GD_.zip_object(['a', 'b'], [1, 2])
 ## 		# => { 'a': 1, 'b': 2 }
-## JS Comparison
+## Notes
 ##		>> Numbers as keys
 ##			In js you can call an infinite amount of args using ellipses 
 ##			E.g. _.zip([1], [2], [3],[4],  ... , [100], [101])
@@ -1674,7 +1674,7 @@ static func zip_object(keys:Array, values:Array):
 ## Example
 ##		GD_.zip_object_deep(['a:b[0]:c', 'a:b[1]:d'], [1, 2])
 ##		# => { 'a': { 'b': {0:{'c':1},1:{'d':2}} } }
-## JS Comparison
+## Notes
 ##		>> Regarding integer keys
 ##			In js ["0", -0, 0] are "the same keys" when applied to an object
 ##			e.g. declaring {"0":"hello",0:"world"} in JS results in  {0:"world"}
@@ -1740,7 +1740,8 @@ CATEGORY: Collections
 ## running each element of collection thru iteratee. The corresponding value 
 ## of each key is the number of times the key was returned by iteratee. 
 ## The iteratee is invoked with two arguments: (value, _UNUSED_).
-## This attempts to replicate lodash's count_by. 
+##
+## This attempts to replicate lodash's countBy. 
 ## See https://lodash.com/docs/4.17.15#countBy
 ##
 ## Arguments
@@ -1756,8 +1757,8 @@ CATEGORY: Collections
 ## 		GD_.count_by(['one', 'two', 'three'], 'length')
 ## 		# => { '3': 2, '5': 1 }
 static func count_by(collection, iteratee = null):
-	if not(_is_collection(collection)):
-		printerr("GD_.count_by received a non-collection type value")
+	if not(GD_._is_collection(collection)):
+		gd_warn("GD_.count_by received a non-collection type value")
 		return null
 		
 	var iter_func = iteratee(iteratee)
@@ -1774,13 +1775,16 @@ static func count_by(collection, iteratee = null):
 ## This attempts to replicate lodash's each.
 ## https://lodash.com/docs/4.17.15#each
 static func each(collection, iteratee): 
-	printerr("GD_.each is an alias, prefer GD_.for_each to avoid overhead")
+	gd_warn("GD_.each is an alias, prefer GD_.for_each to avoid overhead")
 	return for_each(collection, iteratee)
 
 
 ## Iterates over elements of collection and invokes iteratee for each element. 
 ## The iteratee is invoked with two arguments: (value, index|key). 
 ## Iteratee functions may exit iteration early by explicitly returning false.
+##
+## This attempts to replicate lodash's forEach. 
+## See https://lodash.com/docs/4.17.15#forEach
 ##
 ## Aliases
 ## 		GD_.each
@@ -1796,8 +1800,8 @@ static func each(collection, iteratee):
 ## 		GD_.for_each({ 'a': 1, 'b': 2 }, func (_value, key): print(key))
 ## 		# => Logs 'a' then 'b' (iteration order is not guaranteed).
 static func for_each(collection, iteratee): 
-	if not(_is_collection(collection)):
-		printerr("GD_.for_each received a non-collection type value")
+	if not(GD_._is_collection(collection)):
+		gd_warn("GD_.for_each received a non-collection type value")
 		return null
 		
 	var iter_func = iteratee(iteratee)
@@ -1808,7 +1812,47 @@ static func for_each(collection, iteratee):
 			return
 
 static func each_right(a=0, b=0, c=0): not_implemented()
-static func every(a=0, b=0, c=0): not_implemented() ## @TODO from 0.1.0
+
+
+## Checks if predicate returns truthy for all elements of collection. 
+## Iteration is stopped once predicate returns falsey. The predicate is invoked with 
+## two arguments: (value, index|key).
+## 
+## This attempts to replicate lodash's every. 
+## See https://lodash.com/docs/4.17.15#every
+## 
+## Arguments
+## 		collection (Array|Object): The collection to iterate over.
+## 		[predicate=GD_.identity] (Function): The function invoked per iteration.
+## Returns
+## 		(boolean): Returns true if all elements pass the predicate check, else false.
+## Example
+## 		GD_.every([true, 1, null, 'yes'])
+## 		# => false
+## 		 
+## 		var users = [
+## 		  { 'user': 'barney', 'age': 36, 'active': false },
+## 		  { 'user': 'fred',   'age': 40, 'active': false }
+## 		]
+## 		 
+## 		// The `GD_.matches` iteratee shorthand.
+## 		GD_.every(users, { 'user': 'barney', 'active': false })
+## 		# => false
+## 		 
+## 		// The `GD_.matchesProperty` iteratee shorthand.
+## 		GD_.every(users, ['active', false])
+## 		# => true
+## 		 
+## 		// The `GD_.property` iteratee shorthand.
+## 		GD_.every(users, 'active')
+## 		# => false
+static func every(collection, predicate = GD_.identity): 
+	var predicate_fn = iteratee(predicate)
+	for key in keyed_iterable(collection):
+		var thing = collection[key]
+		if not predicate_fn.call(thing, key):
+			return false
+	return true
 
 ## Iterates over elements of collection, returning an array of all elements predicate returns truthy for. 
 ## The predicate is invoked with two arguments (value, index|key).
@@ -1841,8 +1885,8 @@ static func every(a=0, b=0, c=0): not_implemented() ## @TODO from 0.1.0
 ## 		GD_.filter(users, 'active')
 ## 		# => objects for ['barney']
 static func filter(collection, iteratee = null):
-	if not(_is_collection(collection)):
-		printerr("GD_.filter received a non-collection type value")
+	if not(GD_._is_collection(collection)):
+		gd_warn("GD_.filter received a non-collection type value")
 		return null
 		
 	var iter_func = iteratee(iteratee)
@@ -1888,8 +1932,8 @@ static func filter(collection, iteratee = null):
 ## 		GD_.find(users, 'active')
 ## 		# => object for 'barney'
 static func find(collection, iteratee = null, from_index = 0):
-	if not(_is_collection(collection)):
-		printerr("GD_.find received a non-collection type value")
+	if not(GD_._is_collection(collection)):
+		gd_warn("GD_.find received a non-collection type value")
 		return null
 		
 	var iter_func = iteratee(iteratee)
@@ -1913,6 +1957,7 @@ static func for_each_right(a=0, b=0, c=0): not_implemented()
 ## determined by the order they occur in collection. The corresponding value 
 ## of each key is an array of elements responsible for generating the key. 
 ## The iteratee is invoked with two arguments: (value, _UNUSED_).
+##
 ## This attempts to replicate lodash's groupBy.
 ## See https://lodash.com/docs/4.17.15#groupBy
 ##
@@ -1929,8 +1974,8 @@ static func for_each_right(a=0, b=0, c=0): not_implemented()
 ## 		GD_.group_by(['one', 'two', 'three'], 'length')
 ## 		# => { '3': ['one', 'two'], '5': ['three'] }
 static func group_by(collection, iteratee = GD_.identity):
-	if not(_is_collection(collection)):
-		printerr("GD_.group_by received a non-collection type value")
+	if not(GD_._is_collection(collection)):
+		gd_warn("GD_.group_by received a non-collection type value")
 		return null
 		
 	var iter_func = iteratee(iteratee)
@@ -1942,14 +1987,47 @@ static func group_by(collection, iteratee = GD_.identity):
 		counters[key].append(item)
 	return counters
 	
-	
-static func includes(a=0, b=0, c=0): not_implemented() ## @TODO from 0.1.0
+## Checks if value is in collection. If collection is a string, it's checked for 
+## a substring of value, otherwise == is used for equality comparisons. 
+## If fromIndex is negative, it's used as the offset from the end of collection.
+## 
+## This attempts to replicate lodash's includes.
+## See https://lodash.com/docs/4.17.15#includes
+## 
+## Arguments
+## 		collection (Array|Object|string): The collection to inspect.
+## 		value (*): The value to search for.
+## 		[fromIndex=0] (number): The index to search from.
+## 	Returns
+## 		(boolean): Returns true if value is found, else false.
+## Example
+## 		GD_.includes([1, 2, 3], 1)
+## 		# => true
+## 		 
+## 		GD_.includes([1, 2, 3], 1, 2)
+## 		# => false
+## 		 
+## 		GD_.includes({ 'a': 1, 'b': 2 }, 1)
+## 		# => true
+## 		 
+## 		GD_.includes('abcd', 'bc')
+## 		# => true
+static func includes(collection, thing, from_index :=0):
+	if GD_._is_collection(collection):
+		for key in keyed_iterable(collection,from_index):
+			if is_equal(collection[key], thing): 
+				return true
+		return false
+		
+	gd_warn("GD_.includes received a non-collection type value")
+	return false
 static func invoke_map(a=0, b=0, c=0): not_implemented()
 static func key_by(a=0, b=0, c=0): not_implemented()
 
 ## Creates an array of values by running each element in collection thru 
 ## iteratee. The iteratee is invoked with two arguments: (value, index|key).
 ## The iteratee is invoked with two arguments: (value, index).
+##
 ## This attempts to replicate lodash's map.
 ## See https://lodash.com/docs/4.17.15#map
 ##
@@ -1977,11 +2055,11 @@ static func key_by(a=0, b=0, c=0): not_implemented()
 ## 		GD_.map(users, 'user')
 ## 		# => ['barney', 'fred']
 static func map(collection, iteratee = GD_.identity):
-	if not(_is_collection(collection)):
-		printerr("GD_.map received a non-collection type value")
+	if not(GD_._is_collection(collection)):
+		gd_warn("GD_.map received a non-collection type value")
 		return null
 		
-	var iter_func = iteratee(iteratee)
+	var iter_func = GD_.iteratee(iteratee)
 		
 	var new_collection = []
 	for key in keyed_iterable(collection):
@@ -1998,7 +2076,43 @@ static func reject(a=0, b=0, c=0): not_implemented()
 static func sample(a=0, b=0, c=0): not_implemented()
 static func sample_size(a=0, b=0, c=0): not_implemented()
 static func shuffle(a=0, b=0, c=0): not_implemented()
-static func size(a=0, b=0, c=0): not_implemented()
+
+## Gets the size of collection by returning its length for array-like values 
+## or the number of own enumerable string keyed properties for objects.
+## 
+## This attempts to replicate lodash's size.
+## See https://lodash.com/docs/4.17.15#size
+##
+## Arguments
+## 		collection (Array|Object|string): The collection to inspect.
+## Returns
+##		(number): Returns the collection size.
+## Example
+## 		GD_.size([1, 2, 3])
+## 		# => 3
+##
+## 		GD_.size({ 'a': 1, 'b': 2 })
+## 		# => 2
+##
+## 		GD_.size('pebbles')
+## 		# => 7
+## Notes
+##		> Collections in JS
+##		In js, anything can turn to a collection as long as it has the field
+##		length. In GD_, for as long as it implements length() or size() it
+##		size will use that and return it
+static func size(thing): 
+	if thing is Array or thing is Dictionary:
+		return thing.size()
+	elif is_string_like(thing):
+		return thing.length()
+	elif thing is Object:
+		if thing.has_method('length'):
+			return thing.length()
+		elif thing.has_method('size'):
+			return thing.size()
+	gd_warn("GD_.size received a non-collection type value")
+	return 0
 
 ## Checks if predicate returns truthy for any element of collection. 
 ## Iteration is stopped once predicate returns truthy. 
@@ -2007,7 +2121,7 @@ static func size(a=0, b=0, c=0): not_implemented()
 ## See https://lodash.com/docs/4.17.15#some
 ##
 ## Arguments
-## 		collection (Array|Object): The collection to iterate over.
+## 		collection (Array|Dictionary|String): The collection to iterate over.
 ## 		[predicate=_.identity] (Function): The function invoked per iteration.
 ## Returns
 ## 		(boolean): Returns true if any element passes the predicate check, else false.
@@ -2032,8 +2146,8 @@ static func size(a=0, b=0, c=0): not_implemented()
 ## 		GD_.some(users, 'active')
 ## 		# => true
 static func some(collection, iteratee = null):
-	if not(_is_collection(collection)):
-		printerr("GD_.some received a non-collection type value")
+	if not(GD_._is_collection(collection)):
+		gd_warn("GD_.some received a non-collection type value")
 		return null
 		
 	var iter_func = iteratee(iteratee)
@@ -2194,7 +2308,8 @@ static func is_empty(a=0, b=0, c=0): not_implemented()
 ## This attempts to replicate lodash's isEqual. 
 ## See https://lodash.com/docs/4.17.15#isEqual
 static func is_equal(left,right): 
-	return left == right
+	return typeof(left) == typeof(right) and left == right
+	
 	
 	
 static func is_equal_with(a=0, b=0, c=0): not_implemented()
@@ -2243,7 +2358,13 @@ static func is_plain_object(a=0, b=0, c=0): not_implemented()
 static func is_reg_exp(a=0, b=0, c=0): not_implemented()
 static func is_safe_integer(a=0, b=0, c=0): not_implemented()
 static func is_set(a=0, b=0, c=0): not_implemented()
-static func is_string(a=0, b=0, c=0): not_implemented()
+
+
+static func is_string_like(thing):
+	return thing is String or thing is StringName
+	
+static func is_string(thing):
+	return thing is String
 static func is_symbol(a=0, b=0, c=0): not_implemented()
 static func is_typed_array(a=0, b=0, c=0): not_implemented()
 static func is_undefined(a=0, b=0, c=0): not_implemented()
@@ -2359,7 +2480,7 @@ static func assign_with(a=0, b=0, c=0): not_implemented()
 ##		GD_.at(['a', 'b', 'c'], 0,2)
 ##		# => ['a','c']
 ##
-## JS Comparison
+## Notes
 ##		>> Variable Arguments
 ##			In js you can call an infinite amount of args using ellipses 
 ##			E.g. _.at([], 1,2,3,4,5,6,7,"as many as you want",10)
@@ -2427,7 +2548,7 @@ static func functions_in(a=0, b=0, c=0): not_implemented()
 ##
 ##		GD_.get_prop([ {'120':'string', 120: 'number'} ], '0['120']')
 ##		# => string
-## JS Comparison
+## Notes
 ##		>> Regarding integer keys
 ##			In js ["0", -0, 0] are "the same keys" when applied to an object
 ##			e.g. declaring {"0":"hello",0:"world"} in JS results in  {0:"world"}
@@ -2455,7 +2576,7 @@ static func get_prop(thing, path, default_value = null):
 	elif GD_.is_number(path):
 		splits = [path]
 	else:
-		printerr("GD_.get_prop received a non-collection type PATH")
+		gd_warn("GD_.get_prop received a non-collection type PATH")
 		print_stack()
 		return default_value
 		
@@ -2501,7 +2622,7 @@ static func get_prop(thing, path, default_value = null):
 				continue
 		
 		# Expensive but atleast it follows, Lodash behavior
-		print("Warning: '%s' accesses a non-`Object`'s property which is expensive (e.g. Vector2 is a non-Object). Consider a different strategy" % &":".join(splits))
+		gd_warn("Warning: '%s' accesses a non-`Object`'s property which is expensive (e.g. Vector2 is a non-Object). Consider a different strategy" % &":".join(splits))
 		var expression = Expression.new()
 		var payload = "item['%s']" % split
 		var result = expression.parse(payload,["item"])
@@ -2702,14 +2823,10 @@ static func iteratee(iteratee_val):
 		TYPE_NIL:
 			return GD_.identity
 		TYPE_CALLABLE:
-			# These functions have weird lodash behaviors as iteratee's
-			# Visit each function for an explanation
-			if iteratee_val == GD_.take: 
-				return GD_.__iteratee_take
-			return iteratee_val
+			return GD_.__INTERNAL__.get_iteratee(iteratee_val)
 				
 		_:
-			printerr("GD_.find called with unsupported signature %s. See docs for more info" % iteratee)
+			gd_warn("GD_.find called with unsupported signature %s. See docs for more info" % iteratee)
 	return null
 
 ## Creates a function that perform a comparison between a 
@@ -2817,7 +2934,7 @@ static func property(path):
 	elif path is Array:
 		splits = path
 	else:
-		printerr("GD_.property received a non-collection type value")
+		gd_warn("GD_.property received a non-collection type value")
 		return null
 		
 	return func (value, _unused = null):
@@ -2884,15 +3001,24 @@ static func unique_id(prefix=&""):
 
 """
 NON-LODASH FUNCS
-"""
-
+"""	
 ## Ensures that when it iterates through the item, it always iterates via keys
 ## This does not have a lodash equivalent	
-static func keyed_iterable(thing):
-	if thing is Array:
-		return range(thing.size())
-	elif thing is Dictionary:
-		return thing
+static func keyed_iterable(thing, from_index = 0):
+	if thing is Array or GD_.is_string_like(thing):
+		var size = GD_.size(thing)
+		if from_index >= 0:
+			var array = range(from_index, size)
+			return array
+		return range(size).slice(size + from_index)
+	if thing is Dictionary:
+		var keys =  thing.keys()
+		if from_index > 0:
+			return keys.slice(from_index)
+		elif from_index < 0:
+			return keys.slice(thing.size() + from_index)
+		else: 
+			return keys
 		
-	printerr("_to_collection received a non-collection")
+	gd_warn("_to_collection received a non-collection")
 	return []
