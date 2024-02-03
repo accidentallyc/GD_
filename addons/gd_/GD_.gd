@@ -9,6 +9,7 @@ CATEGORY: Array
 ## Creates an array of elements split into groups the length of size. 
 ## If array can't be split evenly, the final chunk will be the remaining elements.
 ## This attempts to replicate lodash's chunk. 
+##
 ## https://lodash.com/docs/4.17.15#chunk
 ##
 ## Arguments
@@ -22,7 +23,7 @@ CATEGORY: Array
 ## 		 
 ## 		GD_.chunk(['a', 'b', 'c', 'd'], 3)
 ## 		# => [['a', 'b', 'c'], ['d']]
-static func chunk(array:Array,size=1): 
+static func chunk(array:Array,size=1): # @TODO guarded method by map, every, filter, mapValues, reject, some
 	# Thanks to cyberreality for the quick code they offered to the 
 	# community. https://www.reddit.com/r/godot/comments/e6ae27/comment/f9p3c2e/?utm_source=share&utm_medium=web2x&context=3
 	var new_array = []
@@ -213,7 +214,7 @@ static func difference_with(array_left, array_right, comparator:Callable):
 ## 		 
 ## 		GD_.drop([1, 2, 3], 0)
 ## 		# => [1, 2, 3]
-static func drop(array:Array, n:int=1):
+static func drop(array:Array, n:int=1): # @TODO guarded method by map, every, filter, mapValues, reject, some
 	var size = array.size()
 	var new_array = []
 	for i in range(n,size):
@@ -244,7 +245,7 @@ static func drop(array:Array, n:int=1):
 ## 		 
 ## 		GD_.drop_right([1, 2, 3], 0)
 ## 		# => [1, 2, 3]
-static func drop_right(array:Array, n:int=1):
+static func drop_right(array:Array, n:int=1): # @TODO guarded method by map, every, filter, mapValues, reject, some
 	var size = array.size() - n
 	var new_array = []
 	var i = 0
@@ -380,7 +381,7 @@ static func drop_while(array:Array, predicate = GD_.identity):
 ## 		 
 ## 		GD_.fill([4, 6, 8, 10], '*', 1, 3)
 ## 		# => [4, '*', '*', 10]
-static func fill(array:Array, value, start=0, end=-1):
+static func fill(array:Array, value, start=0, end=-1): # @TODO guarded method by map, every, filter, mapValues, reject, some
 	if end == -1 or end > array.size():
 		end = array.size()
 
@@ -911,7 +912,7 @@ static func pull_all(array:Array, values_to_remove:Array = _EMPTY_ARRAY_):
 ## Arguments
 ## 		array (Array): The array to modify.
 ## 		values (Array): The values to remove.
-## 		[iteratee=_.identity] (Function): The iteratee invoked per element.
+## 		[iteratee=GD_.identity] (Function): The iteratee invoked per element.
 ## Returns
 ## 		(Array): Returns array.
 ## Example
@@ -1094,7 +1095,7 @@ static func reverse(array:Array):
 ##
 ##		print(slice)
 ##		# => [1,2,3]
-static func slice(array:Array, start=0,end = array.size()):
+static func slice(array:Array, start=0,end = array.size()): # @TODO guarded method by map, every, filter, mapValues, reject, some
 	return array.slice(start,end)
 	
 
@@ -1131,7 +1132,7 @@ static func sorted_index(array:Array, value):
 ## Arguments
 ## 		array (Array): The sorted array to inspect.
 ## 		value (*): The value to evaluate.
-## 		[iteratee=_.identity] (Function): The iteratee invoked per element.
+## 		[iteratee=GD_.identity] (Function): The iteratee invoked per element.
 ## Returns
 ## 		(number): Returns the index at which value should be inserted into array.
 ## Example
@@ -1385,7 +1386,7 @@ static func tail(array:Array, _UNUSED_ = null):
 ## 		 
 ## 		GD_.take([1, 2, 3], 0)
 ## 		# => []
-static func take(array:Array, n = null):
+static func take(array:Array, n = null): # @TODO guarded method by map, every, filter, mapValues, reject, some
 	var size = array.size()
 	if n == null:
 		n = 1
@@ -1394,7 +1395,7 @@ static func take(array:Array, n = null):
 	return array.slice(0, min(n,size))
 	
 	
-static func take_right(array:Array, n = 1): not_implemented()
+static func take_right(array:Array, n = 1): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func take_right_while(array:Array, b=0, c=0): not_implemented()
 static func take_while(array:Array, b=0, c=0): not_implemented()
 
@@ -1441,7 +1442,7 @@ static func union(a:Array, b:Array, c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_U
 ## 
 ## Arguments
 ## 		[arrays] (...Array): The arrays to inspect.
-## 		[iteratee=_.identity] (Function): The iteratee invoked per element.
+## 		[iteratee=GD_.identity] (Function): The iteratee invoked per element.
 ## Returns
 ## 		(Array): Returns the new array of combined values.
 ## Example
@@ -1705,7 +1706,7 @@ static func zip_object_deep(keys:Array, values:Array):
 ## 
 ## Arguments
 ## 		[arrays] (...Array): The arrays to process.
-## 		[iteratee=_.identity] (Function): The function to combine grouped values.
+## 		[iteratee=GD_.identity] (Function): The function to combine grouped values.
 ## Returns
 ## 		(Array): Returns the new array of grouped elements.
 ## Example
@@ -1846,7 +1847,7 @@ static func each_right(a=0, b=0, c=0): not_implemented()
 ## 		// The `GD_.property` iteratee shorthand.
 ## 		GD_.every(users, 'active')
 ## 		# => false
-static func every(collection, predicate = GD_.identity): 
+static func every(collection, predicate = GD_.identity):  # @TODO guarded method by map, every, filter, mapValues, reject, some
 	var predicate_fn = iteratee(predicate)
 	for key in keyed_iterable(collection):
 		var thing = collection[key]
@@ -2028,6 +2029,7 @@ static func key_by(a=0, b=0, c=0): not_implemented()
 ## iteratee. The iteratee is invoked with two arguments: (value, index|key).
 ## The iteratee is invoked with two arguments: (value, index).
 ##
+##
 ## This attempts to replicate lodash's map.
 ## See https://lodash.com/docs/4.17.15#map
 ##
@@ -2070,11 +2072,105 @@ static func map(collection, iteratee = GD_.identity):
 	
 static func order_by(a=0, b=0, c=0): not_implemented()
 static func partition(a=0, b=0, c=0): not_implemented()
-static func reduce(a=0, b=0, c=0): not_implemented() ## @TODO fro 0.1.0
-static func reduce_right(a=0, b=0, c=0): not_implemented()
+
+## Reduces collection to a value which is the accumulated result of running 
+## each element in collection thru iteratee, where each successive invocation 
+## is supplied the return value of the previous. If accumulator is not given, 
+## the first element of collection is used as the initial value. 
+## The iteratee two arguments: (accumulator, {"key":key,"value":value}).
+## 
+## This attempts to replicate lodash's reduce.
+## See https://lodash.com/docs/4.17.15#reduce
+## 
+## Arguments
+## 		collection (Array|Object): The collection to iterate over.
+## 		[iteratee=GD_.identity] (Function): The function invoked per iteration.
+## 		[accumulator] (*): The initial value.
+## Returns
+## 		(*): Returns the accumulated value.
+## Example
+## 		var sum = func (accum, kv): return accum + kv.value
+## 		GD_.reduce([1, 2], sum, 0)
+## 		# => 3
+##  	
+##		var cb = func (result, kv):
+## 		  (result[kv.value] || (result[kv.value] = [])).push(kv.key)
+## 		  return result
+## 		
+## 		GD_.reduce({ 'a': 1, 'b': 2, 'c': 1 }, cb, {})
+## 		# => { '1': ['a', 'c'], '2': ['b'] } (iteration order is not guaranteed)
+## Notes
+##		>> Callable Signature
+##			In GD_ we try to standardize callbacks into having 2 arguments
+##			So they can be chained together. Thats why we pass a dictionary down
+## 			instead
+static func reduce(collection, iteratee=GD_.identity, accumulator = null):
+	if not _is_collection(collection):
+		return null
+	
+	var iter_func = iteratee(iteratee)
+	
+	var iterable = keyed_iterable(collection)
+	var starting_index = 0
+	if accumulator == null:
+		starting_index = 1
+		var key = iterable[0]
+		accumulator = collection[key]
+	var kv_tmp =  {"key":null,"value":null}
+	for key_index in range(starting_index, GD_.size(iterable)):
+		kv_tmp.key = iterable[key_index]
+		kv_tmp.value = collection[kv_tmp.key]
+		accumulator = iter_func.call(accumulator, kv_tmp)
+	
+	return accumulator
+		
+
+## This method is like GD_.reduce except that it iterates over elements 
+## of collection from right to left.
+## 
+## This attempts to replicate lodash's reduceRight.
+## See https://lodash.com/docs/4.17.15#reduceRight
+## 
+## Arguments
+## 		collection (Array|Object): The collection to iterate over.
+## 		[iteratee=GD_.identity] (Function): The function invoked per iteration.
+## 		[accumulator] (*): The initial value.
+## Returns
+## 		(*): Returns the accumulated value.
+## Example
+## 		var array = [[0, 1], [2, 3], [4, 5]]
+## 		 
+##		var concat = func (flattened, kv): flattened.append_array(kv.value)
+## 		GD_.reduce_right(array, concat, [])
+## 		# => [4, 5, 2, 3, 0, 1]
+static func reduce_right(collection, iteratee=GD_.identity, accumulator = null):
+	if not _is_collection(collection):
+		return null
+		
+	var iter_func = iteratee(iteratee)
+	var iterable = keyed_iterable(collection)
+	
+	for key_index in range(GD_.size(iterable) - 1, -1, -1):
+		var key = iterable[key_index]
+		var value = collection[key]
+	
+	var starting_index = GD_.size(iterable) - 1
+	
+	if accumulator == null:
+		var key = iterable[ starting_index ]
+		starting_index = starting_index - 1
+		accumulator = collection[key]
+		
+	for key_index in range(starting_index, -1, -1):
+		var key = iterable[key_index]
+		var value = collection[key]
+		accumulator = iter_func.call(accumulator, {"key":key,"value":value})
+	
+	return accumulator
+	
 static func reject(a=0, b=0, c=0): not_implemented()
 static func sample(a=0, b=0, c=0): not_implemented()
-static func sample_size(a=0, b=0, c=0): not_implemented()
+static func sample_size(a=0, b=0, c=0): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func shuffle(a=0, b=0, c=0): not_implemented()
 
 ## Gets the size of collection by returning its length for array-like values 
@@ -2097,10 +2193,10 @@ static func shuffle(a=0, b=0, c=0): not_implemented()
 ## 		GD_.size('pebbles')
 ## 		# => 7
 ## Notes
-##		> Collections in JS
-##		In js, anything can turn to a collection as long as it has the field
-##		length. In GD_, for as long as it implements length() or size() it
-##		size will use that and return it
+##		>> Collections in JS
+##			In js, anything can turn to a collection as long as it has the field
+##			length. In GD_, for as long as it implements length() or size() it
+##			size will use that and return it
 static func size(thing): 
 	if thing is Array or thing is Dictionary:
 		return thing.size()
@@ -2122,7 +2218,7 @@ static func size(thing):
 ##
 ## Arguments
 ## 		collection (Array|Dictionary|String): The collection to iterate over.
-## 		[predicate=_.identity] (Function): The function invoked per iteration.
+## 		[predicate=GD_.identity] (Function): The function invoked per iteration.
 ## Returns
 ## 		(boolean): Returns true if any element passes the predicate check, else false.
 ## Example
@@ -2145,7 +2241,7 @@ static func size(thing):
 ## 		# The `GD_.property` iteratee shorthand.
 ## 		GD_.some(users, 'active')
 ## 		# => true
-static func some(collection, iteratee = null):
+static func some(collection, iteratee = null): # @TODO guarded method by map, every, filter, mapValues, reject, some
 	if not(GD_._is_collection(collection)):
 		gd_warn("GD_.some received a non-collection type value")
 		return null
@@ -2157,7 +2253,7 @@ static func some(collection, iteratee = null):
 	return false
 	
 	
-static func sort_by(a=0, b=0, c=0): not_implemented()
+static func sort_by(a=0, b=0, c=0): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
 
 """
 CATEGORY: Date
@@ -2167,12 +2263,13 @@ static func now(a=0, b=0, c=0): not_implemented()
 CATEGORY: Function
 """
 static func after(a=0, b=0, c=0): not_implemented()
-static func ary(a=0, b=0, c=0): not_implemented()
+static func ary(a=0, b=0, c=0): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func before(a=0, b=0, c=0): not_implemented()
 static func bind(a=0, b=0, c=0): not_implemented()
 static func bind_key(a=0, b=0, c=0): not_implemented()
-static func curry(a=0, b=0, c=0): not_implemented()
-static func curry_right(a=0, b=0, c=0): not_implemented()
+
+static func curry(a=0, b=0, c=0): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
+static func curry_right(a=0, b=0, c=0): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func debounce(a=0, b=0, c=0): not_implemented()
 static func defer(a=0, b=0, c=0): not_implemented()
 static func delay(a=0, b=0, c=0): not_implemented()
@@ -2451,12 +2548,12 @@ CATEGORY: NUMBER
 
 #static func clamp(a=0, b=0, c=0): not_implemented()
 static func in_range(a=0, b=0, c=0): not_implemented()
-static func random(a=0, b=0, c=0): not_implemented()
+static func random(a=0, b=0, c=0): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
 
 """
 CATEGORY: OBJECT
 """
-static func assign(a=0, b=0, c=0): not_implemented()
+static func assign(a=0, b=0, c=0): not_implemented() # @TODO guarded by reduce, reduceRight, transform
 static func assign_in(a=0, b=0, c=0): not_implemented()
 static func assign_in_with(a=0, b=0, c=0): not_implemented()
 static func assign_with(a=0, b=0, c=0): not_implemented()
@@ -2639,7 +2736,7 @@ static func get_prop(thing, path, default_value = null):
 	
 static func has(a=0, b=0, c=0): not_implemented()
 static func has_in(a=0, b=0, c=0): not_implemented()
-static func invert(a=0, b=0, c=0): not_implemented()
+static func invert(a=0, b=0, c=0): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func invert_by(a=0, b=0, c=0): not_implemented()
 static func invoke(a=0, b=0, c=0): not_implemented()
 static func keys(a=0, b=0, c=0): not_implemented()
@@ -2675,32 +2772,30 @@ static func ends_with(): not_implemented()
 static func escape(): not_implemented()
 static func escape_reg_exp(): not_implemented()
 static func kebab_case(): not_implemented()
-
-###
 static func lower_case(a:String, _UNUSED_ = null): not_implemented()
 static func lower_first(): not_implemented()
 static func pad(): not_implemented()
 static func pad_end(): not_implemented()
 static func pad_start(): not_implemented()
-static func parse_int(): not_implemented()
-static func repeat(): not_implemented()
+static func parse_int(): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
+static func repeat(): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func replace(): not_implemented()
 static func snake_case(): not_implemented()
-static func split(): not_implemented()
+static func split(): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func start_case(): not_implemented()
 static func starts_with(): not_implemented()
-static func template(): not_implemented()
+static func template(): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func to_lower(a:String, _UNUSED_ = null): 
 	return a.to_lower()
 static func to_upper(): not_implemented()
-static func trim(): not_implemented()
-static func trim_end(): not_implemented()
-static func trim_start(): not_implemented()
+static func trim(): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
+static func trim_end(): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
+static func trim_start(): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func truncate(): not_implemented()
 static func unescape(): not_implemented()
 static func upper_case(): not_implemented()
 static func upper_first(): not_implemented()
-static func words(): not_implemented()
+static func words(): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
 
 """
 CATEGORY: UTILS
@@ -2942,8 +3037,8 @@ static func property(path):
 	
 		
 static func property_of(a=0, b=0, c=0): not_implemented()
-#static func range(a=0, b=0, c=0): not_implemented()
-static func range_right(a=0, b=0, c=0): not_implemented()
+#static func range(a=0, b=0, c=0): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
+static func range_right(a=0, b=0, c=0): not_implemented() # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func run_in_context(a=0, b=0, c=0): not_implemented()
 static func stub_array(a=0, b=0, c=0): not_implemented()
 static func stub_false(a=0, b=0, c=0): not_implemented()
