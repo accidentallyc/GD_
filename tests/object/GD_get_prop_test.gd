@@ -70,8 +70,6 @@ func it_should_return_undefined_if_parts_of_path_are_missing():
 	
 func it_should_be_able_to_return_null_values_even_default():
 	var object = { "a": { "b": null } };
-	
-	print("asd ", null in [null,2])
 
 	for path in [ 'a:b',['a', 'b']]:
 		expect(GD_.get_prop(object, path, "NOT THIS")).equal(null, str("Returned default instead of null on path ",path))

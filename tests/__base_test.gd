@@ -2,6 +2,31 @@ extends SimpleTest
 
 var __INTERNAL__ := GD_.__INTERNAL__
 
+func test_keyed_iterable():
+	var ary = [1,2,3]
+	expect( GD_.keyed_iterable(ary)).equal([0,1,2])
+	expect( GD_.keyed_iterable(ary, -1)).equal([2])
+	expect( GD_.keyed_iterable(ary, -2)).equal([1,2])
+	expect( GD_.keyed_iterable(ary, 1)).equal([1,2])
+	expect( GD_.keyed_iterable(ary, 2)).equal([2])
+	expect( GD_.keyed_iterable(ary, 99)).equal([])
+	
+	var obj = {"a":1,"b":2,"c":3}
+	expect( GD_.keyed_iterable(obj)).equal(["a","b","c"])
+	expect( GD_.keyed_iterable(obj, -1)).equal(["c"])
+	expect( GD_.keyed_iterable(obj, -2)).equal(["b","c"])
+	expect( GD_.keyed_iterable(obj, 1)).equal(["b","c"])
+	expect( GD_.keyed_iterable(obj, 2)).equal(["c"])
+	expect( GD_.keyed_iterable(obj, 99)).equal([])
+	
+	var str = "abc"
+	expect( GD_.keyed_iterable(str)).equal([0,1,2])
+	expect( GD_.keyed_iterable(ary, -1)).equal([2])
+	expect( GD_.keyed_iterable(ary, -2)).equal([1,2])
+	expect( GD_.keyed_iterable(str, 1)).equal([1,2])
+	expect( GD_.keyed_iterable(str, 2)).equal([2])
+	expect( GD_.keyed_iterable(str, 99)).equal([])
+
 func test_string_to_path_should_give_path():
 	expect( __INTERNAL__.string_to_path("a:b") ).equal(["a","b"], "Failed at basic split")
 	expect( __INTERNAL__.string_to_path("a[0]") ).equal(["a",0], "Int strings should be parsed as integer")
