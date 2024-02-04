@@ -103,7 +103,7 @@ const ContentComponent = {
             </template>
             
             <template v-if="d.comparison">
-                <h2>JS Comparison</h2>
+                <h2>Notes</h2>
                 <template v-for="text in d.comparison">
                     <i class="left-2 gray" >{{text}}</i><br/>
                 </template>

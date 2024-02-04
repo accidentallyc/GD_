@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=93 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/src/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -88,6 +88,8 @@
 [ext_resource type="Script" path="res://tests/object/GD_at_test.gd" id="68_m3ofe"]
 [ext_resource type="Script" path="res://tests/util/GD_constant_test.gd" id="70_5dmw3"]
 [ext_resource type="Script" path="res://tests/collection/GD_size_test.gd" id="70_iqgfv"]
+[ext_resource type="Script" path="res://tests/collection/GD_reduce_test.gd" id="72_tes0s"]
+[ext_resource type="Script" path="res://tests/collection/GD_reduce_right_test.gd" id="73_2pgui"]
 [ext_resource type="Script" path="res://tests/util/GD_times_test.gd" id="77_fp70i"]
 [ext_resource type="Script" path="res://tests/__base_test.gd" id="86_csbig"]
 
@@ -307,6 +309,12 @@ script = ExtResource("70_iqgfv")
 
 [node name="Some" type="Node" parent="Collection"]
 script = ExtResource("10_4l7mv")
+
+[node name="Reduce" type="Node" parent="Collection"]
+script = ExtResource("72_tes0s")
+
+[node name="Reduce Right" type="Node" parent="Collection"]
+script = ExtResource("73_2pgui")
 
 [node name="Date" type="Node" parent="."]
 
