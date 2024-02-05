@@ -102,9 +102,9 @@ const ContentComponent = {
                 </div>
             </template>
             
-            <template v-if="d.comparison">
+            <template v-if="d.notes">
                 <h2>Notes</h2>
-                <template v-for="text in d.comparison">
+                <template v-for="text in d.notes">
                     <i class="left-2 gray" >{{text}}</i><br/>
                 </template>
             </template>

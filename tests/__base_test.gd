@@ -26,6 +26,16 @@ func test_keyed_iterable():
 	expect( GD_.keyed_iterable(str, 1)).equal([1,2])
 	expect( GD_.keyed_iterable(str, 2)).equal([2])
 	expect( GD_.keyed_iterable(str, 99)).equal([])
+	
+	#expect(GD_.keyed_iterable(PackedByteArray([1,2,3,4]))).
+	#expect(GD_.keyed_iterable(PackedInt32Array([1,2,3,4]))).
+	#expect(GD_.keyed_iterable(PackedInt64Array([-2^63, 2^63 - 1]))).
+	#expect(GD_.keyed_iterable(PackedFloat32Array([1.2,3.4]))).
+	#expect(GD_.keyed_iterable(PackedFloat64Array([1.2,3.4]))).
+	#expect(GD_.keyed_iterable(PackedStringArray(["1234"]))).
+	#expect(GD_.keyed_iterable(PackedVector2Array([Vector2.ONE]))).
+	#expect(GD_.keyed_iterable(PackedVector3Array([Vector3.ONE]))).
+	#expect(GD_.keyed_iterable(PackedColorArray([Color.AQUA]))).
 
 func test_string_to_path_should_give_path():
 	expect( __INTERNAL__.string_to_path("a:b") ).equal(["a","b"], "Failed at basic split")

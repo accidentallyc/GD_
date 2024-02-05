@@ -30,7 +30,8 @@ func _run():
 			data[func_cat] = []
 		elif line_anchor == "static fun":
 			var def = {
-				"category": func_cat
+				"category": func_cat,
+				"has_lodash_equivalent": true,
 			}
 			total_count += 1
 			
@@ -49,6 +50,7 @@ func _run():
 				var i = index - 1
 				var buffer = []
 				var has_text = false
+				var curr_section = null
 				while i >= 0:
 					if not lines[i].strip_edges(): 
 						def.descp = buffer
@@ -63,10 +65,12 @@ func _run():
 							def.example = buffer
 							has_text = true
 							buffer = []
+							curr_section = "example"
 						"returns":
 							def.returns = buffer[0].split(":")
 							has_text = true
 							buffer = []
+							curr_section = "returns"
 						"arguments":
 							var fixed = []
 							for b in buffer:
@@ -74,18 +78,27 @@ func _run():
 							def.arguments = fixed
 							has_text = true
 							buffer = []
+							curr_section = "arguments"
 						"notes":
-							def.comparison = buffer
+							def.notes = buffer
 							has_text = true
 							buffer = []
+							curr_section = "notes"
 						_:
-							buffer.push_front(clean(tmp))
+							var cleaned = clean(tmp)
+							buffer.push_front(cleaned)
 					i -= 1
 					
 				if not has_text: 
 					print("Function %s is missing documentation " % func_name)
 					
 			data[func_cat].append(def)
+			if "notes" in def:
+				for note in def.notes:
+					if  note.to_lower().contains("no lodash equivalent"):
+						total -= 1 # Dont count as lodash function
+						def.has_lodash_equivalent = false
+						break
 				
 		
 		if line == "NON-LODASH FUNCS":
