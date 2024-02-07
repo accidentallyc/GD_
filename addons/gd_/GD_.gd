@@ -2198,15 +2198,21 @@ static func shuffle(a=0, b=0, c=0): not_implemented()
 ##			length. In GD_, for as long as it implements length() or size() it
 ##			size will use that and return it
 static func size(thing): 
-	if thing is Array or thing is Dictionary:
+	if GD_.is_array(thing) or thing is Dictionary:
 		return thing.size()
-	elif is_string_like(thing):
+	elif GD_.is_string(thing):
 		return thing.length()
 	elif thing is Object:
 		if thing.has_method('length'):
 			return thing.length()
 		elif thing.has_method('size'):
 			return thing.size()
+		elif GD_.is_custom_iterator(thing):
+			gd_warn("GD_.size received a custom iterator that doesnt implement size or length. This will be expensive to calculate")
+			var ctr = 0
+			for i in thing: 
+				ctr += 1
+			return ctr
 	gd_warn("GD_.size received a non-collection type value")
 	return 0
 
@@ -2367,6 +2373,7 @@ static func gt(a, b):
 	
 	
 ## Checks if value is greater than other.
+##
 ## This attempts to replicate lodash's gte. 
 ## See https://lodash.com/docs/4.17.15#gte
 ##
@@ -2389,9 +2396,112 @@ static func gte(a,b):
 	
 	
 static func is_arguments(a=0, b=0, c=0): not_implemented()
-static func is_array(a=0, b=0, c=0): not_implemented()
+
+
+## Checks if value is an Array or one of the PackedArray variants
+## 
+## This attempts to replicate lodash's isArray. 
+## See https://lodash.com/docs/4.17.15#isArray
+##
+## Arguments
+## 		value (*): The value to check.
+## Returns
+## 		(boolean): Returns true if value is an array or packed array
+## Example
+## 		GD_.is_array([1,2,3,4])
+## 		# => true
+##
+## 		GD_.is_array(PackedByteArray([1,2,3,4]))
+## 		# => true
+## 		 
+## 		GD_.is_array({1:2,3:4})
+## 		# => false
+## 		 
+## 		GD_.is_array('abc')
+## 		# => false
+## 		 
+## 		GD_.is_array(GD_.noop)
+## 		# => false
+## Notes
+##		>> JS differences
+##		Theres are no "Packed" arrays in JS
+static func is_array(thing):
+	var type = typeof(thing)
+	return type <= TYPE_PACKED_COLOR_ARRAY and type >= TYPE_ARRAY
+	
 static func is_array_buffer(a=0, b=0, c=0): not_implemented()
-static func is_array_like(a=0, b=0, c=0): not_implemented()
+
+## Checks if value implements a custom iterator.
+## See https://docs.godotengine.org/en/latest/tutorials/scripting/gdscript/gdscript_advanced.html#custom-iterators
+##
+## Arguments
+## 		value (*): The value to check.
+## Returns
+## 		(boolean): Returns true if value is a custom iterator
+## Example
+##		class CustomIterator:
+##			var current
+##			func _init(): self.current = 0
+##			func _iter_init(arg):
+##				self.current = 0
+##				return current < 10
+##			func _iter_next(arg):
+##				current += 1
+##				return current < 10
+##			func _iter_get(arg):
+##				return current
+##			func size(): return 10
+## 		 
+## 		GD_.is_array_like(CustomIterator.new())
+## 		# => true
+##
+## 		GD_.is_array([1,2,3,4])
+## 		# => true
+## Notes
+##		>> No lodash equivalent
+static func is_custom_iterator(tmp):
+	return tmp is Object and tmp.has_method('_iter_next')
+
+## Checks if value is array-like. A value is considered 
+## array-like if it can be used in a for loop.
+## 
+## This attempts to replicate lodash's isArray. 
+## See https://lodash.com/docs/4.17.15#isArray
+## 
+## Arguments
+##		value (*): The value to check.
+## Returns
+## 		(boolean): Returns true if value is array-like, else false.
+## Example
+## 		GD_.is_array_like([1, 2, 3])
+## 		# => true
+## 		 
+## 		GD_.is_array_like('abc')
+## 		# => true
+##
+##		class CustomIterator:
+##			var current
+##			func _init(): self.current = 0
+##			func _iter_init(arg):
+##				self.current = 0
+##				return current < 10
+##			func _iter_next(arg):
+##				current += 1
+##				return current < 10
+##			func _iter_get(arg):
+##				return current
+##			func size(): return 10
+## 		 
+## 		GD_.is_array_like(CustomIterator.new()
+## 		# => true
+##
+## 		GD_.is_array_like(GD_.noop)
+##		# => false
+static func is_array_like(tmp): 
+	return GD_.is_array(tmp) \
+		or GD_.is_string(tmp) \
+		or GD_.is_custom_iterator(tmp)
+		
 static func is_array_like_object(a=0, b=0, c=0): not_implemented()
 static func is_boolean(a=0, b=0, c=0): not_implemented()
 static func is_buffer(a=0, b=0, c=0): not_implemented()
@@ -2456,12 +2566,24 @@ static func is_reg_exp(a=0, b=0, c=0): not_implemented()
 static func is_safe_integer(a=0, b=0, c=0): not_implemented()
 static func is_set(a=0, b=0, c=0): not_implemented()
 
-
-static func is_string_like(thing):
+## Checks if value is classified as a String or a StringName
+##
+## This attempts to replicate lodash's isNumber. 
+## See https://lodash.com/docs/4.17.15#isNumber
+## Arguments
+## 		value (*): The value to check.
+## Returns
+## 		(boolean): Returns true if value is a string, else false.
+## Example
+## 		GD_.is_string('abc')
+## 		# => true
+## 		GD_.is_string(&'abc')
+## 		# => true
+## 		GD_.is_string(1)
+## 		# => false
+static func is_string(thing):
 	return thing is String or thing is StringName
 	
-static func is_string(thing):
-	return thing is String
 static func is_symbol(a=0, b=0, c=0): not_implemented()
 static func is_typed_array(a=0, b=0, c=0): not_implemented()
 static func is_undefined(a=0, b=0, c=0): not_implemented()
@@ -3100,7 +3222,7 @@ NON-LODASH FUNCS
 ## Ensures that when it iterates through the item, it always iterates via keys
 ## This does not have a lodash equivalent	
 static func keyed_iterable(thing, from_index = 0):
-	if thing is Array or GD_.is_string_like(thing):
+	if GD_.is_array_like(thing) or GD_.is_string(thing):
 		var size = GD_.size(thing)
 		if from_index >= 0:
 			var array = range(from_index, size)

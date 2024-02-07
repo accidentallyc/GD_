@@ -159,12 +159,9 @@ class Internal:
 """
 INTERNAL STUFF
 """
-
-
-
 	
 static func _is_collection(item):
-	return item is Array or item is Dictionary or GD_.is_string_like(item)
+	return GD_.is_array_like(item) or item is Dictionary or GD_.is_string(item)
 	
 static func _is_not_null_arg(i,_i):
 	return not(is_same(i, _UNDEF_))

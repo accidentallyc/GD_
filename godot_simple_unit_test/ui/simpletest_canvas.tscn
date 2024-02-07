@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://ca70orl8cydp2"]
+
+[ext_resource type="Script" path="res://godot_simple_unit_test/ui/simpletest_canvas.gd" id="1_nrp21"]
+[ext_resource type="PackedScene" uid="uid://bxnxmnhnmodas" path="res://godot_simple_unit_test/ui/simpletest_line_item.tscn" id="2_o7erm"]
+
+[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("container")]
+script = ExtResource("1_nrp21")
+container = NodePath("ScrollContainer/Margin Container/VBoxContainer/Root Line Item")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin Container" type="MarginContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/Margin Container"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/Margin Container/VBoxContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="ScrollContainer/Margin Container/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Failed Tests Only"
+
+[node name="Root Line Item" parent="ScrollContainer/Margin Container/VBoxContainer" instance=ExtResource("2_o7erm")]
+layout_mode = 2
+
+[connection signal="toggled" from="ScrollContainer/Margin Container/VBoxContainer/HBoxContainer/CheckButton" to="." method="_on_failled_button_toggled"]

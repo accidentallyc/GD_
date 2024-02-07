@@ -1,10 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfu6aj4s0m5c0"]
+[gd_scene load_steps=7 format=3 uid="uid://cfu6aj4s0m5c0"]
 
-[ext_resource type="Script" path="res://godot_simple_unit_test/src/simpletest_runner.gd" id="1_bar3o"]
+[ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_bar3o"]
 [ext_resource type="Script" path="res://tests/Test_Startup.gd" id="2_xc84l"]
+[ext_resource type="Script" path="res://tests/lang/GD_is_array_test.gd" id="3_i4bgv"]
+[ext_resource type="Script" path="res://tests/lang/GD_is_array_like.gd" id="4_1yrux"]
+[ext_resource type="Script" path="res://tests/collection/GD_size_test.gd" id="5_32nyb"]
+[ext_resource type="Script" path="res://tests/__base_test.gd" id="5_aen72"]
 
 [node name="Single Test" type="Node"]
 script = ExtResource("1_bar3o")
 
 [node name="__STARTUP__" type="Node" parent="."]
 script = ExtResource("2_xc84l")
+
+[node name="Is Array" type="Node" parent="."]
+script = ExtResource("3_i4bgv")
+
+[node name="Is Array Like" type="Node" parent="."]
+script = ExtResource("4_1yrux")
+
+[node name="Size" type="Node" parent="."]
+script = ExtResource("5_32nyb")
+
+[node name="__INTERNAL__" type="Node" parent="."]
+script = ExtResource("5_aen72")

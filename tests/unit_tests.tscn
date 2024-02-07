@@ -1,6 +1,6 @@
-[gd_scene load_steps=93 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=95 format=3 uid="uid://dmxle5r8u47a8"]
 
-[ext_resource type="Script" path="res://godot_simple_unit_test/src/simpletest_runner.gd" id="1_b4vvq"]
+[ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
 [ext_resource type="Script" path="res://tests/Test_Startup.gd" id="2_yro2i"]
 [ext_resource type="Script" path="res://tests/array/GD_compact_test.gd" id="3_oknqc"]
@@ -91,6 +91,8 @@
 [ext_resource type="Script" path="res://tests/collection/GD_reduce_test.gd" id="72_tes0s"]
 [ext_resource type="Script" path="res://tests/collection/GD_reduce_right_test.gd" id="73_2pgui"]
 [ext_resource type="Script" path="res://tests/util/GD_times_test.gd" id="77_fp70i"]
+[ext_resource type="Script" path="res://tests/lang/GD_is_array_test.gd" id="78_bhb7a"]
+[ext_resource type="Script" path="res://tests/lang/GD_is_array_like.gd" id="79_0673b"]
 [ext_resource type="Script" path="res://tests/__base_test.gd" id="86_csbig"]
 
 [node name="Unit Tests" type="Node"]
@@ -333,6 +335,12 @@ script = ExtResource("49_jic8v")
 
 [node name="Gte" type="Node" parent="Lang"]
 script = ExtResource("50_0gb33")
+
+[node name="Is Array" type="Node" parent="Lang"]
+script = ExtResource("78_bhb7a")
+
+[node name="Is Array Like" type="Node" parent="Lang"]
+script = ExtResource("79_0673b")
 
 [node name="Is Equal" type="Node" parent="Lang"]
 script = ExtResource("31_mx0yu")

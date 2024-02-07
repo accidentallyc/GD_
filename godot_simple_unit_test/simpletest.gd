@@ -1,4 +1,4 @@
-@icon("res://godot_simple_unit_test/src/ui/icon_test.png")
+@icon("res://godot_simple_unit_test/ui/icon_test.png")
 extends Node
 
 ## Base class that all SimpleTests should extend from.
@@ -115,6 +115,7 @@ func _after_each():
 
 func __on_test_initialize(runner:SimpleTest_Runner):
 	_ln_item = SimpleTest_LineItemTscn.instantiate()
+	_ln_item.set_runner(runner)
 	_ln_item.description = name
 
 	_ln_item.status = &"PASS"
@@ -140,6 +141,7 @@ func __on_main_line_item_ready():
 	_cases_failed = []
 	for case in _cases:
 		var case_ln_item = SimpleTest_LineItemTscn.instantiate()
+		case_ln_item.set_runner(_runner)
 		_test_case_line_item_map[case.fn] = case_ln_item
 		
 		case_ln_item.case = case
@@ -156,13 +158,19 @@ func __on_main_line_item_ready():
 		
 		await case_ln_item.ready
 		__run_test(case, case_ln_item)
-		if _errors.size() > 0:
+		
+		var has_error = _errors.size() > 0
+		if has_error:
 			_cases_failed.append(case)
+			
 		
 	on_finished_full_suite_run.emit()
 	
 	_ln_item.status = &"FAIL" if _cases_failed.size() else &"PASS"
 	
+	# default to collapsed if no failures
+	# else open
+	_ln_item.set_collapse(not(_cases_failed))
 	
 	_ln_item.description = &"{name} ({passing}/{total} passed)".format({
 		"name":name,
@@ -255,6 +263,7 @@ func __run_test_run(case, ln_item):
 	ln_item.clear_blocks()
 	for f in _errors:
 		var f_line_item = SimpleTest_LineItemTscn.instantiate()
+		f_line_item.set_runner(_runner)
 		f_line_item.description = f
 		ln_item.add_block(f_line_item)
 		
@@ -265,8 +274,8 @@ func __run_single_test(method_name,ln_item):
 	
 	
 func __run_all_tests():
-	_ln_item.queue_free()
-	__on_test_initialize(_runner)
+	_ln_item.clear_blocks()
+	__on_main_line_item_ready()
 	
 
 func __load_test_cases():
