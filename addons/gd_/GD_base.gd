@@ -16,7 +16,7 @@ static var id_ctr = 0
 
 static var __INTERNAL__:Internal = Internal.new():
 	get:
-		# We gotta do this because static is null in EditorScripts 
+		# We gotta do this because static vars are null in EditorScripts 
 		if __INTERNAL__ == null:
 			__INTERNAL__ = Internal.new()
 		return __INTERNAL__

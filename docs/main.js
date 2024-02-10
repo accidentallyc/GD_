@@ -60,7 +60,7 @@ function main() {
                     
                         <ContentComponent v-if="!d.is_pending" :d="d" />
                         <div v-if="d.is_pending" class="pad-1">
-                            Not Yet Implemented    
+                            <i>Not yet implemented</i>
                         </div>
                     </template>
 
@@ -75,7 +75,19 @@ const ContentComponent = {
     props: ['d'],
     template: `
         <div class="pad-1">
-            <div v-if="d.descp">{{d.descp.join("")}}</div>
+            <div v-if="d.descp">{{d.descp.join(" ")}}</div>
+
+            <template v-if="d.equivalent == false">
+                <i>This function has no lodash equivalent</i>
+            </template>
+            <template v-if="d.equivalent != false">
+                <p>
+                    <i>This function is based on lodash's 
+                        <a :href="\`https://lodash.com/docs/4.17.15#\${_.camelCase(d.name)}\`">{{_.camelCase(d.name)}}</a>
+                    </i>
+                </p>
+            </template>
+            
             
             <template v-if="d.arguments">
                 <h2>Arguments</h2>

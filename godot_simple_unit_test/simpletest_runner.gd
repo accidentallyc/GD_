@@ -7,7 +7,7 @@ extends SimpleTest
 ## Do not extend this. Use as is.
 class_name SimpleTest_Runner
 
-static var SimpleTest_CanvasTscn := preload("./ui/simpletest_canvas.tscn")
+var SimpleTest_CanvasTscn = preload("res://godot_simple_unit_test/ui/simpletest_canvas.tscn")
 
 var _tests = []
 var _canvas

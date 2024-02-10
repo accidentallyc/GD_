@@ -19,6 +19,7 @@ func _run():
 	var end_of_doc = false
 	var func_cat
 	var total = 0
+	var nondash = 0
 	var pending =0
 	while not(_script.eof_reached()):
 		var should_log = false
@@ -31,7 +32,6 @@ func _run():
 		elif line_anchor == "static fun":
 			var def = {
 				"category": func_cat,
-				"has_lodash_equivalent": true,
 			}
 			total_count += 1
 			
@@ -40,6 +40,7 @@ func _run():
 			var is_pending = splits.size() > 1 and splits[1].contains("not_implemented")
 			
 			def.name = func_name
+			def.equivalent = func_name.to_camel_case()
 			def.is_pending = is_pending
 			
 			total +=1
@@ -64,12 +65,12 @@ func _run():
 						"example":
 							def.example = buffer
 							has_text = true
-							buffer = []
+							buffer = [] # force reset buffer
 							curr_section = "example"
 						"returns":
 							def.returns = buffer[0].split(":")
 							has_text = true
-							buffer = []
+							buffer = [] # force reset buffer
 							curr_section = "returns"
 						"arguments":
 							var fixed = []
@@ -77,13 +78,21 @@ func _run():
 								fixed.append(b.split(":"))
 							def.arguments = fixed
 							has_text = true
-							buffer = []
+							buffer = [] # force reset buffer
 							curr_section = "arguments"
 						"notes":
 							def.notes = buffer
 							has_text = true
-							buffer = []
+							buffer = [] # force reset buffer
 							curr_section = "notes"
+						"lodash equivalent":
+							var tmp1 =  buffer[0].to_lower()
+							if tmp1 == "none":
+								nondash += 1
+								def.equivalent = false
+							else: 
+								def.equivalent  = tmp1
+							buffer = [] # force reset buffer
 						_:
 							var cleaned = clean(tmp)
 							buffer.push_front(cleaned)
@@ -93,12 +102,6 @@ func _run():
 					print("Function %s is missing documentation " % func_name)
 					
 			data[func_cat].append(def)
-			if "notes" in def:
-				for note in def.notes:
-					if  note.to_lower().contains("no lodash equivalent"):
-						total -= 1 # Dont count as lodash function
-						def.has_lodash_equivalent = false
-						break
 				
 		
 		if line == "NON-LODASH FUNCS":
@@ -130,6 +133,6 @@ func _run():
 	_html.close()
 	
 	
-	print("Succesful written to %s %s/%s" % [ _html.get_path(),total-pending,total])
+	print("Succesful written to %s %s/%s" % [ _html.get_path(),total-pending-nondash,total-nondash])
 
 func clean(ln): return ln.replace("		","").strip_edges()

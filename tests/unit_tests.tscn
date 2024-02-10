@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=100 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -90,10 +90,15 @@
 [ext_resource type="Script" path="res://tests/collection/GD_size_test.gd" id="70_iqgfv"]
 [ext_resource type="Script" path="res://tests/collection/GD_reduce_test.gd" id="72_tes0s"]
 [ext_resource type="Script" path="res://tests/collection/GD_reduce_right_test.gd" id="73_2pgui"]
+[ext_resource type="Script" path="res://tests/collection/GD_reject_test.gd" id="74_il3cu"]
+[ext_resource type="Script" path="res://tests/collection/GD_shuffle_test.gd" id="75_u71at"]
 [ext_resource type="Script" path="res://tests/util/GD_times_test.gd" id="77_fp70i"]
+[ext_resource type="Script" path="res://tests/lang/GD_clone_test.gd" id="77_yo3wx"]
 [ext_resource type="Script" path="res://tests/lang/GD_is_array_test.gd" id="78_bhb7a"]
 [ext_resource type="Script" path="res://tests/lang/GD_is_array_like.gd" id="79_0673b"]
+[ext_resource type="Script" path="res://tests/lang/GD_is_immutable_test.gd" id="84_y8der"]
 [ext_resource type="Script" path="res://tests/__base_test.gd" id="86_csbig"]
+[ext_resource type="Script" path="res://tests/lang/GD_to_array_test.gd" id="88_1gj8j"]
 
 [node name="Unit Tests" type="Node"]
 script = ExtResource("1_b4vvq")
@@ -318,6 +323,12 @@ script = ExtResource("72_tes0s")
 [node name="Reduce Right" type="Node" parent="Collection"]
 script = ExtResource("73_2pgui")
 
+[node name="Reject" type="Node" parent="Collection"]
+script = ExtResource("74_il3cu")
+
+[node name="Shuffle" type="Node" parent="Collection"]
+script = ExtResource("75_u71at")
+
 [node name="Date" type="Node" parent="."]
 
 [node name="Function" type="Node" parent="."]
@@ -326,6 +337,9 @@ script = ExtResource("73_2pgui")
 
 [node name="Cast Array" type="Node" parent="Lang"]
 script = ExtResource("44_b6wmo")
+
+[node name="Clone" type="Node" parent="Lang"]
+script = ExtResource("77_yo3wx")
 
 [node name="Eq" type="Node" parent="Lang"]
 script = ExtResource("48_qqvla")
@@ -345,6 +359,9 @@ script = ExtResource("79_0673b")
 [node name="Is Equal" type="Node" parent="Lang"]
 script = ExtResource("31_mx0yu")
 
+[node name="Is Immutable Type" type="Node" parent="Lang"]
+script = ExtResource("84_y8der")
+
 [node name="Is Number" type="Node" parent="Lang"]
 script = ExtResource("63_vhodk")
 
@@ -353,6 +370,9 @@ script = ExtResource("51_iwkgm")
 
 [node name="Lte" type="Node" parent="Lang"]
 script = ExtResource("52_1x46s")
+
+[node name="To Array" type="Node" parent="Lang"]
+script = ExtResource("88_1gj8j")
 
 [node name="Math" type="Node" parent="."]
 
