@@ -111,3 +111,7 @@ input#search {
 .left-2 {
     margin-left: 2em;
 }
+
+a:active, a:visited, a {
+    color: aquamarine;
+}
