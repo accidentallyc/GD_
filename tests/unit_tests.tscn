@@ -1,4 +1,4 @@
-[gd_scene load_steps=100 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=102 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -92,7 +92,9 @@
 [ext_resource type="Script" path="res://tests/collection/GD_reduce_right_test.gd" id="73_2pgui"]
 [ext_resource type="Script" path="res://tests/collection/GD_reject_test.gd" id="74_il3cu"]
 [ext_resource type="Script" path="res://tests/collection/GD_shuffle_test.gd" id="75_u71at"]
+[ext_resource type="Script" path="res://tests/function/GD_before_test.gd" id="76_71vx2"]
 [ext_resource type="Script" path="res://tests/util/GD_times_test.gd" id="77_fp70i"]
+[ext_resource type="Script" path="res://tests/function/GD_after_test.gd" id="77_xt4i3"]
 [ext_resource type="Script" path="res://tests/lang/GD_clone_test.gd" id="77_yo3wx"]
 [ext_resource type="Script" path="res://tests/lang/GD_is_array_test.gd" id="78_bhb7a"]
 [ext_resource type="Script" path="res://tests/lang/GD_is_array_like.gd" id="79_0673b"]
@@ -333,6 +335,12 @@ script = ExtResource("75_u71at")
 
 [node name="Function" type="Node" parent="."]
 
+[node name="Before" type="Node" parent="Function"]
+script = ExtResource("76_71vx2")
+
+[node name="After" type="Node" parent="Function"]
+script = ExtResource("77_xt4i3")
+
 [node name="Lang" type="Node" parent="."]
 
 [node name="Cast Array" type="Node" parent="Lang"]
@@ -407,6 +415,8 @@ script = ExtResource("47_bcfvp")
 
 [node name="Matches Property" type="Node" parent="Util"]
 script = ExtResource("48_8d001")
+
+[node name="Node" type="Node" parent="Util/Matches Property"]
 
 [node name="Property" type="Node" parent="Util"]
 script = ExtResource("11_4km8u")

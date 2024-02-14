@@ -23,9 +23,9 @@ func it_should_accept_multiple_key_arguments():
 	expect(actual).equal(['d', 'a','c'])
 	
 func it_should_work_with_a_falsey_object_when_keys_are_given():
-	
-	var expected = GD_.map(Utils.falsey, GD_.constant(null))
-	var result = GD_.at(object, Utils.falsey)
+	var falsies = GD_.to_array(Utils.falsey)
+	var expected = GD_.map(falsies, GD_.constant(null))
+	var result = GD_.at(object,falsies)
 	
 	expect(result).to.equal(expected)
 	

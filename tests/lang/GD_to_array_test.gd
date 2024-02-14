@@ -25,8 +25,9 @@ func it_returns_empty_array_for_invalid_types():
 		null,
 		1,
 		{},
-		Utils.dict
+		Utils.node
 	]
 	
-	for input in GD_.keyed_iterable(invalid_types):
+	for i in GD_.keyed_iterable(invalid_types):
+		var input = invalid_types[i]
 		expect(GD_.to_array(input)).to.have.size(0)
