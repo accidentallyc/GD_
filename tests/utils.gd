@@ -2,7 +2,14 @@ class_name Utils
 
 
 ## Used to provide falsey values to methods.
-static var falsey = [0, null, false, '', []]
+static var falsey:
+	get: return {
+		"zero": 0, 
+		"null": null, 
+		"false": false, 
+		"empty string":'', 
+		"empty array": []
+	}
 static var empties = [{},[]]
 static var array: Array:
 	get: return [1,2,3,4]

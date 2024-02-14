@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cfu6aj4s0m5c0"]
+[gd_scene load_steps=5 format=3 uid="uid://cfu6aj4s0m5c0"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_bar3o"]
 [ext_resource type="Script" path="res://tests/Test_Startup.gd" id="2_xc84l"]
+[ext_resource type="Script" path="res://tests/random_demo.gd" id="4_eg35d"]
 [ext_resource type="Script" path="res://tests/__base_test.gd" id="5_aen72"]
 
 [node name="Single Test" type="Node"]
@@ -16,3 +17,8 @@ script = ExtResource("5_aen72")
 [node name="Collection" type="Node" parent="."]
 
 [node name="Lang" type="Node" parent="."]
+
+[node name="Function" type="Node" parent="."]
+
+[node name="Random Demo" type="Node" parent="Function"]
+script = ExtResource("4_eg35d")

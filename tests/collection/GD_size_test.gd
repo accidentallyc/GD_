@@ -7,7 +7,8 @@ func it_should_get_size_of_collection():
 		expect(GD_.size(collection)).to.equal(4,"Should return correct size for %s" % key)
 
 func it_should_return_0_for_falsey_objs():
-	for falsey in Utils.falsey:
+	for k in Utils.falsey:
+		var falsey = Utils.falsey[k]
 		expect(GD_.size(falsey)).to.equal(0,"Should return 0 for %s" % str(falsey))
 
 class Class_With_Length:

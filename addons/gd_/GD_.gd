@@ -19,21 +19,14 @@ CATEGORY: Array
 ## 		# => [['a', 'b'], ['c', 'd']]
 ## 		 
 ## 		GD_.chunk(['a', 'b', 'c', 'd'], 3)
-## 		# => [['a', 'b', 'c'], ['d']]
-# @TODO guarded method by map, every, filter, mapValues, reject, some
+## 		# => [['a',* 'b', 'c'], ['d']]
+## Notes
+##		>> Credit
+##			Thanks to cyberreality for the quick code they offered to the community
+##			https://www.reddit.com/r/godot/comments/e6ae27/comment/f9p3c2e
+## 		>> @TODO guarded method by map, every, filter, mapValues, reject, some
 static func chunk(array:Array,size=1): 
-	# Thanks to cyberreality for the quick code they offered to the 
-	# community. https://www.reddit.com/r/godot/comments/e6ae27/comment/f9p3c2e/?utm_source=share&utm_medium=web2x&context=3
-	var new_array = []
-	var i = 0
-	var j = -1
-	for item in array:
-		if i % size == 0:
-			new_array.append([])
-			j += 1
-		new_array[j].append(item)
-		i += 1
-	return new_array
+	return __INTERNAL__.base_chunk(array,size)
 				
 				
 ## Creates an array with all falsey values removed. 
@@ -49,11 +42,7 @@ static func chunk(array:Array,size=1):
 ## 		GD_.compact([0, 1, false, 2, '', 3])
 ## 		# => [1, 2, 3]
 static func compact(array:Array):
-	var new_array = []
-	for item in array:
-		if item:
-			new_array.append(item)
-	return new_array
+	return __INTERNAL__.base_compact(array)
 		
 		
 ## Creates a new array concatenating array with any additional arrays and/or values.
@@ -74,17 +63,7 @@ static func compact(array:Array):
 ## 		print(array)
 ## 		# => [1]
 static func concat(array:Array, a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_,k=_UNDEF_):
-	var new_array = []
-	new_array.append_array(array)
-	for arg in [a,b,c,d,e,f,g,h,i,j,k]:
-		# stop after first occurence of _UNDEF_
-		if is_same(arg,_UNDEF_):
-			break
-		if arg is Array:
-			new_array.append_array(arg)
-		else:
-			new_array.append(arg)
-	return new_array
+	return __INTERNAL__.base_concat(array,[a,b,c,d,e,f,g,h,i,j,k])
 				
 			
 ## Creates an array of array values not included in the other given arrays 
@@ -100,14 +79,7 @@ static func concat(array:Array, a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF
 ##			GD_.difference([2, 1], [2, 3])
 ##			# => [1]
 static func difference(array_left:Array, array_right:Array): 	
-	var new_array = []
-	new_array.append_array(array_left)
-	
-	for array_item_2 in array_right:
-		new_array.erase(array_item_2)
-		
-	return new_array
-
+	return __INTERNAL__.base_difference(array_left,array_right)
 
 ## This method is like GD_.difference except that it accepts iteratee which 
 ## is invoked for each element of array and values to generate the criterion 
@@ -129,24 +101,7 @@ static func difference(array_left:Array, array_right:Array):
 ## 		GD_.difference_by([{ 'x': 2 }, { 'x': 1 }], [{ 'x': 1 }], 'x')
 ## 		# => [{ 'x': 2 }]
 static func difference_by(array_left, array_right, iteratee = GD_.identity): 
-	var iter_func = iteratee(iteratee)
-	
-	# new return array
-	var new_array = []
-	
-	# store processed keyes here
-	var keys_to_remove_map = {}
-	for array_item_2 in array_right:
-		keys_to_remove_map[iter_func.call(array_item_2, null)] = true
-		
-	var array_right_max = array_left.size()
-	
-	for left_item in array_left:
-		var left_key = iter_func.call(left_item, null)
-		if not(keys_to_remove_map.has(left_key)):
-			new_array.append(left_item)
-			
-	return new_array
+	return __INTERNAL__.base_difference_by(array_left, array_right, iteratee)
 	
 	
 ## This method is like GD_.difference except that it accepts comparator 
@@ -1456,18 +1411,14 @@ static func uniq_by(array:Array, iteratee = GD_.identity):
 static func uniq_with(array:Array, comparator:Callable):
 	var new_array = []
 	for old_item in array:
-		
 		var should_insert = true
-		
 		for new_item in new_array:
 			if comparator.call(old_item,new_item):
 				should_insert = false
 				break
-				
 		if should_insert:
 			new_array.append(old_item)
-			
-	return new_array	
+	return new_array
 	
 static func unzip(array:Array, b=0, c=0): not_implemented()
 static func unzip_with(array:Array, b=0, c=0): not_implemented()
@@ -1911,8 +1862,7 @@ static func key_by(a=0, b=0, c=0): not_implemented()
 ## Returns
 ## 		(Array): Returns the new mapped array.
 ## Example
-## 		func square(n, _index):
-## 	  		return n * n
+## 		func square(n, _index): return n * n
 ##  
 ## 		GD_.map([4, 8], square)
 ## 		# => [16, 64]
@@ -2172,18 +2122,10 @@ static func size(thing):
 ## 		# The `GD_.property` iteratee shorthand.
 ## 		GD_.some(users, 'active')
 ## 		# => true
-# @TODO guarded method by map, every, filter, mapValues, reject, some
+## Notes:
+##		>> @TODO guarded method by map, every, filter, mapValues, reject, some
 static func some(collection, iteratee = null): 
-	if not(GD_._is_collection(collection)):
-		gd_warn("GD_.some received a non-collection type value")
-		return null
-		
-	var iter_func = iteratee(iteratee)
-	for key in keyed_iterable(collection):
-		if iter_func.call(collection[key],key):
-			return true
-	return false
-	
+	return __INTERNAL__.base_some(collection, iteratee)
 	
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func sort_by(a=0, b=0, c=0): not_implemented() 
@@ -2195,10 +2137,64 @@ static func now(a=0, b=0, c=0): not_implemented()
 """
 CATEGORY: Function
 """
-static func after(a=0, b=0, c=0): not_implemented()
+## The opposite of GD_.before; this method creates a function that 
+## invokes func once it's called n or more times.
+## 
+## Arguments
+## 		n (number): The number of calls before func is invoked.
+## 		func (Function): The function to restrict.
+## Returns
+## 		(Function): Returns the new restricted function.
+## Example
+##		var fn = func (): print("hello world")
+## 		var restricted = GD_.after(2, fn)
+## 		
+##		for i in 5: fn.call()
+##		# => Only prints "hello world" 3 times (starting on the 3rd call)
+## Notes
+##		>> JS Variations
+##			Theres a weird edge case where if you supply 1 as the number
+##			Then it doesnt execute atleast once. That behavior has not
+##			been replicated.
+##		>> Memory Gotcha
+##			To implement this, GD_ keeps an internal record of how many times
+##			The passed in function has been called. That tracker cannot be
+##			garbage collected so use this function sparingly.
+static func after(after_count, callable:Callable):
+	return __INTERNAL__.base_after(after_count, callable)
+	
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func ary(a=0, b=0, c=0): not_implemented() 
-static func before(a=0, b=0, c=0): not_implemented()
+
+## Creates a function that invokes func, with the this binding and 
+## arguments of the created function, while it's called less than n times. 
+## Subsequent calls to the created function return the result of 
+## the last func invocation.
+##
+## Arguments
+## 		n (number): The number of calls at which func is no longer invoked.
+## 		func (Callable): The function to restrict.
+## Returns
+## 		(Function): Returns the new restricted function.
+## Example
+##		var fn = func (): print("hello world")
+## 		var restricted = GD_.before(2, fn)
+## 		
+##		for i in 5: fn.call()
+##		# => Only prints "hello world" twice
+## Notes
+##		>> JS Variations
+##			Theres a weird edge case where if you supply 1 as the number
+##			Then it doesnt execute atleast once. That behavior has not
+##			been replicated.
+##		>> Memory Gotcha
+##			To implement this, GD_ keeps an internal record of how many times
+##			The passed in function has been called. That tracker cannot be
+##			garbage collected so use this function sparingly.
+static func before(up_to_count, callable:Callable): 
+	return __INTERNAL__.base_before(up_to_count, callable)
+	
+	
 static func bind(a=0, b=0, c=0): not_implemented()
 static func bind_key(a=0, b=0, c=0): not_implemented()
 
@@ -2685,15 +2681,7 @@ static func assign_with(a=0, b=0, c=0): not_implemented()
 ##			But in GD_ you can call at most up to 10 args
 ##			E.g. GD_.at([], 1,2,3,4,5,6,7,8,9)
 static func at(obj, a,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_):
-	var array = []
-	var paths
-	for arg in [a,b,c,d,e,f,g,h,i,j]:
-		if is_same(arg, _UNDEF_):
-			continue
-		for p in GD_.cast_array(arg):
-			array.append(GD_.get_prop(obj, p))
-		
-	return array
+	return __INTERNAL__.base_at(obj, [a,b,c,d,e,f,g,h,i,j])
 	
 
 static func create(a=0, b=0, c=0): not_implemented()
@@ -2944,14 +2932,10 @@ static func conforms(a=0, b=0, c=0): not_implemented()
 ## 		print(objects[0] === objects[1])
 ## 		# => true
 ## 
-static func constant(value = null, _UNUSED_ = null):
-	return func (ab=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
-		return value
-
+static func constant(value = null, _UNUSED_ = null): return __INTERNAL__.base_constant(value,_UNUSED_)
 
 ## Checks value to determine whether a default value should be returned 
 ## in its place. The defaultValue is returned if value is NaN or null
-
 ## 
 ## Arguments
 ## 		value (*): The value to check.
@@ -3018,25 +3002,7 @@ static func identity(value, _unused = null):
 ## 		GD_.map(users, GD_.iteratee('user'))
 ## 		# => ['barney', 'fred']
 static func iteratee(iteratee_val):
-	if is_same(iteratee_val, _UNDEF_):
-		return GD_.identity
-	match typeof(iteratee_val):
-		TYPE_DICTIONARY:
-			return matches(iteratee_val)
-		TYPE_STRING:
-			return property(iteratee_val)
-		TYPE_ARRAY:
-			var prop = GD_.get_prop(iteratee_val,["0"])
-			var val = GD_.get_prop(iteratee_val,["1"])
-			return matches_property(prop,val)
-		TYPE_NIL:
-			return GD_.identity
-		TYPE_CALLABLE:
-			return GD_.__INTERNAL__.get_iteratee(iteratee_val)
-				
-		_:
-			gd_warn("GD_.find called with unsupported signature %s. See docs for more info" % iteratee)
-	return null
+	return __INTERNAL__.iteratee(iteratee_val)
 
 ## Creates a function that perform a comparison between a 
 ## given object and source, returning true if the given object has equivalent 
@@ -3055,12 +3021,7 @@ static func iteratee(iteratee_val):
 ## 		GD_.filter(objects, _.matches({ 'a': 4, 'c': 6 }))
 ## 		# => [{ 'a': 4, 'b': 5, 'c': 6 }]
 static func matches(dict:Dictionary) -> Callable:
-	return func (value, _unused = null):
-		var found = true
-		for key in dict:
-			var prop = value.get(key)
-			found = found and dict[key] == prop
-		return found
+	return __INTERNAL__.matches(dict)
 
 
 ## Creates a function that performs a partial deep comparison between 
@@ -3083,8 +3044,7 @@ static func matches(dict:Dictionary) -> Callable:
 ## 		GD_.find(objects, GD_.matches_property('a', 4))
 ## 		# => { 'a': 4, 'b': 5, 'c': 6 }
 static func matches_property(string:String, v):
-	return func (value, _unused = null):
-		return GD_.get_prop(value,string) == v
+	return __INTERNAL__.matches_property(string, v)
 		
 		
 static func method(a=0, b=0, c=0): not_implemented()
@@ -3129,17 +3089,7 @@ static func over_some(a=0, b=0, c=0): not_implemented()
 ##		fn.call(node) 
 ##		# => 15
 static func property(path):
-	var splits
-	if path is String:
-		splits = path.split(&":")
-	elif path is Array:
-		splits = path
-	else:
-		gd_warn("GD_.property received a non-collection type value")
-		return null
-		
-	return func (value, _unused = null):
-		return GD_.get_prop(value, path)
+	return __INTERNAL__.property(path)
 	
 		
 static func property_of(a=0, b=0, c=0): not_implemented()
@@ -3165,7 +3115,7 @@ static func stub_true(a=0, b=0, c=0): not_implemented()
 ## Returns
 ## 		(Array): Returns the array of results.
 ## Example
-## 		GD_.times(3, String)
+## 		GD_.times(3, GD_.to_string)
 ## 		# => ['0', '1', '2']
 ## 		 
 ## 		 GD_.times(4, func (a,b): return 0)
@@ -3189,14 +3139,13 @@ static func to_path(a=0, b=0, c=0): not_implemented()
 ## Returns
 ## 		(string): Returns the unique ID.
 ## Example
-## 		GD_.uniqueId('contact_')
+## 		GD_.unique_id('contact_')
 ## 		# => 'contact_104'
 ## 		 
-## 		GD_.uniqueId()
+## 		GD_.unique_id()
 ## 		# => '105'
 static func unique_id(prefix=&""): 
-	id_ctr += 1
-	return str(prefix,id_ctr)
+	return __INTERNAL__.base_unique_id(prefix)
 
 """
 NON-LODASH FUNCS
@@ -3205,20 +3154,4 @@ NON-LODASH FUNCS
 ## Ensures that when it iterates through the item, it always iterates via keys
 ## This does not have a lodash equivalent	
 static func keyed_iterable(thing, from_index = 0):
-	if GD_.is_array_like(thing) or GD_.is_string(thing):
-		var size = GD_.size(thing)
-		if from_index >= 0:
-			var array = range(from_index, size)
-			return array
-		return range(size).slice(size + from_index)
-	if thing is Dictionary:
-		var keys =  thing.keys()
-		if from_index > 0:
-			return keys.slice(from_index)
-		elif from_index < 0:
-			return keys.slice(thing.size() + from_index)
-		else: 
-			return keys
-		
-	gd_warn("keyed_iterable received a non-collection")
-	return []
+	return __INTERNAL__.keyed_iterable(thing, from_index)
