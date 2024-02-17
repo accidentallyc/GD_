@@ -2655,11 +2655,11 @@ static func in_range(a=0, b=0, c=0): not_implemented()
 ## floats, a floating-point number is returned instead of an integer.
 ## 
 ## Arguments
-## 		{int or float} [lower=0] The lower bound.
-## 		{int or float} [upper=1] The upper bound.
-## 		{bool} [floating] Specify returning a floating-point number.
+## 		[lower=0] (number): The lower bound.
+## 		[upper=1] (number): The upper bound.
+## 		floating (bool): Specify returning a floating-point number.
 ## Returns
-##		{int or float} Returns the random number.
+##		(number): Returns the random number.
 ## Example
 ## 		random(0, 5)
 ## 		# => an integer between 0 and 5
