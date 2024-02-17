@@ -1,4 +1,4 @@
-# GD_ (_102/289_ implemented)
+# GD_ (_104/289_ implemented)
 
 **Wanna jump into it? See [the api docs](https://accidentallyc.github.io/GD_/)**
 
@@ -9,8 +9,8 @@ GD_ is an effort to bring [Lodash](https://lodash.com/) into Godot. This will at
 ```gdscript
 # Map Example
 var users = [
-	{ 'user': 'barney' },
-	{ 'user': 'fred' }
+  { 'user': 'barney' },
+  { 'user': 'fred' }
 ]; 		 
 
 
@@ -22,7 +22,7 @@ var node = Node2D.new()
 node.global_position = Vector2(999,123)
 
 var everything_everywhere_all_at_once = {
-	"array": ["hello", node, "world"]
+  "array": ["hello", node, "world"]
 }
 
 GD_.get_prop(everything_everywhere_all_at_once, "array:1:global_position:y")
@@ -49,7 +49,7 @@ which is invoked with 3 arguments (value,index,array). We drop the 3rd arguments
 
 ```gdscript
 var callback_2_args = func (value, index): 
-	return value
+  return value
 
 GD_.drop_right_while(..., callback_2_args)
 ```
@@ -58,7 +58,7 @@ This also means that if in lodash a callback is invoked with only 1 argument lik
 
 ```
 var callback_1_arg =  func (value, _unused): 
-	return value
+  return value
 
 GD_.difference_by(..., callback_1_arg)
 ```
@@ -85,4 +85,4 @@ See [the api readme](https://github.com/accidentallyc/GD_/blob/master/api.md)
 Just do a pull request with the following requirements
 1. Add a unit test node for it at `res://tests/unit_tests.tscn` scene
 1. Update the comments, it should match how the other comments are written because  👇
-1. Run the auto-markdown generator at `scripts/rebuild_webdocs.gd` which autogenerates api.md
+1. Run the auto-markdown generator at `scripts/rebuild_webdocs.gd` which autogenerates index.html
