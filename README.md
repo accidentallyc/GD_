@@ -82,7 +82,8 @@ See [the api readme](https://github.com/accidentallyc/GD_/blob/master/api.md)
 
 **Contributing**
 
-Just do a pull request with the following requirements
+Just do a pull request against `develop` with the following requirements
 1. Add a unit test node for it at `res://tests/unit_tests.tscn` scene
 1. Update the comments, it should match how the other comments are written because  👇
 1. Run the auto-markdown generator at `scripts/rebuild_webdocs.gd` which autogenerates index.html
+1. Once your PR is merged into develop, I will bump up the plugin version and deploy to the asset library
