@@ -2693,7 +2693,7 @@ static func random(lower=0, upper=0, floating:bool=false):
 		lower = upper
 		upper = temp
 		
-	if floating or int(lower) % 1 or int(upper) % 1:
+	if floating or lower is float or upper is float:
 		var rand = randf()
 		var rand_length = str(rand).length() - 1
 		return min(lower + rand * (upper - lower + (1.0 * pow(10, 1))), upper)
