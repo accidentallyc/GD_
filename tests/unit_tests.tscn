@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=103 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -101,6 +101,7 @@
 [ext_resource type="Script" path="res://tests/lang/GD_is_immutable_test.gd" id="84_y8der"]
 [ext_resource type="Script" path="res://tests/__base_test.gd" id="86_csbig"]
 [ext_resource type="Script" path="res://tests/lang/GD_to_array_test.gd" id="88_1gj8j"]
+[ext_resource type="Script" path="res://tests/number/GD_random.gd" id="92_pok6t"]
 
 [node name="Unit Tests" type="Node"]
 script = ExtResource("1_b4vvq")
@@ -388,6 +389,9 @@ script = ExtResource("88_1gj8j")
 script = ExtResource("12_r0d3c")
 
 [node name="Number" type="Node" parent="."]
+
+[node name="Random" type="Node" parent="Number"]
+script = ExtResource("92_pok6t")
 
 [node name="Object" type="Node" parent="."]
 

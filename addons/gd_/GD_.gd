@@ -2589,7 +2589,11 @@ static func to_array(thing):
 		for key in keyed_iterable(thing):
 			array.append(thing[key])
 	return array
-static func to_finite(a=0, b=0, c=0): not_implemented()
+static func to_finite(value): 
+	if value is float or value is int and !is_nan(value) and !value == 9223372036854775807 :
+		return value
+	return 9223372036854775807
+
 static func to_integer(a=0, b=0, c=0): not_implemented()
 static func to_length(a=0, b=0, c=0): not_implemented()
 static func to_number(a=0, b=0, c=0): not_implemented()
@@ -2625,7 +2629,7 @@ static func divide(a=0, b=0, c=0): not_implemented()
 static func floor(number, precision = null):
 	var scale = pow(10.0, default_to(precision,0))
 	return __floor(number * scale) / scale
-	
+
 #static func max(a=0, b=0, c=0): not_implemented()
 static func max_by(a=0, b=0, c=0): not_implemented()
 static func mean(a=0, b=0, c=0): not_implemented()
@@ -2645,8 +2649,55 @@ CATEGORY: NUMBER
 
 #static func clamp(a=0, b=0, c=0): not_implemented()
 static func in_range(a=0, b=0, c=0): not_implemented()
-# @TODO guarded method by map, every, filter, mapValues, reject, some
-static func random(a=0, b=0, c=0): not_implemented() 
+## Produces a random number between the inclusive `lower` and `upper` bounds.
+## If only one argument is provided a number between `0` and the given number
+## is returned. If `floating` is `true`, or either `lower` or `upper` are
+## floats, a floating-point number is returned instead of an integer.
+## 
+## Arguments
+## 		[lower=0] (number): The lower bound.
+## 		[upper=1] (number): The upper bound.
+## 		floating (bool): Specify returning a floating-point number.
+## Returns
+##		(number): Returns the random number.
+## Example
+## 		random(0, 5)
+## 		# => an integer between 0 and 5
+##
+## 		random(5)
+## 		# => also an integer between 0 and 5
+##
+## 		random(5, true)
+## 		# => a floating-point number between 0 and 5
+##
+## 		random(1.2, 5.2)
+## 		# => a floating-point number between 1.2 and 5.2
+##
+static func random(lower=0, upper=0, floating:bool=false):
+	if not floating:
+		if upper is bool:
+			floating = upper
+			upper = null
+		elif lower is bool:
+			floating = lower
+			lower = null
+		
+	if not lower or lower != lower and not upper:
+		lower = 0
+		upper = 1
+	else:
+		upper = to_finite(upper)
+	
+	if lower > upper:
+		var temp = lower
+		lower = upper
+		upper = temp
+		
+	if floating or lower is float or upper is float:
+		var rand = randf()
+		var rand_length = str(rand).length() - 1
+		return float(min(lower + rand * (upper - lower + (1.0 * pow(10, 1))), upper))
+	return int(lower + floor(randf() * (upper - lower + 1)))
 
 """
 CATEGORY: OBJECT
