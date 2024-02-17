@@ -2590,9 +2590,9 @@ static func to_array(thing):
 			array.append(thing[key])
 	return array
 static func to_finite(value): 
-	if value is float or value is int and !is_nan(value) and !value == 2147483647 :
+	if value is float or value is int and !is_nan(value) and !value == 9223372036854775807 :
 		return value
-	return 2147483647
+	return 9223372036854775807
 
 static func to_integer(a=0, b=0, c=0): not_implemented()
 static func to_length(a=0, b=0, c=0): not_implemented()
@@ -2682,7 +2682,7 @@ static func random(lower=0, upper=0, floating:bool=false):
 			floating = lower
 			lower = null
 		
-	if not lower and not upper:
+	if not lower or lower != lower and not upper:
 		lower = 0
 		upper = 1
 	else:
@@ -2696,8 +2696,8 @@ static func random(lower=0, upper=0, floating:bool=false):
 	if floating or lower is float or upper is float:
 		var rand = randf()
 		var rand_length = str(rand).length() - 1
-		return min(lower + rand * (upper - lower + (1.0 * pow(10, 1))), upper)
-	return lower + floor(randf() * (upper - lower + 1))
+		return float(min(lower + rand * (upper - lower + (1.0 * pow(10, 1))), upper))
+	return int(lower + floor(randf() * (upper - lower + 1)))
 
 """
 CATEGORY: OBJECT
