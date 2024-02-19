@@ -74,10 +74,54 @@ func equal(other, description: String = &""):
 			&"t1":type_string(typeof(value)),
 			&"t2":type_string(typeof(other)),
 			&"equal": &"STRICTLY equal" if is_strict else &"loosely equal",
+			&"not": __s.to_upr(&"",&"NOT ")
+		})
+	)
+	
+func gt(other, description: String = &""):
+	return test.__assert(
+		__s.identity.call(LambdaOperations.gt(value,other)),
+		description,
+		&"Expected '{v1}' to be {not}greater than '{v2}'".format({
+			&"v1": str(value),
+			&"v2": str(other),
 			&"not": &"" if __s.is_upright else &"NOT ",
 		})
 	)
 
+func gte(other, description: String = &""):
+	return test.__assert(
+		__s.identity.call(LambdaOperations.gte(value,other)),
+		description,
+		&"Expected '{v1}' to be {not}greater than or equal to '{v2}'".format({
+			&"v1": str(value),
+			&"v2": str(other),
+			&"not": __s.to_upr(&"",&"NOT "),
+		})
+	)
+	
+func lt(other, description: String = &""):
+	return test.__assert(
+		__s.identity.call(LambdaOperations.lt(value,other)),
+		description,
+		&"Expected '{v1}' to be {not}lesser than '{v2}'".format({
+			&"v1": str(value),
+			&"v2": str(other),
+			&"not": &"" if __s.is_upright else &"NOT ",
+		})
+	)
+	
+func lte(other, description: String = &""):
+	return test.__assert(
+		__s.identity.call(LambdaOperations.lte(value,other)),
+		description,
+		&"Expected '{v1}' to be {not}lesser than or equal to '{v2}'".format({
+			&"v1": str(value),
+			&"v2": str(other),
+			&"not": __s.to_upr(&"",&"NOT "),
+		})
+	)
+	
 ## Checks if 'a' is truthy using a ternary operator
 ## Example 1: expect(true).to.be.truthy()
 ## Example 2: expect([1,2,3]).to.be.truthy()
@@ -87,7 +131,7 @@ func truthy(description: String = &""):
 		description,
 		&"Expected '{v1}' {to} be truthy".format({
 			&"v1": str(value),
-			&"to": &"to" if __s.is_upright else &"to NOT",
+			&"to": __s.to_upr(&"to", &"to NOT"),
 		})
 	)
 	
@@ -101,7 +145,7 @@ func falsey(description: String = &""):
 		description,
 		&"Expected '{v1}' {to} be falsey".format({
 			&"v1": str(value),
-			&"to": &"to" if __s.is_upright else &"to NOT",
+			&"to": __s.to_upr(&"to", &"to NOT"),
 		})
 	)
 	
@@ -116,7 +160,7 @@ func called(description: String = &""):
 		__s.identity.call(vStub.callstack.size() > 0),
 		description,
 		&"Expected callback {to} have been called atleast once".format({
-			&"to": &"to" if __s.is_upright else &"NOT to"
+			&"to": __s.to_upr(&"to", &"NOT to")
 		})
 	)
 	
@@ -132,7 +176,7 @@ func called_n_times(n:int, description: String = &""):
 		__s.identity.call(count == n),
 		description,
 		&"Expected stub {to} have been called {v1} times but got called {v2}".format({
-			&"to": &"to" if __s.is_upright else &"NOT to",
+			&"to": __s.to_upr(&"to", &"NOT to"),
 			&"v1": n,
 			&"v2": count
 		})
@@ -152,7 +196,7 @@ func value_in(thing, description: String = &""):
 		description,
 		&"Expected {v1} {to} {v2}".format({
 			&"v1": value,
-			&"to": &"to be in" if __s.is_upright else &"NOT to be in",
+			&"to": __s.to_upr(&"to be in",&"NOT to be in"),
 			&"v2": thing
 		})
 	)
@@ -173,7 +217,7 @@ func key_in(thing, description: String = &""):
 		description,
 		&"Expected {v1} {to} {v2}".format({
 			&"v1": value,
-			&"to": &"to be key of" if __s.is_upright else &"NOT to be key of",
+			&"to": __s.to_upr(&"to be key of", &"NOT to be key of"),
 			&"v2": thing
 		})
 	)
@@ -183,16 +227,23 @@ func key_in(thing, description: String = &""):
 // INTERNAL STUFF //
 /////////////////////////////
 """
-var __s = {
-	"is_upright": true,
-	"is_strict": false,
-	"equals": func (a,b):
+
+class __INTERNAL_STATE__:
+	var is_upright = true
+	var is_strict = false
+	
+	func to_upr(a,b):
+		return a if is_upright  else b
+		
+	func identity(r):
+		return r if is_upright else not(r)
+		
+	func equals(a,b):
 		var r
-		if __s.is_strict:
+		if is_strict:
 			r = LambdaOperations.equals_strict(a,b)
 		else:
 			r = LambdaOperations.equals(a,b)
-		return __s.identity.call(r),
-	"identity": func (r):
-		return r if __s.is_upright else not(r),
-}
+		return identity(r)
+		
+var __s = __INTERNAL_STATE__.new()

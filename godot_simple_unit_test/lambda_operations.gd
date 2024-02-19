@@ -1,6 +1,25 @@
 class_name LambdaOperations
 
+static func gt(a,b):
+	if GD_.is_number(a) and GD_.is_number(b):
+		return a > b
+	return false
+	
+static func gte(a,b):
+	if GD_.is_number(a) and GD_.is_number(b):
+		return a >= b
+	return false
+	
+static func lt(a,b):
+	if GD_.is_number(a) and GD_.is_number(b):
+		return a < b
+	return false
 
+static func lte(a,b):
+	if GD_.is_number(a) and GD_.is_number(b):
+		return a <= b
+	return false
+	
 ## Does a loosey equality check. If the types are equal
 ## it does a basic "==" comparison but if the types are not
 ## equal, it casts both to string and does the comparison. 

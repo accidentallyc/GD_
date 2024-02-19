@@ -5,7 +5,7 @@ extends Node
 ## This cannot be run by itself
 class_name SimpleTest
 
-var SimpleTest_LineItemTscn = preload("res://godot_simple_unit_test/ui/simpletest_line_item.tscn")
+static var SimpleTest_LineItemTscn = preload("./ui/simpletest_line_item.tscn")
 
 const EMPTY_ARRAY = []
 
@@ -31,6 +31,17 @@ func expect_no_orphan_nodes():
 ## Call to force a test to fail. 
 func expect_fail(description = &"Forced failure invoked"):
 	__append_error(description)
+	
+## Allows you to wait for a certain condition to happen
+func wait_until(condition:Callable, timeout = 5000):
+	while true:
+		if condition.call():
+			return
+		await get_tree().create_timer(0.25).timeout
+
+func wait(timeout = 5000):
+	await get_tree().create_timer(timeout).timeout
+	return
 	
 ## Overrides the displayed test name. This is optional
 func test_name(override_test_name:String):
@@ -157,7 +168,7 @@ func __on_main_line_item_ready():
 		_ln_item.add_block(case_ln_item)
 		
 		await case_ln_item.ready
-		__run_test(case, case_ln_item)
+		await __run_test(case, case_ln_item)
 		
 		var has_error = _errors.size() > 0
 		if has_error:
@@ -191,7 +202,7 @@ func __run_test(case, ln_item):
 	if case.skipped:
 		__run_test_skip(case, ln_item)
 	else:
-		__run_test_run(case, ln_item)
+		await __run_test_run(case, ln_item)
 		__run_state.completed_count += 1
 		
 	if __run_state.completed_count == __run_state.expected_count:
@@ -246,7 +257,7 @@ func __run_test_run(case, ln_item):
 					}))
 		args.append(null)		
 	
-	self.callv(method_name, args)
+	await self.callv(method_name, args)
 	
 	_after_each()
 		
@@ -270,7 +281,7 @@ func __run_test_run(case, ln_item):
 	
 func __run_single_test(method_name,ln_item):
 	__set_run_state(1)
-	__run_test(method_name,ln_item)
+	await __run_test(method_name,ln_item)
 	
 	
 func __run_all_tests():
