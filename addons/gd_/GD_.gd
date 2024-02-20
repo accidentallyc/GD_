@@ -2487,9 +2487,7 @@ static func is_nil(a=0, b=0, c=0): not_implemented()
 static func is_null(a=0, b=0, c=0): not_implemented()
 
 ## Checks if value is classified as a Number primitive 
-## Note: To exclude Infinity, -Infinity, and NaN, which are classified 
-## as numbers, use the _.isFinite method.
-## 
+
 ## 
 ## Arguments
 ## 		value (*): The value to check.
@@ -2507,6 +2505,9 @@ static func is_null(a=0, b=0, c=0): not_implemented()
 ## 		 
 ## 		GD_.is_number('3')
 ## 		# => false
+## Notes
+##      To exclude Infinity, -Infinity, and NaN, which are classified 
+##      as numbers, use the GD_.is_finite method.
 static func is_number(a = null, _UNUSED_=null):
     return a is int or a is float
     
@@ -2589,14 +2590,26 @@ static func to_array(thing):
         for key in keyed_iterable(thing):
             array.append(thing[key])
     return array
+    
+    
 static func to_finite(value): 
-    if value is float or value is int and !is_nan(value) and !value == 9223372036854775807 :
-        return value
-    return 9223372036854775807
+    if !value or not(is_number(value)):
+        return 0
 
+    # See https://docs.godotengine.org/en/stable/classes/class_int.html
+    var max_int_64 = 9223372036854775807
+    if INF == value:
+        return max_int_64
+    elif -INF == value:
+        return -max_int_64
+    return value
+        
 static func to_integer(a=0, b=0, c=0): not_implemented()
 static func to_length(a=0, b=0, c=0): not_implemented()
-static func to_number(a=0, b=0, c=0): not_implemented()
+
+static func to_number(value): 
+    return value # temporary
+    
 static func to_plain_object(a=0, b=0, c=0): not_implemented()
 static func to_safe_integer(a=0, b=0, c=0): not_implemented()
 #static func to_string(a=0, b=0, c=0): not_implemented()
@@ -2674,7 +2687,7 @@ static func in_range(a=0, b=0, c=0): not_implemented()
 ##
 ## 		random(1.2, 5.2)
 ## 		# => a floating-point number between 1.2 and 5.2
-## Notes:
+## Notes
 ##		>> @TODO guarded method by map, every, filter, mapValues, reject, some
 static func random(lower=0, upper=0, floating:bool=false):
     # @TODO guarded method by map, every, filter, mapValues, reject, some

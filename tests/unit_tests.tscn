@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=104 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -101,6 +101,7 @@
 [ext_resource type="Script" path="res://tests/lang/GD_is_immutable_test.gd" id="84_y8der"]
 [ext_resource type="Script" path="res://tests/__base_test.gd" id="86_csbig"]
 [ext_resource type="Script" path="res://tests/lang/GD_to_array_test.gd" id="88_1gj8j"]
+[ext_resource type="Script" path="res://tests/lang/GD_to_finite_test.gd" id="91_ruwto"]
 [ext_resource type="Script" path="res://tests/number/GD_random.gd" id="92_pok6t"]
 
 [node name="Unit Tests" type="Node"]
@@ -383,6 +384,9 @@ script = ExtResource("52_1x46s")
 [node name="To Array" type="Node" parent="Lang"]
 script = ExtResource("88_1gj8j")
 
+[node name="To Finite" type="Node" parent="Lang"]
+script = ExtResource("91_ruwto")
+
 [node name="Math" type="Node" parent="."]
 
 [node name="Floor" type="Node" parent="Math"]
@@ -419,8 +423,6 @@ script = ExtResource("47_bcfvp")
 
 [node name="Matches Property" type="Node" parent="Util"]
 script = ExtResource("48_8d001")
-
-[node name="Node" type="Node" parent="Util/Matches Property"]
 
 [node name="Property" type="Node" parent="Util"]
 script = ExtResource("11_4km8u")
