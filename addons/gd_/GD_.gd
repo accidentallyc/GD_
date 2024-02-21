@@ -2591,24 +2591,44 @@ static func to_array(thing):
             array.append(thing[key])
     return array
     
-    
+## Converts value to a finite number.
+##
+## Arguments
+##      value (*): The value to convert.
+## Returns
+##      (number): Returns the converted number.
+## Example
+##      GD_.to_finite(3.2);
+##      # => 3.2
+##       
+##      GD_.to_finite(Infinity);
+##      # => 9223372036854775807
+##       
+##      GD_.to_finite('3.2');
+##      # => 3.2
 static func to_finite(value): 
-    if !value or not(is_number(value)):
+    if is_number(value):
+        # See https://docs.godotengine.org/en/stable/classes/class_int.html
+        var max_int_64 = 9223372036854775807
+        if INF == value:
+            return max_int_64
+        elif -INF == value:
+            return -max_int_64
+    var result = to_number(value)
+    
+    if is_nan(result):
         return 0
-
-    # See https://docs.godotengine.org/en/stable/classes/class_int.html
-    var max_int_64 = 9223372036854775807
-    if INF == value:
-        return max_int_64
-    elif -INF == value:
-        return -max_int_64
-    return value
+    return to_number(value)
         
 static func to_integer(a=0, b=0, c=0): not_implemented()
 static func to_length(a=0, b=0, c=0): not_implemented()
 
 static func to_number(value): 
-    return value # temporary
+    if GD_.is_number(value):
+        return value
+    elif GD_.is_string(value) and value.is_valid_float():
+        return float(str(value))
+    return NAN
     
 static func to_plain_object(a=0, b=0, c=0): not_implemented()
 static func to_safe_integer(a=0, b=0, c=0): not_implemented()
@@ -2828,7 +2848,6 @@ static func get_prop(thing, path, default_value = null):
         splits = [path]
     else:
         gd_warn("GD_.get_prop received a non-collection type PATH")
-        print_stack()
         return default_value
         
     if not(splits):
