@@ -109,12 +109,41 @@ class Internal:
             else:
                 curr[path] = {}
                 curr = curr[path]
+                
+    func is_array(thing, __UNUSED__ = null):
+        var type = typeof(thing)
+        return type <= TYPE_PACKED_COLOR_ARRAY and type >= TYPE_ARRAY
+        
+    func is_string(thing, __UNUSED__ = null):
+        return thing is String or thing is StringName
     
     func is_int_like(tmp):
         return (tmp is String and tmp.is_valid_int()) or (tmp is int)
         
-    func is_number(a = null, _UNUSED_=null):
+    func is_number(a = null, _UNUSED_= null):
         return a is int or a is float
+        
+    func is_empty(value, __UNUSED__ = null):
+        return size(value) <= 0
+        
+    func size(thing, __UNUSED__ = null):
+        if is_array(thing) or thing is Dictionary:
+            return thing.size()
+        elif GD_.is_string(thing):
+            return thing.length()
+        elif thing is Object:
+            if thing.has_method('length'):
+                return thing.length()
+            elif thing.has_method('size'):
+                return thing.size()
+            elif GD_.is_custom_iterator(thing):
+                gd_warn("GD_.size received a custom iterator that doesnt implement size or length. This will be expensive to calculate")
+                var ctr = 0
+                for i in thing: 
+                    ctr += 1
+                return ctr
+        gd_warn("GD_.size received a non-collection type value")
+        return 0
         
     ## Splits the string into paths
     func string_to_path(str: String):

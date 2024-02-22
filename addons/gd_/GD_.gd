@@ -1264,9 +1264,10 @@ static func take(array:Array, n = null):
     
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func take_right(array:Array, n = 1): not_implemented() 
-static func take_right_while(array:Array, b=0, c=0): not_implemented()
-static func take_while(array:Array, b=0, c=0): not_implemented()
 
+static func take_right_while(array:Array, b=0, c=0): not_implemented()
+
+static func take_while(array:Array, b=0, c=0): not_implemented()
 
 ## Creates an array of unique values, in order, from all given arrays using 
 ## == for equality comparisons.
@@ -1421,7 +1422,9 @@ static func uniq_with(array:Array, comparator:Callable):
     return new_array
     
 static func unzip(array:Array, b=0, c=0): not_implemented()
+
 static func unzip_with(array:Array, b=0, c=0): not_implemented()
+
 
 ## Creates an array excluding all given values using == for equality comparisons.
 ## 
@@ -1458,7 +1461,9 @@ static func without(array:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDE
         
     
 static func xor(array:Array, b=0, c=0): not_implemented()
+
 static func xor_by(array:Array, b=0, c=0): not_implemented()
+
 static func xor_with(array:Array, b=0, c=0): not_implemented()
 
 
@@ -2074,24 +2079,8 @@ static func shuffle(collection):
 ##			In js, anything can turn to a collection as long as it has the field
 ##			length. In GD_, for as long as it implements length() or size() it
 ##			size will use that and return it
-static func size(thing): 
-    if GD_.is_array(thing) or thing is Dictionary:
-        return thing.size()
-    elif GD_.is_string(thing):
-        return thing.length()
-    elif thing is Object:
-        if thing.has_method('length'):
-            return thing.length()
-        elif thing.has_method('size'):
-            return thing.size()
-        elif GD_.is_custom_iterator(thing):
-            gd_warn("GD_.size received a custom iterator that doesnt implement size or length. This will be expensive to calculate")
-            var ctr = 0
-            for i in thing: 
-                ctr += 1
-            return ctr
-    gd_warn("GD_.size received a non-collection type value")
-    return 0
+static func size(thing, __UNUSED__ = null): 
+    return __INTERNAL__.size(thing, __UNUSED__)
 
 ## Checks if predicate returns truthy for any element of collection. 
 ## Iteration is stopped once predicate returns truthy. 
@@ -2381,9 +2370,8 @@ static func is_arguments(a=0, b=0, c=0): not_implemented()
 ## Notes
 ##		>> JS Comparison
 ##			Theres are no "Packed" arrays in JS
-static func is_array(thing):
-    var type = typeof(thing)
-    return type <= TYPE_PACKED_COLOR_ARRAY and type >= TYPE_ARRAY
+static func is_array(thing, __UNUSED__ = null):
+    return __INTERNAL__.is_array(thing, __UNUSED__)
     
 static func is_array_buffer(a=0, b=0, c=0): not_implemented()
 
@@ -2440,7 +2428,34 @@ static func is_boolean(a=0, b=0, c=0): not_implemented()
 static func is_buffer(a=0, b=0, c=0): not_implemented()
 static func is_date(a=0, b=0, c=0): not_implemented()
 static func is_element(a=0, b=0, c=0): not_implemented()
-static func is_empty(a=0, b=0, c=0): not_implemented()
+
+## Checks if value is an empty object, collection, map, or set.
+## 
+## Objects are considered empty if they have no own enumerable string keyed properties.
+## 
+## Array-like values such as arguments objects, arrays, buffers, strings, or jQuery-like collections are considered empty if they have a length of 0. Similarly, maps and sets are considered empty if they have a size of 0.
+## 
+## Arguments
+##      value (*): The value to check.
+## Returns
+##      (boolean): Returns true if value is empty, else false.
+## Example
+##      GD_.is_empty(null);
+##      # => true
+##       
+##      GD_.is_empty(true);
+##      # => true
+##       
+##      GD_.is_empty(1);
+##      # => true
+##       
+##      GD_.is_empty([1, 2, 3]);
+##      # => false
+##       
+##      GD_.is_empty({ 'a': 1 });
+##      # => false
+static func is_empty(value, __UNUSED__ = null):
+    return __INTERNAL__.is_empty(value, __UNUSED__)
 
 ## Basically a lambda wrapper for `==`. Because of the way dicts and
 ## arrays implement the "==" operators, it results in a deep comparison.
@@ -2533,8 +2548,8 @@ static func is_set(a=0, b=0, c=0): not_implemented()
 ## 		# => true
 ## 		GD_.is_string(1)
 ## 		# => false
-static func is_string(thing):
-    return thing is String or thing is StringName
+static func is_string(thing, __UNUSED__ = null):
+    return __INTERNAL__.is_string(thing, __UNUSED__)
     
 static func is_symbol(a=0, b=0, c=0): not_implemented()
 static func is_typed_array(a=0, b=0, c=0): not_implemented()
@@ -2559,6 +2574,7 @@ static func is_weak_set(a=0, b=0, c=0): not_implemented()
 ## 		# => false
 static func lt(a, b):
     return a < b
+    
 static func lte(a=0, b=0, c=0):
     return a <= b
     
@@ -2610,6 +2626,7 @@ static func to_finite(value, __UNUSED__ = null):
     return __INTERNAL__.to_finite(value, __UNUSED__)
         
 static func to_integer(a=0, b=0, c=0): not_implemented()
+
 static func to_length(a=0, b=0, c=0): not_implemented()
 
 static func to_number(value): 
@@ -2620,14 +2637,18 @@ static func to_number(value):
     return NAN
     
 static func to_plain_object(a=0, b=0, c=0): not_implemented()
+
 static func to_safe_integer(a=0, b=0, c=0): not_implemented()
+
 #static func to_string(a=0, b=0, c=0): not_implemented()
 
 """
 CATEGORY: MATH
 """
 static func add(a=0, b=0, c=0): not_implemented()
+
 #static func ceil(a=0, b=0, c=0): not_implemented()
+
 static func divide(a=0, b=0, c=0): not_implemented()
 
 ## Computes number rounded down to precision. This uses Godot's floor
@@ -2653,15 +2674,25 @@ static func floor(number, precision = null):
     return __floor(number * scale) / scale
 
 #static func max(a=0, b=0, c=0): not_implemented()
+
 static func max_by(a=0, b=0, c=0): not_implemented()
+
 static func mean(a=0, b=0, c=0): not_implemented()
+
 static func mean_by(a=0, b=0, c=0): not_implemented()
+
 #static func min(a=0, b=0, c=0): not_implemented()
+
 static func min_by(a=0, b=0, c=0): not_implemented()
+
 static func multiply(a=0, b=0, c=0): not_implemented()
+
 #static func round(a=0, b=0, c=0): not_implemented()
+
 static func subtract(a=0, b=0, c=0): not_implemented()
+
 static func sum(a=0, b=0, c=0): not_implemented()
+
 static func sum_by(a=0, b=0, c=0): not_implemented()
 
 
@@ -2729,9 +2760,13 @@ static func random(lower=0, upper=0, floating:bool=false):
 CATEGORY: OBJECT
 """
 static func assign(a=0, b=0, c=0): not_implemented() # @TODO guarded by reduce, reduceRight, transform
+
 static func assign_in(a=0, b=0, c=0): not_implemented()
+
 static func assign_in_with(a=0, b=0, c=0): not_implemented()
+
 static func assign_with(a=0, b=0, c=0): not_implemented()
+
 
 ## Creates an array of values corresponding to paths of object.
 ## 
@@ -2762,18 +2797,31 @@ static func at(obj, a,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF
     
 
 static func create(a=0, b=0, c=0): not_implemented()
+
 static func defaults(a=0, b=0, c=0): not_implemented()
+
 static func defaults_deep(a=0, b=0, c=0): not_implemented()
+
 static func to_pairs(a=0, b=0, c=0): not_implemented() # alias for entries
+
 static func to_pairs_in(a=0, b=0, c=0): not_implemented() # alias for entriesIn
+
 static func find_key(a=0, b=0, c=0): not_implemented()
+
 static func find_last_key(a=0, b=0, c=0): not_implemented()
+
 static func for_in(a=0, b=0, c=0): not_implemented()
+
 static func for_in_right(a=0, b=0, c=0): not_implemented()
+
 static func for_own(a=0, b=0, c=0): not_implemented()
+
 static func for_own_right(a=0, b=0, c=0): not_implemented()
+
 static func functions(a=0, b=0, c=0): not_implemented()
+
 static func functions_in(a=0, b=0, c=0): not_implemented()
+
 
 
 ## Gets the value at path of object. If the resolved value is null, 
@@ -2827,34 +2875,58 @@ static func functions_in(a=0, b=0, c=0): not_implemented()
 static func get_prop(thing, path, default_value = null):
     return __INTERNAL__.get_prop(thing, path, default_value)
     
-    
 static func has(a=0, b=0, c=0): not_implemented()
+
 static func has_in(a=0, b=0, c=0): not_implemented()
+
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func invert(a=0, b=0, c=0): not_implemented() 
+
 static func invert_by(a=0, b=0, c=0): not_implemented()
+
 static func invoke(a=0, b=0, c=0): not_implemented()
+
 static func keys(a=0, b=0, c=0): not_implemented()
+
 static func keys_in(a=0, b=0, c=0): not_implemented()
+
 static func map_keys(a=0, b=0, c=0): not_implemented()
+
 static func map_values(a=0, b=0, c=0): not_implemented()
+
 static func merge(a=0, b=0, c=0): not_implemented()
+
 static func merge_with(a=0, b=0, c=0): not_implemented()
+
 static func omit(a=0, b=0, c=0): not_implemented()
+
 static func omit_by(a=0, b=0, c=0): not_implemented()
+
 static func pick(a=0, b=0, c=0): not_implemented()
+
 static func pick_by(a=0, b=0, c=0): not_implemented()
+
 static func result(a=0, b=0, c=0): not_implemented()
+
 #static func set(a=0, b=0, c=0): not_implemented()
+
 static func set_with(a=0, b=0, c=0): not_implemented()
+
 #static func to_pairs(a=0, b=0, c=0): not_implemented()
+
 #static func to_pairs_in(a=0, b=0, c=0): not_implemented()
+
 static func transform(a=0, b=0, c=0): not_implemented()
+
 static func unset(a=0, b=0, c=0): not_implemented()
+
 static func update(a=0, b=0, c=0): not_implemented()
+
 static func update_with(a=0, b=0, c=0): not_implemented()
 
+
 static func values(collection): not_implemented()
+
 static func values_in(a=0, b=0, c=0): not_implemented()
 
 

@@ -10,7 +10,8 @@ static var falsey:
         "empty string":'', 
         "empty array": []
     }
-static var empties = [{},[]]
+static var empties:
+    get: return [{},[]]
 static var array: Array:
     get: return [1,2,3,4]
 static var string:String:
@@ -46,7 +47,17 @@ enum TestEnum {
     enum_key_3,
     enum_key_4,
 } 
+
+class TestNodeSized:
+    extends Object
     
+    var _size
+    func _init(size):
+        _size = size
+        
+    func size():
+        return  _size
+
 class TestIterator:
     var start
     var current
