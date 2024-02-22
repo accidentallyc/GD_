@@ -113,6 +113,9 @@ class Internal:
     func is_int_like(tmp):
         return (tmp is String and tmp.is_valid_int()) or (tmp is int)
         
+    func is_number(a = null, _UNUSED_=null):
+        return a is int or a is float
+        
     ## Splits the string into paths
     func string_to_path(str: String):
         var path = []
@@ -136,6 +139,27 @@ class Internal:
                         path.append(key)
         
         return path
+        
+    func to_number(value, _UNUSED_ = null): 
+        if is_number(value):
+            return value
+        elif GD_.is_string(value) and value.is_valid_float():
+            return float(str(value))
+        return NAN
+        
+    func to_finite(value, _UNUSED_ = null): 
+        if is_number(value):
+            # See https://docs.godotengine.org/en/stable/classes/class_int.html
+            var max_int_64 = 9223372036854775807
+            if INF == value:
+                return max_int_64
+            elif -INF == value:
+                return -max_int_64
+        var result = to_number(value)
+        
+        if is_nan(result):
+            return 0
+        return to_number(value)
                     
     
     ## Attempt to get an index from an array or retural the default (null)	
@@ -143,9 +167,79 @@ class Internal:
         if index >= 0 and index < array.size():
             return array[index]
         return default_value
-        
-    # For functions with weird and special behaviors when used as n iteratee.
     
+    func get_prop(thing, path, default_value = null):
+        var splits
+        if path is String:
+            var result = get_prop(thing, [path], null)
+            if result:
+                return result
+            splits = string_to_path(path)
+        elif path is Array:
+            splits = path
+        elif is_number(path):
+            splits = [path]
+        else:
+            gd_warn("GD_.get_prop received a non-collection type PATH")
+            return default_value
+            
+        if not(splits):
+            return default_value
+        
+        var curr_prop = thing
+        for split in splits:
+            if curr_prop is Object:
+                var innnn = split in curr_prop
+                if split in curr_prop:
+                    var attempt = curr_prop.get(split)
+                    if attempt != null:
+                        curr_prop = attempt
+                        continue
+                    else:
+                        return null
+                else:
+                    return default_value # which is null
+            if curr_prop is Dictionary:
+                if split in curr_prop: 
+                    curr_prop = curr_prop[split]
+                    continue
+                # As of 4.2 theres a bug where `&"" in {"":1}` results in a false
+                # If we rewrap with str it becomes usable again
+                # See https://github.com/godotengine/godot/issues/77894
+                # See https://github.com/godotengine/godot/pull/70096
+                elif split is StringName and str(split) in curr_prop: 
+                    curr_prop = curr_prop[str(split)]
+                    continue
+                elif split is String and split.is_valid_int():
+                    curr_prop = curr_prop[int(split)]
+                    continue
+                elif split is int and split in curr_prop:
+                    curr_prop = curr_prop[split]
+                    continue
+                else:
+                    return default_value # which is null
+            if curr_prop is Array \
+                and is_int_like(split) \
+                and int(split) < curr_prop.size():
+                    curr_prop = get_index(curr_prop,int(split))
+                    continue
+            
+            # Expensive but atleast it follows, Lodash behavior
+            gd_warn("Warning: '%s' accesses a non-`Object`'s property which is expensive (e.g. Vector2 is a non-Object). Consider a different strategy" % &":".join(splits))
+            var expression = Expression.new()
+            var payload = "item['%s']" % split
+            var result = expression.parse(payload,["item"])
+            
+            if result == OK:
+                var tmp = expression.execute([curr_prop])
+                if not(expression.has_execute_failed()):
+                    curr_prop = tmp
+                    continue
+                
+            return default_value
+        return curr_prop
+        
+    ## For functions with weird and special behaviors when used as n iteratee.
     func get_iteratee(callable: Callable):
         # These functions have weird lodash behaviors as iteratee's
         # Visit each function for an explanation
@@ -219,7 +313,7 @@ class Internal:
             
         return new_array
 
-    func base_difference_by(array_left, array_right, iteratee = GD_.identity): 
+    func base_difference_by(array_left, array_right, iteratee = identity): 
         var iter_func = iteratee(iteratee)
         
         # new return array
@@ -309,10 +403,13 @@ class Internal:
             
         return func (value, _unused = null):
             return GD_.get_prop(value, path)
+            
+    func identity(value, _unused = null): 
+        return value
         
     func iteratee(iteratee_val):
         if is_same(iteratee_val, _UNDEF_):
-            return GD_.identity
+            return identity
         match typeof(iteratee_val):
             TYPE_DICTIONARY:
                 return matches(iteratee_val)
@@ -323,7 +420,7 @@ class Internal:
                 var val = GD_.get_prop(iteratee_val,["1"])
                 return matches_property(prop,val)
             TYPE_NIL:
-                return GD_.identity
+                return identity
             TYPE_CALLABLE:
                 return GD_.__INTERNAL__.get_iteratee(iteratee_val)
                     

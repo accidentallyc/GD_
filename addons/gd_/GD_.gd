@@ -998,7 +998,7 @@ static func slice(array:Array, start=0,end = array.size()):
 ## 		GD_.sorted_index([30, 50], 40)
 ## 		# => 1
 static func sorted_index(array:Array, value):
-    if not(GD_.is_number(value)):
+    if not(__INTERNAL__.is_number(value)):
         gd_warn("GD_.sorted_index received a non-number value")
         return null
         
@@ -1057,7 +1057,7 @@ static func sorted_index_by(array:Array, value, iteratee = GD_.identity):
 ## 		GD _.sorted_index_of([4, 5, 5, 5, 6], 5)
 ## 		# => 1	
 static func sorted_index_of(array:Array, value):
-    if not(GD_.is_number(value)):
+    if not(__INTERNAL__.is_number(value)):
         gd_warn("GD_.sorted_index_of received a non-number value")
         return -1
         
@@ -1095,7 +1095,7 @@ static func sorted_index_of(array:Array, value):
 ## 		GD_.sorted_last_index([4, 5, 5, 5, 6], 5)
 ## 		# => 4
 static func sorted_last_index(array:Array, value):
-    if not(GD_.is_number(value)):
+    if not(__INTERNAL__.is_number(value)):
         gd_warn("GD_.sorted_index received a non-number value")
         return null
         
@@ -1152,7 +1152,7 @@ static func sorted_last_index_by(array:Array, value, iteratee = GD_.identity):
 ## 		GD_.sorted_last_index_of([4, 5, 5, 5, 6], 5)
 ## 		# => 3
 static func sorted_last_index_of(array:Array, value): 
-    if not(GD_.is_number(value)):
+    if not(__INTERNAL__.is_number(value)):
         gd_warn("GD_.sorted_last_index_of received a non-number value")
         return -1
         
@@ -1257,7 +1257,7 @@ static func take(array:Array, n = null):
     var size = array.size()
     if n == null:
         n = 1
-    if size == 0 or not(GD_.is_number(n)) or n < 0:
+    if size == 0 or not(__INTERNAL__.is_number(n)) or n < 0:
         return []
     return array.slice(0, min(n,size))
     
@@ -2509,7 +2509,7 @@ static func is_null(a=0, b=0, c=0): not_implemented()
 ##      To exclude Infinity, -Infinity, and NaN, which are classified 
 ##      as numbers, use the GD_.is_finite method.
 static func is_number(a = null, _UNUSED_=null):
-    return a is int or a is float
+    return __INTERNAL__.is_number(a)
     
 static func is_object(a=0, b=0, c=0): not_implemented()
 static func is_object_like(a=0, b=0, c=0): not_implemented()
@@ -2606,25 +2606,14 @@ static func to_array(thing):
 ##       
 ##      GD_.to_finite('3.2');
 ##      # => 3.2
-static func to_finite(value): 
-    if is_number(value):
-        # See https://docs.godotengine.org/en/stable/classes/class_int.html
-        var max_int_64 = 9223372036854775807
-        if INF == value:
-            return max_int_64
-        elif -INF == value:
-            return -max_int_64
-    var result = to_number(value)
-    
-    if is_nan(result):
-        return 0
-    return to_number(value)
+static func to_finite(value, __UNUSED__ = null): 
+    return __INTERNAL__.to_finite(value, __UNUSED__)
         
 static func to_integer(a=0, b=0, c=0): not_implemented()
 static func to_length(a=0, b=0, c=0): not_implemented()
 
 static func to_number(value): 
-    if GD_.is_number(value):
+    if __INTERNAL__.is_number(value):
         return value
     elif GD_.is_string(value) and value.is_valid_float():
         return float(str(value))
@@ -2836,75 +2825,7 @@ static func functions_in(a=0, b=0, c=0): not_implemented()
 ##			But in gdscript you can't really do this without knowing that
 ##			The said thing is a Callable or a property
 static func get_prop(thing, path, default_value = null):
-    var splits
-    if path is String:
-        var result = GD_.get_prop(thing, [path], null)
-        if result:
-            return result
-        splits = __INTERNAL__.string_to_path(path)
-    elif path is Array:
-        splits = path
-    elif GD_.is_number(path):
-        splits = [path]
-    else:
-        gd_warn("GD_.get_prop received a non-collection type PATH")
-        return default_value
-        
-    if not(splits):
-        return default_value
-    
-    var curr_prop = thing
-    for split in splits:
-        if curr_prop is Object:
-            var innnn = split in curr_prop
-            if split in curr_prop:
-                var attempt = curr_prop.get(split)
-                if attempt != null:
-                    curr_prop = attempt
-                    continue
-                else:
-                    return null
-            else:
-                return default_value # which is null
-        if curr_prop is Dictionary:
-            if split in curr_prop: 
-                curr_prop = curr_prop[split]
-                continue
-            # As of 4.2 theres a bug where `&"" in {"":1}` results in a false
-            # If we rewrap with str it becomes usable again
-            # See https://github.com/godotengine/godot/issues/77894
-            # See https://github.com/godotengine/godot/pull/70096
-            elif split is StringName and str(split) in curr_prop: 
-                curr_prop = curr_prop[str(split)]
-                continue
-            elif split is String and split.is_valid_int():
-                curr_prop = curr_prop[int(split)]
-                continue
-            elif split is int and split in curr_prop:
-                curr_prop = curr_prop[split]
-                continue
-            else:
-                return default_value # which is null
-        if curr_prop is Array \
-            and __INTERNAL__.is_int_like(split) \
-            and int(split) < curr_prop.size():
-                curr_prop = __INTERNAL__.get_index(curr_prop,int(split))
-                continue
-        
-        # Expensive but atleast it follows, Lodash behavior
-        gd_warn("Warning: '%s' accesses a non-`Object`'s property which is expensive (e.g. Vector2 is a non-Object). Consider a different strategy" % &":".join(splits))
-        var expression = Expression.new()
-        var payload = "item['%s']" % split
-        var result = expression.parse(payload,["item"])
-        
-        if result == OK:
-            var tmp = expression.execute([curr_prop])
-            if not(expression.has_execute_failed()):
-                curr_prop = tmp
-                continue
-            
-        return default_value
-    return curr_prop
+    return __INTERNAL__.get_prop(thing, path, default_value)
     
     
 static func has(a=0, b=0, c=0): not_implemented()
