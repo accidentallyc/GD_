@@ -16,10 +16,3 @@ Extend Order
     Lang
     Base
 """
-
-    
-
-
-"""
-NON-LODASH FUNCS
-"""	

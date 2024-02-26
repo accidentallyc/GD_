@@ -32,8 +32,19 @@ GD_.get_prop(everything_everywhere_all_at_once, "array:1:global_position:y")
 ## 2 Ways to install
 
 * Install it through the [asset library](https://godotengine.org/asset-library/asset/2486)
-* Copy `addons\GD_.gd` and `addons\GD_base.gd` to your project
-  * _note_: these 2 must be in the same folder
+* Copy `addons\gd_\src` folder into your project and it must contain the following files
+    * GD_.gd
+    * GD_array.gd
+    * GD_collection.gd
+    * GD_object.gd
+    * GD_function.gd
+    * GD_math.gd
+    * GD_number.gd
+    * GD_util.gd
+    * GD_date.gd
+    * GD_string.gd
+    * GD_lang.gd
+    * GD_base.gd
 
 
 ## Special callouts
@@ -83,7 +94,10 @@ See [the api readme](https://github.com/accidentallyc/GD_/blob/master/api.md)
 **Contributing**
 
 Just do a pull request against `develop` with the following requirements
+1. Determine what category the function belongs to (array, collection, etc).
+1. Then add your code to the corresponding category file (GD_array.gd, GD_collection.gd, etc)
 1. Add a unit test node for it at `res://tests/unit_tests.tscn` scene
+    1. For unit tests I suggest checking the test cases over at [Lodash's repo](https://github.com/lodash/lodash/tree/main/test)
 1. Update the comments, it should match how the other comments are written because  👇
 1. Run the auto-markdown generator at `scripts/rebuild_webdocs.gd` which autogenerates index.html
 1. Once your PR is merged into develop, I will bump up the plugin version and deploy to the asset library
