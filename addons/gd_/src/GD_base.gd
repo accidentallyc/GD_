@@ -489,3 +489,8 @@ static func _is_not_null_arg(i,_i):
     
 static func not_implemented():  
     assert(false, "Not implemented yet. Do you need this function? If so, open an issue and I will prioritize it")
+
+## Ensures that when it iterates through the item, it always iterates via keys
+## This does not have a lodash equivalent	
+static func keyed_iterable(thing, from_index = 0):
+    return __INTERNAL__.keyed_iterable(thing, from_index)
