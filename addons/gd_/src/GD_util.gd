@@ -25,7 +25,9 @@ static func conforms(a=0, b=0, c=0): not_implemented()
 ## 		print(objects[0] === objects[1])
 ## 		# => true
 ## 
-static func constant(value = null, _UNUSED_ = null): return __INTERNAL__.base_constant(value,_UNUSED_)
+static func constant(value = null, _UNUSED_ = null): 
+    return func (a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
+        return value
 
 ## Checks value to determine whether a default value should be returned 
 ## in its place. The defaultValue is returned if value is NaN or null
@@ -238,4 +240,5 @@ static func to_path(a=0, b=0, c=0): not_implemented()
 ## 		GD_.unique_id()
 ## 		# => '105'
 static func unique_id(prefix=&""): 
-    return __INTERNAL__.base_unique_id(prefix)
+    __INTERNAL__.id_ctr += 1
+    return str(prefix,__INTERNAL__.id_ctr)

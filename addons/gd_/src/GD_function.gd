@@ -1,8 +1,5 @@
 extends "./GD_math.gd"
 
-"""
-CATEGORY: Function
-"""
 ## The opposite of GD_.before; this method creates a function that 
 ## invokes func once it's called n or more times.
 ## 
@@ -27,7 +24,17 @@ CATEGORY: Function
 ##			The passed in function has been called. That tracker cannot be
 ##			garbage collected so use this function sparingly.
 static func after(after_count, callable:Callable):
-    return __INTERNAL__.base_after(after_count, callable)
+    # A zero or invalid count is the same as not limiting the callable
+    if !after_count or is_nan(after_count):
+        return callable
+        
+    var id = unique_id("after")
+    __INTERNAL__.callable_trackers[id] = {"i":0}
+    var fn = func ():
+        if __INTERNAL__.callable_trackers[id].i >= after_count:
+            return callable.call()
+        __INTERNAL__.callable_trackers[id].i += 1
+    return fn
     
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func ary(a=0, b=0, c=0): not_implemented() 
@@ -58,8 +65,18 @@ static func ary(a=0, b=0, c=0): not_implemented()
 ##			The passed in function has been called. That tracker cannot be
 ##			garbage collected so use this function sparingly.
 static func before(up_to_count, callable:Callable): 
-    return __INTERNAL__.base_before(up_to_count, callable)
-    
+    # A zero or an invalid count is the same as a noop
+    if !up_to_count or is_nan(up_to_count):
+        return GD_.noop
+        
+    var id = unique_id("before")
+    __INTERNAL__.callable_trackers[id] = {"i":0,"v":null}
+    var fn = func ():
+        if __INTERNAL__.callable_trackers[id].i < up_to_count:
+            __INTERNAL__.callable_trackers[id].v = callable.call()
+            __INTERNAL__.callable_trackers[id].i += 1
+        return __INTERNAL__.callable_trackers[id].v
+    return fn
     
 static func bind(a=0, b=0, c=0): not_implemented()
 static func bind_key(a=0, b=0, c=0): not_implemented()

@@ -1,10 +1,5 @@
 extends "./GD_base.gd"
 
-"""
-CATEGORY: Lang
-"""
-
-
 ## Casts value as an array if it's not one.
 ##
 ## Arguments
@@ -164,7 +159,7 @@ static func is_arguments(a=0, b=0, c=0): not_implemented()
 ##		>> JS Comparison
 ##			Theres are no "Packed" arrays in JS
 static func is_array(thing, __UNUSED__ = null):
-    return __INTERNAL__.is_array(thing, __UNUSED__)
+    return __INTERNAL__.base_is_array(thing, __UNUSED__)
     
 static func is_array_buffer(a=0, b=0, c=0): not_implemented()
 
@@ -191,7 +186,6 @@ static func is_custom_iterator(tmp):
 ## Checks if value is array-like. A value is considered 
 ## array-like if it can be used in a for loop.
 ## 
-## 
 ## Arguments
 ##		value (*): The value to check.
 ## Returns
@@ -216,10 +210,25 @@ static func is_array_like(tmp):
         
 static func is_array_like_object(a=0, b=0, c=0): not_implemented()
 
-
-static func is_boolean(a=0, b=0, c=0): not_implemented()
+## Checks if value is classified as a boolean
+## 
+## Arguments
+##      value (*): The value to check.
+## Returns
+##      (boolean): Returns true if value is a boolean, else false.
+## Example
+##      GD_.is_boolean(false);
+##      # => true
+##       
+##      GD_.is_boolean(null);
+##      # => false
+static func is_boolean(value, _UNUSED_ = null): 
+    return typeof(value) == TYPE_BOOL
+    
 static func is_buffer(a=0, b=0, c=0): not_implemented()
+
 static func is_date(a=0, b=0, c=0): not_implemented()
+    
 static func is_element(a=0, b=0, c=0): not_implemented()
 
 ## Checks if value is an empty object, collection, map, or set.
@@ -248,7 +257,7 @@ static func is_element(a=0, b=0, c=0): not_implemented()
 ##      GD_.is_empty({ 'a': 1 });
 ##      # => false
 static func is_empty(value, __UNUSED__ = null):
-    return __INTERNAL__.is_empty(value, __UNUSED__)
+    return __INTERNAL__.base_size(value) <= 0
 
 ## Basically a lambda wrapper for `==`. Because of the way dicts and
 ## arrays implement the "==" operators, it results in a deep comparison.
@@ -317,7 +326,7 @@ static func is_null(a=0, b=0, c=0): not_implemented()
 ##      To exclude Infinity, -Infinity, and NaN, which are classified 
 ##      as numbers, use the GD_.is_finite method.
 static func is_number(a = null, _UNUSED_=null):
-    return __INTERNAL__.is_number(a)
+    return __INTERNAL__.base_is_number(a)
     
 static func is_object(a=0, b=0, c=0): not_implemented()
 static func is_object_like(a=0, b=0, c=0): not_implemented()
@@ -342,7 +351,7 @@ static func is_set(a=0, b=0, c=0): not_implemented()
 ## 		GD_.is_string(1)
 ## 		# => false
 static func is_string(thing, __UNUSED__ = null):
-    return __INTERNAL__.is_string(thing, __UNUSED__)
+    return thing is String or thing is StringName
     
 static func is_symbol(a=0, b=0, c=0): not_implemented()
 static func is_typed_array(a=0, b=0, c=0): not_implemented()
@@ -416,14 +425,25 @@ static func to_array(thing):
 ##      GD_.to_finite('3.2');
 ##      # => 3.2
 static func to_finite(value, __UNUSED__ = null): 
-    return __INTERNAL__.to_finite(value, __UNUSED__)
+    if is_number(value):
+        # See https://docs.godotengine.org/en/stable/classes/class_int.html
+        var max_int_64 = 9223372036854775807
+        if INF == value:
+            return max_int_64
+        elif -INF == value:
+            return -max_int_64
+    var result = to_number(value)
+    
+    if is_nan(result):
+        return 0
+    return to_number(value)
         
 static func to_integer(a=0, b=0, c=0): not_implemented()
 
 static func to_length(a=0, b=0, c=0): not_implemented()
 
 static func to_number(value): 
-    if __INTERNAL__.is_number(value):
+    if is_number(value):
         return value
     elif GD_.is_string(value) and value.is_valid_float():
         return float(str(value))

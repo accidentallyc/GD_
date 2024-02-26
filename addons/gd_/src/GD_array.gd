@@ -25,7 +25,16 @@ CATEGORY: Array
 ##			https://www.reddit.com/r/godot/comments/e6ae27/comment/f9p3c2e
 ## 		>> @TODO guarded method by map, every, filter, mapValues, reject, some
 static func chunk(array:Array,size=1): 
-    return __INTERNAL__.base_chunk(array,size)
+    var new_array = []
+    var i = 0
+    var j = -1
+    for item in array:
+        if i % size == 0:
+            new_array.append([])
+            j += 1
+        new_array[j].append(item)
+        i += 1
+    return new_array
                 
                 
 ## Creates an array with all falsey values removed. 
@@ -41,7 +50,11 @@ static func chunk(array:Array,size=1):
 ## 		GD_.compact([0, 1, false, 2, '', 3])
 ## 		# => [1, 2, 3]
 static func compact(array:Array):
-    return __INTERNAL__.base_compact(array)
+    var new_array = []
+    for item in array:
+        if item:
+            new_array.append(item)
+    return new_array
         
         
 ## Creates a new array concatenating array with any additional arrays and/or values.
@@ -78,7 +91,13 @@ static func concat(array:Array, a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF
 ##			GD_.difference([2, 1], [2, 3])
 ##			# => [1]
 static func difference(array_left:Array, array_right:Array): 	
-    return __INTERNAL__.base_difference(array_left,array_right)
+    var new_array = []
+    new_array.append_array(array_left)
+    
+    for array_item_2 in array_right:
+        new_array.erase(array_item_2)
+        
+    return new_array
 
 ## This method is like GD_.difference except that it accepts iteratee which 
 ## is invoked for each element of array and values to generate the criterion 
@@ -100,7 +119,24 @@ static func difference(array_left:Array, array_right:Array):
 ## 		GD_.difference_by([{ 'x': 2 }, { 'x': 1 }], [{ 'x': 1 }], 'x')
 ## 		# => [{ 'x': 2 }]
 static func difference_by(array_left, array_right, iteratee = GD_.identity): 
-    return __INTERNAL__.base_difference_by(array_left, array_right, iteratee)
+    var iter_func = iteratee(iteratee)
+        
+    # new return array
+    var new_array = []
+    
+    # store processed keyes here
+    var keys_to_remove_map = {}
+    for array_item_2 in array_right:
+        keys_to_remove_map[iter_func.call(array_item_2, null)] = true
+        
+    var array_right_max = array_left.size()
+    
+    for left_item in array_left:
+        var left_key = iter_func.call(left_item, null)
+        if not(keys_to_remove_map.has(left_key)):
+            new_array.append(left_item)
+            
+    return new_array
     
     
 ## This method is like GD_.difference except that it accepts comparator 
@@ -997,7 +1033,7 @@ static func slice(array:Array, start=0,end = array.size()):
 ## 		GD_.sorted_index([30, 50], 40)
 ## 		# => 1
 static func sorted_index(array:Array, value):
-    if not(__INTERNAL__.is_number(value)):
+    if not(is_number(value)):
         gd_warn("GD_.sorted_index received a non-number value")
         return null
         
@@ -1056,7 +1092,7 @@ static func sorted_index_by(array:Array, value, iteratee = GD_.identity):
 ## 		GD _.sorted_index_of([4, 5, 5, 5, 6], 5)
 ## 		# => 1	
 static func sorted_index_of(array:Array, value):
-    if not(__INTERNAL__.is_number(value)):
+    if not(super.is_number(value)):
         gd_warn("GD_.sorted_index_of received a non-number value")
         return -1
         
@@ -1094,7 +1130,7 @@ static func sorted_index_of(array:Array, value):
 ## 		GD_.sorted_last_index([4, 5, 5, 5, 6], 5)
 ## 		# => 4
 static func sorted_last_index(array:Array, value):
-    if not(__INTERNAL__.is_number(value)):
+    if not(super.is_number(value)):
         gd_warn("GD_.sorted_index received a non-number value")
         return null
         
@@ -1151,7 +1187,7 @@ static func sorted_last_index_by(array:Array, value, iteratee = GD_.identity):
 ## 		GD_.sorted_last_index_of([4, 5, 5, 5, 6], 5)
 ## 		# => 3
 static func sorted_last_index_of(array:Array, value): 
-    if not(__INTERNAL__.is_number(value)):
+    if not(super.is_number(value)):
         gd_warn("GD_.sorted_last_index_of received a non-number value")
         return -1
         
@@ -1256,7 +1292,7 @@ static func take(array:Array, n = null):
     var size = array.size()
     if n == null:
         n = 1
-    if size == 0 or not(__INTERNAL__.is_number(n)) or n < 0:
+    if size == 0 or not(super.is_number(n)) or n < 0:
         return []
     return array.slice(0, min(n,size))
     

@@ -501,7 +501,7 @@ static func shuffle(collection):
 ##			length. In GD_, for as long as it implements length() or size() it
 ##			size will use that and return it
 static func size(thing, __UNUSED__ = null): 
-    return __INTERNAL__.size(thing, __UNUSED__)
+    return __INTERNAL__.base_size(thing, __UNUSED__)
 
 ## Checks if predicate returns truthy for any element of collection. 
 ## Iteration is stopped once predicate returns truthy. 
@@ -535,7 +535,15 @@ static func size(thing, __UNUSED__ = null):
 ## Notes:
 ##		>> @TODO guarded method by map, every, filter, mapValues, reject, some
 static func some(collection, iteratee = null): 
-    return __INTERNAL__.base_some(collection, iteratee)
+    if not(GD_._is_collection(collection)):
+        gd_warn("GD_.some received a non-collection type value")
+        return null
+        
+    var iter_func = iteratee(iteratee)
+    for key in keyed_iterable(collection):
+        if iter_func.call(collection[key],key):
+            return true
+    return false
     
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func sort_by(a=0, b=0, c=0): not_implemented() 
