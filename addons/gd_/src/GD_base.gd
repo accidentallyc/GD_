@@ -110,24 +110,15 @@ class Internal:
                 curr[path] = {}
                 curr = curr[path]
                 
-    func is_array(thing, __UNUSED__ = null):
+    func base_is_array(thing, __UNUSED__ = null):
         var type = typeof(thing)
         return type <= TYPE_PACKED_COLOR_ARRAY and type >= TYPE_ARRAY
-        
-    func is_string(thing, __UNUSED__ = null):
-        return thing is String or thing is StringName
-    
+
     func is_int_like(tmp):
         return (tmp is String and tmp.is_valid_int()) or (tmp is int)
-        
-    func is_number(a = null, _UNUSED_= null):
-        return a is int or a is float
-        
-    func is_empty(value, __UNUSED__ = null):
-        return size(value) <= 0
-        
-    func size(thing, __UNUSED__ = null):
-        if is_array(thing) or thing is Dictionary:
+
+    func base_size(thing, __UNUSED__ = null):
+        if base_is_array(thing) or thing is Dictionary:
             return thing.size()
         elif GD_.is_string(thing):
             return thing.length()
@@ -144,6 +135,9 @@ class Internal:
                 return ctr
         gd_warn("GD_.size received a non-collection type value")
         return 0
+        
+    func base_is_number(a = null, _UNUSED_=null):
+        return a is int or a is float
         
     ## Splits the string into paths
     func string_to_path(str: String):
@@ -168,27 +162,6 @@ class Internal:
                         path.append(key)
         
         return path
-        
-    func to_number(value, _UNUSED_ = null): 
-        if is_number(value):
-            return value
-        elif GD_.is_string(value) and value.is_valid_float():
-            return float(str(value))
-        return NAN
-        
-    func to_finite(value, _UNUSED_ = null): 
-        if is_number(value):
-            # See https://docs.godotengine.org/en/stable/classes/class_int.html
-            var max_int_64 = 9223372036854775807
-            if INF == value:
-                return max_int_64
-            elif -INF == value:
-                return -max_int_64
-        var result = to_number(value)
-        
-        if is_nan(result):
-            return 0
-        return to_number(value)
                     
     
     ## Attempt to get an index from an array or retural the default (null)	
@@ -206,7 +179,7 @@ class Internal:
             splits = string_to_path(path)
         elif path is Array:
             splits = path
-        elif is_number(path):
+        elif base_is_number(path):
             splits = [path]
         else:
             gd_warn("GD_.get_prop received a non-collection type PATH")
@@ -298,27 +271,6 @@ class Internal:
             for p in GD_.cast_array(arg):
                 array.append(GD_.get_prop(obj, p))
         return array
-            
-    func base_chunk(array:Array,size=1): 
-        # Thanks to cyberreality for the quick code they offered to the 
-        # community. https://www.reddit.com/r/godot/comments/e6ae27/comment/f9p3c2e/?utm_source=share&utm_medium=web2x&context=3
-        var new_array = []
-        var i = 0
-        var j = -1
-        for item in array:
-            if i % size == 0:
-                new_array.append([])
-                j += 1
-            new_array[j].append(item)
-            i += 1
-        return new_array
-    
-    func base_compact(array:Array):
-        var new_array = []
-        for item in array:
-            if item:
-                new_array.append(item)
-        return new_array
         
     func base_concat(array:Array, arguments:Array):
         var new_array = []
@@ -332,81 +284,7 @@ class Internal:
             else:
                 new_array.append(arg)
         return new_array
-        
-    func base_difference(array_left:Array, array_right:Array): 	
-        var new_array = []
-        new_array.append_array(array_left)
-        
-        for array_item_2 in array_right:
-            new_array.erase(array_item_2)
-            
-        return new_array
 
-    func base_difference_by(array_left, array_right, iteratee = identity): 
-        var iter_func = iteratee(iteratee)
-        
-        # new return array
-        var new_array = []
-        
-        # store processed keyes here
-        var keys_to_remove_map = {}
-        for array_item_2 in array_right:
-            keys_to_remove_map[iter_func.call(array_item_2, null)] = true
-            
-        var array_right_max = array_left.size()
-        
-        for left_item in array_left:
-            var left_key = iter_func.call(left_item, null)
-            if not(keys_to_remove_map.has(left_key)):
-                new_array.append(left_item)
-                
-        return new_array
-        
-    func base_some(collection, iteratee = null): 
-        if not(GD_._is_collection(collection)):
-            gd_warn("GD_.some received a non-collection type value")
-            return null
-            
-        var iter_func = iteratee(iteratee)
-        for key in keyed_iterable(collection):
-            if iter_func.call(collection[key],key):
-                return true
-        return false
-        
-    func base_constant(value = null, _UNUSED_ = null):
-        return func (a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
-            return value
-        
-    func base_unique_id(prefix=&""): 
-        id_ctr += 1
-        return str(prefix,id_ctr)
-        
-    func base_before(up_to_count, callable:Callable): 
-        # A zero or an invalid count is the same as a noop
-        if !up_to_count or is_nan(up_to_count):
-            return GD_.noop
-            
-        var id = base_unique_id("before")
-        callable_trackers[id] = {"i":0,"v":null}
-        var fn = func ():
-            if callable_trackers[id].i < up_to_count:
-                callable_trackers[id].v = callable.call()
-                callable_trackers[id].i += 1
-            return callable_trackers[id].v
-        return fn
-    
-    func base_after(after_count, callable:Callable): 
-        # A zero or invalid count is the same as not limiting the callable
-        if !after_count or is_nan(after_count):
-            return callable
-            
-        var id = base_unique_id("after")
-        callable_trackers[id] = {"i":0}
-        var fn = func ():
-            if callable_trackers[id].i >= after_count:
-                return callable.call()
-            callable_trackers[id].i += 1
-        return fn
         
     func matches_property(string:String, v):
         return func (value, _unused = null):
@@ -489,3 +367,8 @@ static func _is_not_null_arg(i,_i):
     
 static func not_implemented():  
     assert(false, "Not implemented yet. Do you need this function? If so, open an issue and I will prioritize it")
+
+## Ensures that when it iterates through the item, it always iterates via keys
+## This does not have a lodash equivalent	
+static func keyed_iterable(thing, from_index = 0):
+    return __INTERNAL__.keyed_iterable(thing, from_index)
