@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfu6aj4s0m5c0"]
+
+[ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_bar3o"]
+[ext_resource type="Script" path="res://tests/Test_Startup.gd" id="2_xc84l"]
+[ext_resource type="Script" path="res://tests/array/is_empty.test.gd" id="4_11sb7"]
+[ext_resource type="Script" path="res://tests/random_demo.gd" id="4_eg35d"]
+[ext_resource type="Script" path="res://tests/__base_test.gd" id="5_aen72"]
+
+[node name="Single Test" type="Node"]
+script = ExtResource("1_bar3o")
+
+[node name="__STARTUP__" type="Node" parent="."]
+script = ExtResource("2_xc84l")
+
+[node name="__INTERNAL__" type="Node" parent="."]
+script = ExtResource("5_aen72")
+
+[node name="Collection" type="Node" parent="."]
+
+[node name="Lang" type="Node" parent="."]
+
+[node name="Is Empty" type="Node" parent="Lang"]
+script = ExtResource("4_11sb7")
+
+[node name="Function" type="Node" parent="."]
+
+[node name="Random Demo" type="Node" parent="Function"]
+script = ExtResource("4_eg35d")
