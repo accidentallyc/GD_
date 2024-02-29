@@ -33,19 +33,28 @@ static func starts_with(): not_implemented()
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func template(): not_implemented() 
 
-## Wrapper for "string" to_lower. Allows for use as an iterator
+## Wrapper for "string" to_lower. Allows for use as an iterator.
 ## 
 ## Arguments
 ## 		[string=''] (string): The string to convert.
 ## Returns
 ## 		(string): Returns the lower cased string.
+## Example
+##      GD_.to_lower('--Foo-Bar--');
+##      # => '--foo-bar--'
+##       
+##      GD_.to_lower('fooBar');
+##      # => 'foobar'
+##       
+##      GD_.to_lower('__FOO_BAR__');
+##      # => '__foo_bar__'
 ## Notes
-##		>> @TODO needs to be revisited
-##			to_lower behaves a bit differently from lodash's to_lower
+##		>> This is different from GD_.to_lower_case
 static func to_lower(a:String, _UNUSED_ = null): 
     return a.to_lower()
     
-static func to_upper(): not_implemented()
+static func to_upper(a:String, _UNUSED_ = null):
+    return a.to_upper()
 
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func trim(): not_implemented() 
