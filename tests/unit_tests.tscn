@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=109 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/GD_chunk_test.gd" id="2_i2yyx"]
@@ -106,6 +106,7 @@
 [ext_resource type="Script" path="res://tests/GD_to_number_test.gd" id="91_3tyhp"]
 [ext_resource type="Script" path="res://tests/lang/GD_to_finite_test.gd" id="91_ruwto"]
 [ext_resource type="Script" path="res://tests/number/GD_random.gd" id="92_pok6t"]
+[ext_resource type="Script" path="res://tests/string/to_upper_test.gd" id="100_n5k24"]
 [ext_resource type="Script" path="res://tests/gd_to_lower_test.gd" id="107_qirra"]
 
 [node name="Unit Tests" type="Node"]
@@ -420,6 +421,12 @@ script = ExtResource("43_lm35f")
 
 [node name="String" type="Node" parent="."]
 
+[node name="To Lower" type="Node" parent="String"]
+script = ExtResource("107_qirra")
+
+[node name="To Upper" type="Node" parent="String"]
+script = ExtResource("100_n5k24")
+
 [node name="Util" type="Node" parent="."]
 
 [node name="Constant" type="Node" parent="Util"]
@@ -445,6 +452,3 @@ script = ExtResource("49_onwvn")
 
 [node name="Times" type="Node" parent="Util"]
 script = ExtResource("77_fp70i")
-
-[node name="To Lower" type="Node" parent="."]
-script = ExtResource("107_qirra")
