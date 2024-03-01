@@ -13,7 +13,7 @@ var gd_files = {
     "Function" : "GD_function.gd",
     "Math" : "GD_math.gd",
     "Number" : "GD_number.gd",
-    "Util" : "GD_util.gd",
+    "Util" : "GD_util.gd", 
     "Date" : "GD_date.gd",
     "String" : "GD_string.gd",
     "Lang" : "GD_lang.gd",
