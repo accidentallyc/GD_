@@ -88,7 +88,7 @@ This project is very much in its early stages, so it's very likely for the funct
 
 ## Documentation for existing functions
 
-See [the api readme](https://github.com/accidentallyc/GD_/blob/master/api.md)
+**Wanna jump into it? See [the api docs](https://accidentallyc.github.io/GD_/)**
 
 
 **Contributing**
