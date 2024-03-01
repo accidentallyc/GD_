@@ -50,6 +50,50 @@ class Internal:
     var string_to_path_rx:RegEx
     var id_ctr = 0
     
+    var char_code_reference = "azAZ".to_utf8_buffer()
+    var key_a = char_code_reference[0]
+    var key_z = char_code_reference[1]
+    var key_A = char_code_reference[2]
+    var key_Z = char_code_reference[3]
+    
+    """
+    The subsection BELOW is dedicated to building the regex used in GD_.words
+    """
+    var rx_words_postfixes = "|".join([
+        '(\'[dD])', 
+        '(\'[lL][lL])', 
+        '(\'[mM])', 
+        '(\'[rR][eE])', 
+        '(\'[sS])', 
+        '(\'[tT])', 
+        '(\'[vV][eE])',
+    ])
+    var rx_words_ordinals = "|".join([
+        '[sS][tT]', '[nN][dD]', '[rR][dD]', '[tT][hH]'
+    ])
+    var rx_words_args = {
+        "postfixes":rx_words_postfixes,
+        "ordinals": rx_words_ordinals
+    }
+    var rx_words = RegEx.create_from_string(
+        "|".join([
+            # Numbers
+            "([0-9]+({ordinals})?)".format(rx_words_args),
+            # Captilized words
+            "(\\p{Lu}{1}\\p{Ll}+({postfixes})?)".format(rx_words_args),
+            # All capped words,
+            "(\\p{Lu}+(?!\\p{Ll}))({postfixes})?".format(rx_words_args),
+            # lowercase everything
+            "(\\p{Ll}+)({postfixes})?".format(rx_words_args),
+            # Emojis and other chars
+            "(\\p{So})"
+        ])
+    )
+    """
+    The subsection ABOVE is dedicated to building the regex used in GD_.words
+    """
+    
+    
     # Keeps track of how many times
     # a specific function has been called
     # - Used in before and after trackers 
@@ -242,12 +286,24 @@ class Internal:
         return curr_prop
         
     ## For functions with weird and special behaviors when used as n iteratee.
+    ## These functions are considered "guarded"
+    ##
     func get_iteratee(callable: Callable):
-        # These functions have weird lodash behaviors as iteratee's
-        # Visit each function for an explanation
-        match callable:
-            GD_.take: return iteratee_drop_second_arg(GD_.take)
-            GD_.every: return iteratee_drop_second_arg(GD_.every)
+        """
+        FAQ Portion:
+        Q: Why reference a method by index e.g. 
+           e.g. GD_["words"] instead of GD_.words
+        A: To circumvent GD's type safety where it starts throwing errors
+        if a rootscript references a member from its inheritors 
+        (
+            yes i know this is bad design but id rather have this than surface
+            implementation details to consumers
+        )
+        
+        """
+        if callable in [GD_["words"],GD_["take"],GD_["every"]]:
+            return iteratee_drop_second_arg(callable)
+        
         return callable
         
     ## Some iteratees completely drop the second argument when used in a map
