@@ -75,3 +75,5 @@ func it_can_be_used_as_an_iterator():
 
 func it_accepts_custom_pattern():
     expect(GD_.words('fred, barney, & pebbles', "[^, ]+")).to.equal(['fred', 'barney', '&', 'pebbles'])
+    expect(GD_.words('fred, barney, & pebbles', RegEx.create_from_string("[^, ]+"))).to.equal(['fred', 'barney', '&', 'pebbles'])
+

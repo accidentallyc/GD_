@@ -108,7 +108,9 @@ static func upper_first(): not_implemented()
 ##          match most uses cases. Please open a ticket if you find any
 ##          cases where the function does not correctly split it into words
 static func words(str, pattern = null): 
-    var rx = __INTERNAL__.rx_words if pattern == null else RegEx.create_from_string(pattern)
+    var rx:RegEx = __INTERNAL__.rx_words 
+    if pattern != null: 
+        rx = pattern if pattern is RegEx else RegEx.create_from_string(pattern)
     
     var results = []
     for result in rx.search_all(str):
