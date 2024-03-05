@@ -321,12 +321,14 @@ static func is_function(a=0, b=0, c=0): not_implemented()
 ##		# => false
 ## Lodash Equivalent 
 ##		None
-static func is_immutable(thing):
+static func is_immutable(thing, __UNUSED__ = null):
     var is_mutable_type = is_array(thing) \
             or thing is Object \
             or thing is Dictionary
     return not(is_mutable_type)
+    
 static func is_integer(a=0, b=0, c=0): not_implemented()
+
 static func is_length(a=0, b=0, c=0): not_implemented()
 static func is_map(a=0, b=0, c=0): not_implemented()
 static func is_match(a=0, b=0, c=0): not_implemented()
@@ -366,7 +368,24 @@ static func is_object_like(a=0, b=0, c=0): not_implemented()
 
 static func is_plain_object(a=0, b=0, c=0): not_implemented()
 
-static func is_reg_exp(a=0, b=0, c=0): not_implemented()
+## Checks if value is classified as a RegExp object.
+## 
+## Since
+## 0.1.0
+## 
+## Arguments
+##      value (*): The value to check.
+## Returns
+##      (boolean): Returns true if value is a regexp, else false.
+## Example
+##      GD_.is_reg_exp(RegEx.create_from_string("\\w+"))
+##      # => true
+##       
+##      GD_.is_reg_exp('\\w+');
+##      # => false
+static func is_regexp(a, _UNUSED_ = null):
+    return a is RegEx
+    
 static func is_safe_integer(a=0, b=0, c=0): not_implemented()
 static func is_set(a=0, b=0, c=0): not_implemented()
 
