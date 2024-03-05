@@ -1,4 +1,4 @@
-[gd_scene load_steps=110 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=111 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/chunk.test.gd" id="2_i2yyx"]
@@ -103,6 +103,7 @@
 [ext_resource type="Script" path="res://tests/lang/is_boolean.test.gd" id="85_ovdls"]
 [ext_resource type="Script" path="res://tests/__base_test.gd" id="86_csbig"]
 [ext_resource type="Script" path="res://tests/lang/to_array.test.gd" id="88_1gj8j"]
+[ext_resource type="Script" path="res://tests/lang/is_regexp.test.gd" id="90_cuy5l"]
 [ext_resource type="Script" path="res://tests/string/to_number.test.gd" id="91_3tyhp"]
 [ext_resource type="Script" path="res://tests/lang/to_finite.test.gd" id="91_ruwto"]
 [ext_resource type="Script" path="res://tests/number/GD_random.gd" id="92_pok6t"]
@@ -386,6 +387,9 @@ script = ExtResource("84_y8der")
 
 [node name="Is Number" type="Node" parent="Lang"]
 script = ExtResource("63_vhodk")
+
+[node name="Is RegExp" type="Node" parent="Lang"]
+script = ExtResource("90_cuy5l")
 
 [node name="Lt" type="Node" parent="Lang"]
 script = ExtResource("51_iwkgm")

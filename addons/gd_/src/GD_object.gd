@@ -117,7 +117,7 @@ static func functions_in(a=0, b=0, c=0): not_implemented()
 ##			But in gdscript you can't really do this without knowing that
 ##			The said thing is a Callable or a property
 static func get_prop(thing, path, default_value = null):
-    return __INTERNAL__.get_prop(thing, path, default_value)
+    return __INTERNAL__.base_get_prop(thing, path, default_value)
     
 static func has(a=0, b=0, c=0): not_implemented()
 

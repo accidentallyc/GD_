@@ -56,11 +56,11 @@ static func cast_array(v = _UNDEF_):
 ##			preferring to rebuild a replica of an uncloneable class instead of
 ##			what would have been a "shallow" clone in js
 static func clone(thing):
-    if GD_.is_array(thing) \
+    if is_array(thing) \
         or thing is Dictionary \
-        or GD_.has_method_safe(thing,'duplicate'):
+        or has_method_safe(thing,'duplicate'):
         return thing.duplicate()
-    elif GD_.is_immutable(thing):
+    elif is_immutable(thing):
         # object is already done by copy, just return the thing again
         return thing
     elif thing is Object:
@@ -204,9 +204,9 @@ static func is_custom_iterator(tmp):
 ## 		GD_.is_array_like(GD_.noop)
 ##		# => false
 static func is_array_like(tmp): 
-    return GD_.is_array(tmp) \
-        or GD_.is_string(tmp) \
-        or GD_.is_custom_iterator(tmp)
+    return is_array(tmp) \
+        or is_string(tmp) \
+        or is_custom_iterator(tmp)
         
 static func is_array_like_object(a=0, b=0, c=0): not_implemented()
 
@@ -224,8 +224,41 @@ static func is_array_like_object(a=0, b=0, c=0): not_implemented()
 ##      # => false
 static func is_boolean(value, _UNUSED_ = null): 
     return typeof(value) == TYPE_BOOL
-    
+
+## Checks if value is classified as a boolean
+## 
+## Arguments
+##      value (*): The value to check.
+## Returns
+##      (boolean): Returns true if value is a boolean, else false.
+## Example
+##      GD_.is_boolean(false);
+##      # => true
+##       
+##      GD_.is_boolean(null);
+##      # => false    
 static func is_buffer(a=0, b=0, c=0): not_implemented()
+
+
+## Checks if value is either an array, string, or dict.
+## These types can be used in a for loop.
+## 
+## Arguments
+##      value (*): The value to check.
+## Returns
+##      (boolean): Returns true if value is an array, string or dict.
+## Example
+##      GD_.is_collection("yes");
+##      # => true
+##      GD_.is_collection([1,2]);
+##      # => true
+##       
+##      GD_.is_collection(null);
+##      # => false    
+## Lodash Equivalent 
+##		None
+static func is_collection(item):
+    return is_array_like(item) or item is Dictionary or is_string(item)
 
 static func is_date(a=0, b=0, c=0): not_implemented()
     
@@ -257,7 +290,7 @@ static func is_element(a=0, b=0, c=0): not_implemented()
 ##      GD_.is_empty({ 'a': 1 });
 ##      # => false
 static func is_empty(value, __UNUSED__ = null):
-    return __INTERNAL__.base_size(value) <= 0
+    return size(value) <= 0
 
 ## Basically a lambda wrapper for `==`. Because of the way dicts and
 ## arrays implement the "==" operators, it results in a deep comparison.
@@ -288,12 +321,14 @@ static func is_function(a=0, b=0, c=0): not_implemented()
 ##		# => false
 ## Lodash Equivalent 
 ##		None
-static func is_immutable(thing):
-    var is_mutable_type = GD_.is_array(thing) \
+static func is_immutable(thing, __UNUSED__ = null):
+    var is_mutable_type = is_array(thing) \
             or thing is Object \
             or thing is Dictionary
     return not(is_mutable_type)
+    
 static func is_integer(a=0, b=0, c=0): not_implemented()
+
 static func is_length(a=0, b=0, c=0): not_implemented()
 static func is_map(a=0, b=0, c=0): not_implemented()
 static func is_match(a=0, b=0, c=0): not_implemented()
@@ -333,7 +368,24 @@ static func is_object_like(a=0, b=0, c=0): not_implemented()
 
 static func is_plain_object(a=0, b=0, c=0): not_implemented()
 
-static func is_reg_exp(a=0, b=0, c=0): not_implemented()
+## Checks if value is classified as a RegExp object.
+## 
+## Since
+## 0.1.0
+## 
+## Arguments
+##      value (*): The value to check.
+## Returns
+##      (boolean): Returns true if value is a regexp, else false.
+## Example
+##      GD_.is_reg_exp(RegEx.create_from_string("\\w+"))
+##      # => true
+##       
+##      GD_.is_reg_exp('\\w+');
+##      # => false
+static func is_regexp(a, _UNUSED_ = null):
+    return a is RegEx
+    
 static func is_safe_integer(a=0, b=0, c=0): not_implemented()
 static func is_set(a=0, b=0, c=0): not_implemented()
 
@@ -380,6 +432,49 @@ static func lt(a, b):
 static func lte(a=0, b=0, c=0):
     return a <= b
     
+
+## Gets the size of collection by returning its length for array-like values 
+## or the number of own enumerable string keyed properties for objects.
+## 
+##
+## Arguments
+## 		collection (Array|Object|string): The collection to inspect.
+## Returns
+##		(number): Returns the collection size.
+## Example
+## 		GD_.size([1, 2, 3])
+## 		# => 3
+##
+## 		GD_.size({ 'a': 1, 'b': 2 })
+## 		# => 2
+##
+## 		GD_.size('pebbles')
+## 		# => 7
+## Notes
+##		>> Collections in JS
+##			In js, anything can turn to a collection as long as it has the field
+##			length. In GD_, for as long as it implements length() or size() it
+##			size will use that and return it
+##      >> This is categorized as collection in lodash
+static func size(thing, __UNUSED__ = null): 
+    if is_array(thing) or thing is Dictionary:
+            return thing.size()
+    elif is_string(thing):
+        return thing.length()
+    elif thing is Object:
+        if thing.has_method('length'):
+            return thing.length()
+        elif thing.has_method('size'):
+            return thing.size()
+        elif is_custom_iterator(thing):
+            gd_warn("GD_.size received a custom iterator that doesnt implement size or length. This will be expensive to calculate")
+            var ctr = 0
+            for i in thing: 
+                ctr += 1
+            return ctr
+    gd_warn("GD_.size received a non-collection type value")
+    return 0
+    
 ## Converts value to an array.
 ## Works on any collection and custom iterators
 ## 
@@ -401,7 +496,7 @@ static func lte(a=0, b=0, c=0):
 ## 		# => []
 static func to_array(thing):
     var array = []
-    if GD_.is_custom_iterator(thing):
+    if is_custom_iterator(thing):
         for i in thing:
             array.append(i)
     else:
@@ -445,7 +540,7 @@ static func to_length(a=0, b=0, c=0): not_implemented()
 static func to_number(value): 
     if is_number(value):
         return value
-    elif GD_.is_string(value) and value.is_valid_float():
+    elif is_string(value) and value.is_valid_float():
         return float(str(value))
     return NAN
     
@@ -454,3 +549,23 @@ static func to_plain_object(a=0, b=0, c=0): not_implemented()
 static func to_safe_integer(a=0, b=0, c=0): not_implemented()
 
 #static func to_string(a=0, b=0, c=0): not_implemented()
+
+        
+static func keyed_iterable(thing, from_index = 0):
+    if is_array_like(thing) or is_string(thing):
+        var size = len(thing)
+        if from_index >= 0:
+            var array = range(from_index, size)
+            return array
+        return range(size).slice(size + from_index)
+    if thing is Dictionary:
+        var keys =  thing.keys()
+        if from_index > 0:
+            return keys.slice(from_index)
+        elif from_index < 0:
+            return keys.slice(thing.size() + from_index)
+        else: 
+            return keys
+        
+    gd_warn("keyed_iterable received a non-collection")
+    return []
