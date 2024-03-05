@@ -24,7 +24,7 @@ CATEGORY: Collections
 ## 		GD_.count_by(['one', 'two', 'three'], 'length')
 ## 		# => { '3': 2, '5': 1 }
 static func count_by(collection, iteratee = null):
-    if not(GD_._is_collection(collection)):
+    if not(super.is_collection(collection)):
         gd_warn("GD_.count_by received a non-collection type value")
         return null
         
@@ -63,7 +63,7 @@ static func each(collection, iteratee):
 ## 		GD_.for_each({ 'a': 1, 'b': 2 }, func (_value, key): print(key))
 ## 		# => Logs 'a' then 'b' (iteration order is not guaranteed).
 static func for_each(collection, iteratee): 
-    if not(GD_._is_collection(collection)):
+    if not(super.is_collection(collection)):
         gd_warn("GD_.for_each received a non-collection type value")
         return null
         
@@ -145,7 +145,7 @@ static func every(collection, predicate = GD_.identity):
 ## 		GD_.filter(users, 'active')
 ## 		# => objects for ['barney']
 static func filter(collection, iteratee = null):
-    if not(GD_._is_collection(collection)):
+    if not(super.is_collection(collection)):
         gd_warn("GD_.filter received a non-collection type value")
         return null
         
@@ -190,7 +190,7 @@ static func filter(collection, iteratee = null):
 ## 		GD_.find(users, 'active')
 ## 		# => object for 'barney'
 static func find(collection, iteratee = null, from_index = 0):
-    if not(GD_._is_collection(collection)):
+    if not(super.is_collection(collection)):
         gd_warn("GD_.find received a non-collection type value")
         return null
         
@@ -230,7 +230,7 @@ static func for_each_right(a=0, b=0, c=0): not_implemented()
 ## 		GD_.group_by(['one', 'two', 'three'], 'length')
 ## 		# => { '3': ['one', 'two'], '5': ['three'] }
 static func group_by(collection, iteratee = GD_.identity):
-    if not(GD_._is_collection(collection)):
+    if not(super.is_collection(collection)):
         gd_warn("GD_.group_by received a non-collection type value")
         return null
         
@@ -267,7 +267,7 @@ static func group_by(collection, iteratee = GD_.identity):
 ## 		GD_.includes('abcd', 'bc')
 ## 		# => true
 static func includes(collection, thing, from_index :=0):
-    if GD_._is_collection(collection):
+    if super.is_collection(collection):
         for key in keyed_iterable(collection,from_index):
             if is_equal(collection[key], thing): 
                 return true
@@ -305,11 +305,11 @@ static func key_by(a=0, b=0, c=0): not_implemented()
 ## 		GD_.map(users, 'user')
 ## 		# => ['barney', 'fred']
 static func map(collection, iteratee = GD_.identity):
-    if not(GD_._is_collection(collection)):
+    if not(super.is_collection(collection)):
         gd_warn("GD_.map received a non-collection type value")
         return null
         
-    var iter_func = GD_.iteratee(iteratee)
+    var iter_func = super.iteratee(iteratee)
         
     var new_collection = []
     for key in keyed_iterable(collection):
@@ -349,8 +349,8 @@ static func partition(a=0, b=0, c=0): not_implemented()
 ##			In GD_ we try to standardize callbacks into having 2 arguments
 ##			So they can be chained together. Thats why we pass a dictionary down
 ## 			instead
-static func reduce(collection, iteratee=GD_.identity, accumulator = null):
-    if not GD_._is_collection(collection):
+static func reduce(collection, iteratee = GD_.identity, accumulator = null):
+    if not super.is_collection(collection):
         return null
     
     var iter_func = iteratee(iteratee)
@@ -362,7 +362,7 @@ static func reduce(collection, iteratee=GD_.identity, accumulator = null):
         var key = iterable[0]
         accumulator = collection[key]
     var kv_tmp =  {"key":null,"value":null}
-    for key_index in range(starting_index, GD_.size(iterable)):
+    for key_index in range(starting_index, super.size(iterable)):
         kv_tmp.key = iterable[key_index]
         kv_tmp.value = collection[kv_tmp.key]
         accumulator = iter_func.call(accumulator, kv_tmp)
@@ -386,18 +386,18 @@ static func reduce(collection, iteratee=GD_.identity, accumulator = null):
 ##		var concat = func (flattened, kv): flattened.append_array(kv.value)
 ## 		GD_.reduce_right(array, concat, [])
 ## 		# => [4, 5, 2, 3, 0, 1]
-static func reduce_right(collection, iteratee=GD_.identity, accumulator = null):
-    if not GD_._is_collection(collection):
+static func reduce_right(collection, iteratee = GD_.identity, accumulator = null):
+    if not super.is_collection(collection):
         return null
         
     var iter_func = iteratee(iteratee)
     var iterable = keyed_iterable(collection)
     
-    for key_index in range(GD_.size(iterable) - 1, -1, -1):
+    for key_index in range(super.size(iterable) - 1, -1, -1):
         var key = iterable[key_index]
         var value = collection[key]
     
-    var starting_index = GD_.size(iterable) - 1
+    var starting_index = super.size(iterable) - 1
     
     if accumulator == null:
         var key = iterable[ starting_index ]
@@ -442,7 +442,7 @@ static func reduce_right(collection, iteratee=GD_.identity, accumulator = null):
 ## 		# The `GD_.property` iteratee shorthand.
 ## 		GD_.reject(users, 'active')
 ## 		# => objects for ['barney']
-static func reject(collection, callable = GD_.identity): 
+static func reject(collection, callable = identity): 
     var ary = []
     var iter_func = iteratee(callable)
     for key in keyed_iterable(collection):
@@ -461,13 +461,13 @@ static func shuffle(collection):
         var dup = collection.duplicate()
         dup.shuffle()
         return dup
-    elif GD_.is_custom_iterator(collection):
-        collection = GD_.to_array(collection)
+    elif super.is_custom_iterator(collection):
+        collection = super.to_array(collection)
     
     # Fallback to manual implementation
     var keys = keyed_iterable(collection)
     var new_array = []
-    var i = GD_.size(keys)
+    var i = super.size(keys)
     var array = []
     
     while i != 0:
@@ -478,30 +478,6 @@ static func shuffle(collection):
         
     return new_array
 
-## Gets the size of collection by returning its length for array-like values 
-## or the number of own enumerable string keyed properties for objects.
-## 
-##
-## Arguments
-## 		collection (Array|Object|string): The collection to inspect.
-## Returns
-##		(number): Returns the collection size.
-## Example
-## 		GD_.size([1, 2, 3])
-## 		# => 3
-##
-## 		GD_.size({ 'a': 1, 'b': 2 })
-## 		# => 2
-##
-## 		GD_.size('pebbles')
-## 		# => 7
-## Notes
-##		>> Collections in JS
-##			In js, anything can turn to a collection as long as it has the field
-##			length. In GD_, for as long as it implements length() or size() it
-##			size will use that and return it
-static func size(thing, __UNUSED__ = null): 
-    return __INTERNAL__.base_size(thing, __UNUSED__)
 
 ## Checks if predicate returns truthy for any element of collection. 
 ## Iteration is stopped once predicate returns truthy. 
@@ -535,7 +511,7 @@ static func size(thing, __UNUSED__ = null):
 ## Notes:
 ##		>> @TODO guarded method by map, every, filter, mapValues, reject, some
 static func some(collection, iteratee = null): 
-    if not(GD_._is_collection(collection)):
+    if not(super.is_collection(collection)):
         gd_warn("GD_.some received a non-collection type value")
         return null
         

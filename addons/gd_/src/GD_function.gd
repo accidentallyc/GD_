@@ -69,7 +69,7 @@ static func before(up_to_count, callable:Callable):
     if !up_to_count or is_nan(up_to_count):
         return GD_.noop
         
-    var id = unique_id("before")
+    var id = super.unique_id("before")
     __INTERNAL__.callable_trackers[id] = {"i":0,"v":null}
     var fn = func ():
         if __INTERNAL__.callable_trackers[id].i < up_to_count:

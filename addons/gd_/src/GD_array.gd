@@ -392,7 +392,7 @@ static func fill(array:Array, value, start=0, end=-1):
 ## 		GD_.find_index(users, 'active')
 ## 		# => 2
 static func find_index(array:Array, predicate = GD_.identity, from_index = 0):
-    var iteratee = GD_.iteratee(predicate)
+    var iteratee = iteratee(predicate)
     for i in range(from_index, array.size()):
         if iteratee.call(array[i], null):
             return i
@@ -433,7 +433,7 @@ static func find_last_index(array:Array, predicate = GD_.identity, from_index=-1
     if from_index == -1 or from_index >= array.size():
         from_index = array.size() - 1
 
-    var iter_func = GD_.iteratee(predicate)
+    var iter_func = iteratee(predicate)
     for i in range(from_index, -1, -1):
         if iter_func.call(array[i],null):
             return i
@@ -761,7 +761,7 @@ static func last(array:Array):
 ## 		# => 1
 static func last_index_of(array:Array, search, from_index = null ): 
     var size = array.size()
-    from_index = GD_.default_to(from_index, size -1)
+    from_index = super.default_to(from_index, size -1)
     if from_index < 0:
         from_index = max(size + from_index, 0)
     
@@ -812,7 +812,7 @@ static func nth(array:Array, n=0):
 ## 		print(array)
 ## 		# => ['b', 'b']
 static func pull(array:Array, a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
-    var to_remove = GD_.filter([a,b,c,d,e,f,g,h,i,j], GD_._is_not_null_arg)
+    var to_remove = super.filter([a,b,c,d,e,f,g,h,i,j], GD_._is_not_null_arg)
     return pull_all_by(array, to_remove)
     
 
@@ -851,12 +851,12 @@ static func pull_all(array:Array, values_to_remove:Array = _EMPTY_ARRAY_):
 ## 		GD_.pull_all_by(array, [{ 'x': 1 }, { 'x': 3 }], 'x')
 ## 		# => [{ 'x': 2 }]
 static func pull_all_by(array:Array, values_to_remove = _EMPTY_ARRAY_, iteratee = GD_.identity):
-    values_to_remove = GD_.cast_array(values_to_remove)
+    values_to_remove = super.cast_array(values_to_remove)
     
     var iter_func = iteratee(iteratee)
     values_to_remove = values_to_remove \
             if iter_func == GD_.identity \
-            else GD_.map(values_to_remove,iter_func)
+            else super.map(values_to_remove,iter_func)
     
     var index = 0
     var max = array.size()
@@ -888,8 +888,8 @@ static func pull_all_by(array:Array, values_to_remove = _EMPTY_ARRAY_, iteratee 
 ## 		GD_.pull_all_with(array, [{ 'x': 3, 'y': 4 }], GD_.is_equal)
 ## 		print(array)
 ## 		# => [{ 'x': 1, 'y': 2 }, { 'x': 5, 'y': 6 }]
-static func pull_all_with(array:Array, values_to_remove, comparator:Callable = GD_.is_equal):
-    values_to_remove = GD_.cast_array(values_to_remove)
+static func pull_all_with(array:Array, values_to_remove, comparator:Callable = is_equal):
+    values_to_remove = cast_array(values_to_remove)
     
     var index = 0
     var max = array.size()
@@ -1355,7 +1355,7 @@ static func union(a:Array, b:Array, c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_U
 static func union_by(array_a:Array, array_b:Array, iteratee = GD_.identity):
     var array_c = array_a.duplicate()
     array_c.append_array(array_b)
-    return GD_.uniq_by(array_c, iteratee)
+    return uniq_by(array_c, iteratee)
 
 
 ## This method is like GD_.union except that it accepts comparator 

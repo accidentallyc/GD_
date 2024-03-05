@@ -9,6 +9,8 @@ class UNDEFINED:
     
     func _init():
         ref = self
+        
+static var static_self = self
 
 static var _UNDEF_ = Internal._UNDEF_:
     get: return Internal._UNDEF_
@@ -160,25 +162,6 @@ class Internal:
 
     func is_int_like(tmp):
         return (tmp is String and tmp.is_valid_int()) or (tmp is int)
-
-    func base_size(thing, __UNUSED__ = null):
-        if base_is_array(thing) or thing is Dictionary:
-            return thing.size()
-        elif GD_.is_string(thing):
-            return thing.length()
-        elif thing is Object:
-            if thing.has_method('length'):
-                return thing.length()
-            elif thing.has_method('size'):
-                return thing.size()
-            elif GD_.is_custom_iterator(thing):
-                gd_warn("GD_.size received a custom iterator that doesnt implement size or length. This will be expensive to calculate")
-                var ctr = 0
-                for i in thing: 
-                    ctr += 1
-                return ctr
-        gd_warn("GD_.size received a non-collection type value")
-        return 0
         
     func base_is_number(a = null, _UNUSED_=null):
         return a is int or a is float
@@ -214,10 +197,10 @@ class Internal:
             return array[index]
         return default_value
     
-    func get_prop(thing, path, default_value = null):
+    func base_get_prop(thing, path, default_value = null):
         var splits
         if path is String:
-            var result = get_prop(thing, [path], null)
+            var result = base_get_prop(thing, [path], null)
             if result:
                 return result
             splits = string_to_path(path)
@@ -325,7 +308,7 @@ class Internal:
             if is_same(arg, _UNDEF_):
                 continue
             for p in GD_.cast_array(arg):
-                array.append(GD_.get_prop(obj, p))
+                array.append(base_get_prop(obj, p))
         return array
         
     func base_concat(array:Array, arguments:Array):
@@ -340,11 +323,10 @@ class Internal:
             else:
                 new_array.append(arg)
         return new_array
-
-        
+    
     func matches_property(string:String, v):
         return func (value, _unused = null):
-            return GD_.get_prop(value,string) == v
+            return base_get_prop(value,string) == v
         
     func matches(dict:Dictionary) -> Callable:
         return func (value, _unused = null):
@@ -365,7 +347,7 @@ class Internal:
             return null
             
         return func (value, _unused = null):
-            return GD_.get_prop(value, path)
+            return base_get_prop(value, path)
             
     func identity(value, _unused = null): 
         return value
@@ -379,45 +361,21 @@ class Internal:
             TYPE_STRING:
                 return property(iteratee_val)
             TYPE_ARRAY:
-                var prop = GD_.get_prop(iteratee_val,["0"])
-                var val = GD_.get_prop(iteratee_val,["1"])
+                var prop = base_get_prop(iteratee_val,["0"])
+                var val = base_get_prop(iteratee_val,["1"])
                 return matches_property(prop,val)
             TYPE_NIL:
                 return identity
             TYPE_CALLABLE:
-                return GD_.__INTERNAL__.get_iteratee(iteratee_val)
+                return get_iteratee(iteratee_val)
                     
             _:
                 gd_warn("GD_.find called with unsupported signature %s. See docs for more info" % iteratee)
         return null
-        
-    func keyed_iterable(thing, from_index = 0):
-        if GD_.is_array_like(thing) or GD_.is_string(thing):
-            var size = GD_.size(thing)
-            if from_index >= 0:
-                var array = range(from_index, size)
-                return array
-            return range(size).slice(size + from_index)
-        if thing is Dictionary:
-            var keys =  thing.keys()
-            if from_index > 0:
-                return keys.slice(from_index)
-            elif from_index < 0:
-                return keys.slice(thing.size() + from_index)
-            else: 
-                return keys
-            
-        gd_warn("keyed_iterable received a non-collection")
-        return []
-        
-    
+
 """
 INTERNAL STUFF
 """
-    
-static func _is_collection(item):
-    return GD_.is_array_like(item) or item is Dictionary or GD_.is_string(item)
-    
 static func _is_not_null_arg(i,_i):
     return not(is_same(i, _UNDEF_))
     

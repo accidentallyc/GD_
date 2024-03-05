@@ -16,4 +16,7 @@ Inheritence order of GD_
     ↪ GD_lang
     ↪ GD_base
 """
+static func foobar(): 
+    # static func needs atleast 1 member var for it to load properly
+    pass
 
