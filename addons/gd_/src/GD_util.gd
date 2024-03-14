@@ -52,7 +52,7 @@ static func default_to(a,b):
         TYPE_FLOAT:
             return b if is_nan(a) else a
         TYPE_OBJECT:
-            return b if is_same(a,_UNDEF_) or not(a) else a
+            return b if a is UNDEFINED or not(a) else a
     return a
     
     

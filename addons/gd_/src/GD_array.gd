@@ -49,7 +49,7 @@ static func chunk(array:Array,size=1):
 ## Example
 ## 		GD_.compact([0, 1, false, 2, '', 3])
 ## 		# => [1, 2, 3]
-static func compact(array:Array):
+static func compact(array:Array, _UNUSED_ = null):
     var new_array = []
     for item in array:
         if item:
@@ -702,7 +702,11 @@ static func intersection_with(array_1:Array,array_2:Array,array_3 = null,array_4
             break
         if arrays[i] == null:
             break
-        
+            
+    var all = []
+    for i in max:
+        all.append_array(arrays[i])
+    
     var left_array = array_1
     for i in max:
         var right_array = arrays[i]
@@ -888,7 +892,7 @@ static func pull_all_by(array:Array, values_to_remove = _EMPTY_ARRAY_, iteratee 
 ## 		GD_.pull_all_with(array, [{ 'x': 3, 'y': 4 }], GD_.is_equal)
 ## 		print(array)
 ## 		# => [{ 'x': 1, 'y': 2 }, { 'x': 5, 'y': 6 }]
-static func pull_all_with(array:Array, values_to_remove, comparator:Callable = is_equal):
+static func pull_all_with(array:Array, values_to_remove, comparator:Callable = GD_.is_equal):
     values_to_remove = cast_array(values_to_remove)
     
     var index = 0
@@ -1494,12 +1498,153 @@ static func without(array:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDE
         
     return new_array
         
+## Creates an array of unique values that is the symmetric difference of the given arrays. The order of result values is determined by the order they occur in the arrays.
+## 
+## Arguments
+##      [arrays] (...Array): The arrays to inspect.
+## Returns
+##      (Array): Returns the new array of filtered values.
+## Example
+##      GD_.xor([2, 1], [2, 3]);
+##      # => [1, 3]   
+## Notes
+##		>> Variable Arguments
+##			In js you can call an infinite amount of args using ellipses 
+##			E.g. _.xor([1], [2], [3],[4],  ... , [100], [101])
+##
+##			But in GD_ you can call at most up to 10 args
+##			E.g. GD_.xor([1], [2], [3], ... , [10])
+static func xor(arg1,arg2 = _UNDEF_,arg3 = _UNDEF_,arg4 = _UNDEF_,arg5 = _UNDEF_,arg6 = _UNDEF_,arg7 = _UNDEF_,arg8 = _UNDEF_,arg9 = _UNDEF_,arg10 = _UNDEF_,arg11 = _UNDEF_):
+    return xor_with(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11)
+
+## This method is like GD_.xor except that it accepts iteratee which is 
+## invoked for each element of each arrays to generate the criterion by which 
+## by which they're compared. The order of result values is determined by the 
+## order they occur in the arrays. The iteratee is invoked 
+## with two arguments: (value, _UNUSED_).
+## 
+## Arguments
+##      [arrays] (...Array): The arrays to inspect.
+##      [iteratee=_.identity] (Function): The iteratee invoked per element.
+## Returns
+##      (Array): Returns the new array of filtered values.
+## Example
+##      GD_.xor_by([2.1, 1.2], [2.3, 3.4], GD_.floor);
+##      # => [1.2, 3.4]
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.xor_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x');
+##      # => [{ 'x': 2 }]
+## Notes
+##		>> Variable Arguments
+##			In js you can call an infinite amount of args using ellipses 
+##			E.g. _.xor_by([1], [2], [3],[4],  ... , [100], [101],'x')
+##
+##			But in GD_ you can call at most up to 10 args
+##			E.g. GD_.xor_by([1], [2], [3], ... , [10],'x')
+static func xor_by(arg1,arg2 = _UNDEF_,arg3 = _UNDEF_,arg4 = _UNDEF_,arg5 = _UNDEF_,arg6 = _UNDEF_,arg7 = _UNDEF_,arg8 = _UNDEF_,arg9 = _UNDEF_,arg10 = _UNDEF_,arg11 = _UNDEF_):
+    var args = __INTERNAL_ARGS__.new()
+    args.last_is_iteratee(
+        [arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11],
+        GD_.is_equal
+    )
+
+    var differences = []
+    var removed = []
+    var arrays := args.all as Array
+    var iter_func := super.iteratee(args.last_item) as Callable
+    # Loop through all arrays
+    for i in range(0,len(arrays)): 
+        var ary = arrays[i]
+        
+        if not(GD_.is_array(ary)):
+            gd_warn("GD_.intersection_with received a non-array type value")
+            continue
+        
+        var added_this_iteration = []
+        for item_raw in ary:
+            var item = iter_func.call(item_raw, null)
+            # See if its saved in removed, and if it is we pluck it out
+            var item_index = super.map(differences, iter_func).find(item)
+            if item_index > -1:
+                # Item was added during this run - this means duplicate value
+                # e.g. [1,2,3,1,1,1] - lets do nothing and move on
+                if item in added_this_iteration: 
+                    continue
+                
+                differences.remove_at(item_index)
+                # Add to "deleted list" to not re-add it later via a diff array
+                removed.append(item)
+                continue
+            elif item in removed:
+                continue
+            differences.append(item_raw) 
+            added_this_iteration.append(item)
+                
+    return differences
     
-static func xor(array:Array, b=0, c=0): not_implemented()
+## This method is like GD_.xor except that it accepts comparator which is 
+## invoked to compare elements of arrays. The order of result values is 
+## determined by the order they occur in the arrays. The comparator is invoked 
+## with two arguments: (arrVal, othVal).
+## 
+## Arguments
+##      [arrays] (...Array): The arrays to inspect.
+##      [comparator] (Function): The comparator invoked per element.
+## Returns
+##      (Array): Returns the new array of filtered values.
+## Example
+##      var a1 = ["hello","foo"]
+##      var a2 = ["bar","homer"]
+##      var comparator = func (a,b): return a[0] == b[0]
+##
+##      GD_.xor_wth(a1, a2, comparator);
+##      # => ["foo","bar"]
+## Notes
+##		>> Variable Arguments
+##			In js you can call an infinite amount of args using ellipses 
+##			E.g. _.xor_by([1], [2], [3],[4],  ... , [100], [101],GD_.is_equal)
+##
+##			But in GD_ you can call at most up to 10 args
+##			E.g. GD_.xor_by([1], [2], [3], ... , [10],GD_.is_equal)
+static func xor_with(arg1:Array,arg2 = null,arg3 = null,arg4 = null,arg5 = null,arg6 = null,arg7 = null,arg8 = null,arg9 = null,arg10 = null,arg11 = null):
+    var args = __INTERNAL_ARGS__.new()
+    args.last_is_func(
+        [arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11],
+        GD_.is_equal
+    )
 
-static func xor_by(array:Array, b=0, c=0): not_implemented()
-
-static func xor_with(array:Array, b=0, c=0): not_implemented()
+    var differences = []
+    var removed = []
+    var arrays := args.all as Array
+    var comparator := args.last_item as Callable
+    # Loop through all arrays
+    for i in range(0,len(arrays)): 
+        var ary = arrays[i]
+        
+        if not(GD_.is_array(ary)):
+            gd_warn("GD_.intersection_with received a non-array type value")
+            continue
+        
+        var added_this_iteration = []
+        for item in ary:
+            # See if its saved in removed, and if it is we pluck it out
+            if __INTERNAL__.item_in(item,differences,comparator):
+                # Item was added during this run - this means duplicate value
+                # e.g. [1,2,3,1,1,1] - lets do nothing and move on
+                if __INTERNAL__.item_in(item,added_this_iteration,comparator): 
+                    continue
+                
+                pull_all_with(differences, [item], comparator)
+                # Add to "deleted list" to not re-add it later via a diff array
+                removed.append(item)
+                continue
+            elif item in removed:
+                continue
+            differences.append(item) 
+            added_this_iteration.append(item)
+                
+    return differences
 
 
 ## Creates an array of grouped elements, the first of which contains the first elements of the 
@@ -1598,7 +1743,7 @@ static func zip_object_deep(keys:Array, values:Array):
 static func zip_with(a:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
     var args = __INTERNAL__.to_clean_args(a,b,c,d,e,f,g,h,i,j)
     var has_callable_arg = args[-1] is Callable
-    var iter_func = iteratee(args.pop_back()) if has_callable_arg else __INTERNAL__.to_clean_args
+    var iter_func = iteratee(args.pop_back()) if has_callable_arg else null
     
     var cursor = -1
     var result = []
@@ -1609,7 +1754,7 @@ static func zip_with(a:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,
         for index in range(max(cursor,0), array_arg.size()):
             cursor = index
             var arg_set = args.map(func (tmp): return tmp[cursor] if cursor < tmp.size() else null  )
-            var tmp = iter_func.callv(arg_set)
+            var tmp = iter_func.callv(arg_set) if iter_func else compact(arg_set)
             result.append(tmp)
         cursor += 1
     return result
