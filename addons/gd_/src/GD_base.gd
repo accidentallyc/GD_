@@ -5,15 +5,11 @@
 # Use this to differentiate betwen default null
 # and actual null values. Do not use outside of this class.
 class UNDEFINED: 
-    static var ref:UNDEFINED
+    pass
     
-    func _init():
-        ref = self
-        
 static var static_self = self
 
-static var _UNDEF_ = __INTERNAL__._UNDEF_:
-    get: return __INTERNAL__._UNDEF_
+static var _UNDEF_ = __INTERNAL__._UNDEF_
 static var _EMPTY_ARRAY_ = []
 
 """
@@ -37,12 +33,44 @@ Internal utility function
 
 static func _get_callable_result(callable:Callable):
     return callable.call()
-
+    
+    
+## Utility class to support the "ellipsis args" that
+## Lodash dash into something that can be consumed by Godot
+class __INTERNAL_ARGS__:
+    
+    var last_item 
+    var all = []
+    
+    func last_is_iteratee(raw_args:Array, default_last_item = null):
+        last_item = default_last_item
+        for arg in raw_args:
+            if arg is UNDEFINED:
+                break
+            all.append(arg)
+        last_item = all.pop_back()
+    
+    func last_is_func(raw_args:Array, default_last_item = null):
+        last_item = default_last_item
+        for arg in raw_args:
+            if arg is Callable:
+                last_item = arg
+                break
+            if arg is UNDEFINED:
+                break
+            all.append(arg)
+            
 ## Wrapping it in a class o we can hide the implementation from being visible
 ## when accessing GD_.
 class __INTERNAL__:
-    static var _UNDEF_ = UNDEFINED.new()
-    
+    static var _UNDEF_ = UNDEFINED.new():
+        get:
+            if _UNDEF_ == null:
+                _UNDEF_ = UNDEFINED.new() # Happens in editor scripts
+                return UNDEFINED.new()
+        set(v):
+            _UNDEF_ = v
+            
     """
     Function useful for complex initializations without
     exposing implementation
@@ -127,16 +155,16 @@ class __INTERNAL__:
     ## Assumes that the user will fill from left to right.
     ## Will break on the first UNDEFINED
     static func to_clean_args(
-        a = UNDEFINED.ref,
-        b = UNDEFINED.ref,
-        c = UNDEFINED.ref,
-        d = UNDEFINED.ref,
-        e = UNDEFINED.ref,
-        f = UNDEFINED.ref,
-        g = UNDEFINED.ref,
-        h = UNDEFINED.ref,
-        i = UNDEFINED.ref,
-        j = UNDEFINED.ref
+        a = _UNDEF_,
+        b = _UNDEF_,
+        c = _UNDEF_,
+        d = _UNDEF_,
+        e = _UNDEF_,
+        f = _UNDEF_,
+        g = _UNDEF_,
+        h = _UNDEF_,
+        i = _UNDEF_,
+        j = _UNDEF_
     ):
         var cleaned = []
     
@@ -308,7 +336,7 @@ class __INTERNAL__:
         var array = []
         var paths
         for arg in arguments:
-            if is_same(arg, _UNDEF_):
+            if arg is UNDEFINED:
                 continue
             for p in GD_.cast_array(arg):
                 array.append(base_get_prop(obj, p))
@@ -319,7 +347,7 @@ class __INTERNAL__:
         new_array.append_array(array)
         for arg in arguments:
             # stop after first occurence of _UNDEF_
-            if is_same(arg,_UNDEF_):
+            if arg is UNDEFINED:
                 break
             if arg is Array:
                 new_array.append_array(arg)
@@ -339,6 +367,12 @@ class __INTERNAL__:
                 found = found and dict[key] == prop
             return found
             
+    static func item_in(item, array:Array, comparator:Callable):
+        for i in array:
+            if comparator.call(i, item):
+                return true
+        return false
+        
     static func property(path):
         var splits
         if path is String:
@@ -356,7 +390,7 @@ class __INTERNAL__:
         return value
         
     static func iteratee(iteratee_val):
-        if is_same(iteratee_val, _UNDEF_):
+        if iteratee_val is UNDEFINED:
             return identity
         match typeof(iteratee_val):
             TYPE_DICTIONARY:
@@ -380,7 +414,7 @@ class __INTERNAL__:
 INTERNAL STUFF
 """
 static func _is_not_null_arg(i,_i):
-    return not(is_same(i, _UNDEF_))
+    return not(i is UNDEFINED)
     
 static func not_implemented():  
     assert(false, "Not implemented yet. Do you need this function? If so, open an issue and I will prioritize it")

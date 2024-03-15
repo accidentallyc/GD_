@@ -29,7 +29,7 @@ extends "./GD_base.gd"
 ## 		print(GD_.castArray(array) == array)
 ## 		# => true
 static func cast_array(v = _UNDEF_):
-    if is_same(v, _UNDEF_):
+    if v is UNDEFINED:
         return []
     else:
         return v if v is Array else [v]

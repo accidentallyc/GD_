@@ -1,4 +1,4 @@
-[gd_scene load_steps=111 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=114 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/chunk.test.gd" id="2_i2yyx"]
@@ -81,6 +81,8 @@
 [ext_resource type="Script" path="res://tests/array/zip.test.gd" id="55_8ajws"]
 [ext_resource type="Script" path="res://tests/array/zip_object.test.gd" id="56_thnxy"]
 [ext_resource type="Script" path="res://tests/array/zip_with.test.gd" id="57_ajste"]
+[ext_resource type="Script" path="res://tests/array/xor_by.test.gd" id="57_nevjf"]
+[ext_resource type="Script" path="res://tests/array/xor.test.gd" id="57_sr3hp"]
 [ext_resource type="Script" path="res://tests/array/zip_object_deep.test.gd" id="58_qeg5f"]
 [ext_resource type="Script" path="res://tests/collection/every.test.gd" id="63_1f61c"]
 [ext_resource type="Script" path="res://tests/array/is_number.test.gd" id="63_vhodk"]
@@ -93,6 +95,7 @@
 [ext_resource type="Script" path="res://tests/collection/reject.test.gd" id="74_il3cu"]
 [ext_resource type="Script" path="res://tests/collection/shuffle.test.gd" id="75_u71at"]
 [ext_resource type="Script" path="res://tests/function/before.test.gd" id="76_71vx2"]
+[ext_resource type="Script" path="res://tests/xor_with.test.gd" id="76_oc2mi"]
 [ext_resource type="Script" path="res://tests/util/times.test.gd" id="77_fp70i"]
 [ext_resource type="Script" path="res://tests/function/after.test.gd" id="77_xt4i3"]
 [ext_resource type="Script" path="res://tests/lang/clone.test.gd" id="77_yo3wx"]
@@ -280,6 +283,15 @@ script = ExtResource("52_o6bxo")
 
 [node name="Without" type="Node" parent="Array"]
 script = ExtResource("54_2kyht")
+
+[node name="Xor" type="Node" parent="Array"]
+script = ExtResource("57_sr3hp")
+
+[node name="Xor By" type="Node" parent="Array"]
+script = ExtResource("57_nevjf")
+
+[node name="Xor With" type="Node" parent="Array"]
+script = ExtResource("76_oc2mi")
 
 [node name="Zip" type="Node" parent="Array"]
 script = ExtResource("55_8ajws")
