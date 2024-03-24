@@ -1745,17 +1745,16 @@ static func zip_with(a:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,
     var has_callable_arg = args[-1] is Callable
     var iter_func = iteratee(args.pop_back()) if has_callable_arg else null
     
-    var cursor = -1
+    var biggest_size = __INTERNAL__.get_max_size_of_all_arrays(args)
     var result = []
-    for array_arg in args:
-        var size = array_arg.size()
-        if cursor == size -1 : continue
+    
+    for index in range(0, biggest_size):
+        var arg_set = []
         
-        for index in range(max(cursor,0), array_arg.size()):
-            cursor = index
-            var arg_set = args.map(func (tmp): return tmp[cursor] if cursor < tmp.size() else null  )
-            var tmp = iter_func.callv(arg_set) if iter_func else compact(arg_set)
-            result.append(tmp)
-        cursor += 1
+        for ary in args: # Get the current index of each array
+            var size = ary.size()
+            arg_set.append( null if index >= size else ary[index] )
+        var slice = iter_func.callv(arg_set) if iter_func else compact(arg_set)
+        result.append(slice)
     return result
             

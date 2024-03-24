@@ -38,6 +38,7 @@ static func _get_callable_result(callable:Callable):
 ## Utility class to support the "ellipsis args" that
 ## Lodash dash into something that can be consumed by Godot
 class __INTERNAL_ARGS__:
+    static var _UNDEF_ = UNDEFINED.new()
     
     var last_item 
     var all = []
@@ -409,6 +410,13 @@ class __INTERNAL__:
             _:
                 gd_warn("GD_.find called with unsupported signature %s. See docs for more info" % iteratee)
         return null
+    
+    static func get_max_size_of_all_arrays(arrays:Array):
+        var max_size = 0
+        for a in arrays:
+            var tmp = a.size()
+            if(tmp > max_size): max_size = tmp
+        return max_size
 
 """
 INTERNAL STUFF
