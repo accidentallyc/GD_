@@ -7,26 +7,26 @@ extends "./GD_base.gd"
 ## Returns
 ## 		(Array): Returns the cast array.
 ## Example
-## 		GD_.castArray(1)
+## 		GD_.cast_array(1)
 ## 		# => [1]
 ## 		 
-## 		GD_.castArray({ 'a': 1 })
+## 		GD_.cast_array({ 'a': 1 })
 ## 		# => [{ 'a': 1 }]
 ## 		 
-## 		GD_.castArray('abc')
+## 		GD_.cast_array('abc')
 ## 		# => ['abc']
 ## 		 
-## 		GD_.castArray(null)
+## 		GD_.cast_array(null)
 ## 		# => [null]
 ## 		 
-## 		GD_.castArray(null)
+## 		GD_.cast_array(null)
 ## 		# => [null]
 ## 		 
-## 		GD_.castArray()
+## 		GD_.cast_array()
 ## 		# => []
 ## 		 
 ## 		var array = [1, 2, 3]
-## 		print(GD_.castArray(array) == array)
+## 		print(GD_.cast_array(array) == array)
 ## 		# => true
 static func cast_array(v = _UNDEF_):
     if v is UNDEFINED:
@@ -550,7 +550,8 @@ static func to_safe_integer(a=0, b=0, c=0): not_implemented()
 
 #static func to_string(a=0, b=0, c=0): not_implemented()
 
-        
+## Lodash Equivalent 
+##		None
 static func keyed_iterable(thing, from_index = 0):
     if is_array_like(thing) or is_string(thing):
         var size = len(thing)

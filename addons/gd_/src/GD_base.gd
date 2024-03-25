@@ -43,6 +43,9 @@ class __INTERNAL_ARGS__:
     var last_item 
     var all = []
     
+    func size() -> int:
+        return all.size()
+    
     func last_is_iteratee(raw_args:Array, default_last_item = null):
         last_item = default_last_item
         for arg in raw_args:

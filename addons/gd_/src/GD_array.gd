@@ -1460,9 +1460,26 @@ static func uniq_with(array:Array, comparator:Callable):
             new_array.append(old_item)
     return new_array
     
-static func unzip(array:Array, b=0, c=0): not_implemented()
+static func unzip(args:Array):
+    return unzip_with(args)
 
-static func unzip_with(array:Array, b=0, c=0): not_implemented()
+static func unzip_with(args:Array, iter_func = null):
+    var biggest_size = __INTERNAL__.get_max_size_of_all_arrays(args)
+    var result = []
+    # Preconstructs results for easier accessing
+    for tmp in  range(0, biggest_size): result.append([])
+    
+    
+    for index in range(0, biggest_size):
+        var arg_set = result[index]
+        for arg_i in range(0, args.size()): 
+            var ary = args[arg_i]
+            var size = ary.size()
+            # Get the array
+            arg_set.append( null if index >= size else ary[index] )
+        var slice = iter_func.callv(arg_set) if iter_func else arg_set
+        result[index] = slice
+    return result
 
 
 ## Creates an array excluding all given values using == for equality comparisons.
@@ -1666,7 +1683,7 @@ static func xor_with(arg1:Array,arg2 = null,arg3 = null,arg4 = null,arg5 = null,
 ##			But in GD_ you can call at most up to 10 args
 ##			E.g. GD_.zip([1], [2], [3], ... , [10])
 static func zip(a:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
-    return GD_.zip_with(a,b,c,d,e,f,g,h,i,j)
+    return zip_with(a,b,c,d,e,f,g,h,i,j)
 
 
 ## This method is like _.fromPairs except that it accepts two arrays, one of property identifiers and one of corresponding values.

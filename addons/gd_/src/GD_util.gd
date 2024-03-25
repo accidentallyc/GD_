@@ -113,7 +113,7 @@ static func iteratee(iteratee_val):
 ## 		  { 'a': 4, 'b': 5, 'c': 6 }
 ## 		]
 ## 		 
-## 		GD_.filter(objects, _.matches({ 'a': 4, 'c': 6 }))
+## 		GD_.filter(objects, GD_.matches({ 'a': 4, 'c': 6 }))
 ## 		# => [{ 'a': 4, 'b': 5, 'c': 6 }]
 static func matches(dict:Dictionary) -> Callable:
     return __INTERNAL__.matches(dict)
