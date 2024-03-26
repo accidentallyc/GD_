@@ -1,4 +1,4 @@
-[gd_scene load_steps=114 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=116 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/chunk.test.gd" id="2_i2yyx"]
@@ -79,6 +79,8 @@
 [ext_resource type="Script" path="res://tests/array/union.test.gd" id="53_xewci"]
 [ext_resource type="Script" path="res://tests/array/without.test.gd" id="54_2kyht"]
 [ext_resource type="Script" path="res://tests/array/zip.test.gd" id="55_8ajws"]
+[ext_resource type="Script" path="res://tests/array/unzip_with.test.gd" id="56_eskdc"]
+[ext_resource type="Script" path="res://tests/array/unzip.test.gd" id="56_mej03"]
 [ext_resource type="Script" path="res://tests/array/zip_object.test.gd" id="56_thnxy"]
 [ext_resource type="Script" path="res://tests/array/zip_with.test.gd" id="57_ajste"]
 [ext_resource type="Script" path="res://tests/array/xor_by.test.gd" id="57_nevjf"]
@@ -280,6 +282,12 @@ script = ExtResource("51_01hcw")
 
 [node name="Union With" type="Node" parent="Array"]
 script = ExtResource("52_o6bxo")
+
+[node name="Unzip" type="Node" parent="Array"]
+script = ExtResource("56_mej03")
+
+[node name="Unzip With" type="Node" parent="Array"]
+script = ExtResource("56_eskdc")
 
 [node name="Without" type="Node" parent="Array"]
 script = ExtResource("54_2kyht")

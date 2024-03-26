@@ -96,15 +96,15 @@ static func each_right(a=0, b=0, c=0): not_implemented()
 ## 		  { 'user': 'fred',   'age': 40, 'active': false }
 ## 		]
 ## 		 
-## 		// The `GD_.matches` iteratee shorthand.
+## 		# The `GD_.matches` iteratee shorthand.
 ## 		GD_.every(users, { 'user': 'barney', 'active': false })
 ## 		# => false
 ## 		 
-## 		// The `GD_.matchesProperty` iteratee shorthand.
+## 		# The `GD_.matchesProperty` iteratee shorthand.
 ## 		GD_.every(users, ['active', false])
 ## 		# => true
 ## 		 
-## 		// The `GD_.property` iteratee shorthand.
+## 		# The `GD_.property` iteratee shorthand.
 ## 		GD_.every(users, 'active')
 ## 		# => false
 # @TODO guarded method by map, every, filter, mapValues, reject, some
@@ -508,7 +508,7 @@ static func shuffle(collection):
 ## 		# The `GD_.property` iteratee shorthand.
 ## 		GD_.some(users, 'active')
 ## 		# => true
-## Notes:
+## Notes
 ##		>> @TODO guarded method by map, every, filter, mapValues, reject, some
 static func some(collection, iteratee = null): 
     if not(super.is_collection(collection)):
