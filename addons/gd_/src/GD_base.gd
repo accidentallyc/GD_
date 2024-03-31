@@ -67,13 +67,17 @@ class __INTERNAL_ARGS__:
 ## Wrapping it in a class o we can hide the implementation from being visible
 ## when accessing GD_.
 class __INTERNAL__:
+    # We do this because for some reason, this never gets set 
+    # permanently in editor scripts
     static var _UNDEF_ = UNDEFINED.new():
         get:
             if _UNDEF_ == null:
                 _UNDEF_ = UNDEFINED.new() # Happens in editor scripts
-                return UNDEFINED.new()
+            return _UNDEF_
         set(v):
             _UNDEF_ = v
+        
+    static var _GDref = preload("res://addons/gd_/src/GD_.gd")
             
     """
     Function useful for complex initializations without
@@ -309,17 +313,17 @@ class __INTERNAL__:
     static func get_iteratee(callable: Callable):
         """
         FAQ Portion:
-        Q: Why reference a method by index e.g. 
-           e.g. GD_["words"] instead of GD_.words
-        A: To circumvent GD's type safety where it starts throwing errors
-        if a rootscript references a member from its inheritors 
-        (
-            yes i know this is bad design but id rather have this than surface
-            implementation details to consumers
-        )
-        
+        Q: Why use the _GDref
+           e.g. _GDref.words vs GD_.words
+        A: Because GD_ cannot handle circular references yet.
+        See https://github.com/godotengine/godot-proposals/issues/1566
         """
-        if callable in [GD_["words"],GD_["take"],GD_["every"]]:
+        if callable in [
+                _GDref.words,
+                _GDref.take, 
+                _GDref.take_right,
+                _GDref.every
+                ]:
             return iteratee_drop_second_arg(callable)
         
         return callable
@@ -342,7 +346,7 @@ class __INTERNAL__:
         for arg in arguments:
             if arg is UNDEFINED:
                 continue
-            for p in GD_.cast_array(arg):
+            for p in _GDref.cast_array(arg):
                 array.append(base_get_prop(obj, p))
         return array
         
@@ -406,7 +410,7 @@ class __INTERNAL__:
                 var val = base_get_prop(iteratee_val,["1"])
                 return matches_property(prop,val)
             TYPE_NIL:
-                return GD_.identity
+                return _GDref.identity
             TYPE_CALLABLE:
                 return get_iteratee(iteratee_val)
                     
