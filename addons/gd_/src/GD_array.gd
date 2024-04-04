@@ -1291,22 +1291,137 @@ static func tail(array:Array, _UNUSED_ = null):
 ## 		 
 ## 		GD_.take([1, 2, 3], 0)
 ## 		# => []
-# @TODO guarded method by map, every, filter, mapValues, reject, some
+## Notes
+##      >> This is a guarded method 
+##      When used with methods like map, every, filter, mapValues, reject, some
+##      it is invoked with all the optionals set as null
 static func take(array:Array, n = null): 
     var size = array.size()
-    if n == null:
-        n = 1
-    if size == 0 or not(super.is_number(n)) or n < 0:
-        return []
-    return array.slice(0, min(n,size))
+    
+    if __INTERNAL__.base_is_undef(n): n = 1
+    elif not(super.is_number(n)): n = -INF
+    
+    return array.slice(0, max(min(n,size),0))
     
     
-# @TODO guarded method by map, every, filter, mapValues, reject, some
-static func take_right(array:Array, n = 1): not_implemented() 
+## Creates a slice of array with n elements taken from the end.
+## 
+## Arguments
+##      array (Array): The array to query.
+##      [n=1] (number): The number of elements to take.
+## Returns
+##      (Array): Returns the slice of array.
+## Example
+##      GD_.take_right([1, 2, 3])
+##      # => [3]
+##       
+##      GD_.take_right([1, 2, 3], 2)
+##      # => [2, 3]
+##       
+##      GD_.take_right([1, 2, 3], 5)
+##      # => [1, 2, 3]
+##       
+##      GD_.take_right([1, 2, 3], 0)
+##      # => []
+## Notes
+##      >> This is a guarded method 
+##      When used with methods like map, every, filter, mapValues, reject, some
+##      it is invoked with all the optionals set as null
+static func take_right(array:Array, n = null): 
+    var size = array.size()
+    
+    if __INTERNAL__.base_is_undef(n): n = 1
+    elif not(super.is_number(n)): n = -INF # to
+    
+    return array.slice(clamp(size-n,0,size), size)
+    
 
-static func take_right_while(array:Array, b=0, c=0): not_implemented()
+## Creates a slice of array with elements taken from the end. 
+## Elements are taken until predicate returns falsey. The predicate is invoked 
+## with two arguments: (value, index).
+## 
+## Arguments
+##      array (Array): The array to query.
+##      [predicate=_.identity] (Function): The function invoked per iteration.
+## Returns
+##      (Array): Returns the slice of array.
+## 
+## Example
+##      var users = [
+##        { 'user': 'barney',  'active': true },
+##        { 'user': 'fred',    'active': false },
+##        { 'user': 'pebbles', 'active': false }
+##      ]
+##  
+##      GD_.take_right_while(users, func(o,_u): return !o.active)
+##      # => objects for ['fred', 'pebbles']
+##       
+##      # The `GD_.matches` iteratee shorthand.
+##      GD_.take_right_while(users, { 'user': 'pebbles', 'active': false })
+##      # => objects for ['pebbles']
+##       
+##      # The `GD_.matchesProperty` iteratee shorthand.
+##      GD_.take_right_while(users, ['active', false])
+##      # => objects for ['fred', 'pebbles']
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.take_right_while(users, 'active')
+##      # => []
+static func take_right_while(array:Array, predicate = null):
+    var size = array.size()
+    
+    predicate = iteratee(predicate)
+    
+    var n = size
+    for i in range(size - 1, -1, -1):
+        if not predicate.call(array[i], i): break
+        n = i
+            
+    return take_right(array,n)
 
-static func take_while(array:Array, b=0, c=0): not_implemented()
+## Creates a slice of array with elements taken from the beginning. 
+## Elements are taken until predicate returns falsey. The predicate is 
+## invoked with three arguments: (value, index).
+## 
+## Arguments
+##      array (Array): The array to query.
+##      [predicate=_.identity] (Function): The function invoked per iteration.
+## Returns
+## (Array): Returns the slice of array.
+## 
+## Example
+##      var users = [
+##        { 'user': 'barney',  'active': false },
+##        { 'user': 'fred',    'active': false },
+##        { 'user': 'pebbles', 'active': true }
+##      ]
+##       
+##      GD_.take_while(users, func (o,u): return !o.active )
+##      # => objects for ['barney', 'fred']
+##       
+##      # The `GD_.matches` iteratee shorthand.
+##      GD_.take_while(users, { 'user': 'barney', 'active': false })
+##      # => objects for ['barney']
+##       
+##      # The `GD_.matchesProperty` iteratee shorthand.
+##      GD_.take_while(users, ['active', false])
+##      # => objects for ['barney', 'fred']
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.take_while(users, 'active')
+##      # => []  
+static func take_while(array:Array, predicate = null):
+    var size = array.size()
+    
+    predicate = iteratee(predicate)
+    
+    var n = 0
+    for i in range(0, size):
+        if not predicate.call(array[i], i): 
+            break
+        n = i
+            
+    return take(array,n + 1)
 
 ## Creates an array of unique values, in order, from all given arrays using 
 ## == for equality comparisons.
@@ -1522,7 +1637,7 @@ static func without(array:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDE
 ## Returns
 ##      (Array): Returns the new array of filtered values.
 ## Example
-##      GD_.xor([2, 1], [2, 3]);
+##      GD_.xor([2, 1], [2, 3])
 ##      # => [1, 3]   
 ## Notes
 ##		>> Variable Arguments
@@ -1546,11 +1661,11 @@ static func xor(arg1,arg2 = _UNDEF_,arg3 = _UNDEF_,arg4 = _UNDEF_,arg5 = _UNDEF_
 ## Returns
 ##      (Array): Returns the new array of filtered values.
 ## Example
-##      GD_.xor_by([2.1, 1.2], [2.3, 3.4], GD_.floor);
+##      GD_.xor_by([2.1, 1.2], [2.3, 3.4], GD_.floor)
 ##      # => [1.2, 3.4]
 ##       
 ##      # The `GD_.property` iteratee shorthand.
-##      GD_.xor_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x');
+##      GD_.xor_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
 ##      # => [{ 'x': 2 }]
 ## Notes
 ##		>> Variable Arguments
@@ -1615,7 +1730,7 @@ static func xor_by(arg1,arg2 = _UNDEF_,arg3 = _UNDEF_,arg4 = _UNDEF_,arg5 = _UND
 ##      var a2 = ["bar","homer"]
 ##      var comparator = func (a,b): return a[0] == b[0]
 ##
-##      GD_.xor_wth(a1, a2, comparator);
+##      GD_.xor_wth(a1, a2, comparator)
 ##      # => ["foo","bar"]
 ## Notes
 ##		>> Variable Arguments

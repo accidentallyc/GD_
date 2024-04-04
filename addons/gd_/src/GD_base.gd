@@ -183,6 +183,8 @@ class __INTERNAL__:
             
         return cleaned
         
+    static func is_false(v): return not(v) or v is UNDEFINED
+        
     static func set_dict_deep(dict:Dictionary, paths:Array, value):
         var curr = dict
         var size = paths.size()
@@ -205,6 +207,9 @@ class __INTERNAL__:
         
     static func base_is_number(a = null, _UNUSED_=null):
         return a is int or a is float
+        
+    static func base_is_undef(a):
+        return a == null or a is UNDEFINED
         
     ## Splits the string into paths
     static func string_to_path(str: String):
