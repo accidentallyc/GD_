@@ -91,29 +91,40 @@ func extract_func_defs(category, fileName):
                     
                     match tmp.strip_edges().to_lower():
                         "example":
+                            buffer.reverse() # faster to reverse than pushfront
+                            
                             def.example = buffer
                             has_text = true
                             buffer = [] # force reset buffer
                             curr_section = "example"
                         "returns":
+                            buffer.reverse() # faster to reverse than pushfront
+                            
                             def.returns = buffer[0].split(":")
                             has_text = true
                             buffer = [] # force reset buffer
                             curr_section = "returns"
                         "arguments":
+                            buffer.reverse() # faster to reverse than pushfront
+                            
                             var fixed = []
                             for b in buffer:
-                                fixed.append(b.split(":"))
+                                var splat = b.split(":")
+                                fixed.append([clean(splat[0]),clean(splat[1])])
                             def.arguments = fixed
                             has_text = true
                             buffer = [] # force reset buffer
                             curr_section = "arguments"
                         "notes":
+                            buffer.reverse() # faster to reverse than pushfront
+                            
                             def.notes = buffer
                             has_text = true
                             buffer = [] # force reset buffer
                             curr_section = "notes"
                         "lodash equivalent":
+                            buffer.reverse() # faster to reverse than pushfront
+                            
                             var tmp1 =  buffer[0].to_lower()
                             if tmp1 == "none":
                                     nondash += 1
@@ -122,8 +133,7 @@ func extract_func_defs(category, fileName):
                                     def.equivalent  = tmp1
                             buffer = [] # force reset buffer
                         _:
-                            var cleaned = clean(tmp)
-                            buffer.push_front(cleaned)
+                            buffer.append(tmp)
                     i -= 1
                 
                 if not has_text: 

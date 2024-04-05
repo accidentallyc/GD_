@@ -145,16 +145,16 @@ static func difference_by(array_left, array_right, iteratee = GD_.identity):
 ## The comparator is invoked with two arguments: (arrVal, othVal).
 ##
 ## Arguments
-## 		array (Array): The array to inspect.
-## 		[values] (...Array): The values to exclude.
-## 		[comparator] (Function): The comparator invoked per element.
+##      array (Array): The array to inspect.
+##      [values] (...Array): The values to exclude.
+##      [comparator] (Function): The comparator invoked per element.
 ## Returns
-## 		(Array): Returns the new array of filtered values.
+##      (Array): Returns the new array of filtered values.
 ## Example
-## 		var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]
-## 		 
-## 		GD_.difference_with(objects, [{ 'x': 1, 'y': 2 }], GD_.is_equal)
-## 		# => [{ 'x': 2, 'y': 1 }]
+##      var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]
+##       
+##      GD_.difference_with(objects, [{ 'x': 1, 'y': 2 }], GD_.is_equal)
+##      # => [{ 'x': 2, 'y': 1 }]
 static func difference_with(array_left, array_right, comparator:Callable): 
     var new_array = []
     var has_match = false
