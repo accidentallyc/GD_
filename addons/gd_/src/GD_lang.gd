@@ -3,31 +3,31 @@ extends "./GD_base.gd"
 ## Casts value as an array if it's not one.
 ##
 ## Arguments
-## 		value (*): The value to inspect.
+##      value (*): The value to inspect.
 ## Returns
-## 		(Array): Returns the cast array.
+##      (Array): Returns the cast array.
 ## Example
-## 		GD_.cast_array(1)
-## 		# => [1]
-## 		 
-## 		GD_.cast_array({ 'a': 1 })
-## 		# => [{ 'a': 1 }]
-## 		 
-## 		GD_.cast_array('abc')
-## 		# => ['abc']
-## 		 
-## 		GD_.cast_array(null)
-## 		# => [null]
-## 		 
-## 		GD_.cast_array(null)
-## 		# => [null]
-## 		 
-## 		GD_.cast_array()
-## 		# => []
-## 		 
-## 		var array = [1, 2, 3]
-## 		print(GD_.cast_array(array) == array)
-## 		# => true
+##      GD_.cast_array(1)
+##      # => [1]
+##       
+##      GD_.cast_array({ 'a': 1 })
+##      # => [{ 'a': 1 }]
+##       
+##      GD_.cast_array('abc')
+##      # => ['abc']
+##       
+##      GD_.cast_array(null)
+##      # => [null]
+##       
+##      GD_.cast_array(null)
+##      # => [null]
+##       
+##      GD_.cast_array()
+##      # => []
+##       
+##      var array = [1, 2, 3]
+##      print(GD_.cast_array(array) == array)
+##      # => true
 static func cast_array(v = _UNDEF_):
     if v is UNDEFINED:
         return []
@@ -39,22 +39,22 @@ static func cast_array(v = _UNDEF_):
 ## by conventional means.
 ## 
 ## Arguments
-## 		value (*): The value to clone.
+##      value (*): The value to clone.
 ## Returns
-## 		(*): Returns the cloned value.
+##      (*): Returns the cloned value.
 ## Example
-## 		var objects = [{ 'a': 1 }, { 'b': 2 }]
+##      var objects = [{ 'a': 1 }, { 'b': 2 }]
 ##  
-## 		var shallow = GD_.clone(objects)
-## 		console.log(shallow[0] === objects[0])
-## 		# true
+##      var shallow = GD_.clone(objects)
+##      console.log(shallow[0] === objects[0])
+##      # true
 ## Notes
-##		>> JS Comparison
-##			In javascript, everything is an object which makes cloning relatively
-##			simple, but in GDScript, some types are distinct. This makes cloning
-##			a bit harder so GD_ instead is more loose on "how" a thing is cloned
-##			preferring to rebuild a replica of an uncloneable class instead of
-##			what would have been a "shallow" clone in js
+##     >> JS Comparison
+##      In javascript, everything is an object which makes cloning relatively
+##      simple, but in GDScript, some types are distinct. This makes cloning
+##      a bit harder so GD_ instead is more loose on "how" a thing is cloned
+##      preferring to rebuild a replica of an uncloneable class instead of
+##      what would have been a "shallow" clone in js
 static func clone(thing):
     if is_array(thing) \
         or thing is Dictionary \
@@ -89,19 +89,19 @@ static func eq(a,b):
 ## Checks if value is greater than other.
 ##
 ## Arguments
-## 		value (*): The value to compare.
-## 		other (*): The other value to compare.
+##      value (*): The value to compare.
+##      other (*): The other value to compare.
 ## Returns
-## 		(boolean): Returns true if value is greater than other, else false.
+##      (boolean): Returns true if value is greater than other, else false.
 ## Example
-## 		GD_.gt(3, 1)
-## 		# => true
-## 		GD 
-## 		GD_.gt(3, 3)
-## 		# => false
-## 		GD 
-## 		GD_.gt(1, 3)
-## 		# => false
+##      GD_.gt(3, 1)
+##      # => true
+##      GD 
+##      GD_.gt(3, 3)
+##      # => false
+##      GD 
+##      GD_.gt(1, 3)
+##      # => false
 static func gt(a, b):
     return a > b
     
@@ -110,19 +110,19 @@ static func gt(a, b):
 ##
 ##
 ## Arguments
-## 		value (*): The value to compare.
-## 		other (*): The other value to compare.
+##      value (*): The value to compare.
+##      other (*): The other value to compare.
 ## Returns
-## 		(boolean): Returns true if value is greater than or equal to other, else false.
+##      (boolean): Returns true if value is greater than or equal to other, else false.
 ## Example
-## 		GD_.gte(3, 1)
-## 		# => true
-## 		 
-## 		GD_.gte(3, 3)
-## 		# => true
-## 		 
-## 		GD_.gte(1, 3)
-## 		# => false
+##      GD_.gte(3, 1)
+##      # => true
+##       
+##      GD_.gte(3, 3)
+##      # => true
+##       
+##      GD_.gte(1, 3)
+##      # => false
 static func gte(a,b):
     return a >= b
     
@@ -137,27 +137,27 @@ static func is_arguments(a=0, b=0, c=0): not_implemented()
 ## Checks if value is an Array or one of the PackedArray variants
 ##
 ## Arguments
-## 		value (*): The value to check.
+##      value (*): The value to check.
 ## Returns
-## 		(boolean): Returns true if value is an array or packed array
+##      (boolean): Returns true if value is an array or packed array
 ## Example
-## 		GD_.is_array([1,2,3,4])
-## 		# => true
+##      GD_.is_array([1,2,3,4])
+##      # => true
 ##
-## 		GD_.is_array(PackedByteArray([1,2,3,4]))
-## 		# => true
-## 		 
-## 		GD_.is_array({1:2,3:4})
-## 		# => false
-## 		 
-## 		GD_.is_array('abc')
-## 		# => false
-## 		 
-## 		GD_.is_array(GD_.noop)
-## 		# => false
+##      GD_.is_array(PackedByteArray([1,2,3,4]))
+##      # => true
+##       
+##      GD_.is_array({1:2,3:4})
+##      # => false
+##       
+##      GD_.is_array('abc')
+##      # => false
+##       
+##      GD_.is_array(GD_.noop)
+##      # => false
 ## Notes
-##		>> JS Comparison
-##			Theres are no "Packed" arrays in JS
+##     >> JS Comparison
+##      Theres are no "Packed" arrays in JS
 static func is_array(thing, __UNUSED__ = null):
     return __INTERNAL__.base_is_array(thing, __UNUSED__)
     
@@ -167,19 +167,19 @@ static func is_array_buffer(a=0, b=0, c=0): not_implemented()
 ## See https://docs.godotengine.org/en/latest/tutorials/scripting/gdscript/gdscript_advanced.html#custom-iterators
 ##
 ## Arguments
-## 		value (*): The value to check.
+##      value (*): The value to check.
 ## Returns
-## 		(boolean): Returns true if value is a custom iterator
+##      (boolean): Returns true if value is a custom iterator
 ## Example
-##		class CustomIterator:  # custom iterator implementation
+##     class CustomIterator:  # custom iterator implementation
 ##
-## 		GD_.is_array_like(CustomIterator.new())
-## 		# => true
+##      GD_.is_array_like(CustomIterator.new())
+##      # => true
 ##
-## 		GD_.is_array([1,2,3,4])
-## 		# => true
+##      GD_.is_array([1,2,3,4])
+##      # => true
 ## Lodash Equivalent 
-##		None
+##     None
 static func is_custom_iterator(tmp):
     return tmp is Object and tmp.has_method('_iter_next')
 
@@ -187,22 +187,22 @@ static func is_custom_iterator(tmp):
 ## array-like if it can be used in a for loop.
 ## 
 ## Arguments
-##		value (*): The value to check.
+##     value (*): The value to check.
 ## Returns
-## 		(boolean): Returns true if value is array-like, else false.
+##      (boolean): Returns true if value is array-like, else false.
 ## Example
-## 		GD_.is_array_like([1, 2, 3])
-## 		# => true
-## 		 
-## 		GD_.is_array_like('abc')
-## 		# => true
+##      GD_.is_array_like([1, 2, 3])
+##      # => true
+##       
+##      GD_.is_array_like('abc')
+##      # => true
 ##
-##		class CustomIterator:  # custom iterator implementation
-## 		GD_.is_array_like(CustomIterator.new()
-## 		# => true
+##     class CustomIterator:  # custom iterator implementation
+##      GD_.is_array_like(CustomIterator.new()
+##      # => true
 ##
-## 		GD_.is_array_like(GD_.noop)
-##		# => false
+##      GD_.is_array_like(GD_.noop)
+##     # => false
 static func is_array_like(tmp): 
     return is_array(tmp) \
         or is_string(tmp) \
@@ -256,7 +256,7 @@ static func is_buffer(a=0, b=0, c=0): not_implemented()
 ##      GD_.is_collection(null);
 ##      # => false    
 ## Lodash Equivalent 
-##		None
+##     None
 static func is_collection(item):
     return is_array_like(item) or item is Dictionary or is_string(item)
 
@@ -310,17 +310,17 @@ static func is_function(a=0, b=0, c=0): not_implemented()
 ## is_same test.
 ##
 ## Arguments
-##		value (*): The value to check.
+##     value (*): The value to check.
 ## Returns
-## 		(boolean): Returns true if value is immutable
+##      (boolean): Returns true if value is immutable
 ## Example
-##		GD_.is_immutable("foobar")
-##		# => true
+##     GD_.is_immutable("foobar")
+##     # => true
 ##
-##		GD_.is_immutable([1,2,3,4])
-##		# => false
+##     GD_.is_immutable([1,2,3,4])
+##     # => false
 ## Lodash Equivalent 
-##		None
+##     None
 static func is_immutable(thing, __UNUSED__ = null):
     var is_mutable_type = is_array(thing) \
             or thing is Object \
@@ -342,21 +342,21 @@ static func is_null(a=0, b=0, c=0): not_implemented()
 
 ## 
 ## Arguments
-## 		value (*): The value to check.
+##      value (*): The value to check.
 ## Returns
-## 		(boolean): Returns true if value is a number, else false.
+##      (boolean): Returns true if value is a number, else false.
 ## Example
-## 		GD_.is_number(3)
-## 		# => true
-## 		 
-## 		GD_.is_number(Number.MIN_VALUE)
-## 		# => true
-## 		 
-## 		GD_.is_number(Infinity)
-## 		# => true
-## 		 
-## 		GD_.is_number('3')
-## 		# => false
+##      GD_.is_number(3)
+##      # => true
+##       
+##      GD_.is_number(Number.MIN_VALUE)
+##      # => true
+##       
+##      GD_.is_number(Infinity)
+##      # => true
+##       
+##      GD_.is_number('3')
+##      # => false
 ## Notes
 ##      To exclude Infinity, -Infinity, and NaN, which are classified 
 ##      as numbers, use the GD_.is_finite method.
@@ -392,16 +392,16 @@ static func is_set(a=0, b=0, c=0): not_implemented()
 ## Checks if value is classified as a String or a StringName
 ##
 ## Arguments
-## 		value (*): The value to check.
+##      value (*): The value to check.
 ## Returns
-## 		(boolean): Returns true if value is a string, else false.
+##      (boolean): Returns true if value is a string, else false.
 ## Example
-## 		GD_.is_string('abc')
-## 		# => true
-## 		GD_.is_string(&'abc')
-## 		# => true
-## 		GD_.is_string(1)
-## 		# => false
+##      GD_.is_string('abc')
+##      # => true
+##      GD_.is_string(&'abc')
+##      # => true
+##      GD_.is_string(1)
+##      # => false
 static func is_string(thing, __UNUSED__ = null):
     return thing is String or thing is StringName
     
@@ -413,19 +413,19 @@ static func is_weak_set(a=0, b=0, c=0): not_implemented()
 
 ## Checks if value is less than other.
 ## Arguments
-## 		value (*): The value to compare.
-## 		other (*): The other value to compare.
+##      value (*): The value to compare.
+##      other (*): The other value to compare.
 ## Returns
-## 		(boolean): Returns true if value is less than other, else false.
+##      (boolean): Returns true if value is less than other, else false.
 ## Example
-## 		GD_.lt(1, 3)
-## 		# => true
-## 		 
-## 		GD_.lt(3, 3)
-## 		# => false
-## 		 
-## 		GD_.lt(3, 1)
-## 		# => false
+##      GD_.lt(1, 3)
+##      # => true
+##       
+##      GD_.lt(3, 3)
+##      # => false
+##       
+##      GD_.lt(3, 1)
+##      # => false
 static func lt(a, b):
     return a < b
     
@@ -438,23 +438,23 @@ static func lte(a=0, b=0, c=0):
 ## 
 ##
 ## Arguments
-## 		collection (Array|Object|string): The collection to inspect.
+##      collection (Array|Object|string): The collection to inspect.
 ## Returns
-##		(number): Returns the collection size.
+##     (number): Returns the collection size.
 ## Example
-## 		GD_.size([1, 2, 3])
-## 		# => 3
+##      GD_.size([1, 2, 3])
+##      # => 3
 ##
-## 		GD_.size({ 'a': 1, 'b': 2 })
-## 		# => 2
+##      GD_.size({ 'a': 1, 'b': 2 })
+##      # => 2
 ##
-## 		GD_.size('pebbles')
-## 		# => 7
+##      GD_.size('pebbles')
+##      # => 7
 ## Notes
-##		>> Collections in JS
-##			In js, anything can turn to a collection as long as it has the field
-##			length. In GD_, for as long as it implements length() or size() it
-##			size will use that and return it
+##     >> Collections in JS
+##      In js, anything can turn to a collection as long as it has the field
+##      length. In GD_, for as long as it implements length() or size() it
+##      size will use that and return it
 ##      >> This is categorized as collection in lodash
 static func size(thing, __UNUSED__ = null): 
     if is_array(thing) or thing is Dictionary:
@@ -479,21 +479,21 @@ static func size(thing, __UNUSED__ = null):
 ## Works on any collection and custom iterators
 ## 
 ## Arguments
-## 		value (*): The value to convert.
+##      value (*): The value to convert.
 ## Returns
-## 		(Array): Returns the converted array.
+##      (Array): Returns the converted array.
 ## Example
-## 		GD_.to_array({ 'a': 1, 'b': 2 });
-## 		# => [1, 2]
-## 		 
-## 		GD_.to_array('abc');
-## 		# => ['a', 'b', 'c']
-## 		 
-## 		GD_.to_array(1);
-## 		# => []
-## 		 
-## 		GD_.to_array(null);
-## 		# => []
+##      GD_.to_array({ 'a': 1, 'b': 2 });
+##      # => [1, 2]
+##       
+##      GD_.to_array('abc');
+##      # => ['a', 'b', 'c']
+##       
+##      GD_.to_array(1);
+##      # => []
+##       
+##      GD_.to_array(null);
+##      # => []
 static func to_array(thing):
     var array = []
     if is_custom_iterator(thing):
@@ -551,7 +551,7 @@ static func to_safe_integer(a=0, b=0, c=0): not_implemented()
 #static func to_string(a=0, b=0, c=0): not_implemented()
 
 ## Lodash Equivalent 
-##		None
+##     None
 static func keyed_iterable(thing, from_index = 0):
     if is_array_like(thing) or is_string(thing):
         var size = len(thing)

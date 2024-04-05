@@ -338,7 +338,7 @@ class __INTERNAL__:
     ##
     ## _.map([[1, 2, 3], [4, 5, 6], [7, 8, 9]], _.take)
     ## _.mapValues({a:[1, 2, 3], b:[4, 5, 6], c:[7, 8, 9]},_.take)
-    ## 		vs
+    ##      vs
     ## _.map([[1, 2, 3], [4, 5, 6], [7, 8, 9]], (a,b)=> _.take(a,b))
     ## _.mapValues({a:[1, 2, 3], b:[4, 5, 6], c:[7, 8, 9]},(a,b) => _.take(a,b))
     static func iteratee_drop_second_arg(callable:Callable):

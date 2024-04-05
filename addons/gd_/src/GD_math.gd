@@ -15,19 +15,19 @@ static func divide(a=0, b=0, c=0): not_implemented()
 ##
 ##
 ## Arguments
-## 		number (number): The number to round down.
-## 		[precision=0] (number): The precision to round down to.
+##      number (number): The number to round down.
+##      [precision=0] (number): The precision to round down to.
 ## Returns
-## 		(number): Returns the rounded down number.
+##      (number): Returns the rounded down number.
 ## Example
-## 		GD_.floor(4.006)
-## 		# => 4
-## 		 
-## 		GD_.floor(0.046, 2)
-## 		# => 0.04
-## 		 
-## 		GD_.floor(4060, -2)
-## 		# => 4000
+##      GD_.floor(4.006)
+##      # => 4
+##       
+##      GD_.floor(0.046, 2)
+##      # => 0.04
+##       
+##      GD_.floor(4060, -2)
+##      # => 4000
 static func floor(number, precision = null):
     var scale = pow(10.0, default_to(precision,0))
     return __floor(number * scale) / scale

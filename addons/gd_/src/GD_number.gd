@@ -15,25 +15,25 @@ static func in_range(a=0, b=0, c=0): not_implemented()
 ## floats, a floating-point number is returned instead of an integer.
 ## 
 ## Arguments
-## 		[lower=0] (number): The lower bound.
-## 		[upper=1] (number): The upper bound.
-## 		floating (bool): Specify returning a floating-point number.
+##      [lower=0] (number): The lower bound.
+##      [upper=1] (number): The upper bound.
+##      floating (bool): Specify returning a floating-point number.
 ## Returns
-##		(number): Returns the random number.
+##     (number): Returns the random number.
 ## Example
-## 		random(0, 5)
-## 		# => an integer between 0 and 5
+##      random(0, 5)
+##      # => an integer between 0 and 5
 ##
-## 		random(5)
-## 		# => also an integer between 0 and 5
+##      random(5)
+##      # => also an integer between 0 and 5
 ##
-## 		random(5, true)
-## 		# => a floating-point number between 0 and 5
+##      random(5, true)
+##      # => a floating-point number between 0 and 5
 ##
-## 		random(1.2, 5.2)
-## 		# => a floating-point number between 1.2 and 5.2
+##      random(1.2, 5.2)
+##      # => a floating-point number between 1.2 and 5.2
 ## Notes
-##		>> @TODO guarded method by map, every, filter, mapValues, reject, some
+##     >> @TODO guarded method by map, every, filter, mapValues, reject, some
 static func random(lower=0, upper=0, floating:bool=false):
     # @TODO guarded method by map, every, filter, mapValues, reject, some
     if not floating:

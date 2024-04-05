@@ -4,25 +4,25 @@ extends "./GD_math.gd"
 ## invokes func once it's called n or more times.
 ## 
 ## Arguments
-## 		n (number): The number of calls before func is invoked.
-## 		func (Function): The function to restrict.
+##      n (number): The number of calls before func is invoked.
+##      func (Function): The function to restrict.
 ## Returns
-## 		(Function): Returns the new restricted function.
+##      (Function): Returns the new restricted function.
 ## Example
-##		var fn = func (): print("hello world")
-## 		var restricted = GD_.after(2, fn)
-## 		
-##		for i in 5: fn.call()
-##		# => Only prints "hello world" 3 times (starting on the 3rd call)
+##     var fn = func (): print("hello world")
+##      var restricted = GD_.after(2, fn)
+##      
+##     for i in 5: fn.call()
+##     # => Only prints "hello world" 3 times (starting on the 3rd call)
 ## Notes
-##		>> JS Variations
-##			Theres a weird edge case where if you supply 1 as the number
-##			Then it doesnt execute atleast once. That behavior has not
-##			been replicated.
-##		>> Memory Gotcha
-##			To implement this, GD_ keeps an internal record of how many times
-##			The passed in function has been called. That tracker cannot be
-##			garbage collected so use this function sparingly.
+##     >> JS Variations
+##      Theres a weird edge case where if you supply 1 as the number
+##      Then it doesnt execute atleast once. That behavior has not
+##      been replicated.
+##     >> Memory Gotcha
+##      To implement this, GD_ keeps an internal record of how many times
+##      The passed in function has been called. That tracker cannot be
+##      garbage collected so use this function sparingly.
 static func after(after_count, callable:Callable):
     # A zero or invalid count is the same as not limiting the callable
     if !after_count or is_nan(after_count):
@@ -45,25 +45,25 @@ static func ary(a=0, b=0, c=0): not_implemented()
 ## the last func invocation.
 ##
 ## Arguments
-## 		n (number): The number of calls at which func is no longer invoked.
-## 		func (Callable): The function to restrict.
+##      n (number): The number of calls at which func is no longer invoked.
+##      func (Callable): The function to restrict.
 ## Returns
-## 		(Function): Returns the new restricted function.
+##      (Function): Returns the new restricted function.
 ## Example
-##		var fn = func (): print("hello world")
-## 		var restricted = GD_.before(2, fn)
-## 		
-##		for i in 5: fn.call()
-##		# => Only prints "hello world" twice
+##     var fn = func (): print("hello world")
+##      var restricted = GD_.before(2, fn)
+##      
+##     for i in 5: fn.call()
+##     # => Only prints "hello world" twice
 ## Notes
-##		>> JS Variations
-##			Theres a weird edge case where if you supply 1 as the number
-##			Then it doesnt execute atleast once. That behavior has not
-##			been replicated.
-##		>> Memory Gotcha
-##			To implement this, GD_ keeps an internal record of how many times
-##			The passed in function has been called. That tracker cannot be
-##			garbage collected so use this function sparingly.
+##     >> JS Variations
+##      Theres a weird edge case where if you supply 1 as the number
+##      Then it doesnt execute atleast once. That behavior has not
+##      been replicated.
+##     >> Memory Gotcha
+##      To implement this, GD_ keeps an internal record of how many times
+##      The passed in function has been called. That tracker cannot be
+##      garbage collected so use this function sparingly.
 static func before(up_to_count, callable:Callable): 
     # A zero or an invalid count is the same as a noop
     if !up_to_count or is_nan(up_to_count):

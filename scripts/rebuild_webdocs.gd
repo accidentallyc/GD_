@@ -93,7 +93,7 @@ func extract_func_defs(category, fileName):
                         "example":
                             buffer.reverse() # faster to reverse than pushfront
                             
-                            def.example = buffer
+                            def.example = buffer.map(func(b): return b.trim_prefix("     "))
                             has_text = true
                             buffer = [] # force reset buffer
                             curr_section = "example"

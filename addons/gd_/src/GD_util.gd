@@ -13,17 +13,17 @@ static func conforms(a=0, b=0, c=0): not_implemented()
 ## 
 ## 
 ## Arguments
-## 		value (*): The value to return from the new function.
+##      value (*): The value to return from the new function.
 ## Returns
-## 		(Function): Returns the new constant function.
+##      (Function): Returns the new constant function.
 ## Example
-## 		var objects = GD_.map([0,0], GD_.constant({ 'a': 1 }))
-## 		 
-## 		print(objects)
-## 		# => [{ 'a': 1 }, { 'a': 1 }]
-## 		 
-## 		print(objects[0] === objects[1])
-## 		# => true
+##      var objects = GD_.map([0,0], GD_.constant({ 'a': 1 }))
+##       
+##      print(objects)
+##      # => [{ 'a': 1 }, { 'a': 1 }]
+##       
+##      print(objects[0] === objects[1])
+##      # => true
 ## 
 static func constant(value = null, _UNUSED_ = null): 
     return func (a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
@@ -33,16 +33,16 @@ static func constant(value = null, _UNUSED_ = null):
 ## in its place. The defaultValue is returned if value is NaN or null
 ## 
 ## Arguments
-## 		value (*): The value to check.
-## 		defaultValue (*): The default value.
+##      value (*): The value to check.
+##      defaultValue (*): The default value.
 ## Returns
-## 		(*): Returns the resolved value.
+##      (*): Returns the resolved value.
 ## Example
-## 		GD_.default_to(1, 10)
-## 		# => 1
-## 		 
-## 		GD_.default_to(null, 10)
-## 		# => 10
+##      GD_.default_to(1, 10)
+##      # => 1
+##       
+##      GD_.default_to(null, 10)
+##      # => 10
 static func default_to(a,b): 
     match typeof(a):
         TYPE_NIL:
@@ -62,40 +62,40 @@ static func flow_right(a=0, b=0, c=0): not_implemented()
 ## This method returns the first argument it receives.
 ## 
 ## Arguments
-## 		value (*): Any value.
+##      value (*): Any value.
 ## Returns
-## 		(*): Returns value.
+##      (*): Returns value.
 ## Example
-## 		var object = { 'a': 1 }
+##      var object = { 'a': 1 }
 ##  
-## 		print(is_same(GD_.identity(object),object))
-## 		# => true
+##      print(is_same(GD_.identity(object),object))
+##      # => true
 static func identity(value, _unused = null): 
     return value
     
 ## Converts shorthands to callables for use in other funcs
 ##
 ## Arguments
-## 		[func=GD_.identity] (*): The value to convert to a callback.
+##      [func=GD_.identity] (*): The value to convert to a callback.
 ## Returns
-## 		(Function): Returns the callback.
+##      (Function): Returns the callback.
 ## Example
-## 		var users = [
-## 		  { 'user': 'barney', 'age': 36, 'active': true },
-## 		  { 'user': 'fred',   'age': 40, 'active': false }
-## 		]
-## 		 
-## 		# The `GD_.matches` iteratee shorthand.
-## 		GD_.filter(users, GD_.iteratee({ 'user': 'barney', 'active': true }))
-## 		# => [{ 'user': 'barney', 'age': 36, 'active': true }]
-## 		 
-## 		# The `GD_.matches_property` iteratee shorthand.
-## 		GD_.filter(users, GD_.iteratee(['user', 'fred']))
-## 		# => [{ 'user': 'fred', 'age': 40 }]
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.map(users, GD_.iteratee('user'))
-## 		# => ['barney', 'fred']
+##      var users = [
+##        { 'user': 'barney', 'age': 36, 'active': true },
+##        { 'user': 'fred',   'age': 40, 'active': false }
+##      ]
+##       
+##      # The `GD_.matches` iteratee shorthand.
+##      GD_.filter(users, GD_.iteratee({ 'user': 'barney', 'active': true }))
+##      # => [{ 'user': 'barney', 'age': 36, 'active': true }]
+##       
+##      # The `GD_.matches_property` iteratee shorthand.
+##      GD_.filter(users, GD_.iteratee(['user', 'fred']))
+##      # => [{ 'user': 'fred', 'age': 40 }]
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.map(users, GD_.iteratee('user'))
+##      # => ['barney', 'fred']
 static func iteratee(iteratee_val):
     return __INTERNAL__.iteratee(iteratee_val)
 
@@ -104,17 +104,17 @@ static func iteratee(iteratee_val):
 ## property values, else false.
 ##
 ## Arguments
-## 		source (Object): The object of property values to match.
+##      source (Object): The object of property values to match.
 ## Returns
-## 		(Function): Returns the new spec function.
+##      (Function): Returns the new spec function.
 ## Example
-## 		var objects = [
-## 		  { 'a': 1, 'b': 2, 'c': 3 },
-## 		  { 'a': 4, 'b': 5, 'c': 6 }
-## 		]
-## 		 
-## 		GD_.filter(objects, GD_.matches({ 'a': 4, 'c': 6 }))
-## 		# => [{ 'a': 4, 'b': 5, 'c': 6 }]
+##      var objects = [
+##        { 'a': 1, 'b': 2, 'c': 3 },
+##        { 'a': 4, 'b': 5, 'c': 6 }
+##      ]
+##       
+##      GD_.filter(objects, GD_.matches({ 'a': 4, 'c': 6 }))
+##      # => [{ 'a': 4, 'b': 5, 'c': 6 }]
 static func matches(dict:Dictionary) -> Callable:
     return __INTERNAL__.matches(dict)
 
@@ -126,18 +126,18 @@ static func matches(dict:Dictionary) -> Callable:
 ## or object value, respectively. 
 ## 
 ## Arguments
-## 		path (Array|string): The path of the property to get.
-## 		srcValue (*): The value to match.
+##      path (Array|string): The path of the property to get.
+##      srcValue (*): The value to match.
 ## Returns
-## 		(Function): Returns the new spec function.
+##      (Function): Returns the new spec function.
 ## Example
-## 		var objects = [
-## 		  { 'a': 1, 'b': 2, 'c': 3 },
-## 		  { 'a': 4, 'b': 5, 'c': 6 }
-## 		]
-## 		 
-## 		GD_.find(objects, GD_.matches_property('a', 4))
-## 		# => { 'a': 4, 'b': 5, 'c': 6 }
+##      var objects = [
+##        { 'a': 1, 'b': 2, 'c': 3 },
+##        { 'a': 4, 'b': 5, 'c': 6 }
+##      ]
+##       
+##      GD_.find(objects, GD_.matches_property('a', 4))
+##      # => { 'a': 4, 'b': 5, 'c': 6 }
 static func matches_property(string:String, v):
     return __INTERNAL__.matches_property(string, v)
         
@@ -152,8 +152,8 @@ static func no_conflict(a=0, b=0, c=0): not_implemented()
 ##
 ##
 ## Example
-## 		GD_.times(2, GD_.noop)
-## 		# => [null, null]
+##      GD_.times(2, GD_.noop)
+##      # => [null, null]
 static func noop(a=0,b=0,c=0,d=0,e=0,f=0,g=0,h=0,i=0,j=0,k=0,l=0,m=0,n=0,o=0,p=0): 
     return null
             
@@ -166,23 +166,23 @@ static func over_some(a=0, b=0, c=0): not_implemented()
 ##
 ##
 ## Arguments
-## 		path (Array|string): The path of the property to get.
+##      path (Array|string): The path of the property to get.
 ## Returns
-## 		(Function): Returns the new accessor function.
+##      (Function): Returns the new accessor function.
 ## Example
-## 		var objects = [
-## 		  { 'a': { 'b': 2 } },
-## 		  { 'a': { 'b': 1 } }
-## 		]
-## 		 
-## 		GD_.map(objects, GD_.property('a:b'))
-## 		# => [2, 1]
+##      var objects = [
+##        { 'a': { 'b': 2 } },
+##        { 'a': { 'b': 1 } }
+##      ]
+##       
+##      GD_.map(objects, GD_.property('a:b'))
+##      # => [2, 1]
 ## 
-##		var node = Node2D.new()
-##		node.global_position = Vector2(15,10)
-##		var fn = GD_.property("global_position:x")
-##		fn.call(node) 
-##		# => 15
+##     var node = Node2D.new()
+##     node.global_position = Vector2(15,10)
+##     var fn = GD_.property("global_position:x")
+##     fn.call(node) 
+##     # => 15
 static func property(path):
     return __INTERNAL__.property(path)
     
@@ -205,16 +205,16 @@ static func stub_true(a=0, b=0, c=0): not_implemented()
 ## 
 ## 
 ## Arguments
-## 		n (number): The number of times to invoke iteratee.
-## 		[iteratee=GD_.identity] (Function): The function invoked per iteration.
+##      n (number): The number of times to invoke iteratee.
+##      [iteratee=GD_.identity] (Function): The function invoked per iteration.
 ## Returns
-## 		(Array): Returns the array of results.
+##      (Array): Returns the array of results.
 ## Example
-## 		GD_.times(3, GD_.to_string)
-## 		# => ['0', '1', '2']
-## 		 
-## 		 GD_.times(4, func (a,b): return 0)
-## 		# => [0, 0, 0, 0]
+##      GD_.times(3, GD_.to_string)
+##      # => ['0', '1', '2']
+##       
+##       GD_.times(4, func (a,b): return 0)
+##      # => [0, 0, 0, 0]
 static func times(n=0, iteratee = GD_.identity): 
     var ary = []
     var iter_func = iteratee(iteratee)
@@ -230,15 +230,15 @@ static func to_path(a=0, b=0, c=0): not_implemented()
 ##
 ##
 ## Arguments
-## 		[prefix=''] (string): The value to prefix the ID with.
+##      [prefix=''] (string): The value to prefix the ID with.
 ## Returns
-## 		(string): Returns the unique ID.
+##      (string): Returns the unique ID.
 ## Example
-## 		GD_.unique_id('contact_')
-## 		# => 'contact_104'
-## 		 
-## 		GD_.unique_id()
-## 		# => '105'
+##      GD_.unique_id('contact_')
+##      # => 'contact_104'
+##       
+##      GD_.unique_id()
+##      # => '105'
 static func unique_id(prefix=&""): 
     __INTERNAL__.id_ctr += 1
     return str(prefix,__INTERNAL__.id_ctr)

@@ -9,21 +9,21 @@ CATEGORY: Array
 ## If array can't be split evenly, the final chunk will be the remaining elements.
 ##
 ## Arguments
-## 		array (Array): The array to process.
-## 		[size=1] (number): The length of each chunk
+##      array (Array): The array to process.
+##      [size=1] (number): The length of each chunk
 ## Returns
-## 		(Array): Returns the new array of chunks.
+##      (Array): Returns the new array of chunks.
 ## Example
-## 		GD_.chunk(['a', 'b', 'c', 'd'], 2)
-## 		# => [['a', 'b'], ['c', 'd']]
-## 		 
-## 		GD_.chunk(['a', 'b', 'c', 'd'], 3)
-## 		# => [['a',* 'b', 'c'], ['d']]
+##      GD_.chunk(['a', 'b', 'c', 'd'], 2)
+##      # => [['a', 'b'], ['c', 'd']]
+##       
+##      GD_.chunk(['a', 'b', 'c', 'd'], 3)
+##      # => [['a',* 'b', 'c'], ['d']]
 ## Notes
-##		>> Credit
-##			Thanks to cyberreality for the quick code they offered to the community
-##			https://www.reddit.com/r/godot/comments/e6ae27/comment/f9p3c2e
-## 		>> @TODO guarded method by map, every, filter, mapValues, reject, some
+##     >> Credit
+##      Thanks to cyberreality for the quick code they offered to the community
+##      https://www.reddit.com/r/godot/comments/e6ae27/comment/f9p3c2e
+##      >> @TODO guarded method by map, every, filter, mapValues, reject, some
 static func chunk(array:Array,size=1): 
     var new_array = []
     var i = 0
@@ -42,13 +42,13 @@ static func chunk(array:Array,size=1):
 ## The values false, null, 0, "", [], and {} are falsey.
 ##
 ## Arguments
-## 		array (Array): The array to process.
-## 		[size=1] (number): The length of each chunk
+##      array (Array): The array to process.
+##      [size=1] (number): The length of each chunk
 ## Returns
-## 		(Array): Returns the new array of chunks.
+##      (Array): Returns the new array of chunks.
 ## Example
-## 		GD_.compact([0, 1, false, 2, '', 3])
-## 		# => [1, 2, 3]
+##      GD_.compact([0, 1, false, 2, '', 3])
+##      # => [1, 2, 3]
 static func compact(array:Array, _UNUSED_ = null):
     var new_array = []
     for item in array:
@@ -61,19 +61,19 @@ static func compact(array:Array, _UNUSED_ = null):
 ## This func can receive up to 10 concat values. Hopefully thats enough
 ##
 ## Arguments
-## 		array (Array): The array to concatenate.
-## 		[values] (...*): The values to concatenate.
+##      array (Array): The array to concatenate.
+##      [values] (...*): The values to concatenate.
 ## Returns
-## 		(Array): Returns the new concatenated array.
+##      (Array): Returns the new concatenated array.
 ## Example
-## 		var array = [1]
-## 		var other = GD_.concat(array, 2, [3], [[4]])
-## 		 
-## 		print(other)
-## 		# => [1, 2, 3, [4]]
-## 		 
-## 		print(array)
-## 		# => [1]
+##      var array = [1]
+##      var other = GD_.concat(array, 2, [3], [[4]])
+##       
+##      print(other)
+##      # => [1, 2, 3, [4]]
+##       
+##      print(array)
+##      # => [1]
 static func concat(array:Array, a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_,k=_UNDEF_):
     return __INTERNAL__.base_concat(array,[a,b,c,d,e,f,g,h,i,j,k])
                 
@@ -83,13 +83,13 @@ static func concat(array:Array, a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF
 ## are determined by the first array.
 ##
 ## Arguments
-##			array (Array): The array to inspect.
-##			[values] (...Array): The values to exclude.
+##      array (Array): The array to inspect.
+##      [values] (...Array): The values to exclude.
 ## Returns
-##			(Array): Returns the new array of filtered values.
+##      (Array): Returns the new array of filtered values.
 ## Example
-##			GD_.difference([2, 1], [2, 3])
-##			# => [1]
+##      GD_.difference([2, 1], [2, 3])
+##      # => [1]
 static func difference(array_left:Array, array_right:Array): 	
     var new_array = []
     new_array.append_array(array_left)
@@ -106,18 +106,18 @@ static func difference(array_left:Array, array_right:Array):
 ## invoked with two arguments: (value, _UNUSED_)
 ##
 ## Arguments
-##		array (Array): The array to inspect.
-##		[values] (...Array): The values to exclude.
-##		[iteratee=GD_.identity] (Function): The iteratee invoked per element.
+##     array (Array): The array to inspect.
+##     [values] (...Array): The values to exclude.
+##     [iteratee=GD_.identity] (Function): The iteratee invoked per element.
 ## Returns
-##		(Array): Returns the new array of filtered values.
+##     (Array): Returns the new array of filtered values.
 ## Example
-## 		GD_.difference_by([2.1, 1.2], [2.3, 3.4], Math.floor)
-## 		# => [1.2]
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.difference_by([{ 'x': 2 }, { 'x': 1 }], [{ 'x': 1 }], 'x')
-## 		# => [{ 'x': 2 }]
+##      GD_.difference_by([2.1, 1.2], [2.3, 3.4], Math.floor)
+##      # => [1.2]
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.difference_by([{ 'x': 2 }, { 'x': 1 }], [{ 'x': 1 }], 'x')
+##      # => [{ 'x': 2 }]
 static func difference_by(array_left, array_right, iteratee = GD_.identity): 
     var iter_func = iteratee(iteratee)
         
@@ -173,22 +173,22 @@ static func difference_with(array_left, array_right, comparator:Callable):
 ## Creates a slice of array with n elements dropped from the beginning.
 ##
 ## Arguments
-## 		array (Array): The array to query.
-## 		[n=1] (number): The number of elements to drop.
+##      array (Array): The array to query.
+##      [n=1] (number): The number of elements to drop.
 ## Returns
-## 		(Array): Returns the slice of array.
+##      (Array): Returns the slice of array.
 ## Example
-## 		GD_.drop([1, 2, 3])
-## 		# => [2, 3]
-## 		 
-## 		GD_.drop([1, 2, 3], 2)
-## 		# => [3]
-## 		 
-## 		GD_.drop([1, 2, 3], 5)
-## 		# => []
-## 		 
-## 		GD_.drop([1, 2, 3], 0)
-## 		# => [1, 2, 3]
+##      GD_.drop([1, 2, 3])
+##      # => [2, 3]
+##       
+##      GD_.drop([1, 2, 3], 2)
+##      # => [3]
+##       
+##      GD_.drop([1, 2, 3], 5)
+##      # => []
+##       
+##      GD_.drop([1, 2, 3], 0)
+##      # => [1, 2, 3]
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func drop(array:Array, n:int=1): 
     var size = array.size()
@@ -203,22 +203,22 @@ static func drop(array:Array, n:int=1):
 ## Creates a slice of array with n elements dropped from the beginning.
 ## 
 ## Arguments
-## 		array (Array): The array to query.
-## 		[n=1] (number): The number of elements to drop.
+##      array (Array): The array to query.
+##      [n=1] (number): The number of elements to drop.
 ## Returns
-## 		(Array): Returns the slice of array.
+##      (Array): Returns the slice of array.
 ## Example
-## 		GD_.drop_right([1, 2, 3])
-## 		# => [1, 2]
-## 		
-## 		GD_.drop_right([1, 2, 3], 2)
-## 		# => [1]
-## 		 
-## 		GD_.drop_right([1, 2, 3], 5)
-## 		# => []
-## 		 
-## 		GD_.drop_right([1, 2, 3], 0)
-## 		# => [1, 2, 3]
+##      GD_.drop_right([1, 2, 3])
+##      # => [1, 2]
+##      
+##      GD_.drop_right([1, 2, 3], 2)
+##      # => [1]
+##       
+##      GD_.drop_right([1, 2, 3], 5)
+##      # => []
+##       
+##      GD_.drop_right([1, 2, 3], 0)
+##      # => [1, 2, 3]
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func drop_right(array:Array, n:int=1): 
     var size = array.size() - n
@@ -236,31 +236,31 @@ static func drop_right(array:Array, n:int=1):
 ## The predicate is invoked with two arguments: (value, index).
 ##
 ## Arguments
-## 		array (Array): The array to query.
-## 		[predicate=GD_.identity] (Function): The function invoked per iteration.
+##      array (Array): The array to query.
+##      [predicate=GD_.identity] (Function): The function invoked per iteration.
 ## Returns
-## 		(Array): Returns the slice of array.
+##      (Array): Returns the slice of array.
 ## Example
-## 		var users = [
-## 		  { 'user': 'barney',  'active': true },
-## 		  { 'user': 'fred',    'active': false },
-## 		  { 'user': 'pebbles', 'active': false }
-## 		]
-## 		 
-## 		GD_.drop_right_while(users, func (o,_unused): return !o.active)
-## 		# => objects for ['barney']
-## 		 
-## 		# The `GD_.matches` iteratee shorthand.
-## 		GD_.drop_right_while(users, { 'user': 'pebbles', 'active': false })
-## 		# => objects for ['barney', 'fred']
-## 		 
-## 		# The `GD_.matches_property` iteratee shorthand.
-## 		GD_.drop_right_while(users, ['active', false])
-## 		# => objects for ['barney']
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.drop_right_while(users, 'active')
-## 		# => objects for ['barney', 'fred', 'pebbles']
+##      var users = [
+##        { 'user': 'barney',  'active': true },
+##        { 'user': 'fred',    'active': false },
+##        { 'user': 'pebbles', 'active': false }
+##      ]
+##       
+##      GD_.drop_right_while(users, func (o,_unused): return !o.active)
+##      # => objects for ['barney']
+##       
+##      # The `GD_.matches` iteratee shorthand.
+##      GD_.drop_right_while(users, { 'user': 'pebbles', 'active': false })
+##      # => objects for ['barney', 'fred']
+##       
+##      # The `GD_.matches_property` iteratee shorthand.
+##      GD_.drop_right_while(users, ['active', false])
+##      # => objects for ['barney']
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.drop_right_while(users, 'active')
+##      # => objects for ['barney', 'fred', 'pebbles']
 static func drop_right_while(array:Array, predicate = GD_.identity):
     var new_array = []
     var n = array.size()
@@ -284,31 +284,31 @@ static func drop_right_while(array:Array, predicate = GD_.identity):
 ## The predicate is invoked with two arguments: (value, index).
 ##
 ## Arguments
-## 		array (Array): The array to query.
-## 		[predicate=GD_.identity] (Function): The function invoked per iteration.
+##      array (Array): The array to query.
+##      [predicate=GD_.identity] (Function): The function invoked per iteration.
 ## Returns
-## 		(Array): Returns the slice of array.
+##      (Array): Returns the slice of array.
 ## Example
-## 		var users = [
-## 		  { 'user': 'barney',  'active': false },
-## 		  { 'user': 'fred',    'active': false },
-## 		  { 'user': 'pebbles', 'active': true }
-## 		]
-## 		 
-## 		GD_.drop_while(users, func (o, _unused): return !o.active )
-## 		# => objects for ['pebbles']
-## 		 
-## 		# The `GD_.matches` iteratee shorthand.
-## 		GD_.drop_while(users, { 'user': 'barney', 'active': false })
-## 		# => objects for ['fred', 'pebbles']
-## 		 
-## 		# The `GD_.matches_property` iteratee shorthand.
-## 		GD_.drop_while(users, ['active', false])
-## 		# => objects for ['pebbles']
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.drop_while(users, 'active')
-## 		# => objects for ['barney', 'fred', 'pebbles']
+##      var users = [
+##        { 'user': 'barney',  'active': false },
+##        { 'user': 'fred',    'active': false },
+##        { 'user': 'pebbles', 'active': true }
+##      ]
+##       
+##      GD_.drop_while(users, func (o, _unused): return !o.active )
+##      # => objects for ['pebbles']
+##       
+##      # The `GD_.matches` iteratee shorthand.
+##      GD_.drop_while(users, { 'user': 'barney', 'active': false })
+##      # => objects for ['fred', 'pebbles']
+##       
+##      # The `GD_.matches_property` iteratee shorthand.
+##      GD_.drop_while(users, ['active', false])
+##      # => objects for ['pebbles']
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.drop_while(users, 'active')
+##      # => objects for ['barney', 'fred', 'pebbles']
 static func drop_while(array:Array, predicate = GD_.identity):
     var new_array = []
     var size = array.size()
@@ -332,24 +332,24 @@ static func drop_while(array:Array, predicate = GD_.identity):
 ## Note: This method mutates array.
 ##
 ## Arguments
-## 		array (Array): The array to fill.
-## 		value (*): The value to fill array with.
-## 		[start=0] (number): The start position.
-## 		[end=array.length] (number): The end position.
+##      array (Array): The array to fill.
+##      value (*): The value to fill array with.
+##      [start=0] (number): The start position.
+##      [end=array.length] (number): The end position.
 ## Returns
-## 		(Array): Returns array.
+##      (Array): Returns array.
 ## Example
-## 		var array = [1, 2, 3]
-## 		 
-## 		GD_.fill(array, 'a')
-## 		print(array)
-## 		# => ['a', 'a', 'a']
-## 		 
-## 		GD_.fill(Array(3), 2)
-## 		# => [2, 2, 2]
-## 		 
-## 		GD_.fill([4, 6, 8, 10], '*', 1, 3)
-## 		# => [4, '*', '*', 10]
+##      var array = [1, 2, 3]
+##       
+##      GD_.fill(array, 'a')
+##      print(array)
+##      # => ['a', 'a', 'a']
+##       
+##      GD_.fill(Array(3), 2)
+##      # => [2, 2, 2]
+##       
+##      GD_.fill([4, 6, 8, 10], '*', 1, 3)
+##      # => [4, '*', '*', 10]
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func fill(array:Array, value, start=0, end=-1): 
     if end == -1 or end > array.size():
@@ -365,32 +365,32 @@ static func fill(array:Array, value, start=0, end=-1):
 ## element predicate returns truthy for instead of the element itself.
 ##
 ## Arguments
-## 		array (Array): The array to inspect.
-## 		[predicate=GD_.identity] (Function): The function invoked per iteration.
-## 		[fromIndex=0] (number): The index to search from.
+##      array (Array): The array to inspect.
+##      [predicate=GD_.identity] (Function): The function invoked per iteration.
+##      [fromIndex=0] (number): The index to search from.
 ## Returns
-## 		(number): Returns the index of the found element, else -1.
+##      (number): Returns the index of the found element, else -1.
 ## Example
-## 		var users = [
-## 		  { 'user': 'barney',  'active': false },
-## 		  { 'user': 'fred',    'active': false },
-## 		  { 'user': 'pebbles', 'active': true }
-## 		]
-## 		 
-## 		GD_.find_index(users, func (o, _i): return o.user == 'barney' )
-## 		# => 0
-## 		 
-## 		# The `GD_.matches` iteratee shorthand.
-## 		GD_.find_index(users, { 'user': 'fred', 'active': false })
-## 		# => 1
-## 		 
-## 		# The `GD_.matches_property` iteratee shorthand.
-## 		GD_.find_index(users, ['active', false])
-## 		# => 0
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.find_index(users, 'active')
-## 		# => 2
+##      var users = [
+##        { 'user': 'barney',  'active': false },
+##        { 'user': 'fred',    'active': false },
+##        { 'user': 'pebbles', 'active': true }
+##      ]
+##       
+##      GD_.find_index(users, func (o, _i): return o.user == 'barney' )
+##      # => 0
+##       
+##      # The `GD_.matches` iteratee shorthand.
+##      GD_.find_index(users, { 'user': 'fred', 'active': false })
+##      # => 1
+##       
+##      # The `GD_.matches_property` iteratee shorthand.
+##      GD_.find_index(users, ['active', false])
+##      # => 0
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.find_index(users, 'active')
+##      # => 2
 static func find_index(array:Array, predicate = GD_.identity, from_index = 0):
     var iteratee = iteratee(predicate)
     for i in range(from_index, array.size()):
@@ -403,32 +403,32 @@ static func find_index(array:Array, predicate = GD_.identity, from_index = 0):
 ## elements of collection from right to left.
 ##
 ## Arguments
-## 		array (Array): The array to inspect.
-## 		[predicate=GD_.identity] (Function): The function invoked per iteration.
-## 		[fromIndex=array.length-1] (number): The index to search from.
+##      array (Array): The array to inspect.
+##      [predicate=GD_.identity] (Function): The function invoked per iteration.
+##      [fromIndex=array.length-1] (number): The index to search from.
 ## Returns
-## 		(number): Returns the index of the found element, else -1.
+##      (number): Returns the index of the found element, else -1.
 ## Example
-## 		var users = [
-## 		  { 'user': 'barney',  'active': true },
-## 		  { 'user': 'fred',    'active': false },
-## 		  { 'user': 'pebbles', 'active': false }
-## 		]
-## 		 
-## 		GD_.find_last_index(users, func(o,_index): return o.user == 'pebbles')
-## 		# => 2
-## 		 
-## 		# The `GD_.matches` iteratee shorthand.
-## 		GD_.find_last_index(users, { 'user': 'barney', 'active': true })
-## 		# => 0
-## 		 
-## 		# The `GD_.matches_property` iteratee shorthand.
-## 		GD_.find_last_index(users, ['active', false])
-## 		# => 2
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.find_last_index(users, 'active')
-## 		# => 0
+##      var users = [
+##        { 'user': 'barney',  'active': true },
+##        { 'user': 'fred',    'active': false },
+##        { 'user': 'pebbles', 'active': false }
+##      ]
+##       
+##      GD_.find_last_index(users, func(o,_index): return o.user == 'pebbles')
+##      # => 2
+##       
+##      # The `GD_.matches` iteratee shorthand.
+##      GD_.find_last_index(users, { 'user': 'barney', 'active': true })
+##      # => 0
+##       
+##      # The `GD_.matches_property` iteratee shorthand.
+##      GD_.find_last_index(users, ['active', false])
+##      # => 2
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.find_last_index(users, 'active')
+##      # => 0
 static func find_last_index(array:Array, predicate = GD_.identity, from_index=-1):
     if from_index == -1 or from_index >= array.size():
         from_index = array.size() - 1
@@ -449,12 +449,12 @@ static func first(array):
 ## Flattens array a single level deep.
 ##
 ## Arguments
-## 		array (Array): The array to flatten.
+##      array (Array): The array to flatten.
 ## Returns
-## 		(Array): Returns the new flattened array.
+##      (Array): Returns the new flattened array.
 ## Example
-## 		GD_.flatten([1, [2, [3, [4]], 5]])
-## 		# => [1, 2, [3, [4]], 5]
+##      GD_.flatten([1, [2, [3, [4]], 5]])
+##      # => [1, 2, [3, [4]], 5]
 static func flatten(array:Array): 
     return flatten_depth(array, 1)
     
@@ -462,12 +462,12 @@ static func flatten(array:Array):
 ## Recursively flattens array.
 ##
 ## Arguments
-## 		array (Array): The array to flatten.
+##      array (Array): The array to flatten.
 ## Returns
-## 		(Array): Returns the new flattened array.
+##      (Array): Returns the new flattened array.
 ## Example
-##		GD_.flatten_deep([1, [2, [3, [4]], 5]])
-##		# => [1, 2, 3, 4, 5]
+##     GD_.flatten_deep([1, [2, [3, [4]], 5]])
+##     # => [1, 2, 3, 4, 5]
 static func flatten_deep(array:Array):
     return flatten_depth(array, INF)
     
@@ -475,18 +475,18 @@ static func flatten_deep(array:Array):
 ## Recursively flatten array up to depth times.
 ##
 ## Arguments
-## 		array (Array): The array to flatten.
-## 		[depth=1] (number): The maximum recursion depth.
+##      array (Array): The array to flatten.
+##      [depth=1] (number): The maximum recursion depth.
 ## Returns
-## 		(Array): Returns the new flattened array.
+##      (Array): Returns the new flattened array.
 ## Example
-## 		var array = [1, [2, [3, [4]], 5]]
-## 		 
-## 		GD_.flatten_depth(array, 1)
-## 		# => [1, 2, [3, [4]], 5]
-## 		 
-## 		GD_.flatten_depth(array, 2)
-## 		# => [1, 2, 3, [4], 5]
+##      var array = [1, [2, [3, [4]], 5]]
+##       
+##      GD_.flatten_depth(array, 1)
+##      # => [1, 2, [3, [4]], 5]
+##       
+##      GD_.flatten_depth(array, 2)
+##      # => [1, 2, 3, [4], 5]
 static func flatten_depth(array:Array, depth = 1):
     var new_array = array.duplicate()
     var current_depth = 0
@@ -514,12 +514,12 @@ static func flatten_depth(array:Array, depth = 1):
 ## This method returns an object composed from key-value pairs.
 ##
 ## Arguments
-## 		pairs (Array): The key-value pairs.
+##      pairs (Array): The key-value pairs.
 ## Returns
-## 		(Object): Returns the new object.
+##      (Object): Returns the new object.
 ## Example
-##		GD_.from_pairs([['a', 1], ['b', 2]])
-##		# => { 'a': 1, 'b': 2 }
+##     GD_.from_pairs([['a', 1], ['b', 2]])
+##     # => { 'a': 1, 'b': 2 }
 static func from_pairs(array:Array): 
     var obj = {}
     for i in array:
@@ -534,17 +534,17 @@ static func from_pairs(array:Array):
 ## Gets the first element of array.
 ## 
 ## Aliases
-## 		GD_.first
+##      GD_.first
 ## Arguments
-## 		array (Array): The array to query.
+##      array (Array): The array to query.
 ## Returns
-## 		(*): Returns the first element of array.
+##      (*): Returns the first element of array.
 ## Example
-##		GD_.head([1, 2, 3])
-##		# => 1
-##		 
-##		GD_.head([])
-##		# => null
+##     GD_.head([1, 2, 3])
+##     # => 1
+##      
+##     GD_.head([])
+##     # => null
 static func head(array:Array):
     return array[0] if array.size() else null
     
@@ -554,18 +554,18 @@ static func head(array:Array):
 ## it's used as the offset from the end of array.
 ##
 ## Arguments
-## 		array (Array): The array to inspect.
-## 		value (*): The value to search for.
-## 		[fromIndex=0] (number): The index to search from.
+##      array (Array): The array to inspect.
+##      value (*): The value to search for.
+##      [fromIndex=0] (number): The index to search from.
 ## Returns
-## 		(number): Returns the index of the matched value, else -1.
+##      (number): Returns the index of the matched value, else -1.
 ## Example
-##		GD_.index_of([1, 2, 1, 2], 2)
-##		# => 1
-##		 
-##		# Search from the `fromIndex`.
-##		GD_.index_of([1, 2, 1, 2], 2, 2)
-##		# => 3
+##     GD_.index_of([1, 2, 1, 2], 2)
+##     # => 1
+##      
+##     # Search from the `fromIndex`.
+##     GD_.index_of([1, 2, 1, 2], 2, 2)
+##     # => 3
 static func index_of(array:Array, search, from_index = 0 ): 
     var size = array.size()
     if from_index < 0:
@@ -579,12 +579,12 @@ static func index_of(array:Array, search, from_index = 0 ):
 ## Gets all but the last element of array.
 ##
 ## Arguments
-## 		array (Array): The array to query.
+##      array (Array): The array to query.
 ## Returns
-## 		(Array): Returns the slice of array.
+##      (Array): Returns the slice of array.
 ## 	Example
-##		GD_.initial([1, 2, 3])
-##		# => [1, 2]
+##     GD_.initial([1, 2, 3])
+##     # => [1, 2]
 static func initial(array:Array):
     var copy = array.duplicate() 
     copy.pop_back()
@@ -596,12 +596,12 @@ static func initial(array:Array):
 ## result values are determined by the first array.
 ##
 ## Arguments
-## 		[arrays] (...Array): The arrays to inspect.
+##      [arrays] (...Array): The arrays to inspect.
 ## Returns
-## 		(Array): Returns the new array of intersecting values.
+##      (Array): Returns the new array of intersecting values.
 ## Example
-## 		GD_.intersection([2, 1], [2, 3])
-## 		# => [2]
+##      GD_.intersection([2, 1], [2, 3])
+##      # => [2]
 static func intersection(array_1:Array,array_2:Array,array_3 = null,array_4 = null,array_5 = null,array_6 = null,array_7 = null,array_8 = null,array_9 = null,array_10 = null,array_11 = null):
     if not(array_1 is Array):
         gd_warn("GD_.intersection received a non-array type value")
@@ -619,17 +619,17 @@ static func intersection(array_1:Array,array_2:Array,array_3 = null,array_4 = nu
 ## with one argument: (value)
 ##
 ## Arguments
-## 		[arrays] (...Array): The arrays to inspect.
-## 		[iteratee=GD_.identity] (Function): The iteratee invoked per element.
+##      [arrays] (...Array): The arrays to inspect.
+##      [iteratee=GD_.identity] (Function): The iteratee invoked per element.
 ## Returns
-## 		(Array): Returns the new array of intersecting values.
+##      (Array): Returns the new array of intersecting values.
 ## Example
-##		GD_.intersection_by([2.1, 1.2], [2.3, 3.4], GD_.floor)
-##		# => [2.1]
-##		 
-##		# The `GD_.property` iteratee shorthand.
-##		GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
-##		# => [{ 'x': 1 }]
+##     GD_.intersection_by([2.1, 1.2], [2.3, 3.4], GD_.floor)
+##     # => [2.1]
+##      
+##     # The `GD_.property` iteratee shorthand.
+##     GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
+##     # => [{ 'x': 1 }]
 static func intersection_by(array_1:Array, array_2:Array, array_3 = null, array_4 = null, array_5 = null, array_6 = null, array_7 = null, array_8 = null, array_9 = null, array_10 = null):
     if not array_1 is Array:
         gd_warn("GD_.intersection_by received a non-array type value for array_1")
@@ -672,16 +672,16 @@ static func intersection_by(array_1:Array, array_2:Array, array_3 = null, array_
 ## You can "intersect" with up to 10 values. Hopefully thats enough
 ## 
 ## Arguments
-## 		[arrays] (...Array): The arrays to inspect.
-## 		[comparator] (Function): The comparator invoked per element.
+##      [arrays] (...Array): The arrays to inspect.
+##      [comparator] (Function): The comparator invoked per element.
 ## Returns
-## 		(Array): Returns the new array of intersecting values.
+##      (Array): Returns the new array of intersecting values.
 ## Example
-## 		var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]
-## 		var others = [{ 'x': 1, 'y': 1 }, { 'x': 1, 'y': 2 }]
-## 		 
-## 		GD_.intersection_with(objects, others, GD_.is_equal)
-## 		# => [{ 'x': 1, 'y': 2 }]
+##      var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]
+##      var others = [{ 'x': 1, 'y': 1 }, { 'x': 1, 'y': 2 }]
+##       
+##      GD_.intersection_with(objects, others, GD_.is_equal)
+##      # => [{ 'x': 1, 'y': 2 }]
 static func intersection_with(array_1:Array,array_2:Array,array_3 = null,array_4 = null,array_5 = null,array_6 = null,array_7 = null,array_8 = null,array_9 = null,array_10 = null,array_11 = null):
     if not(array_1 is Array):
         gd_warn("GD_.intersection_with received a non-array type value")
@@ -723,13 +723,13 @@ static func intersection_with(array_1:Array,array_2:Array,array_3 = null,array_4
 ## Converts all elements in array into a string separated by separator.
 ## 
 ## Arguments
-## 		array (Array): The array to convert.
-## 		[separator=','] (string): The element separator.
+##      array (Array): The array to convert.
+##      [separator=','] (string): The element separator.
 ## Returns
-## 		(string): Returns the joined string.
+##      (string): Returns the joined string.
 ## Example
-## 		GD_.join(['a', 'b', 'c'], '~')
-## 		# => 'a~b~c'
+##      GD_.join(['a', 'b', 'c'], '~')
+##      # => 'a~b~c'
 static func join(array:Array, separator=&','):
     return separator.join(array)
         
@@ -737,12 +737,12 @@ static func join(array:Array, separator=&','):
 ## Gets the last element of array.
 ##
 ## Arguments
-## 		array (Array): The array to query.
+##      array (Array): The array to query.
 ## Returns
-## 		(*): Returns the last element of array.
+##      (*): Returns the last element of array.
 ## Example
-## 		GD_.last([1, 2, 3])
-## 		# => 3
+##      GD_.last([1, 2, 3])
+##      # => 3
 static func last(array:Array):
     return array.back()
     
@@ -751,18 +751,18 @@ static func last(array:Array):
 ## over elements of array from right to left.
 ##
 ## Arguments
-## 		array (Array): The array to inspect.
-## 		value (*): The value to search for.
-## 		[fromIndex=array.length-1] (number): The index to search from.
+##      array (Array): The array to inspect.
+##      value (*): The value to search for.
+##      [fromIndex=array.length-1] (number): The index to search from.
 ## Returns
-## 		(number): Returns the index of the matched value, else -1.
+##      (number): Returns the index of the matched value, else -1.
 ## Example
-## 		GD_.last_index_of([1, 2, 1, 2], 2)
-## 		# => 3
-## 		 
-## 		# Search from the from_index`.
-## 		GD_.last_index_of([1, 2, 1, 2], 2, 2)
-## 		# => 1
+##      GD_.last_index_of([1, 2, 1, 2], 2)
+##      # => 3
+##       
+##      # Search from the from_index`.
+##      GD_.last_index_of([1, 2, 1, 2], 2, 2)
+##      # => 1
 static func last_index_of(array:Array, search, from_index = null ): 
     var size = array.size()
     from_index = super.default_to(from_index, size -1)
@@ -779,18 +779,18 @@ static func last_index_of(array:Array, search, from_index = null ):
 ## If n is negative, the nth element from the end is returned.
 ## 
 ## Arguments
-## 		array (Array): The array to query.
-## 		[n=0] (number): The index of the element to return.
+##      array (Array): The array to query.
+##      [n=0] (number): The index of the element to return.
 ## Returns
-## 		(*): Returns the nth element of array.
+##      (*): Returns the nth element of array.
 ## Example
-## 		var array = ['a', 'b', 'c', 'd']
-## 		 
-## 		GD_.nth(array, 1)
-## 		# => 'b'
-## 		 
-## 		GD_.nth(array, -2)
-## 		# => 'c'
+##      var array = ['a', 'b', 'c', 'd']
+##       
+##      GD_.nth(array, 1)
+##      # => 'b'
+##       
+##      GD_.nth(array, -2)
+##      # => 'c'
 static func nth(array:Array, n=0):
     var count = array.size()
     var index =  count + n  if n < 0 else n
@@ -805,16 +805,16 @@ static func nth(array:Array, n=0):
 ## Use _.remove to remove elements from an array by predicate
 ##
 ## Arguments
-## 		array (Array): The array to modify.
-## 		[values] (...*): The values to remove.
+##      array (Array): The array to modify.
+##      [values] (...*): The values to remove.
 ## Returns
-## 		(Array): Returns array.
+##      (Array): Returns array.
 ## Example
-## 		var array = ['a', 'b', 'c', 'a', 'b', 'c']
-## 		 
-## 		GD_.pull(array, 'a', 'c')
-## 		print(array)
-## 		# => ['b', 'b']
+##      var array = ['a', 'b', 'c', 'a', 'b', 'c']
+##       
+##      GD_.pull(array, 'a', 'c')
+##      print(array)
+##      # => ['b', 'b']
 static func pull(array:Array, a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
     var to_remove = super.filter([a,b,c,d,e,f,g,h,i,j], GD_._is_not_null_arg)
     return pull_all_by(array, to_remove)
@@ -824,17 +824,17 @@ static func pull(array:Array, a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,
 ## Note: Unlike _.difference, this method mutates array.
 ## 
 ## Arguments
-## 		array (Array): The array to modify.
-## 		values (Array): The values to remove.
+##      array (Array): The array to modify.
+##      values (Array): The values to remove.
 ## Returns
-## 		(Array): Returns array.
+##      (Array): Returns array.
 ## Example
-## 		var array = ['a', 'b', 'c', 'a', 'b', 'c']
-## 		 
-## 		GD_.pull_all(array, ['a', 'c'])
-## 		print(array)
-## 		# => ['b', 'b']
-static func pull_all(array:Array, values_to_remove:Array = _EMPTY_ARRAY_): 				
+##      var array = ['a', 'b', 'c', 'a', 'b', 'c']
+##       
+##      GD_.pull_all(array, ['a', 'c'])
+##      print(array)
+##      # => ['b', 'b']
+static func pull_all(array:Array, values_to_remove:Array = _EMPTY_ARRAY_):           
     return pull_all_by(array, values_to_remove)
     
 ## This method is like GD_.pull_all except that it accepts iteratee 
@@ -844,16 +844,16 @@ static func pull_all(array:Array, values_to_remove:Array = _EMPTY_ARRAY_):
 ## Note: Unlike GD_.difference_by, this method mutates array.	
 ##
 ## Arguments
-## 		array (Array): The array to modify.
-## 		values (Array): The values to remove.
-## 		[iteratee=GD_.identity] (Function): The iteratee invoked per element.
+##      array (Array): The array to modify.
+##      values (Array): The values to remove.
+##      [iteratee=GD_.identity] (Function): The iteratee invoked per element.
 ## Returns
-## 		(Array): Returns array.
+##      (Array): Returns array.
 ## Example
-## 		var array = [{ 'x': 1 }, { 'x': 2 }, { 'x': 3 }, { 'x': 1 }]
-## 		 
-## 		GD_.pull_all_by(array, [{ 'x': 1 }, { 'x': 3 }], 'x')
-## 		# => [{ 'x': 2 }]
+##      var array = [{ 'x': 1 }, { 'x': 2 }, { 'x': 3 }, { 'x': 1 }]
+##       
+##      GD_.pull_all_by(array, [{ 'x': 1 }, { 'x': 3 }], 'x')
+##      # => [{ 'x': 2 }]
 static func pull_all_by(array:Array, values_to_remove = _EMPTY_ARRAY_, iteratee = GD_.identity):
     values_to_remove = super.cast_array(values_to_remove)
     
@@ -881,17 +881,17 @@ static func pull_all_by(array:Array, values_to_remove = _EMPTY_ARRAY_, iteratee 
 ## Note: Unlike GD_.difference_with, this method mutates array.
 ##
 ## Arguments
-## 		array (Array): The array to modify.
-## 		values (Array): The values to remove.
-## 		[comparator] (Function): The comparator invoked per element.
+##      array (Array): The array to modify.
+##      values (Array): The values to remove.
+##      [comparator] (Function): The comparator invoked per element.
 ## Returns
-## 		(Array): Returns array.
+##      (Array): Returns array.
 ## Example
-## 		var array = [{ 'x': 1, 'y': 2 }, { 'x': 3, 'y': 4 }, { 'x': 5, 'y': 6 }]
-## 		 
-## 		GD_.pull_all_with(array, [{ 'x': 3, 'y': 4 }], GD_.is_equal)
-## 		print(array)
-## 		# => [{ 'x': 1, 'y': 2 }, { 'x': 5, 'y': 6 }]
+##      var array = [{ 'x': 1, 'y': 2 }, { 'x': 3, 'y': 4 }, { 'x': 5, 'y': 6 }]
+##       
+##      GD_.pull_all_with(array, [{ 'x': 3, 'y': 4 }], GD_.is_equal)
+##      print(array)
+##      # => [{ 'x': 1, 'y': 2 }, { 'x': 5, 'y': 6 }]
 static func pull_all_with(array:Array, values_to_remove, comparator:Callable = GD_.is_equal):
     values_to_remove = cast_array(values_to_remove)
     
@@ -922,19 +922,19 @@ static func pull_all_with(array:Array, values_to_remove, comparator:Callable = G
 ## Note: Unlike GD_.at, this method mutates array.
 ## 
 ## Arguments
-## 		array (Array): The array to modify.
-## 		[indexes] (...(number|number[])): The indexes of elements to remove.
+##      array (Array): The array to modify.
+##      [indexes] (...(number|number[])): The indexes of elements to remove.
 ## Returns
-## 		(Array): Returns the new array of removed elements.
+##      (Array): Returns the new array of removed elements.
 ## Example
-## 		var array = ['a', 'b', 'c', 'd']
-## 		var pulled = GD_.pull_at(array, [1, 3])
-## 		 
-## 		print(array)
-## 		# => ['a', 'c']
-## 		 
-## 		print(pulled)
-## 		# => ['b', 'd']
+##      var array = ['a', 'b', 'c', 'd']
+##      var pulled = GD_.pull_at(array, [1, 3])
+##       
+##      print(array)
+##      # => ['a', 'c']
+##       
+##      print(pulled)
+##      # => ['b', 'd']
 static func pull_at(array:Array, values_to_remove:Array):
     var array_size = array.size()
     var removed_array = []
@@ -955,21 +955,21 @@ static func pull_at(array:Array, values_to_remove:Array):
 ## 
 ## 
 ## Arguments
-## 		array (Array): The array to modify.
-## 		[predicate=GD_.identity] (Function): The function invoked per iteration.
+##      array (Array): The array to modify.
+##      [predicate=GD_.identity] (Function): The function invoked per iteration.
 ## Returns
-## 		(Array): Returns the new array of removed elements.
+##      (Array): Returns the new array of removed elements.
 ## Example
-## 		var array = [1, 2, 3, 4]
-## 		var evens = GD_.remove(array, func(n, _i):
-## 			return n % 2 == 0
-## 		)
+##      var array = [1, 2, 3, 4]
+##      var evens = GD_.remove(array, func(n, _i):
+##       return n % 2 == 0
+##      )
 ##  	
-## 		print(array)
-## 		# => [1, 3]
-## 		 
-## 		print(evens)
-## 		# => [2, 4]
+##      print(array)
+##      # => [1, 3]
+##       
+##      print(evens)
+##      # => [2, 4]
 static func remove(array:Array, predicate = GD_.identity):
     var array_size = array.size()
     var removed_array = []
@@ -988,17 +988,17 @@ static func remove(array:Array, predicate = GD_.identity):
 ##
 ##
 ## Arguments
-## 		array (Array): The array to modify.
+##      array (Array): The array to modify.
 ## Returns
-## 		(Array): Returns array.
+##      (Array): Returns array.
 ## Example
-## 		var array = [1, 2, 3]
-## 		 
-## 		GD_.reverse(array)
-## 		# => [3, 2, 1]
-## 		 
-## 		print(array)
-## 		# => [3, 2, 1]
+##      var array = [1, 2, 3]
+##       
+##      GD_.reverse(array)
+##      # => [3, 2, 1]
+##       
+##      print(array)
+##      # => [3, 2, 1]
 static func reverse(array:Array):
     array.reverse()
     return array
@@ -1008,17 +1008,17 @@ static func reverse(array:Array):
 ## Note: This method is a wrapper for Godot's Array.slice
 ## 
 ## Arguments
-## 		array (Array): The array to slice.
-## 		[start=0] (number): The start position.
-## 		[end=array.length] (number): The end position.
+##      array (Array): The array to slice.
+##      [start=0] (number): The start position.
+##      [end=array.length] (number): The end position.
 ## Returns
-## 		(Array): Returns the slice of array.
+##      (Array): Returns the slice of array.
 ## Example
-##		var array = [0,1,2,3,4]
-##		var slice = GD_.slice(array,1,4)
+##     var array = [0,1,2,3,4]
+##     var slice = GD_.slice(array,1,4)
 ##
-##		print(slice)
-##		# => [1,2,3]
+##     print(slice)
+##     # => [1,2,3]
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func slice(array:Array, start=0,end = array.size()): 
     return array.slice(start,end)
@@ -1029,13 +1029,13 @@ static func slice(array:Array, start=0,end = array.size()):
 ## 
 ## 
 ## Arguments
-## 		array (Array): The sorted array to inspect.
-## 		value (*): The value to evaluate.
+##      array (Array): The sorted array to inspect.
+##      value (*): The value to evaluate.
 ## Returns
-## 		(number): Returns the index at which value should be inserted into array.
+##      (number): Returns the index at which value should be inserted into array.
 ## Example
-## 		GD_.sorted_index([30, 50], 40)
-## 		# => 1
+##      GD_.sorted_index([30, 50], 40)
+##      # => 1
 static func sorted_index(array:Array, value):
     if not(is_number(value)):
         gd_warn("GD_.sorted_index received a non-number value")
@@ -1051,20 +1051,20 @@ static func sorted_index(array:Array, value):
 ##
 ##
 ## Arguments
-## 		array (Array): The sorted array to inspect.
-## 		value (*): The value to evaluate.
-## 		[iteratee=GD_.identity] (Function): The iteratee invoked per element.
+##      array (Array): The sorted array to inspect.
+##      value (*): The value to evaluate.
+##      [iteratee=GD_.identity] (Function): The iteratee invoked per element.
 ## Returns
-## 		(number): Returns the index at which value should be inserted into array.
+##      (number): Returns the index at which value should be inserted into array.
 ## Example
-## 		var objects = [{ 'x': 4 }, { 'x': 5 }]
-## 		 
-## 		GD_.sorted_index_by(objects, { 'x': 4 }, func(o): return o.x)
-## 		# => 0
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.sorted_index_by(objects, { 'x': 4 }, 'x')
-## 		# => 0 
+##      var objects = [{ 'x': 4 }, { 'x': 5 }]
+##       
+##      GD_.sorted_index_by(objects, { 'x': 4 }, func(o): return o.x)
+##      # => 0
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.sorted_index_by(objects, { 'x': 4 }, 'x')
+##      # => 0 
 static func sorted_index_by(array:Array, value, iteratee = GD_.identity): 
     var iter_func = iteratee(iteratee)
     var ceil = array.size()
@@ -1088,13 +1088,13 @@ static func sorted_index_by(array:Array, value, iteratee = GD_.identity):
 ## 
 ## 
 ## Arguments
-## 		array (Array): The array to inspect.
-## 		value (*): The value to search for.
+##      array (Array): The array to inspect.
+##      value (*): The value to search for.
 ## Returns
-## 		(number): Returns the index of the matched value, else -1.
+##      (number): Returns the index of the matched value, else -1.
 ## Example
-## 		GD _.sorted_index_of([4, 5, 5, 5, 6], 5)
-## 		# => 1	
+##      GD _.sorted_index_of([4, 5, 5, 5, 6], 5)
+##      # => 1	
 static func sorted_index_of(array:Array, value):
     if not(super.is_number(value)):
         gd_warn("GD_.sorted_index_of received a non-number value")
@@ -1126,13 +1126,13 @@ static func sorted_index_of(array:Array, value):
 ## 
 ## 
 ## Arguments
-## 		array (Array): The sorted array to inspect.
-## 		value (*): The value to evaluate.
+##      array (Array): The sorted array to inspect.
+##      value (*): The value to evaluate.
 ## Returns
-## 		(number): Returns the index at which value should be inserted into array.
+##      (number): Returns the index at which value should be inserted into array.
 ## Example
-## 		GD_.sorted_last_index([4, 5, 5, 5, 6], 5)
-## 		# => 4
+##      GD_.sorted_last_index([4, 5, 5, 5, 6], 5)
+##      # => 4
 static func sorted_last_index(array:Array, value):
     if not(super.is_number(value)):
         gd_warn("GD_.sorted_index received a non-number value")
@@ -1148,19 +1148,19 @@ static func sorted_last_index(array:Array, value):
 ##
 ## 
 ## Arguments
-## 		array (Array): The sorted array to inspect.
-## 		value (*): The value to evaluate.
-## 		[iteratee=GD_.identity] (Function): The iteratee invoked per element.
+##      array (Array): The sorted array to inspect.
+##      value (*): The value to evaluate.
+##      [iteratee=GD_.identity] (Function): The iteratee invoked per element.
 ## Returns
-## 		(number): Returns the index at which value should be inserted into array.
+##      (number): Returns the index at which value should be inserted into array.
 ## Example
-## 		var objects = [{ 'x': 4 }, { 'x': 5 }]
-## 		GD_.sorted_last_index_by(objects, { 'x': 4 }, func(o,_u): return o.x)
-## 		# => 1
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.sorted_last_index_by(objects, { 'x': 4 }, 'x')
-## 		# => 1
+##      var objects = [{ 'x': 4 }, { 'x': 5 }]
+##      GD_.sorted_last_index_by(objects, { 'x': 4 }, func(o,_u): return o.x)
+##      # => 1
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.sorted_last_index_by(objects, { 'x': 4 }, 'x')
+##      # => 1
 static func sorted_last_index_by(array:Array, value, iteratee = GD_.identity): 
     var iter_func = iteratee(iteratee)
     var ceil = array.size()
@@ -1183,13 +1183,13 @@ static func sorted_last_index_by(array:Array, value, iteratee = GD_.identity):
 ##
 ## 
 ## Arguments
-## 		array (Array): The array to inspect.
-## 		value (*): The value to search for.
+##      array (Array): The array to inspect.
+##      value (*): The value to search for.
 ## Returns
-## 		(number): Returns the index of the matched value, else -1.
+##      (number): Returns the index of the matched value, else -1.
 ## Example
-## 		GD_.sorted_last_index_of([4, 5, 5, 5, 6], 5)
-## 		# => 3
+##      GD_.sorted_last_index_of([4, 5, 5, 5, 6], 5)
+##      # => 3
 static func sorted_last_index_of(array:Array, value): 
     if not(super.is_number(value)):
         gd_warn("GD_.sorted_last_index_of received a non-number value")
@@ -1221,12 +1221,12 @@ static func sorted_last_index_of(array:Array, value):
 ##
 ##
 ## Arguments
-## 		array (Array): The array to inspect.
+##      array (Array): The array to inspect.
 ## Returns
-## 		(Array): Returns the new duplicate free array.
+##      (Array): Returns the new duplicate free array.
 ## Example
-## 		GD_.sorted_uniq([1, 1, 2])
-## 		# => [1, 2]
+##      GD_.sorted_uniq([1, 1, 2])
+##      # => [1, 2]
 static func sorted_uniq(array:Array):
     return sorted_uniq_by(array)
     
@@ -1236,13 +1236,13 @@ static func sorted_uniq(array:Array):
 ## 
 ## 
 ## Arguments
-## 		array (Array): The array to inspect.
-## 		[iteratee] (Function): The iteratee invoked per element.
+##      array (Array): The array to inspect.
+##      [iteratee] (Function): The iteratee invoked per element.
 ## Returns
-## 		(Array): Returns the new duplicate free array.
+##      (Array): Returns the new duplicate free array.
 ## Example
-## 		GD_.sorted_uniq_by([1.1, 1.2, 2.3, 2.4], Math.floor)
-## 		# => [1.1, 2.3]
+##      GD_.sorted_uniq_by([1.1, 1.2, 2.3, 2.4], Math.floor)
+##      # => [1.1, 2.3]
 static func sorted_uniq_by(array:Array, iteratee = GD_.identity): 
     var iter_func = iteratee(iteratee)
     var unique_array = []
@@ -1261,12 +1261,12 @@ static func sorted_uniq_by(array:Array, iteratee = GD_.identity):
 ## 
 ## 
 ## Arguments
-## 		array (Array): The array to query.
+##      array (Array): The array to query.
 ## Returns
-## 		(Array): Returns the slice of array.
+##      (Array): Returns the slice of array.
 ## Example
-## 		GD_.tail([1, 2, 3])
-## 		# => [2, 3]
+##      GD_.tail([1, 2, 3])
+##      # => [2, 3]
 static func tail(array:Array, _UNUSED_ = null): 
     return array.slice(1)
     
@@ -1275,22 +1275,22 @@ static func tail(array:Array, _UNUSED_ = null):
 ## 
 ##
 ## Arguments
-## 		array (Array): The array to query.
-## 		[n=1] (number): The number of elements to take.
+##      array (Array): The array to query.
+##      [n=1] (number): The number of elements to take.
 ## Returns
-## 		(Array): Returns the slice of array.
+##      (Array): Returns the slice of array.
 ## Example
-## 		GD_.take([1, 2, 3])
-## 		# => [1]
-## 		 
-## 		GD_.take([1, 2, 3], 2)
-## 		# => [1, 2]
-## 		 
-## 		GD_.take([1, 2, 3], 5)
-## 		# => [1, 2, 3]
-## 		 
-## 		GD_.take([1, 2, 3], 0)
-## 		# => []
+##      GD_.take([1, 2, 3])
+##      # => [1]
+##       
+##      GD_.take([1, 2, 3], 2)
+##      # => [1, 2]
+##       
+##      GD_.take([1, 2, 3], 5)
+##      # => [1, 2, 3]
+##       
+##      GD_.take([1, 2, 3], 0)
+##      # => []
 ## Notes
 ##      >> This is a guarded method 
 ##      When used with methods like map, every, filter, mapValues, reject, some
@@ -1428,22 +1428,22 @@ static func take_while(array:Array, predicate = null):
 ## 
 ## 
 ## Arguments
-## 		[arrays] (...Array): The arrays to inspect.
+##      [arrays] (...Array): The arrays to inspect.
 ## Returns
-## 		(Array): Returns the new array of combined values.
+##      (Array): Returns the new array of combined values.
 ## Example
-## 		GD_.union([2], [1, 2])
-## 		# => [2, 1]
+##      GD_.union([2], [1, 2])
+##      # => [2, 1]
 ##
-## 		GD_.union([1],[2],[3],[4],[5])
-## 		# => [1,2,3,4,5]
+##      GD_.union([1],[2],[3],[4],[5])
+##      # => [1,2,3,4,5]
 ## Notes
-##		>> Variable Arguments
-##			In js you can call an infinite amount of args using ellipses 
-##			E.g. "GD_.union([1],[2],[3],[4],[5],[6],[7],["as many as you want"],[10])
+##     >> Variable Arguments
+##      In js you can call an infinite amount of args using ellipses 
+##      E.g. "GD_.union([1],[2],[3],[4],[5],[6],[7],["as many as you want"],[10])
 ##
-##			But in GD_ you can call at most up to 10 args
-##			E.g. "GD_.union([1],[2],[3],[4],[5],[6],[7],[8],[9],[10])
+##      But in GD_ you can call at most up to 10 args
+##      E.g. "GD_.union([1],[2],[3],[4],[5],[6],[7],[8],[9],[10])
 static func union(a:Array, b:Array, c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_):
     var array = a.duplicate()
     for arg in [b,c,d,e,f,g,h,i,j]:
@@ -1460,17 +1460,17 @@ static func union(a:Array, b:Array, c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_U
 ## 
 ## 
 ## Arguments
-## 		[arrays] (...Array): The arrays to inspect.
-## 		[iteratee=GD_.identity] (Function): The iteratee invoked per element.
+##      [arrays] (...Array): The arrays to inspect.
+##      [iteratee=GD_.identity] (Function): The iteratee invoked per element.
 ## Returns
-## 		(Array): Returns the new array of combined values.
+##      (Array): Returns the new array of combined values.
 ## Example
-## 		GD_.union_by([2.1], [1.2, 2.3], GD_.floor)
-## 		# => [2.1, 1.2]
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.union_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
-## 		# => [{ 'x': 1 }, { 'x': 2 }]
+##      GD_.union_by([2.1], [1.2, 2.3], GD_.floor)
+##      # => [2.1, 1.2]
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.union_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
+##      # => [{ 'x': 1 }, { 'x': 2 }]
 static func union_by(array_a:Array, array_b:Array, iteratee = GD_.identity):
     var array_c = array_a.duplicate()
     array_c.append_array(array_b)
@@ -1484,16 +1484,16 @@ static func union_by(array_a:Array, array_b:Array, iteratee = GD_.identity):
 ## 
 ## 
 ## Arguments
-## 		[arrays] (...Array): The arrays to inspect.
-## 		[comparator] (Function): The comparator invoked per element.
+##      [arrays] (...Array): The arrays to inspect.
+##      [comparator] (Function): The comparator invoked per element.
 ## Returns
-## 		(Array): Returns the new array of combined values.
+##      (Array): Returns the new array of combined values.
 ## Example
-## 		var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]
-## 		var others = [{ 'x': 1, 'y': 1 }, { 'x': 1, 'y': 2 }]
+##      var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]
+##      var others = [{ 'x': 1, 'y': 1 }, { 'x': 1, 'y': 2 }]
 ##  
-## 		GD_.union_with(objects, others, GD_.is_equal)
-## 		# => [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }, { 'x': 1, 'y': 1 }]		
+##      GD_.union_with(objects, others, GD_.is_equal)
+##      # => [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }, { 'x': 1, 'y': 1 }]     
 static func union_with(array_a:Array, array_b:Array, comparator:Callable):
     var array_c = array_a.duplicate()
     array_c.append_array(array_b)
@@ -1506,12 +1506,12 @@ static func union_with(array_a:Array, array_b:Array, comparator:Callable):
 ##
 ## 
 ## Arguments
-## 		array (Array): The array to inspect.
+##      array (Array): The array to inspect.
 ## Returns
-## 		(Array): Returns the new duplicate free array.
+##      (Array): Returns the new duplicate free array.
 ## Example
-## 		GD_.uniq([2, 1, 2])
-## 		# => [2, 1]
+##      GD_.uniq([2, 1, 2])
+##      # => [2, 1]
 static func uniq(array:Array):
     return uniq_by(array)
 
@@ -1524,17 +1524,17 @@ static func uniq(array:Array):
 ## 
 ## 
 ## Arguments
-## 		array (Array): The array to inspect.
-## 		[iteratee=GD_.identity] (Function): The iteratee invoked per element.
+##      array (Array): The array to inspect.
+##      [iteratee=GD_.identity] (Function): The iteratee invoked per element.
 ## Returns
-## 		(Array): Returns the new duplicate free array.
+##      (Array): Returns the new duplicate free array.
 ## Example
-## 		GD_.uniq_by([2.1, 1.2, 2.3], Math.floor)
-## 		# => [2.1, 1.2]
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.uniq_by([{ 'x': 1 }, { 'x': 2 }, { 'x': 1 }], 'x')
-## 		# => [{ 'x': 1 }, { 'x': 2 }]
+##      GD_.uniq_by([2.1, 1.2, 2.3], Math.floor)
+##      # => [2.1, 1.2]
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.uniq_by([{ 'x': 1 }, { 'x': 2 }, { 'x': 1 }], 'x')
+##      # => [{ 'x': 1 }, { 'x': 2 }]
 static func uniq_by(array:Array, iteratee = GD_.identity):
     var cache = {}
     var new_array = []
@@ -1555,14 +1555,14 @@ static func uniq_by(array:Array, iteratee = GD_.identity):
 ## 
 ## 
 ## Arguments
-## 		array (Array): The array to inspect.
-## 		[comparator] (Function): The comparator invoked per element.
+##      array (Array): The array to inspect.
+##      [comparator] (Function): The comparator invoked per element.
 ## Returns
-## 		(Array): Returns the new duplicate free array.
+##      (Array): Returns the new duplicate free array.
 ## Example
-## 		var objects = [{'x':1,'y':2},{'x':2,'y':1},{'x':1,'y':2}]
-## 		GD_.uniq_with(objects, GD_.is_equal)
-## 		# => [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]	
+##      var objects = [{'x':1,'y':2},{'x':2,'y':1},{'x':1,'y':2}]
+##      GD_.uniq_with(objects, GD_.is_equal)
+##      # => [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]	
 static func uniq_with(array:Array, comparator:Callable):
     var new_array = []
     for old_item in array:
@@ -1603,13 +1603,13 @@ static func unzip_with(args:Array, iter_func = null):
 ## 
 ## 
 ## Arguments
-## 		array (Array): The array to inspect.
-## 		[values] (...*): The values to exclude.
+##      array (Array): The array to inspect.
+##      [values] (...*): The values to exclude.
 ## Returns
-## 		(Array): Returns the new array of filtered values.
+##      (Array): Returns the new array of filtered values.
 ## Example
-## 		GD_.without([2, 1, 2, 3], 1, 2)
-## 		# => [3]
+##      GD_.without([2, 1, 2, 3], 1, 2)
+##      # => [3]
 static func without(array:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_):
     var without_list = []
     for arg in [b,c,d,e,f,g,h,i,j]:
@@ -1640,12 +1640,12 @@ static func without(array:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDE
 ##      GD_.xor([2, 1], [2, 3])
 ##      # => [1, 3]   
 ## Notes
-##		>> Variable Arguments
-##			In js you can call an infinite amount of args using ellipses 
-##			E.g. _.xor([1], [2], [3],[4],  ... , [100], [101])
+##     >> Variable Arguments
+##      In js you can call an infinite amount of args using ellipses 
+##      E.g. _.xor([1], [2], [3],[4],  ... , [100], [101])
 ##
-##			But in GD_ you can call at most up to 10 args
-##			E.g. GD_.xor([1], [2], [3], ... , [10])
+##      But in GD_ you can call at most up to 10 args
+##      E.g. GD_.xor([1], [2], [3], ... , [10])
 static func xor(arg1,arg2 = _UNDEF_,arg3 = _UNDEF_,arg4 = _UNDEF_,arg5 = _UNDEF_,arg6 = _UNDEF_,arg7 = _UNDEF_,arg8 = _UNDEF_,arg9 = _UNDEF_,arg10 = _UNDEF_,arg11 = _UNDEF_):
     return xor_with(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11)
 
@@ -1668,12 +1668,12 @@ static func xor(arg1,arg2 = _UNDEF_,arg3 = _UNDEF_,arg4 = _UNDEF_,arg5 = _UNDEF_
 ##      GD_.xor_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
 ##      # => [{ 'x': 2 }]
 ## Notes
-##		>> Variable Arguments
-##			In js you can call an infinite amount of args using ellipses 
-##			E.g. _.xor_by([1], [2], [3],[4],  ... , [100], [101],'x')
+##     >> Variable Arguments
+##      In js you can call an infinite amount of args using ellipses 
+##      E.g. _.xor_by([1], [2], [3],[4],  ... , [100], [101],'x')
 ##
-##			But in GD_ you can call at most up to 10 args
-##			E.g. GD_.xor_by([1], [2], [3], ... , [10],'x')
+##      But in GD_ you can call at most up to 10 args
+##      E.g. GD_.xor_by([1], [2], [3], ... , [10],'x')
 static func xor_by(arg1,arg2 = _UNDEF_,arg3 = _UNDEF_,arg4 = _UNDEF_,arg5 = _UNDEF_,arg6 = _UNDEF_,arg7 = _UNDEF_,arg8 = _UNDEF_,arg9 = _UNDEF_,arg10 = _UNDEF_,arg11 = _UNDEF_):
     var args = __INTERNAL_ARGS__.new()
     args.last_is_iteratee(
@@ -1733,12 +1733,12 @@ static func xor_by(arg1,arg2 = _UNDEF_,arg3 = _UNDEF_,arg4 = _UNDEF_,arg5 = _UND
 ##      GD_.xor_wth(a1, a2, comparator)
 ##      # => ["foo","bar"]
 ## Notes
-##		>> Variable Arguments
-##			In js you can call an infinite amount of args using ellipses 
-##			E.g. _.xor_by([1], [2], [3],[4],  ... , [100], [101],GD_.is_equal)
+##     >> Variable Arguments
+##      In js you can call an infinite amount of args using ellipses 
+##      E.g. _.xor_by([1], [2], [3],[4],  ... , [100], [101],GD_.is_equal)
 ##
-##			But in GD_ you can call at most up to 10 args
-##			E.g. GD_.xor_by([1], [2], [3], ... , [10],GD_.is_equal)
+##      But in GD_ you can call at most up to 10 args
+##      E.g. GD_.xor_by([1], [2], [3], ... , [10],GD_.is_equal)
 static func xor_with(arg1:Array,arg2 = null,arg3 = null,arg4 = null,arg5 = null,arg6 = null,arg7 = null,arg8 = null,arg9 = null,arg10 = null,arg11 = null):
     var args = __INTERNAL_ARGS__.new()
     args.last_is_func(
@@ -1784,19 +1784,19 @@ static func xor_with(arg1:Array,arg2 = null,arg3 = null,arg4 = null,arg5 = null,
 ## 
 ## 
 ## Arguments
-##		[arrays] (...Array): The arrays to process.
+##     [arrays] (...Array): The arrays to process.
 ## Returns
-## 		(Array): Returns the new array of grouped elements.
+##      (Array): Returns the new array of grouped elements.
 ## Example
-## 		GD_.zip(['a', 'b'], [1, 2], [true, false])
-## 		# => [['a', 1, true], ['b', 2, false]]
+##      GD_.zip(['a', 'b'], [1, 2], [true, false])
+##      # => [['a', 1, true], ['b', 2, false]]
 ## Notes
-##		>> Variable Arguments
-##			In js you can call an infinite amount of args using ellipses 
-##			E.g. _.zip([1], [2], [3],[4],  ... , [100], [101])
+##     >> Variable Arguments
+##      In js you can call an infinite amount of args using ellipses 
+##      E.g. _.zip([1], [2], [3],[4],  ... , [100], [101])
 ##
-##			But in GD_ you can call at most up to 10 args
-##			E.g. GD_.zip([1], [2], [3], ... , [10])
+##      But in GD_ you can call at most up to 10 args
+##      E.g. GD_.zip([1], [2], [3], ... , [10])
 static func zip(a:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
     return zip_with(a,b,c,d,e,f,g,h,i,j)
 
@@ -1805,20 +1805,20 @@ static func zip(a:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UN
 ## 
 ## 
 ## Arguments
-## 		[props=[]] (Array): The property identifiers.
-## 		[values=[]] (Array): The property values.
+##      [props=[]] (Array): The property identifiers.
+##      [values=[]] (Array): The property values.
 ## Returns
-## 		(Object): Returns the new object.
+##      (Object): Returns the new object.
 ## Example
-## 		GD_.zip_object(['a', 'b'], [1, 2])
-## 		# => { 'a': 1, 'b': 2 }
+##      GD_.zip_object(['a', 'b'], [1, 2])
+##      # => { 'a': 1, 'b': 2 }
 ## Notes
-##		>> Numbers as keys
-##			In js you can call an infinite amount of args using ellipses 
-##			E.g. _.zip([1], [2], [3],[4],  ... , [100], [101])
+##     >> Numbers as keys
+##      In js you can call an infinite amount of args using ellipses 
+##      E.g. _.zip([1], [2], [3],[4],  ... , [100], [101])
 ##
-##			But in GD_ you can call at most up to 10 args
-##			E.g. GD_.zip([1], [2], [3], ... , [10])
+##      But in GD_ you can call at most up to 10 args
+##      E.g. GD_.zip([1], [2], [3], ... , [10])
 static func zip_object(keys:Array, values:Array):
     var dict = {}
     for i in range(0, keys.size()):
@@ -1829,27 +1829,27 @@ static func zip_object(keys:Array, values:Array):
 ## 
 ## 
 ## Arguments
-## 		[props=[]] (Array): The property identifiers.
-## 		[values=[]] (Array): The property values.
+##      [props=[]] (Array): The property identifiers.
+##      [values=[]] (Array): The property values.
 ## Returns
-## 		(Object): Returns the new object.
+##      (Object): Returns the new object.
 ## Example
-##		GD_.zip_object_deep(['a:b[0]:c', 'a:b[1]:d'], [1, 2])
-##		# => { 'a': { 'b': {0:{'c':1},1:{'d':2}} } }
+##     GD_.zip_object_deep(['a:b[0]:c', 'a:b[1]:d'], [1, 2])
+##     # => { 'a': { 'b': {0:{'c':1},1:{'d':2}} } }
 ## Notes
-##		>> Regarding integer keys
-##			In js ["0", -0, 0] are "the same keys" when applied to an object
-##			e.g. declaring {"0":"hello",0:"world"} in JS results in  {0:"world"}
-##			But in gdscript ["0"] is a different key from [-0,0]
-##			e.g. declaring {"0":"hello",0:"world"} in GODOT in {"0":"hello",0:"world"} 
-## 		
-##			Meaning in js
-##			_.zipObjectDeep( ["0"], ["foo"]) == _.zipObjectDeep( [-0],  ["foo"]) == _.zipObjectDeep( [0], ["foo"])
-##			And in godot
-##			_.zip_object_deep( ["0"], ["foo"]) != _.zip_object_deep( [-0],  ["foo"]) == _.zip_object_deep( [0], ["foo"])
+##     >> Regarding integer keys
+##      In js ["0", -0, 0] are "the same keys" when applied to an object
+##      e.g. declaring {"0":"hello",0:"world"} in JS results in  {0:"world"}
+##      But in gdscript ["0"] is a different key from [-0,0]
+##      e.g. declaring {"0":"hello",0:"world"} in GODOT in {"0":"hello",0:"world"} 
+##      
+##      Meaning in js
+##      _.zipObjectDeep( ["0"], ["foo"]) == _.zipObjectDeep( [-0],  ["foo"]) == _.zipObjectDeep( [0], ["foo"])
+##      And in godot
+##      _.zip_object_deep( ["0"], ["foo"]) != _.zip_object_deep( [-0],  ["foo"]) == _.zip_object_deep( [0], ["foo"])
 ##
-##			You can specify if you want a numeric key to act as a string by wrapping
-##			it in a quoate (e.g.  in th_.zip_object_deep( ["0"], ["foo"]) )
+##      You can specify if you want a numeric key to act as a string by wrapping
+##      it in a quoate (e.g.  in th_.zip_object_deep( ["0"], ["foo"]) )
 static func zip_object_deep(keys:Array, values:Array):
     var dict = {}
     for i in range(0, keys.size()):
@@ -1864,14 +1864,14 @@ static func zip_object_deep(keys:Array, values:Array):
 ## 
 ## 
 ## Arguments
-## 		[arrays] (...Array): The arrays to process.
-## 		[iteratee=GD_.identity] (Function): The function to combine grouped values.
+##      [arrays] (...Array): The arrays to process.
+##      [iteratee=GD_.identity] (Function): The function to combine grouped values.
 ## Returns
-## 		(Array): Returns the new array of grouped elements.
+##      (Array): Returns the new array of grouped elements.
 ## Example
-##		var iteratee = func(a,b,c): return a + b + c
-## 		GD_.zip_with([1, 2], [10, 20], [100, 200], iteratee)
-## 		# => [111, 222]
+##     var iteratee = func(a,b,c): return a + b + c
+##      GD_.zip_with([1, 2], [10, 20], [100, 200], iteratee)
+##      # => [111, 222]
 static func zip_with(a:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
     var args = __INTERNAL__.to_clean_args(a,b,c,d,e,f,g,h,i,j)
     var has_callable_arg = args[-1] is Callable
