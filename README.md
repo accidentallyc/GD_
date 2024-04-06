@@ -1,4 +1,4 @@
-# GD_ (_114/289_ implemented)
+# GD_ (_122/289_ implemented)
 
 **Wanna jump into it? See [the api docs](https://accidentallyc.github.io/GD_/)**
 
