@@ -7,7 +7,7 @@ func it_should_take_the_first_two_elements():
     var result = GD_.take(array, 2)
     var expected = [1, 2]
     expect(result).to.equal(expected)
-
+    
 func it_should_treat_falsey_n_values_except_null_as_0():
     var expected = GD_.map(Utils.falsey, func (v,_v): return [1] if v == null else [])
     var actual = GD_.map(Utils.falsey, func (v,_v): return GD_.take(array, v))

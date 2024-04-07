@@ -1,4 +1,4 @@
-[gd_scene load_steps=116 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=119 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/chunk.test.gd" id="2_i2yyx"]
@@ -76,9 +76,12 @@
 [ext_resource type="Script" path="res://tests/lang/lt.test.gd" id="51_iwkgm"]
 [ext_resource type="Script" path="res://tests/lang/lte.test.gd" id="52_1x46s"]
 [ext_resource type="Script" path="res://tests/array/union_with.test.gd" id="52_o6bxo"]
+[ext_resource type="Script" path="res://tests/array/take_right.test.gd" id="53_m747r"]
 [ext_resource type="Script" path="res://tests/array/union.test.gd" id="53_xewci"]
 [ext_resource type="Script" path="res://tests/array/without.test.gd" id="54_2kyht"]
+[ext_resource type="Script" path="res://tests/array/take_right_while.test.gd" id="54_dqbcw"]
 [ext_resource type="Script" path="res://tests/array/zip.test.gd" id="55_8ajws"]
+[ext_resource type="Script" path="res://tests/array/take_while.test.gd" id="55_orqji"]
 [ext_resource type="Script" path="res://tests/array/unzip_with.test.gd" id="56_eskdc"]
 [ext_resource type="Script" path="res://tests/array/unzip.test.gd" id="56_mej03"]
 [ext_resource type="Script" path="res://tests/array/zip_object.test.gd" id="56_thnxy"]
@@ -273,6 +276,15 @@ script = ExtResource("49_7kv02")
 
 [node name="Take" type="Node" parent="Array"]
 script = ExtResource("50_vcc8d")
+
+[node name="Take Right" type="Node" parent="Array"]
+script = ExtResource("53_m747r")
+
+[node name="Take Right While" type="Node" parent="Array"]
+script = ExtResource("54_dqbcw")
+
+[node name="Take While" type="Node" parent="Array"]
+script = ExtResource("55_orqji")
 
 [node name="Union" type="Node" parent="Array"]
 script = ExtResource("53_xewci")

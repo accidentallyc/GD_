@@ -108,9 +108,7 @@ const ContentComponent = {
             <template v-if="d.example">
                 <h2>Example</h2>
                 <div class="bg-dark pad-1">
-                    <code>
-                        <template v-for="(d) in d.example">{{d}}<br/></template>
-                    </code>
+                    <pre><code><template v-for="(d) in d.example">{{d}}<br/></template></code></pre>
                 </div>
             </template>
             

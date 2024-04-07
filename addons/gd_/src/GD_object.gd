@@ -16,26 +16,26 @@ static func assign_with(a=0, b=0, c=0): not_implemented()
 ## 
 ## 
 ## Arguments
-## 		object (Object): The object to iterate over.
-## 		[paths] (...(string|string[])): The property paths to pick.
+##      object (Object): The object to iterate over.
+##      [paths] (...(string|string[])): The property paths to pick.
 ## Returns
-## 		(Array): Returns the picked values.
+##      (Array): Returns the picked values.
 ## Example
-## 		var object = { 'a': [{ 'b': { 'c': 3 } }, 4] }
-## 		 
-## 		GD_.at(object, ['a[0].b.c', 'a[1]'])
-## 		# => [3, 4]
+##      var object = { 'a': [{ 'b': { 'c': 3 } }, 4] }
+##       
+##      GD_.at(object, ['a[0].b.c', 'a[1]'])
+##      # => [3, 4]
 ##
-##		GD_.at(['a', 'b', 'c'], 0,2)
-##		# => ['a','c']
+##     GD_.at(['a', 'b', 'c'], 0,2)
+##     # => ['a','c']
 ##
 ## Notes
-##		>> Variable Arguments
-##			In js you can call an infinite amount of args using ellipses 
-##			E.g. _.at([], 1,2,3,4,5,6,7,"as many as you want",10)
+##     >> Variable Arguments
+##      In js you can call an infinite amount of args using ellipses 
+##      E.g. _.at([], 1,2,3,4,5,6,7,"as many as you want",10)
 ##
-##			But in GD_ you can call at most up to 10 args
-##			E.g. GD_.at([], 1,2,3,4,5,6,7,8,9)
+##      But in GD_ you can call at most up to 10 args
+##      E.g. GD_.at([], 1,2,3,4,5,6,7,8,9)
 static func at(obj, a,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_):
     return __INTERNAL__.base_at(obj, [a,b,c,d,e,f,g,h,i,j])
     
@@ -77,45 +77,45 @@ static func functions_in(a=0, b=0, c=0): not_implemented()
 ## Or use the index access notation "a['b']['c']"
 ##
 ## Arguments
-## 		object (Object): The object to query.
-## 		path (Array|string): The path of the property to get.
-## 		[defaultValue] (*): The value returned for null resolved values.
+##      object (Object): The object to query.
+##      path (Array|string): The path of the property to get.
+##      [defaultValue] (*): The value returned for null resolved values.
 ## Returns
-## 		(*): Returns the resolved value.
+##      (*): Returns the resolved value.
 ## Example
-## 		GD_.get_prop({ 'a': [{ 'b': { 'c': 3 } }] }, 'a:0:b:c')
-## 		# => 3
-## 		 
-## 		GD_.get_prop({ 'a': [{ 'b': { 'c': 3 } }] }, ['a', 0, 'b', 'c'])
-## 		# => 3
-## 		 
-## 		GD_.get_prop({ 'a': {}, 'a:b:c', 'default')
-## 		# => 'default'
+##      GD_.get_prop({ 'a': [{ 'b': { 'c': 3 } }] }, 'a:0:b:c')
+##      # => 3
+##       
+##      GD_.get_prop({ 'a': [{ 'b': { 'c': 3 } }] }, ['a', 0, 'b', 'c'])
+##      # => 3
+##       
+##      GD_.get_prop({ 'a': {}, 'a:b:c', 'default')
+##      # => 'default'
 ##
-##		GD_.get_prop([1,2,[3]], '2:1') 
-##		# => 3
+##     GD_.get_prop([1,2,[3]], '2:1') 
+##     # => 3
 ##
-##		GD_.get_prop([ {'120':'string', 120: 'number'} ], '0[120]')
-##		# => number
+##     GD_.get_prop([ {'120':'string', 120: 'number'} ], '0[120]')
+##     # => number
 ##
-##		GD_.get_prop([ {'120':'string', 120: 'number'} ], '0['120']')
-##		# => string
+##     GD_.get_prop([ {'120':'string', 120: 'number'} ], '0['120']')
+##     # => string
 ## Notes
-##		>> Regarding integer keys
-##			In js ["0", -0, 0] are "the same keys" when applied to an object
-##			e.g. declaring {"0":"hello",0:"world"} in JS results in  {0:"world"}
-##			But in gdscript ["0"] is a different key from [-0,0]
-##			e.g. declaring {"0":"hello",0:"world"} in GODOT in {"0":"hello",0:"world"} 
-## 		
-##			Meaning in js
-##			_.get( thing, "0") == _.get( thing, -0) == _.get( thing, 0)
-##			And in godot
-##			_.get( thing, "0") != (_.get( thing, -0) == _.get( thing, 0))
+##     >> Regarding integer keys
+##      In js ["0", -0, 0] are "the same keys" when applied to an object
+##      e.g. declaring {"0":"hello",0:"world"} in JS results in  {0:"world"}
+##      But in gdscript ["0"] is a different key from [-0,0]
+##      e.g. declaring {"0":"hello",0:"world"} in GODOT in {"0":"hello",0:"world"} 
+##      
+##      Meaning in js
+##      _.get( thing, "0") == _.get( thing, -0) == _.get( thing, 0)
+##      And in godot
+##      _.get( thing, "0") != (_.get( thing, -0) == _.get( thing, 0))
 ##
-##		>> Regarding function returns
-##			In js you can fetch a function like this _.get([],"push")
-##			But in gdscript you can't really do this without knowing that
-##			The said thing is a Callable or a property
+##     >> Regarding function returns
+##      In js you can fetch a function like this _.get([],"push")
+##      But in gdscript you can't really do this without knowing that
+##      The said thing is a Callable or a property
 static func get_prop(thing, path, default_value = null):
     return __INTERNAL__.base_get_prop(thing, path, default_value)
     

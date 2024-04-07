@@ -12,17 +12,17 @@ CATEGORY: Collections
 ##
 ##
 ## Arguments
-## 		collection (Array|Object): The collection to iterate over.
-## 		[iteratee=GD_.identity] (Function): The iteratee to transform keys.
+##      collection (Array|Object): The collection to iterate over.
+##      [iteratee=GD_.identity] (Function): The iteratee to transform keys.
 ## Returns
-## 		(Object): Returns the composed aggregate object.
+##      (Object): Returns the composed aggregate object.
 ## Example
-## 		GD_.count_by([6.1, 4.2, 6.3], GD_.floor)
-## 		# => { '4': 1, '6': 2 }
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.count_by(['one', 'two', 'three'], 'length')
-## 		# => { '3': 2, '5': 1 }
+##      GD_.count_by([6.1, 4.2, 6.3], GD_.floor)
+##      # => { '4': 1, '6': 2 }
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.count_by(['one', 'two', 'three'], 'length')
+##      # => { '3': 2, '5': 1 }
 static func count_by(collection, iteratee = null):
     if not(super.is_collection(collection)):
         gd_warn("GD_.count_by received a non-collection type value")
@@ -50,18 +50,18 @@ static func each(collection, iteratee):
 ##
 ##
 ## Aliases
-## 		GD_.each
+##      GD_.each
 ## Arguments
-## 		collection (Array|Object): The collection to iterate over.
-## 		[iteratee=GD_.identity] (Function): The function invoked per iteration.
+##      collection (Array|Object): The collection to iterate over.
+##      [iteratee=GD_.identity] (Function): The function invoked per iteration.
 ## Returns
-## 		(*): Returns collection.
+##      (*): Returns collection.
 ## Example
-## 		GD_.for_each([1, 2], func (value,_index): print(value))
-## 		# => Logs `1` then `2`.
-## 		 
-## 		GD_.for_each({ 'a': 1, 'b': 2 }, func (_value, key): print(key))
-## 		# => Logs 'a' then 'b' (iteration order is not guaranteed).
+##      GD_.for_each([1, 2], func (value,_index): print(value))
+##      # => Logs `1` then `2`.
+##       
+##      GD_.for_each({ 'a': 1, 'b': 2 }, func (_value, key): print(key))
+##      # => Logs 'a' then 'b' (iteration order is not guaranteed).
 static func for_each(collection, iteratee): 
     if not(super.is_collection(collection)):
         gd_warn("GD_.for_each received a non-collection type value")
@@ -83,30 +83,30 @@ static func each_right(a=0, b=0, c=0): not_implemented()
 ## 
 ## 
 ## Arguments
-## 		collection (Array|Object): The collection to iterate over.
-## 		[predicate=GD_.identity] (Function): The function invoked per iteration.
+##      collection (Array|Object): The collection to iterate over.
+##      [predicate=GD_.identity] (Function): The function invoked per iteration.
 ## Returns
-## 		(boolean): Returns true if all elements pass the predicate check, else false.
+##      (boolean): Returns true if all elements pass the predicate check, else false.
 ## Example
-## 		GD_.every([true, 1, null, 'yes'])
-## 		# => false
-## 		 
-## 		var users = [
-## 		  { 'user': 'barney', 'age': 36, 'active': false },
-## 		  { 'user': 'fred',   'age': 40, 'active': false }
-## 		]
-## 		 
-## 		# The `GD_.matches` iteratee shorthand.
-## 		GD_.every(users, { 'user': 'barney', 'active': false })
-## 		# => false
-## 		 
-## 		# The `GD_.matchesProperty` iteratee shorthand.
-## 		GD_.every(users, ['active', false])
-## 		# => true
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.every(users, 'active')
-## 		# => false
+##      GD_.every([true, 1, null, 'yes'])
+##      # => false
+##       
+##      var users = [
+##        { 'user': 'barney', 'age': 36, 'active': false },
+##        { 'user': 'fred',   'age': 40, 'active': false }
+##      ]
+##       
+##      # The `GD_.matches` iteratee shorthand.
+##      GD_.every(users, { 'user': 'barney', 'active': false })
+##      # => false
+##       
+##      # The `GD_.matchesProperty` iteratee shorthand.
+##      GD_.every(users, ['active', false])
+##      # => true
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.every(users, 'active')
+##      # => false
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func every(collection, predicate = GD_.identity):  
     var predicate_fn = iteratee(predicate)
@@ -120,30 +120,30 @@ static func every(collection, predicate = GD_.identity):
 ## The predicate is invoked with two arguments (value, index|key).
 ##
 ## Arguments
-## 		collection (Array|Object): The collection to iterate over.
-## 		[predicate=GD_.identity] (Function): The function invoked per iteration.
+##      collection (Array|Object): The collection to iterate over.
+##      [predicate=GD_.identity] (Function): The function invoked per iteration.
 ## Returns
-## 		(Array): Returns the new filtered array.
+##      (Array): Returns the new filtered array.
 ## Example
-## 		var users = [
-## 		  { 'user': 'barney', 'age': 36, 'active': true },
-## 		  { 'user': 'fred',   'age': 40, 'active': false }
-## 		]
-## 		 
-## 		GD_.filter(users, func(o,_index): return !o.active)
-## 		# => objects for ['fred']
-## 		 
-## 		# The `GD_.matches` iteratee shorthand.
-## 		GD_.filter(users, { 'age': 36, 'active': true })
-## 		# => objects for ['barney']
-## 		 
-## 		# The `GD_.matches_property` iteratee shorthand.
-## 		GD_.filter(users, ['active', false])
-## 		# => objects for ['fred']
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.filter(users, 'active')
-## 		# => objects for ['barney']
+##      var users = [
+##        { 'user': 'barney', 'age': 36, 'active': true },
+##        { 'user': 'fred',   'age': 40, 'active': false }
+##      ]
+##       
+##      GD_.filter(users, func(o,_index): return !o.active)
+##      # => objects for ['fred']
+##       
+##      # The `GD_.matches` iteratee shorthand.
+##      GD_.filter(users, { 'age': 36, 'active': true })
+##      # => objects for ['barney']
+##       
+##      # The `GD_.matches_property` iteratee shorthand.
+##      GD_.filter(users, ['active', false])
+##      # => objects for ['fred']
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.filter(users, 'active')
+##      # => objects for ['barney']
 static func filter(collection, iteratee = null):
     if not(super.is_collection(collection)):
         gd_warn("GD_.filter received a non-collection type value")
@@ -163,32 +163,32 @@ static func filter(collection, iteratee = null):
 ## The predicate is invoked with two arguments: (value, index|key).
 ## 
 ## Arguments
-## 		collection (Array|Object): The collection to inspect.
-## 		[predicate=GD_.identity] (Function): The function invoked per iteration.
-## 		[fromIndex=0] (number): The index to search from.
+##      collection (Array|Object): The collection to inspect.
+##      [predicate=GD_.identity] (Function): The function invoked per iteration.
+##      [fromIndex=0] (number): The index to search from.
 ## Returns
-## 		(*): Returns the matched element, else null.
+##      (*): Returns the matched element, else null.
 ## Example
-## 		var users = [
-## 		  { 'user': 'barney',  'age': 36, 'active': true },
-## 		  { 'user': 'fred',    'age': 40, 'active': false },
-## 		  { 'user': 'pebbles', 'age': 1,  'active': true }
-## 		]
+##      var users = [
+##        { 'user': 'barney',  'age': 36, 'active': true },
+##        { 'user': 'fred',    'age': 40, 'active': false },
+##        { 'user': 'pebbles', 'age': 1,  'active': true }
+##      ]
 ##  
-## 		GD_.find(users, func(o,_index): return o.age < 40)
-## 		# => object for 'barney'
-## 		 
-## 		# The `GD_.matches` iteratee shorthand.
-## 		GD_.find(users, { 'age': 1, 'active': true })
-## 		# => object for 'pebbles'
-## 		 
-## 		# The `GD_.matches_property` iteratee shorthand.
-## 		GD_.find(users, ['active', false])
-## 		# => object for 'fred'
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.find(users, 'active')
-## 		# => object for 'barney'
+##      GD_.find(users, func(o,_index): return o.age < 40)
+##      # => object for 'barney'
+##       
+##      # The `GD_.matches` iteratee shorthand.
+##      GD_.find(users, { 'age': 1, 'active': true })
+##      # => object for 'pebbles'
+##       
+##      # The `GD_.matches_property` iteratee shorthand.
+##      GD_.find(users, ['active', false])
+##      # => object for 'fred'
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.find(users, 'active')
+##      # => object for 'barney'
 static func find(collection, iteratee = null, from_index = 0):
     if not(super.is_collection(collection)):
         gd_warn("GD_.find received a non-collection type value")
@@ -218,17 +218,17 @@ static func for_each_right(a=0, b=0, c=0): not_implemented()
 ##
 ##
 ## Arguments
-## 		collection (Array|Object): The collection to iterate over.
-## 		[iteratee=GD_.identity] (Function): The iteratee to transform keys.
+##      collection (Array|Object): The collection to iterate over.
+##      [iteratee=GD_.identity] (Function): The iteratee to transform keys.
 ## Returns
-## 		(Object): Returns the composed aggregate object.
+##      (Object): Returns the composed aggregate object.
 ## Example
-## 		GD_.group_by([6.1, 4.2, 6.3], GD_.floor)
-## 		# => { '4': [4.2], '6': [6.1, 6.3] }
-## 		 
-## 		# The `_.property` iteratee shorthand.
-## 		GD_.group_by(['one', 'two', 'three'], 'length')
-## 		# => { '3': ['one', 'two'], '5': ['three'] }
+##      GD_.group_by([6.1, 4.2, 6.3], GD_.floor)
+##      # => { '4': [4.2], '6': [6.1, 6.3] }
+##       
+##      # The `_.property` iteratee shorthand.
+##      GD_.group_by(['one', 'two', 'three'], 'length')
+##      # => { '3': ['one', 'two'], '5': ['three'] }
 static func group_by(collection, iteratee = GD_.identity):
     if not(super.is_collection(collection)):
         gd_warn("GD_.group_by received a non-collection type value")
@@ -249,23 +249,23 @@ static func group_by(collection, iteratee = GD_.identity):
 ## 
 ## 
 ## Arguments
-## 		collection (Array|Object|string): The collection to inspect.
-## 		value (*): The value to search for.
-## 		[fromIndex=0] (number): The index to search from.
+##      collection (Array|Object|string): The collection to inspect.
+##      value (*): The value to search for.
+##      [fromIndex=0] (number): The index to search from.
 ## 	Returns
-## 		(boolean): Returns true if value is found, else false.
+##      (boolean): Returns true if value is found, else false.
 ## Example
-## 		GD_.includes([1, 2, 3], 1)
-## 		# => true
-## 		 
-## 		GD_.includes([1, 2, 3], 1, 2)
-## 		# => false
-## 		 
-## 		GD_.includes({ 'a': 1, 'b': 2 }, 1)
-## 		# => true
-## 		 
-## 		GD_.includes('abcd', 'bc')
-## 		# => true
+##      GD_.includes([1, 2, 3], 1)
+##      # => true
+##       
+##      GD_.includes([1, 2, 3], 1, 2)
+##      # => false
+##       
+##      GD_.includes({ 'a': 1, 'b': 2 }, 1)
+##      # => true
+##       
+##      GD_.includes('abcd', 'bc')
+##      # => true
 static func includes(collection, thing, from_index :=0):
     if super.is_collection(collection):
         for key in keyed_iterable(collection,from_index):
@@ -283,27 +283,27 @@ static func key_by(a=0, b=0, c=0): not_implemented()
 ## The iteratee is invoked with two arguments: (value, index).
 ##
 ## Arguments
-## 		collection (Array|Object): The collection to iterate over.
-## 		[iteratee=GD_.identity] (Function): The function invoked per iteration.
+##      collection (Array|Object): The collection to iterate over.
+##      [iteratee=GD_.identity] (Function): The function invoked per iteration.
 ## Returns
-## 		(Array): Returns the new mapped array.
+##      (Array): Returns the new mapped array.
 ## Example
-## 		func square(n, _index): return n * n
+##      func square(n, _index): return n * n
 ##  
-## 		GD_.map([4, 8], square)
-## 		# => [16, 64]
-## 		 
-## 		GD_.map({ 'a': 4, 'b': 8 }, square)
-## 		# => [16, 64] (iteration order is not guaranteed)
-## 		 
-## 		var users = [
-## 		  { 'user': 'barney' },
-## 		  { 'user': 'fred' }
-## 		]
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.map(users, 'user')
-## 		# => ['barney', 'fred']
+##      GD_.map([4, 8], square)
+##      # => [16, 64]
+##       
+##      GD_.map({ 'a': 4, 'b': 8 }, square)
+##      # => [16, 64] (iteration order is not guaranteed)
+##       
+##      var users = [
+##        { 'user': 'barney' },
+##        { 'user': 'fred' }
+##      ]
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.map(users, 'user')
+##      # => ['barney', 'fred']
 static func map(collection, iteratee = GD_.identity):
     if not(super.is_collection(collection)):
         gd_warn("GD_.map received a non-collection type value")
@@ -328,27 +328,27 @@ static func partition(a=0, b=0, c=0): not_implemented()
 ## The iteratee two arguments: (accumulator, {"key":key,"value":value}).
 ## 
 ## Arguments
-## 		collection (Array|Object): The collection to iterate over.
-## 		[iteratee=GD_.identity] (Function): The function invoked per iteration.
-## 		[accumulator] (*): The initial value.
+##      collection (Array|Object): The collection to iterate over.
+##      [iteratee=GD_.identity] (Function): The function invoked per iteration.
+##      [accumulator] (*): The initial value.
 ## Returns
-## 		(*): Returns the accumulated value.
+##      (*): Returns the accumulated value.
 ## Example
-## 		var sum = func (accum, kv): return accum + kv.value
-## 		GD_.reduce([1, 2], sum, 0)
-## 		# => 3
+##      var sum = func (accum, kv): return accum + kv.value
+##      GD_.reduce([1, 2], sum, 0)
+##      # => 3
 ##  	
-##		var cb = func (result, kv):
-## 		  (result[kv.value] || (result[kv.value] = [])).push(kv.key)
-## 		  return result
-## 		
-## 		GD_.reduce({ 'a': 1, 'b': 2, 'c': 1 }, cb, {})
-## 		# => { '1': ['a', 'c'], '2': ['b'] } (iteration order is not guaranteed)
+##     var cb = func (result, kv):
+##        (result[kv.value] || (result[kv.value] = [])).push(kv.key)
+##        return result
+##      
+##      GD_.reduce({ 'a': 1, 'b': 2, 'c': 1 }, cb, {})
+##      # => { '1': ['a', 'c'], '2': ['b'] } (iteration order is not guaranteed)
 ## Notes
-##		>> Callable Signature
-##			In GD_ we try to standardize callbacks into having 2 arguments
-##			So they can be chained together. Thats why we pass a dictionary down
-## 			instead
+##     >> Callable Signature
+##      In GD_ we try to standardize callbacks into having 2 arguments
+##      So they can be chained together. Thats why we pass a dictionary down
+##       instead
 static func reduce(collection, iteratee = GD_.identity, accumulator = null):
     if not super.is_collection(collection):
         return null
@@ -375,17 +375,17 @@ static func reduce(collection, iteratee = GD_.identity, accumulator = null):
 ## 
 ## 
 ## Arguments
-## 		collection (Array|Object): The collection to iterate over.
-## 		[iteratee=GD_.identity] (Function): The function invoked per iteration.
-## 		[accumulator] (*): The initial value.
+##      collection (Array|Object): The collection to iterate over.
+##      [iteratee=GD_.identity] (Function): The function invoked per iteration.
+##      [accumulator] (*): The initial value.
 ## Returns
-## 		(*): Returns the accumulated value.
+##      (*): Returns the accumulated value.
 ## Example
-## 		var array = [[0, 1], [2, 3], [4, 5]]
-## 		 
-##		var concat = func (flattened, kv): flattened.append_array(kv.value)
-## 		GD_.reduce_right(array, concat, [])
-## 		# => [4, 5, 2, 3, 0, 1]
+##      var array = [[0, 1], [2, 3], [4, 5]]
+##       
+##     var concat = func (flattened, kv): flattened.append_array(kv.value)
+##      GD_.reduce_right(array, concat, [])
+##      # => [4, 5, 2, 3, 0, 1]
 static func reduce_right(collection, iteratee = GD_.identity, accumulator = null):
     if not super.is_collection(collection):
         return null
@@ -416,32 +416,32 @@ static func reduce_right(collection, iteratee = GD_.identity, accumulator = null
 ## with two args (value, index)
 ## 
 ## Arguments
-## 		collection (Array|Object): The collection to iterate over.
-## 		[predicate=GD_.identity] (Function): The function invoked per iteration.
+##      collection (Array|Object): The collection to iterate over.
+##      [predicate=GD_.identity] (Function): The function invoked per iteration.
 ## Returns
-## 		(Array): Returns the new filtered array.
+##      (Array): Returns the new filtered array.
 ## Example
-## 		var users = [
-## 		  { 'user': 'barney', 'age': 36, 'active': false },
-## 		  { 'user': 'fred',   'age': 40, 'active': true }
-## 		]
-##		var not_active = func (o, i): 
-##			return !o.active
+##      var users = [
+##        { 'user': 'barney', 'age': 36, 'active': false },
+##        { 'user': 'fred',   'age': 40, 'active': true }
+##      ]
+##     var not_active = func (o, i): 
+##      return !o.active
 ##
-## 		GD_.reject(users, function(o) { return !o.active })
-## 		# => objects for ['fred']
-## 		 
-## 		# The `GD_.matches` iteratee shorthand.
-## 		GD_.reject(users, { 'age': 40, 'active': true })
-## 		# => objects for ['barney']
-## 		 
-## 		# The `GD_.matchesProperty` iteratee shorthand.
-## 		GD_.reject(users, ['active', false])
-## 		# => objects for ['fred']
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.reject(users, 'active')
-## 		# => objects for ['barney']
+##      GD_.reject(users, function(o) { return !o.active })
+##      # => objects for ['fred']
+##       
+##      # The `GD_.matches` iteratee shorthand.
+##      GD_.reject(users, { 'age': 40, 'active': true })
+##      # => objects for ['barney']
+##       
+##      # The `GD_.matchesProperty` iteratee shorthand.
+##      GD_.reject(users, ['active', false])
+##      # => objects for ['fred']
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.reject(users, 'active')
+##      # => objects for ['barney']
 static func reject(collection, callable = identity): 
     var ary = []
     var iter_func = iteratee(callable)
@@ -484,32 +484,32 @@ static func shuffle(collection):
 ## The predicate is invoked with two arguments: (value, index|key).
 ##
 ## Arguments
-## 		collection (Array|Dictionary|String): The collection to iterate over.
-## 		[predicate=GD_.identity] (Function): The function invoked per iteration.
+##      collection (Array|Dictionary|String): The collection to iterate over.
+##      [predicate=GD_.identity] (Function): The function invoked per iteration.
 ## Returns
-## 		(boolean): Returns true if any element passes the predicate check, else false.
+##      (boolean): Returns true if any element passes the predicate check, else false.
 ## Example
-## 		GD_.some([null, 0, 'yes', false], Boolean)
-## 		# => true
-## 		 
-## 		var users = [
-## 		  { 'user': 'barney', 'active': true },
-## 		  { 'user': 'fred',   'active': false }
-## 		]
-## 		 
-## 		# The `GD_.matches` iteratee shorthand.
-## 		GD_.some(users, { 'user': 'barney', 'active': false })
-## 		# => false
-## 		 
-## 		# The `GD_.matches_property` iteratee shorthand.
-## 		GD_.some(users, ['active', false])
-## 		# => true
-## 		 
-## 		# The `GD_.property` iteratee shorthand.
-## 		GD_.some(users, 'active')
-## 		# => true
+##      GD_.some([null, 0, 'yes', false], Boolean)
+##      # => true
+##       
+##      var users = [
+##        { 'user': 'barney', 'active': true },
+##        { 'user': 'fred',   'active': false }
+##      ]
+##       
+##      # The `GD_.matches` iteratee shorthand.
+##      GD_.some(users, { 'user': 'barney', 'active': false })
+##      # => false
+##       
+##      # The `GD_.matches_property` iteratee shorthand.
+##      GD_.some(users, ['active', false])
+##      # => true
+##       
+##      # The `GD_.property` iteratee shorthand.
+##      GD_.some(users, 'active')
+##      # => true
 ## Notes
-##		>> @TODO guarded method by map, every, filter, mapValues, reject, some
+##     >> @TODO guarded method by map, every, filter, mapValues, reject, some
 static func some(collection, iteratee = null): 
     if not(super.is_collection(collection)):
         gd_warn("GD_.some received a non-collection type value")

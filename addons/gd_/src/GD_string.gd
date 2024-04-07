@@ -38,9 +38,9 @@ static func template(): not_implemented()
 
 ## Wrapper for "string".to_lower().
 ## Arguments
-## 		[string=''] (string): The string to convert.
+##      [string=''] (string): The string to convert.
 ## Returns
-## 		(string): Returns the lower cased string.
+##      (string): Returns the lower cased string.
 ## Example
 ##      GD_.to_lower('--Foo-Bar--');
 ##      # => '--foo-bar--'
@@ -51,15 +51,15 @@ static func template(): not_implemented()
 ##      GD_.to_lower('__FOO_BAR__');
 ##      # => '__foo_bar__'
 ## Notes
-##		>> Though similar this is different from GD_.lower_case
+##     >> Though similar this is different from GD_.lower_case
 static func to_lower(a:String, _UNUSED_ = null): 
     return a.to_lower()
  
 ## Wrapper for "string".to_upper().
 ## Arguments
-## 		[string=''] (string): The string to convert.
+##      [string=''] (string): The string to convert.
 ## Returns
-## 		(string): Returns the lower cased string.
+##      (string): Returns the lower cased string.
 ## Example
 ##      GD_.to_upper('--Foo-Bar--');
 ##      # => '--foo-bar--'
@@ -70,7 +70,7 @@ static func to_lower(a:String, _UNUSED_ = null):
 ##      GD_.to_upper('__FOO_BAR__');
 ##      # => '__foo_bar__'
 ## Notes
-##		>> Though similar this is different from GD_.upper_case   
+##     >> Though similar this is different from GD_.upper_case   
 static func to_upper(a:String, _UNUSED_ = null):
     return a.to_upper()
 
