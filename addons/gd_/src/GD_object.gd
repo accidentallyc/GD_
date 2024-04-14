@@ -168,8 +168,39 @@ static func update(a=0, b=0, c=0): not_implemented()
 
 static func update_with(a=0, b=0, c=0): not_implemented()
 
-
-static func values(collection): not_implemented()
+## Creates an array of values of a collection.
+## 
+## Arguments
+##      v (Variant): The value to query.
+## Returns
+##      (Array): Returns the array of property values.
+## Example
+##      GD_.values([1,2,3,4])
+##      # => [1,2,3,4]
+##
+##      GD_.values("1234")
+##      # => ["1","2","3","4"]
+##      
+##      var dict = {"a":1,"b":2,"c":3,"d":4}
+##      GD_.values(dict)
+##      # => [1,2,3,4]
+static func values(collection):
+    if is_string(collection):
+        return Array(collection.split())
+    if is_array_like(collection):
+        if not is_custom_iterator(collection):
+            return Array(collection) # Converts packed arys to arrays
+        #  Appending from a custom iterator is slow, so we avoid that if we can
+        var ary = []
+        for c in collection:
+            ary.append(c)
+        return ary
+        
+    if collection is Dictionary:
+        return collection.values()
+        
+    gd_warn("GD_.values received a non-collection")
+    return []
 
 static func values_in(a=0, b=0, c=0): not_implemented()
 

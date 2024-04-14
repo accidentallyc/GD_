@@ -455,7 +455,22 @@ static func sample(a=0, b=0, c=0): not_implemented()
 static func sample_size(a=0, b=0, c=0): not_implemented() 
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 
-static func shuffle(collection):
+## Creates an array of shuffled values, using a version of the Fisher-Yates shuffle.
+## This version can be used on any collection.
+## Arguments
+##      collection (Array|Object): The collection to shuffle.
+## Returns
+##      (Array): Returns the new shuffled array.
+## Example
+##      GD_.shuffle([1, 2, 3, 4]);
+##      # => [4, 1, 3, 2]
+##      
+##      GD_.shuffle("1234")
+##      # => [4, 1, 3, 2]
+##
+##      GD_.shuffle({"red":1,"green":2,"blue":3,"indigo":4})
+##      # => ["green","indigo","blue","red"]
+static func shuffle(collection, _UNUSED_ = null):
     if collection is Array:
         # Use built in function
         var dup = collection.duplicate()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=119 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=120 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/chunk.test.gd" id="2_i2yyx"]
@@ -118,6 +118,7 @@
 [ext_resource type="Script" path="res://tests/string/to_lower.test.gd" id="99_yeurw"]
 [ext_resource type="Script" path="res://tests/string/to_upper.test.gd" id="100_n5k24"]
 [ext_resource type="Script" path="res://tests/words.test.gd" id="102_ggmyw"]
+[ext_resource type="Script" path="res://tests/object/values.test.gd" id="108_fwbfb"]
 
 [node name="Unit Tests" type="Node"]
 script = ExtResource("1_b4vvq")
@@ -455,6 +456,9 @@ script = ExtResource("68_m3ofe")
 
 [node name="Get Prop" type="Node" parent="Object"]
 script = ExtResource("43_lm35f")
+
+[node name="Values" type="Node" parent="Object"]
+script = ExtResource("108_fwbfb")
 
 [node name="String" type="Node" parent="."]
 
