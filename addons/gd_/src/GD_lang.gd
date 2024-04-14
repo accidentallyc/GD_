@@ -79,12 +79,37 @@ static func clone_with(a=0, b=0, c=0): not_implemented()
 static func conforms_to(a=0, b=0, c=0): not_implemented()
 
 
-## Basically a lambda wrapper for `==`. Because of the way dicts and
-## arrays implement the "==" operators, it results in a deep comparison.
-## So GD_.is_equal, GD_.eq, and ==, have all the same results
-static func eq(a,b):
-    return a == b
-
+## Basically a version of == that doesnt throw an error if the types
+## are not matching
+##
+## Arguments
+##      value (*): The value to compare.
+##      other (*): The other value to compare.
+## Returns
+##      (boolean): Returns true if the values are equivalent, else false.
+## Example
+##      var object = { 'a': 1 };
+##      var other = { 'a': 1 };
+##       
+##      GD_.eq(object, object);
+##      # => true
+##       
+##      GD_.eq(object, other);
+##      # => true
+##       
+##      GD_.eq('a', 'a');
+##      # => true
+##       
+##      GD_.eq('a', &'a');
+##      # => true
+static func eq(l,r):
+    if ( \
+            (typeof(l) == typeof(r)) \
+            or (GD_.is_number(l) and GD_.is_number(r)) \
+            or (GD_.is_string(l) and GD_.is_string(r)) \
+        ): 
+        return l == r
+    return false
 
 ## Checks if value is greater than other.
 ##
@@ -292,11 +317,56 @@ static func is_element(a=0, b=0, c=0): not_implemented()
 static func is_empty(value, __UNUSED__ = null):
     return size(value) <= 0
 
-## Basically a lambda wrapper for `==`. Because of the way dicts and
-## arrays implement the "==" operators, it results in a deep comparison.
-## So GD_.is_equal, GD_.eq, and ==, have all the same results
-static func is_equal(left,right): 
-    return typeof(left) == typeof(right) and left == right
+## Performs a deep comparison between two values to determine if they are equivalent.
+## This equality method attempts to extract the "underlying" values of Variants
+## 
+## Arguments
+##      value (*): The value to compare.
+##      other (*): The other value to compare.
+## Returns
+##      (boolean): Returns true if the values are equivalent, else false.
+## Example
+##      GD_.is_equal(&"foobar", "foobar")
+##      # => true
+##       
+##      is_same(&"foobar", "foobar")
+##      # => false
+## Notes
+##      To get a "value" the method does the following:
+##          • (any number type) = compare as is
+##          • (string) = compare as is
+##          • (string name) = cast to str
+##          • (dict) = loop and compare
+##          • (array-like) = loop and compare
+##          • (*) = cast to str
+static func is_equal(l,r): 
+    # Compare basic values
+    if GD_.is_number(l) and GD_.is_number(r): return l == r
+    elif GD_.is_string(l) and GD_.is_string(r): return l == r
+    # Loop through complex values
+    elif GD_.is_array_like(l) and GD_.is_array_like(r):
+        var size = GD_.size(l)
+        if size != GD_.size(r): return false
+        
+        # If any one element is not the same we short circuit
+        for i in range(0, size):
+            if not is_equal(l[i],r[i]): return false
+        return true
+    elif l is Dictionary and r is Dictionary: 
+        var size = GD_.size(l)
+        if size != GD_.size(r): return false
+        
+        # If any one element is not the same we short circuit
+        for key in l.keys():
+            if not(key in r) or not( is_equal(l[key],r[key]) ): 
+                return false
+        return true
+    
+    # We cast to str for 2 reasons
+    #   1: When the type is node, this gives us the node id Node<#21322>
+    #   2: When the types are mismatch (float vs int) it doesnt throw an err
+    return str(l) == str(r)
+        
     
     
     
