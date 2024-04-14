@@ -269,7 +269,7 @@ static func group_by(collection, iteratee = GD_.identity):
 static func includes(collection, thing, from_index :=0):
     if super.is_collection(collection):
         for key in keyed_iterable(collection,from_index):
-            if is_equal(collection[key], thing): 
+            if eq(collection[key], thing): 
                 return true
         return false
         
