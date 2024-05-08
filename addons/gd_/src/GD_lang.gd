@@ -607,7 +607,7 @@ static func to_integer(a=0, b=0, c=0): not_implemented()
 
 static func to_length(a=0, b=0, c=0): not_implemented()
 
-static func to_number(value): 
+static func to_number(value, _dummy_ = null): 
     if is_number(value):
         return value
     elif is_string(value) and value.is_valid_float():
@@ -640,3 +640,5 @@ static func keyed_iterable(thing, from_index = 0):
         
     gd_warn("keyed_iterable received a non-collection")
     return []
+    
+    
