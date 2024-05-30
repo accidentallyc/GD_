@@ -607,6 +607,20 @@ static func to_integer(a=0, b=0, c=0): not_implemented()
 
 static func to_length(a=0, b=0, c=0): not_implemented()
 
+## Converts value to a number.
+## 
+## Arguments
+##      value (*): The value to process.
+## Returns
+##      (number): Returns the number.
+## Example
+##      GD_.to_number(2) # 2
+##      GD_.to_number(2.2) # 2.2
+##      GD_.to_number(-5) # -5
+##      GD_.to_number('500') # 500
+##      GD_.to_number('-3.9') # -3.9
+##      GD_.to_number(&'-4.2') # -4.2
+##      GD_.to_number(INF) # INF
 static func to_number(value, _dummy_ = null): 
     if is_number(value):
         return value
