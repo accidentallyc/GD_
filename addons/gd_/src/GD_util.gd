@@ -188,21 +188,26 @@ static func property(path):
     
         
 static func property_of(a=0, b=0, c=0): not_implemented()
-# @TODO guarded method by map, every, filter, mapValues, reject, some
-#static func range(a=0, b=0, c=0): not_implemented() 
-# @TODO guarded method by map, every, filter, mapValues, reject, some
-static func range_right(a=0, b=0, c=0): not_implemented() 
-static func run_in_context(a=0, b=0, c=0): not_implemented()
-static func stub_array(a=0, b=0, c=0): not_implemented()
-static func stub_false(a=0, b=0, c=0): not_implemented()
-static func stub_object(a=0, b=0, c=0): not_implemented()
-static func stub_string(a=0, b=0, c=0): not_implemented()
-static func stub_true(a=0, b=0, c=0): not_implemented()
 
+##  @TODO guarded method by map, every, filter, mapValues, reject, some
+## static func range(a=0, b=0, c=0): not_implemented() 
+## @TODO guarded method by map, every, filter, mapValues, reject, some
+static func range_right(a=0, b=0, c=0): not_implemented() 
+
+static func run_in_context(a=0, b=0, c=0): not_implemented()
+
+static func stub_array(a=0, b=0, c=0): not_implemented()
+
+static func stub_false(a=0, b=0, c=0): not_implemented()
+
+static func stub_object(a=0, b=0, c=0): not_implemented()
+
+static func stub_string(a=0, b=0, c=0): not_implemented()
+    
+static func stub_true(a=0, b=0, c=0): not_implemented()
 
 ## Invokes the iteratee n times, returning an array of the results of 
 ## each invocation. The iteratee is invoked with two args (index, _UNUSED_)
-## 
 ## 
 ## Arguments
 ##      n (number): The number of times to invoke iteratee.
@@ -213,7 +218,7 @@ static func stub_true(a=0, b=0, c=0): not_implemented()
 ##      GD_.times(3, GD_.to_string)
 ##      # => ['0', '1', '2']
 ##       
-##       GD_.times(4, func (a,b): return 0)
+##      GD_.times(4, func (a,b): return 0)
 ##      # => [0, 0, 0, 0]
 static func times(n=0, iteratee = GD_.identity): 
     var ary = []

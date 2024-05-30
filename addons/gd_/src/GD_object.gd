@@ -50,9 +50,81 @@ static func to_pairs(a=0, b=0, c=0): not_implemented() # alias for entries
 
 static func to_pairs_in(a=0, b=0, c=0): not_implemented() # alias for entriesIn
 
-static func find_key(a=0, b=0, c=0): not_implemented()
-
-static func find_last_key(a=0, b=0, c=0): not_implemented()
+## This method is like GD_.find except that it returns 
+## the key of the first element predicate returns truthy for 
+## instead of the element itself.
+##
+## Arguments
+##      object (Object): The object to inspect.
+##      [predicate=GD_.identity] (Function): The function invoked per iteration.
+## Returns
+##      (*): Returns the key of the matched element, else undefined.
+## Example
+##      var users = {
+##          'barney':  { 'age': 36, 'active': true },
+##          'fred':    { 'age': 40, 'active': false },
+##          'pebbles': { 'age': 1,  'active': true }
+##      }
+##    
+##      GD_.find_key(users, func(o, _o): return o.age < 40 )
+##      ## => 'barney' (iteration order is not guaranteed)
+##      
+##      ## The `GD_.matches` iteratee shorthand.
+##      GD_.find_key(users, { 'age': 1, 'active': true })
+##      ## => 'pebbles'
+##      
+##      ## The `GD_.matchesProperty` iteratee shorthand.
+##      GD_.find_key(users, ['active', false])
+##      ## => 'fred'
+##      
+##      ## The `GD_.property` iteratee shorthand.
+##      GD_.find_key(users, 'active')
+##      ## => 'barney'
+static func find_key(collection, iteratee = GD_.identity): 
+    var iter_func = iteratee(iteratee)
+    
+    for key in keyed_iterable(collection):
+        var val = collection[key]
+        if iter_func.call(val,key):
+            return key
+            
+## This method is like GD_.find_key except that it iterates over 
+## elements of a collection in the opposite order.
+## 
+## Arguments
+##      object (Object): The object to inspect.
+##      [predicate=GD_.identity] (Function): The function invoked per iteration.
+## Returns
+##      (*): Returns the key of the matched element, else undefined.
+## Example
+##      var users = {
+##          'barney':  { 'age': 36, 'active': true },
+##          'fred':    { 'age': 40, 'active': false },
+##          'pebbles': { 'age': 1,  'active': true }
+##      }
+##    
+##      GD_.find_last_key(users, func(o, _o): return o.age < 40 )
+##      ## => returns 'pebbles' assuming `GD_.find_key` returns 'barney'
+##      
+##      ## The `GD_.matches` iteratee shorthand.
+##      GD_.find_last_key(users, { 'age': 36, 'active': true })
+##      ## => 'barney'
+##      
+##      ## The `GD_.matchesProperty` iteratee shorthand.
+##      GD_.find_last_key(users, ['active', false])
+##      ## => 'fred'
+##      
+##      ## The `GD_.property` iteratee shorthand.
+##      GD_.find_last_key(users, 'active')
+##      ## => 'pebbles'
+static func find_last_key(collection, iteratee = GD_.identity): 
+    var tmp = keyed_iterable(collection)
+    var iter_func = iteratee(iteratee)
+    for i in range(tmp.size()-1,-1,-1):
+        var key = tmp[i]
+        var val = collection[key]
+        if iter_func.call(val,key):
+            return key
 
 static func for_in(a=0, b=0, c=0): not_implemented()
 
