@@ -145,7 +145,7 @@ static func functions_in(a=0, b=0, c=0): not_implemented()
 ## This is similar to lodash's get but renamed due to name clashes.
 ##
 ##
-## When using string paths, delimit them with the ":" key e.g."a:b:c"
+## When using string paths, delimit them with the "/" key e.g."a/b/c"
 ## Or use the index access notation "a['b']['c']"
 ##
 ## Arguments
@@ -155,13 +155,13 @@ static func functions_in(a=0, b=0, c=0): not_implemented()
 ## Returns
 ##      (*): Returns the resolved value.
 ## Example
-##      GD_.get_prop({ 'a': [{ 'b': { 'c': 3 } }] }, 'a:0:b:c')
+##      GD_.get_prop({ 'a': [{ 'b': { 'c': 3 } }] }, 'a/0/b/c')
 ##      # => 3
 ##       
 ##      GD_.get_prop({ 'a': [{ 'b': { 'c': 3 } }] }, ['a', 0, 'b', 'c'])
 ##      # => 3
 ##       
-##      GD_.get_prop({ 'a': {}, 'a:b:c', 'default')
+##      GD_.get_prop({ 'a': {}, 'a/b/c', 'default')
 ##      # => 'default'
 ##
 ##     GD_.get_prop([1,2,[3]], '2:1') 
@@ -172,22 +172,18 @@ static func functions_in(a=0, b=0, c=0): not_implemented()
 ##
 ##     GD_.get_prop([ {'120':'string', 120: 'number'} ], '0['120']')
 ##     # => string
+##
 ## Notes
 ##     >> Regarding integer keys
 ##      In js ["0", -0, 0] are "the same keys" when applied to an object
 ##      e.g. declaring {"0":"hello",0:"world"} in JS results in  {0:"world"}
 ##      But in gdscript ["0"] is a different key from [-0,0]
-##      e.g. declaring {"0":"hello",0:"world"} in GODOT in {"0":"hello",0:"world"} 
+##      e.g. declaring {"0":"hello",0:"world"} in gdscript results in {"0":"hello",0:"world"} 
 ##      
 ##      Meaning in js
 ##      _.get( thing, "0") == _.get( thing, -0) == _.get( thing, 0)
 ##      And in godot
-##      _.get( thing, "0") != (_.get( thing, -0) == _.get( thing, 0))
-##
-##     >> Regarding function returns
-##      In js you can fetch a function like this _.get([],"push")
-##      But in gdscript you can't really do this without knowing that
-##      The said thing is a Callable or a property
+##      _.get_prop( thing, "0") != (_.get_prop( thing, -0) == _.get_prop( thing, 0))
 static func get_prop(thing, path, default_value = null):
     return __INTERNAL__.base_get_prop(thing, path, default_value)
     

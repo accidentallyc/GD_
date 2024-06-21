@@ -1,15 +1,15 @@
 ## @TODO Reuse tests from lodash repo
 extends SimpleTest
 
-func it_should_get_string_keyed_property_values( ):
+func it_should_get_string_keyed_property_values():
     var object = { "a": 1, "b":[1], "c": {0:1}, '':1}
     
     for path in [
             'a',	# regular get
             ['a'],	# array path get
-            "b:0",	# get using : notation but target is array
+            "b/0",	# get using : notation but target is array
             "b[0]",	# get using [] notation but target is array
-            "c:0",	# get using : notation but target is object
+            "c/0",	# get using : notation but target is object
             "c[0]",	# get using [] notation but target is object
             "",		# empty string should work as key
         ]:
@@ -36,19 +36,19 @@ func it_should_fetch_string_and_number_separately():
 func it_should_get_deep_property_values():
     var object = { 'a': { 'b': 2 } }
     
-    for path in ['a:b',['a','b']]:
+    for path in ['a/b',['a','b']]:
         expect(GD_.get_prop(object,path)).to.equal(2)
     
     
 func it_should_get_a_key_over_a_path():
     var object = { 'a.b': 1, 'a': { 'b': 2 } }
     
-    for path in ['a:b',['a','b']]:
+    for path in ['a/b',['a','b']]:
         expect(GD_.get_prop(object,path)).to.equal(2)
     
     
 func it_should_not_coerce_array_paths_to_strings():
-    var object = { "a:b:c": 3, "a": { "b": { "c": 4 } } }
+    var object = { "a/b/c": 3, "a": { "b": { "c": 4 } } }
     expect(GD_.get_prop(object, ['a', 'b', 'c'])).equal(4)
     
     
@@ -71,7 +71,7 @@ func it_should_return_undefined_if_parts_of_path_are_missing():
 func it_should_be_able_to_return_null_values_even_default():
     var object = { "a": { "b": null } };
 
-    for path in [ 'a:b',['a', 'b']]:
+    for path in [ 'a/b',['a', 'b']]:
         expect(GD_.get_prop(object, path, "NOT THIS")).equal(null, str("Returned default instead of null on path ",path))
             
 
@@ -126,7 +126,7 @@ func it_can_get_nested_properties():
         "array": ["hello", node, "world"]
     }
 
-    var path = "array:1:global_position:y"
+    var path = "array/1/global_position:y"
     var result = GD_.get_prop(everything_everywhere_all_at_once,path)
     expect(result).equal(123)
     
