@@ -36,7 +36,7 @@ static func assign_with(a=0, b=0, c=0): not_implemented()
 ##
 ##      But in GD_ you can call at most up to 10 args
 ##      E.g. GD_.at([], 1,2,3,4,5,6,7,8,9)
-static func at(obj, a,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_):
+static func at(obj, a,b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF):
     return __INTERNAL__.base_at(obj, [a,b,c,d,e,f,g,h,i,j])
     
 

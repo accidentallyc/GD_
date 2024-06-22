@@ -144,7 +144,7 @@ static func every(collection, predicate = GD_.identity):
 ##      # The `GD_.property` iteratee shorthand.
 ##      GD_.filter(users, 'active')
 ##      # => objects for ['barney']
-static func filter(collection, iteratee = null):
+static func filter(collection, iteratee = GD_UNDEF):
     if not(super.is_collection(collection)):
         gd_warn("GD_.filter received a non-collection type value")
         return null

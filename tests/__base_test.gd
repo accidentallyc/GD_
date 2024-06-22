@@ -37,7 +37,7 @@ func test_keyed_iterable():
     expect(GD_.keyed_iterable(PackedVector3Array([Vector3.ONE]))).equal([0])
     expect(GD_.keyed_iterable(PackedColorArray([Color.AQUA]))).equal([0])
 
-func test_string_to_path_should_give_path(_solo_,_solo_suite_):
+func test_string_to_path_should_give_path():
     expect( __INTERNAL__.string_to_path("a/b") ).equal(["a","b"], "Failed at basic split")
     expect( __INTERNAL__.string_to_path("a[0]") ).equal(["a",0], "Int strings should be parsed as integer")
     expect( __INTERNAL__.string_to_path("a[0.25]") ).equal(["a",0.25], "Float strings should be parsed as float")
