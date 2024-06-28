@@ -7,7 +7,7 @@ extends "./GD_math.gd"
 ##      n (number): The number of calls before func is invoked.
 ##      func (Function): The function to restrict.
 ## Returns
-##      (Function): Returns the new restricted function.
+##      (Function): Returns a command you can execute via exec(...args) or execv([...args]).
 ## Example
 ##      var fn = func (): print("hello world")
 ##      var restricted = GD_.after(2, fn)
@@ -29,6 +29,7 @@ static func after(max_count, callable:Callable) -> GDInternal_AfterCommand:
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func ary(a=0, b=0, c=0): not_implemented() 
 
+
 ## Creates a function that invokes func, with the this binding and 
 ## arguments of the created function, while it's called less than n times. 
 ## Subsequent calls to the created function return the result of 
@@ -38,7 +39,7 @@ static func ary(a=0, b=0, c=0): not_implemented()
 ##      n (number): The number of calls at which func is no longer invoked.
 ##      func (Callable): The function to restrict.
 ## Returns
-##      (Function): Returns the new restricted function.
+##      (Function): Returns a command you can execute via exec(...args) or execv([...args]).
 ## Example
 ##      var fn = func (): print("hello world")
 ##      var restricted = GD_.before(2, fn)
@@ -50,10 +51,6 @@ static func ary(a=0, b=0, c=0): not_implemented()
 ##      Theres a weird edge case where if you supply 1 as the number
 ##      Then it doesnt execute atleast once. That behavior has not
 ##      been replicated.
-##     >> Memory Gotcha
-##      To implement this, GD_ keeps an internal record of how many times
-##      The passed in function has been called. That tracker cannot be
-##      garbage collected so use this function sparingly.
 static func before(up_to_count, callable:Callable) -> GDInternal_BeforeCommand: 
     return GDInternal_BeforeCommand.new(callable, up_to_count)
     
@@ -66,7 +63,38 @@ static func curry(a=0, b=0, c=0): not_implemented()
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func curry_right(a=0, b=0, c=0): not_implemented() 
 
-static func debounce(a=0, b=0, c=0): not_implemented()
+## Creates a debounced function that delays invoking func until after wait 
+## milliseconds have elapsed since the last time the debounced function 
+## was invoked. The debounced function comes with a cancel method to cancel 
+## delayed func invocations and a flush method to immediately invoke them. 
+## 
+## Provide options to indicate whether func should be invoked on the leading 
+## and/or trailing edge of the wait timeout. The func is invoked with the last 
+## arguments provided to the debounced function. Subsequent calls to the debounced 
+## function return the result of the last func invocation.
+## 
+## Note: If leading and trailing options are true, func is invoked on the 
+## trailing edge of the timeout only if the debounced function is invoked more 
+## than once during the wait timeout.
+## 
+## If wait is 0 and leading is false, func invocation is deferred until to the 
+## next tick, similar to setTimeout with a timeout of 0.
+## 
+## See David Corbacho's article for details over the differences between _.debounce and _.throttle.
+## Arguments
+##      func (Function): The function to debounce.
+##      [wait=0] (number): The number of milliseconds to delay.
+##      [options={}] (Object): The options object.
+##      [options.leading=false] (boolean): Specify invoking on the leading edge of the timeout.
+##      [options.maxWait=INF] (number): The maximum time func is allowed to be delayed before it's invoked.
+##      [options.trailing=true] (boolean): Specify invoking on the trailing edge of the timeout.
+## Returns
+##      (Function): Returns a command you can execute via exec(...args) or execv([...args]).
+## Example
+##      var my_func = func(): print("hello")
+##      var debounced = GD_.debounce(my_func, wait_time) 
+static func debounce(callable:Callable, time:float, dict:Dictionary = GDInternal_DebounceCommand.default_opts) -> GDInternal_DebounceCommand:
+    return GDInternal_DebounceCommand.new(callable, time, dict)
 static func defer(a=0, b=0, c=0): not_implemented()
 static func delay(a=0, b=0, c=0): not_implemented()
 static func flip(a=0, b=0, c=0): not_implemented()

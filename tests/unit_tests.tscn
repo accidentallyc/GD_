@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=123 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/chunk.test.gd" id="2_i2yyx"]
@@ -109,6 +109,7 @@
 [ext_resource type="Script" path="res://tests/lang/is_immutable.test.gd" id="84_y8der"]
 [ext_resource type="Script" path="res://tests/array/is_empty.test.gd" id="85_k044f"]
 [ext_resource type="Script" path="res://tests/lang/is_boolean.test.gd" id="85_ovdls"]
+[ext_resource type="Script" path="res://tests/function/debounce.test.gd" id="86_83von"]
 [ext_resource type="Script" path="res://tests/__base_test.gd" id="86_csbig"]
 [ext_resource type="Script" path="res://tests/lang/to_array.test.gd" id="88_1gj8j"]
 [ext_resource type="Script" path="res://tests/lang/is_regexp.test.gd" id="90_cuy5l"]
@@ -384,6 +385,9 @@ script = ExtResource("76_71vx2")
 
 [node name="After" type="Node" parent="Function"]
 script = ExtResource("77_xt4i3")
+
+[node name="Debounce" type="Node" parent="Function"]
+script = ExtResource("86_83von")
 
 [node name="Lang" type="Node" parent="."]
 
