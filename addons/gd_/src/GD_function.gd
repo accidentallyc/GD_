@@ -1,7 +1,9 @@
 extends "./GD_math.gd"
 
-## The opposite of GD_.before; this method creates a function that 
-## invokes func once it's called n or more times.
+## The opposite of GD_.before; 
+##
+## Creates a <a href="#what-are-commands">command</a> that takes a callable and wraps it in a callable
+## that only invokes said callable after it's called n or more times.
 ## 
 ## Arguments
 ##      n (number): The number of calls before func is invoked.
@@ -30,8 +32,8 @@ static func after(max_count, callable:Callable) -> GDInternal_AfterCommand:
 static func ary(a=0, b=0, c=0): not_implemented() 
 
 
-## Creates a function that invokes func, with the this binding and 
-## arguments of the created function, while it's called less than n times. 
+## Creates a <a href="#what-are-commands">command</a> that takes a callable and wraps it in a callable
+## that invokes func while it's called less than n times. 
 ## Subsequent calls to the created function return the result of 
 ## the last func invocation.
 ##
@@ -63,18 +65,19 @@ static func curry(a=0, b=0, c=0): not_implemented()
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func curry_right(a=0, b=0, c=0): not_implemented() 
 
-## Creates a debounced function that delays invoking func until after wait 
-## milliseconds have elapsed since the last time the debounced function 
-## was invoked. The debounced function comes with a cancel method to cancel 
+## Creates a <a href="#what-are-commands">command</a> that takes a callable and wraps it in a callable
+## that delays invoking func until after wait 
+## milliseconds have elapsed since the last time the debounced callable 
+## was invoked. The debounced callable comes with a cancel method to cancel 
 ## delayed func invocations and a flush method to immediately invoke them. 
 ## 
 ## Provide options to indicate whether func should be invoked on the leading 
 ## and/or trailing edge of the wait timeout. The func is invoked with the last 
-## arguments provided to the debounced function. Subsequent calls to the debounced 
-## function return the result of the last func invocation.
+## arguments provided to the debounced callable. Subsequent calls to the debounced 
+## callable return the result of the last func invocation.
 ## 
 ## Note: If leading and trailing options are true, func is invoked on the 
-## trailing edge of the timeout only if the debounced function is invoked more 
+## trailing edge of the timeout only if the debounced callable is invoked more 
 ## than once during the wait timeout.
 ## 
 ## If wait is 0 and leading is false, func invocation is deferred until to the 
@@ -82,7 +85,7 @@ static func curry_right(a=0, b=0, c=0): not_implemented()
 ## 
 ## See David Corbacho's article for details over the differences between _.debounce and _.throttle.
 ## Arguments
-##      func (Function): The function to debounce.
+##      func (Function): The callable to debounce.
 ##      [wait=0] (number): The number of milliseconds to delay.
 ##      [options={}] (Object): The options object.
 ##      [options.leading=false] (boolean): Specify invoking on the leading edge of the timeout.
