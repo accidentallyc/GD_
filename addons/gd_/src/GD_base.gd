@@ -406,20 +406,11 @@ class __INTERNAL__:
 """
 INTERNAL STUFF
 """
-class AfterFuncCommand:
-    extends RefCounted
-    
-    var fn:Callable
-    
-    func _init(fn):
-        self.fn = fn
-        
-    func exec(arg1 = GD_UNDEF,arg2 = GD_UNDEF,arg3 = GD_UNDEF,arg4 = GD_UNDEF,arg5 = GD_UNDEF,arg6 = GD_UNDEF,arg7 = GD_UNDEF,arg8 = GD_UNDEF,arg9 = GD_UNDEF,arg10 = GD_UNDEF):
-        var args = GD_.filter([arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10])
-        execv(args)
-    
-    func execv(arguments:Array):
-        return fn.callv(arguments)
+static func assert_resource_group():
+    assert(GDInternal_ResourceGroup != null, """
+        This function requires GDInternal_ResourceGroup to be autoloaded in. 
+        Please re-enable the plugin or restart the editor.
+    """)
     
 static func not_implemented():  
     assert(false, "Not implemented yet. Do you need this function? If so, open an issue and I will prioritize it")

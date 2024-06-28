@@ -97,6 +97,7 @@ static func curry_right(a=0, b=0, c=0): not_implemented()
 ##      var my_func = func(): print("hello")
 ##      var debounced = GD_.debounce(my_func, wait_time) 
 static func debounce(callable:Callable, time:float, dict:Dictionary = GDInternal_DebounceCommand.default_opts) -> GDInternal_DebounceCommand:
+    assert_resource_group()
     return GDInternal_DebounceCommand.new(callable, time, dict)
 static func defer(a=0, b=0, c=0): not_implemented()
 static func delay(a=0, b=0, c=0): not_implemented()

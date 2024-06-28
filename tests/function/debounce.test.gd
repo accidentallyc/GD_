@@ -1,6 +1,6 @@
 extends SimpleTest
 
-func it_should_call_the_func_after_timeout_if_leading_is_false(_solo_suite):
+func it_should_call_the_func_after_timeout_if_leading_is_false():
     var wait_time = 0.25
     var config = {
         "leading":false
