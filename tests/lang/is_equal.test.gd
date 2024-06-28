@@ -27,7 +27,7 @@ func it_can_handle_different_types():
         var b = inputs[key][1]
         expect(GD_.is_equal(a,b)).to.be.truthy("Failed at " + key)
 
-func it_can_handle_node(_solo):
+func it_can_handle_node():
     var a:Node = TestNode.new()
     a.health = 200
     

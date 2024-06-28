@@ -19,7 +19,7 @@ func it_correctly_finds_keys_in_dictionaries():
     result = GD_.find_key(users, 'active');
     expect(result).to.equal('barney')
 
-func it_correctly_finds_keys_in_arrays(_solo,_solo_suite):
+func it_correctly_finds_keys_in_arrays():
     var users = [
         { 'age': 36, 'active': true },
         { 'age': 40, 'active': false },

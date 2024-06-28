@@ -7,6 +7,10 @@ var users = [barney,fred]
 
 
 func it_can_filter_by_truthy():
+    var test  = GD_UNDEF
+    var x = test == GD_UNDEF
+    
+    
     var collection = [0,"","foo",null,1]
     var result = GD_.filter(collection)
     expect(result).to.equal(["foo",1])

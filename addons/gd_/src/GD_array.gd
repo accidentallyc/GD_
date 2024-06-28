@@ -74,7 +74,7 @@ static func compact(array:Array, _UNUSED_ = null):
 ##       
 ##      print(array)
 ##      # => [1]
-static func concat(array:Array, a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_,k=_UNDEF_):
+static func concat(array:Array, a=GD_UNDEF,b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF,k=GD_UNDEF):
     return __INTERNAL__.base_concat(array,[a,b,c,d,e,f,g,h,i,j,k])
                 
             
@@ -815,8 +815,8 @@ static func nth(array:Array, n=0):
 ##      GD_.pull(array, 'a', 'c')
 ##      print(array)
 ##      # => ['b', 'b']
-static func pull(array:Array, a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
-    var to_remove = super.filter([a,b,c,d,e,f,g,h,i,j], GD_._is_not_null_arg)
+static func pull(array:Array, a=GD_UNDEF,b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF): 
+    var to_remove = super.filter([a,b,c,d,e,f,g,h,i,j], GD_UNDEF.is_defined)
     return pull_all_by(array, to_remove)
     
 
@@ -1295,10 +1295,11 @@ static func tail(array:Array, _UNUSED_ = null):
 ##      >> This is a guarded method 
 ##      When used with methods like map, every, filter, mapValues, reject, some
 ##      it is invoked with all the optionals set as null
-static func take(array:Array, n = null): 
+static func take(array:Array, n = GD_UNDEF): 
     var size = array.size()
     
-    if __INTERNAL__.base_is_undef(n): n = 1
+    var lo = GD_UNDEF.is_undefined(n)
+    if GD_UNDEF.is_undefined(n) or n == null: n = 1
     elif not(super.is_number(n)): n = -INF
     
     return array.slice(0, max(min(n,size),0))
@@ -1330,7 +1331,7 @@ static func take(array:Array, n = null):
 static func take_right(array:Array, n = null): 
     var size = array.size()
     
-    if __INTERNAL__.base_is_undef(n): n = 1
+    if GD_UNDEF.is_undefined(n) or n == null: n = 1
     elif not(super.is_number(n)): n = -INF # to
     
     return array.slice(clamp(size-n,0,size), size)
@@ -1444,7 +1445,7 @@ static func take_while(array:Array, predicate = null):
 ##
 ##      But in GD_ you can call at most up to 10 args
 ##      E.g. "GD_.union([1],[2],[3],[4],[5],[6],[7],[8],[9],[10])
-static func union(a:Array, b:Array, c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_):
+static func union(a:Array, b:Array, c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF):
     var array = a.duplicate()
     for arg in [b,c,d,e,f,g,h,i,j]:
         if arg is Array:
@@ -1610,10 +1611,10 @@ static func unzip_with(args:Array, iter_func = null):
 ## Example
 ##      GD_.without([2, 1, 2, 3], 1, 2)
 ##      # => [3]
-static func without(array:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_):
+static func without(array:Array, b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF):
     var without_list = []
     for arg in [b,c,d,e,f,g,h,i,j]:
-        if arg is UNDEFINED: continue
+        if GD_UNDEF.is_undefined(arg): continue
         without_list.append(arg)
         
     var new_array = []
@@ -1646,7 +1647,7 @@ static func without(array:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDE
 ##
 ##      But in GD_ you can call at most up to 10 args
 ##      E.g. GD_.xor([1], [2], [3], ... , [10])
-static func xor(arg1,arg2 = _UNDEF_,arg3 = _UNDEF_,arg4 = _UNDEF_,arg5 = _UNDEF_,arg6 = _UNDEF_,arg7 = _UNDEF_,arg8 = _UNDEF_,arg9 = _UNDEF_,arg10 = _UNDEF_,arg11 = _UNDEF_):
+static func xor(arg1,arg2 = GD_UNDEF,arg3 = GD_UNDEF,arg4 = GD_UNDEF,arg5 = GD_UNDEF,arg6 = GD_UNDEF,arg7 = GD_UNDEF,arg8 = GD_UNDEF,arg9 = GD_UNDEF,arg10 = GD_UNDEF,arg11 = GD_UNDEF):
     return xor_with(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11)
 
 ## This method is like GD_.xor except that it accepts iteratee which is 
@@ -1674,7 +1675,7 @@ static func xor(arg1,arg2 = _UNDEF_,arg3 = _UNDEF_,arg4 = _UNDEF_,arg5 = _UNDEF_
 ##
 ##      But in GD_ you can call at most up to 10 args
 ##      E.g. GD_.xor_by([1], [2], [3], ... , [10],'x')
-static func xor_by(arg1,arg2 = _UNDEF_,arg3 = _UNDEF_,arg4 = _UNDEF_,arg5 = _UNDEF_,arg6 = _UNDEF_,arg7 = _UNDEF_,arg8 = _UNDEF_,arg9 = _UNDEF_,arg10 = _UNDEF_,arg11 = _UNDEF_):
+static func xor_by(arg1,arg2 = GD_UNDEF,arg3 = GD_UNDEF,arg4 = GD_UNDEF,arg5 = GD_UNDEF,arg6 = GD_UNDEF,arg7 = GD_UNDEF,arg8 = GD_UNDEF,arg9 = GD_UNDEF,arg10 = GD_UNDEF,arg11 = GD_UNDEF):
     var args = __INTERNAL_ARGS__.new()
     args.last_is_iteratee(
         [arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11],
@@ -1797,7 +1798,7 @@ static func xor_with(arg1:Array,arg2 = null,arg3 = null,arg4 = null,arg5 = null,
 ##
 ##      But in GD_ you can call at most up to 10 args
 ##      E.g. GD_.zip([1], [2], [3], ... , [10])
-static func zip(a:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
+static func zip(a:Array, b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF): 
     return zip_with(a,b,c,d,e,f,g,h,i,j)
 
 
@@ -1872,7 +1873,7 @@ static func zip_object_deep(keys:Array, values:Array):
 ##     var iteratee = func(a,b,c): return a + b + c
 ##      GD_.zip_with([1, 2], [10, 20], [100, 200], iteratee)
 ##      # => [111, 222]
-static func zip_with(a:Array, b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
+static func zip_with(a:Array, b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF): 
     var args = __INTERNAL__.to_clean_args(a,b,c,d,e,f,g,h,i,j)
     var has_callable_arg = args[-1] is Callable
     var iter_func = iteratee(args.pop_back()) if has_callable_arg else null

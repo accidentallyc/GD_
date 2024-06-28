@@ -82,6 +82,7 @@ func extract_func_defs(category, fileName):
                 var curr_section = null
                 while i >= 0:
                     if not lines[i].strip_edges(): 
+                        buffer.reverse()
                         def.descp = buffer
                         has_text = true
                         buffer = []

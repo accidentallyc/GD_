@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cr4atuo6aou0t"]
+
+[ext_resource type="Script" path="res://addons/gd_/GD_ResourceGroup.gd" id="1_huy5n"]
+
+[node name="GD_ResourceGroup" type="Node"]
+script = ExtResource("1_huy5n")

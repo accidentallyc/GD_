@@ -39,7 +39,7 @@ func wait_until(condition:Callable, timeout = 5000):
             return
         await get_tree().create_timer(0.25).timeout
 
-func wait(timeout = 5000):
+func wait(timeout = 5):
     await get_tree().create_timer(timeout).timeout
     return
     

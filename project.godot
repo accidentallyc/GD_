@@ -15,9 +15,17 @@ run/main_scene="res://tests/unit_tests.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GDInternal_ResourceGroup="*res://addons/gd_/./GDInternal_ResourceGroup.tscn"
+
 [dotnet]
 
 project/assembly_name="Gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gd_/plugin.cfg")
 
 [rendering]
 

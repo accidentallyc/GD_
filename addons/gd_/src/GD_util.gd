@@ -26,7 +26,7 @@ static func conforms(a=0, b=0, c=0): not_implemented()
 ##      # => true
 ## 
 static func constant(value = null, _UNUSED_ = null): 
-    return func (a=_UNDEF_,b=_UNDEF_,c=_UNDEF_,d=_UNDEF_,e=_UNDEF_,f=_UNDEF_,g=_UNDEF_,h=_UNDEF_,i=_UNDEF_,j=_UNDEF_): 
+    return func (a=GD_UNDEF,b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF): 
         return value
 
 ## Checks value to determine whether a default value should be returned 
@@ -52,7 +52,7 @@ static func default_to(a,b):
         TYPE_FLOAT:
             return b if is_nan(a) else a
         TYPE_OBJECT:
-            return b if a is UNDEFINED or not(a) else a
+            return b if GD_UNDEF.is_undefined(a) or not(a) else a
     return a
     
     

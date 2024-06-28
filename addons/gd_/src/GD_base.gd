@@ -1,21 +1,12 @@
 # Base class  for storing functions that have the same name as globalscope types
 # And other random utility functions
 
-
-# Use this to differentiate betwen default null
-# and actual null values. Do not use outside of this class.
-class UNDEFINED: 
-    pass
-    
 static var static_self = self
-
-static var _UNDEF_ = __INTERNAL__._UNDEF_
 static var _EMPTY_ARRAY_ = []
 
 """
 Reference to original functions
 """
-
 ## Original floor to use in GD_.floor
 static func __floor(n): return floor(n)
 
@@ -38,8 +29,6 @@ static func _get_callable_result(callable:Callable):
 ## Utility class to support the "ellipsis args" that
 ## Lodash dash into something that can be consumed by Godot
 class __INTERNAL_ARGS__:
-    static var _UNDEF_ = UNDEFINED.new()
-    
     var last_item 
     var all = []
     
@@ -49,7 +38,7 @@ class __INTERNAL_ARGS__:
     func last_is_iteratee(raw_args:Array, default_last_item = null):
         last_item = default_last_item
         for arg in raw_args:
-            if arg is UNDEFINED:
+            if GD_UNDEF.is_undefined(arg):
                 break
             all.append(arg)
         last_item = all.pop_back()
@@ -60,23 +49,13 @@ class __INTERNAL_ARGS__:
             if arg is Callable:
                 last_item = arg
                 break
-            if arg is UNDEFINED:
+            if GD_UNDEF.is_undefined(arg):
                 break
             all.append(arg)
             
 ## Wrapping it in a class o we can hide the implementation from being visible
 ## when accessing GD_.
 class __INTERNAL__:
-    # We do this because for some reason, this never gets set 
-    # permanently in editor scripts
-    static var _UNDEF_ = UNDEFINED.new():
-        get:
-            if _UNDEF_ == null:
-                _UNDEF_ = UNDEFINED.new() # Happens in editor scripts
-            return _UNDEF_
-        set(v):
-            _UNDEF_ = v
-        
     static var _GDref = preload("res://addons/gd_/src/GD_.gd")
             
     """
@@ -161,29 +140,29 @@ class __INTERNAL__:
         
     ## This attempts to replicate the "variable arguments"
     ## Assumes that the user will fill from left to right.
-    ## Will break on the first UNDEFINED
+    ## Will break on the first GD_UNDEF
     static func to_clean_args(
-        a = _UNDEF_,
-        b = _UNDEF_,
-        c = _UNDEF_,
-        d = _UNDEF_,
-        e = _UNDEF_,
-        f = _UNDEF_,
-        g = _UNDEF_,
-        h = _UNDEF_,
-        i = _UNDEF_,
-        j = _UNDEF_
+        a = GD_UNDEF,
+        b = GD_UNDEF,
+        c = GD_UNDEF,
+        d = GD_UNDEF,
+        e = GD_UNDEF,
+        f = GD_UNDEF,
+        g = GD_UNDEF,
+        h = GD_UNDEF,
+        i = GD_UNDEF,
+        j = GD_UNDEF
     ):
         var cleaned = []
     
         for arg in [a,b,c,d,e,f,g,h,i,j]:
-            if arg is UNDEFINED: 
+            if GD_UNDEF.is_undefined(arg): 
                 break
             cleaned.append(arg)
             
         return cleaned
         
-    static func is_false(v): return not(v) or v is UNDEFINED
+    static func is_false(v): return not(v) or GD_UNDEF.is_undefined(v)
         
     static func set_dict_deep(dict:Dictionary, paths:Array, value):
         var curr = dict
@@ -207,10 +186,7 @@ class __INTERNAL__:
         
     static func base_is_number(a = null, _UNUSED_=null):
         return a is int or a is float
-        
-    static func base_is_undef(a):
-        return a == null or a is UNDEFINED
-        
+
     ## Splits the string into paths
     static func string_to_path(str: String):
         var path = []
@@ -349,7 +325,7 @@ class __INTERNAL__:
         var array = []
         var paths
         for arg in arguments:
-            if arg is UNDEFINED:
+            if GD_UNDEF.is_undefined(arg):
                 continue
             for p in _GDref.cast_array(arg):
                 array.append(base_get_prop(obj, p))
@@ -359,8 +335,8 @@ class __INTERNAL__:
         var new_array = []
         new_array.append_array(array)
         for arg in arguments:
-            # stop after first occurence of _UNDEF_
-            if arg is UNDEFINED:
+            # stop after first occurence of GD_UNDEF
+            if GD_UNDEF.is_undefined(arg):
                 break
             if arg is Array:
                 new_array.append_array(arg)
@@ -399,13 +375,12 @@ class __INTERNAL__:
         return func (value, _unused = null):
             return base_get_prop(value, path)
             
-    static func identity(value, _unused = null): 
-        return value
-        
     static func iteratee(iteratee_val):
-        if iteratee_val is UNDEFINED:
-            return identity
-        match typeof(iteratee_val):
+        var type = typeof(iteratee_val)
+        if GD_UNDEF.is_undefined(iteratee_val) or type == TYPE_NIL:
+            # @TODO move this to its own function
+            return func identity(v,_v = null): return v # Identity
+        match type:
             TYPE_DICTIONARY:
                 return matches(iteratee_val)
             TYPE_STRING:
@@ -414,8 +389,6 @@ class __INTERNAL__:
                 var prop = base_get_prop(iteratee_val,["0"])
                 var val = base_get_prop(iteratee_val,["1"])
                 return matches_property(prop,val)
-            TYPE_NIL:
-                return _GDref.identity
             TYPE_CALLABLE:
                 return get_iteratee(iteratee_val)
                     
@@ -433,8 +406,11 @@ class __INTERNAL__:
 """
 INTERNAL STUFF
 """
-static func _is_not_null_arg(i,_i):
-    return not(i is UNDEFINED)
+static func assert_resource_group():
+    assert(GDInternal_ResourceGroup != null, """
+        This function requires GDInternal_ResourceGroup to be autoloaded in. 
+        Please re-enable the plugin or restart the editor.
+    """)
     
 static func not_implemented():  
     assert(false, "Not implemented yet. Do you need this function? If so, open an issue and I will prioritize it")
