@@ -35,7 +35,7 @@ function main() {
         created(){
             requestAnimationFrame(() => {
                 // Force scroll down (cant use scrollIntoView)
-                window.location.href = window.location.href
+                // window.location.href = window.location.href
             })
         },
         components: {
