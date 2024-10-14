@@ -26,8 +26,8 @@ extends "./GD_math.gd"
 ##      The passed in function has been called. That tracker cannot be
 ##      garbage collected so use this function sparingly.
 static func after(max_count, callable:Callable) -> GDInternal_AfterCommand:
-    return GDInternal_AfterCommand.new(callable, max_count)
-    
+	return GDInternal_AfterCommand.new(callable, max_count)
+	
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func ary(a=0, b=0, c=0): not_implemented() 
 
@@ -54,8 +54,8 @@ static func ary(a=0, b=0, c=0): not_implemented()
 ##      Then it doesnt execute atleast once. That behavior has not
 ##      been replicated.
 static func before(up_to_count, callable:Callable) -> GDInternal_BeforeCommand: 
-    return GDInternal_BeforeCommand.new(callable, up_to_count)
-    
+	return GDInternal_BeforeCommand.new(callable, up_to_count)
+	
 static func bind(a=0, b=0, c=0): not_implemented()
 static func bind_key(a=0, b=0, c=0): not_implemented()
 
@@ -97,8 +97,8 @@ static func curry_right(a=0, b=0, c=0): not_implemented()
 ##      var my_func = func(): print("hello")
 ##      var debounced = GD_.debounce(my_func, wait_time) 
 static func debounce(callable:Callable, time:float, dict:Dictionary = GDInternal_DebounceCommand.default_opts) -> GDInternal_DebounceCommand:
-    assert_resource_group()
-    return GDInternal_DebounceCommand.new(callable, time, dict)
+	assert_resource_group()
+	return GDInternal_DebounceCommand.new(callable, time, dict)
 static func defer(a=0, b=0, c=0): not_implemented()
 static func delay(a=0, b=0, c=0): not_implemented()
 static func flip(a=0, b=0, c=0): not_implemented()
