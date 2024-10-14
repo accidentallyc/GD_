@@ -126,7 +126,7 @@ func extract_func_defs(category, fileName):
 						"lodash equivalent":
 							buffer.reverse() # faster to reverse than pushfront
 							
-							var tmp1 =  buffer[0].to_lower()
+							var tmp1 =  buffer[0].to_lower().strip_edges()
 							if tmp1 == "none":
 									nondash += 1
 									def.equivalent = false

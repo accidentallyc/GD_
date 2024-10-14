@@ -64,16 +64,18 @@ static func bind_key(a=0, b=0, c=0): not_implemented()
 ##
 ## This behavior is similar to how javascript execute's calls
 ##
+## Lodash Equivalent 
+##     None
 ## Arguments
 ##      [cb] (Callable): The callable to execute
 ##      [args] (Array): The arguments to supply to the callable
 ## Returns
-##		(Variannt): Returns whatever [cb] returns
+##		(Variant): Returns whatever [cb] returns
 ## Example
-##		var cb:Callable = func(a,b,c): return a
-##		GD_.callf(cb, [1])		# returns 1 without errors
-##		GD_.callf(cb, [1,2])	# returns 1 without errors
-##		GD_.callf(cb, [1,2,3])	# returns 1 without errors
+## var cb:Callable = func(a,b,c): return a
+## GD_.callf(cb, [1])		# returns 1 without errors
+## GD_.callf(cb, [1,2])		# returns 1 without errors
+## GD_.callf(cb, [1,2,3])	# returns 1 without errors
 static func callf(cb:Callable, args:Array):
 	return __INTERNAL__.callf(cb,args)
 		
