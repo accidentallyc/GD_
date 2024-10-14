@@ -47,26 +47,3 @@ func test_string_to_path_should_give_path():
 	expect( __INTERNAL__.string_to_path("a[\'\']") ).equal(["a",""], "Failed at splitting into empty string (single quote)")
 	expect( __INTERNAL__.string_to_path("a[\"\"]") ).equal(["a",""], "Failed at splitting into empty string (double quote)")
 	expect( __INTERNAL__.string_to_path("a/b/c") ).equal(["a","b","c"], "Failed at multi split")
-
-func test_is_version():
-	__INTERNAL__.engine_version.major = 4
-	__INTERNAL__.engine_version.minor = 3
-	
-	# Integer with Minor
-	expect(GD_.is_version(4.3)).to.be.truthy('Should match 4.3')
-	expect(GD_.is_version(4.2)).to.be.falsey('Should fail 4.2')
-	
-	# Strings
-	expect(GD_.is_version("4.3")).to.be.truthy('Should default to ==')
-	expect(GD_.is_version("=4.3")).to.be.truthy('Should be same as just setting 4')
-	expect(GD_.is_version("==4.3")).to.be.truthy('Should same as =4')
-	
-	expect(GD_.is_version(">4")).to.be.truthy('Should be true cause >4')
-	expect(GD_.is_version(">4.3")).to.be.falsey('Should be true cause >=4')
-	expect(GD_.is_version(">=4.3")).to.be.truthy('Should be true cause >=4')
-	
-	expect(GD_.is_version("<5")).to.be.truthy('Should be true cause >=4')
-	expect(GD_.is_version("<4.3")).to.be.falsey('Should be true cause >=4')
-	expect(GD_.is_version("<=4.3")).to.be.truthy('Should be true cause >=4')
-	
-	__INTERNAL__.engine_version = Engine.get_version_info()

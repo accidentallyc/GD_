@@ -450,19 +450,9 @@ class __INTERNAL__:
 				return op.call(ver_num, float(version.substr(substr_index)))
 		return false
 		
-		
-## Returns true if the version matches the parameters
-## 
-## Arguments
-##      [major] (int|float|String): 4, 4.3, ">4.3"
-## Returns
-##      (Array): Returns the new array of grouped elements.
-## Example
-##     var iteratee = func(a,b,c): return a + b + c
-##      GD_.zip_with([1, 2], [10, 20], [100, 200], iteratee)
-##      # => [111, 222]
-static func is_version(version) -> bool:
-	return __INTERNAL__.is_version(version)
+	static func callf(cb:Callable, args:Array):
+		args.resize(cb.get_argument_count())
+		return cb.callv(args)
 
 """
 INTERNAL STUFF

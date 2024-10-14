@@ -58,6 +58,25 @@ static func before(up_to_count, callable:Callable) -> GDInternal_BeforeCommand:
 	
 static func bind(a=0, b=0, c=0): not_implemented()
 static func bind_key(a=0, b=0, c=0): not_implemented()
+		
+## Calls a callable, via callv and resizes the args
+## based on the actual parameter count it takes.
+##
+## This behavior is similar to how javascript execute's calls
+##
+## Arguments
+##      [cb] (Callable): The callable to execute
+##      [args] (Array): The arguments to supply to the callable
+## Returns
+##		(Variannt): Returns whatever [cb] returns
+## Example
+##		var cb:Callable = func(a,b,c): return a
+##		GD_.callf(cb, [1])		# returns 1 without errors
+##		GD_.callf(cb, [1,2])	# returns 1 without errors
+##		GD_.callf(cb, [1,2,3])	# returns 1 without errors
+static func callf(cb:Callable, args:Array):
+	return __INTERNAL__.callf(cb,args)
+		
 
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func curry(a=0, b=0, c=0): not_implemented() 

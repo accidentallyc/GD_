@@ -478,6 +478,18 @@ static func is_string(thing, __UNUSED__ = null):
 static func is_symbol(a=0, b=0, c=0): not_implemented()
 static func is_typed_array(a=0, b=0, c=0): not_implemented()
 static func is_undefined(a=0, b=0, c=0): not_implemented()
+
+## Returns true if the version matches the parameters
+## 
+## Arguments
+##      [major] (int|float|String): 4, 4.3, ">4.3"
+## Returns
+##      (Array): Returns the new array of grouped elements.
+## Example
+##     	if GD_.is_version(">4"): print("hello")
+static func is_version(version) -> bool:
+	return __INTERNAL__.is_version(version)
+	
 static func is_weak_map(a=0, b=0, c=0): not_implemented()
 static func is_weak_set(a=0, b=0, c=0): not_implemented()
 
@@ -654,5 +666,3 @@ static func keyed_iterable(thing, from_index = 0):
 		
 	gd_warn("keyed_iterable received a non-collection")
 	return []
-	
-	

@@ -127,12 +127,13 @@ static func difference_by(array_left, array_right, iteratee = GD_.identity):
 	# store processed keyes here
 	var keys_to_remove_map = {}
 	for array_item_2 in array_right:
-		keys_to_remove_map[iter_func.call(array_item_2, null)] = true
+		var key = __INTERNAL__.callf(iter_func,[array_item_2])
+		keys_to_remove_map[key] = true
 		
 	var array_right_max = array_left.size()
 	
 	for left_item in array_left:
-		var left_key = iter_func.call(left_item, null)
+		var left_key = __INTERNAL__.callf(iter_func,[left_item])
 		if not(keys_to_remove_map.has(left_key)):
 			new_array.append(left_item)
 			
