@@ -1,4 +1,4 @@
-[gd_scene load_steps=123 format=3 uid="uid://dmxle5r8u47a8"]
+[gd_scene load_steps=124 format=3 uid="uid://dmxle5r8u47a8"]
 
 [ext_resource type="Script" path="res://godot_simple_unit_test/simpletest_runner.gd" id="1_b4vvq"]
 [ext_resource type="Script" path="res://tests/array/chunk.test.gd" id="2_i2yyx"]
@@ -119,6 +119,7 @@
 [ext_resource type="Script" path="res://tests/string/to_lower.test.gd" id="99_yeurw"]
 [ext_resource type="Script" path="res://tests/string/to_upper.test.gd" id="100_n5k24"]
 [ext_resource type="Script" path="res://tests/words.test.gd" id="102_ggmyw"]
+[ext_resource type="Script" path="res://tests/is_version.test.gd" id="105_2gscy"]
 [ext_resource type="Script" path="res://tests/object/values.test.gd" id="108_fwbfb"]
 [ext_resource type="Script" path="res://tests/object/find_key.test.gd" id="109_hj61t"]
 [ext_resource type="Script" path="res://tests/object/find_last_key.test.gd" id="110_am7s5"]
@@ -444,6 +445,9 @@ script = ExtResource("91_3tyhp")
 
 [node name="To Finite" type="Node" parent="Lang"]
 script = ExtResource("91_ruwto")
+
+[node name="Is Version" type="Node" parent="Lang"]
+script = ExtResource("105_2gscy")
 
 [node name="Math" type="Node" parent="."]
 
