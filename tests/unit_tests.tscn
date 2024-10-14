@@ -431,6 +431,9 @@ script = ExtResource("63_vhodk")
 [node name="Is RegExp" type="Node" parent="Lang"]
 script = ExtResource("90_cuy5l")
 
+[node name="Is Version" type="Node" parent="Lang"]
+script = ExtResource("105_2gscy")
+
 [node name="Lt" type="Node" parent="Lang"]
 script = ExtResource("51_iwkgm")
 
@@ -445,9 +448,6 @@ script = ExtResource("91_3tyhp")
 
 [node name="To Finite" type="Node" parent="Lang"]
 script = ExtResource("91_ruwto")
-
-[node name="Is Version" type="Node" parent="Lang"]
-script = ExtResource("105_2gscy")
 
 [node name="Math" type="Node" parent="."]
 

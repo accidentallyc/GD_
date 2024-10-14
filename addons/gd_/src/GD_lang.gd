@@ -480,7 +480,9 @@ static func is_typed_array(a=0, b=0, c=0): not_implemented()
 static func is_undefined(a=0, b=0, c=0): not_implemented()
 
 ## Returns true if the version matches the parameters
-## 
+##
+## Lodash Equivalent 
+##     None
 ## Arguments
 ##      [major] (int|float|String): 4, 4.3, ">4.3"
 ## Returns

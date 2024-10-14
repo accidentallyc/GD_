@@ -34,8 +34,7 @@ function main() {
         },
         created(){
             requestAnimationFrame(() => {
-                // Force scroll down (cant use scrollIntoView)
-                window.location.href = window.location.href
+                document.querySelector(window.location.hash)?.scrollIntoView()
             })
         },
         components: {
@@ -86,16 +85,16 @@ const ContentComponent = {
         <div class="pad-1">
             <div v-if="d.descp" v-html="d.descp.join(' ')"></div>
 
-            <template v-if="d.equivalent == false">
-                <i>This function has no lodash equivalent</i>
-            </template>
-            <template v-if="d.equivalent != false">
-                <p>
-                    <i>This function is based on lodash's 
-                        <a :href="\`https://lodash.com/docs/4.17.15#\${_.camelCase(d.name)}\`">{{_.camelCase(d.name)}}</a>
-                    </i>
-                </p>
-            </template>
+            <p>
+                <template v-if="d.equivalent == false">
+                    <i>This function is specific to GD_</i>
+                </template>
+                <template v-if="d.equivalent != false">
+                        <i>This function is based on lodash's 
+                            <a :href="\`https://lodash.com/docs/4.17.15#\${_.camelCase(d.name)}\`">{{_.camelCase(d.name)}}</a>
+                        </i>
+                </template>
+            </p>
             
             
             <template v-if="d.arguments">
