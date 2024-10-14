@@ -41,7 +41,7 @@ func it_correctly_identifies_pass_by_copy_or_by_reference():
 		TYPE_PACKED_VECTOR3_ARRAY: make_TYPE_PACKED_VECTOR3_ARRAY,
 		TYPE_PACKED_COLOR_ARRAY: make_TYPE_PACKED_COLOR_ARRAY
 	}
-	
+
 	if GD_.is_version(">=4.3"):
 		var TYPE_PACKED_VECTOR4_ARRAY = TYPE_PACKED_COLOR_ARRAY + 1
 		cases[TYPE_PACKED_VECTOR4_ARRAY] = make_TYPE_PACKED_VECTOR4_ARRAY
@@ -98,4 +98,9 @@ func make_TYPE_PACKED_STRING_ARRAY(): return PackedStringArray()
 func make_TYPE_PACKED_VECTOR2_ARRAY(): return PackedVector2Array()
 func make_TYPE_PACKED_VECTOR3_ARRAY(): return PackedVector3Array()
 func make_TYPE_PACKED_COLOR_ARRAY(): return PackedColorArray()
-func make_TYPE_PACKED_VECTOR4_ARRAY(): return PackedVector4Array()
+func make_TYPE_PACKED_VECTOR4_ARRAY(): 
+	# Need to avoid explicit reference because this only exists in
+	# Godot 4.3 onward
+	var expression = Expression.new()
+	expression.parse("PackedVector4Array()")
+	return expression.execute()

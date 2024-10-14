@@ -422,12 +422,12 @@ class __INTERNAL__:
 		var ver_num:float = info.major + (info.minor)/10.0
 		match typeof(version):
 			TYPE_INT, TYPE_FLOAT:
-				return strict_eq(version,ver_num)
+				return __INTERNAL__.strict_eq(version,ver_num)
 			TYPE_STRING, TYPE_STRING_NAME:
 				# Fastest way without too much memory usage
 				var splat:Array[String]
 				splat.assign(version.split(""))
-				var op:Callable = strict_eq
+				var op:Callable = __INTERNAL__.strict_eq
 				var substr_index = 0
 				var num:float
 				match splat:
