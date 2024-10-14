@@ -47,3 +47,19 @@ func test_string_to_path_should_give_path():
 	expect( __INTERNAL__.string_to_path("a[\'\']") ).equal(["a",""], "Failed at splitting into empty string (single quote)")
 	expect( __INTERNAL__.string_to_path("a[\"\"]") ).equal(["a",""], "Failed at splitting into empty string (double quote)")
 	expect( __INTERNAL__.string_to_path("a/b/c") ).equal(["a","b","c"], "Failed at multi split")
+
+func test_validate_callable():
+	var tmp = func (b): return 2
+	expect(__INTERNAL__.validate_callable(tmp, 5,5))\
+		.equal("Recieved invalid callable, needs to have exactly 5 args but found 1")
+	expect(__INTERNAL__.validate_callable(tmp, 2,3))\
+		.equal("Recieved invalid callable, needs to have between 2-3 args but found 1")
+	
+	tmp = func (a,b,c,d,e): return 2
+	expect(__INTERNAL__.validate_callable(tmp, 5,5)).equal(null)
+
+	tmp = func (a,b): return 2
+	expect(__INTERNAL__.validate_callable(tmp, 2,3)).equal(null)
+	
+	tmp = func (a,b,c): return 2
+	expect(__INTERNAL__.validate_callable(tmp, 2,3)).equal(null)

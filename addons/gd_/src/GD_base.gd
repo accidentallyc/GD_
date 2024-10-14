@@ -453,6 +453,19 @@ class __INTERNAL__:
 	static func callf(cb:Callable, args:Array):
 		args.resize(cb.get_argument_count())
 		return cb.callv(args)
+		
+	static func validate_callable(cb:Callable, min, max):
+		var count = cb.get_argument_count()
+		if min == max:
+			if count != max: return "Recieved invalid callable, needs to have exactly %s args but found %s" % [max,count]
+		if not(min <= count and count <= max):
+			return "Recieved invalid callable, needs to have between %s-%s args but found %s" % [min,max,count]
+		return null
+		
+static func assert_callable(cb:Callable, min:int = INF, max:int = INF):
+	var msg = __INTERNAL__.validate_callable(cb,min,max)
+	if msg is String:
+		assert(false,msg as String)
 
 """
 INTERNAL STUFF
