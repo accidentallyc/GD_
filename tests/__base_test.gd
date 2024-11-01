@@ -51,9 +51,9 @@ func test_string_to_path_should_give_path():
 func test_validate_callable():
 	var tmp = func (b): return 2
 	expect(__INTERNAL__.validate_callable(tmp, 5,5))\
-		.equal("Recieved invalid callable, needs to have exactly 5 args but found 1")
+		.equal("Callable needs to have exactly 5 args but found 1")
 	expect(__INTERNAL__.validate_callable(tmp, 2,3))\
-		.equal("Recieved invalid callable, needs to have between 2-3 args but found 1")
+		.equal("Callable needs to have between 2-3 args but found 1")
 	
 	tmp = func (a,b,c,d,e): return 2
 	expect(__INTERNAL__.validate_callable(tmp, 5,5)).equal(null)
@@ -61,5 +61,6 @@ func test_validate_callable():
 	tmp = func (a,b): return 2
 	expect(__INTERNAL__.validate_callable(tmp, 2,3)).equal(null)
 	
-	tmp = func (a,b,c): return 2
-	expect(__INTERNAL__.validate_callable(tmp, 2,3)).equal(null)
+	tmp = func (a): return 2
+	__INTERNAL__.callf(tmp, [1,2,3,4,5]) 	# no error
+	__INTERNAL__.callf(tmp) 				# no error

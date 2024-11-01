@@ -2,7 +2,7 @@
 # And other random utility functions
 
 static var static_self = self
-static var _EMPTY_ARRAY_ = []
+const _EMPTY_ARRAY_ = []
 
 """
 Reference to original functions
@@ -450,16 +450,21 @@ class __INTERNAL__:
 				return op.call(ver_num, float(version.substr(substr_index)))
 		return false
 		
-	static func callf(cb:Callable, args:Array):
-		args.resize(cb.get_argument_count())
+	
+	static func callf(cb:Callable, args:Array = _EMPTY_ARRAY_):
+		if args:
+			args.resize(cb.get_argument_count())
 		return cb.callv(args)
 		
+	## Validates that the callable's argument count is between min-max
+	## This is used to ensure that before a CB is invoked, it has the
+	## correct number of arguments.
 	static func validate_callable(cb:Callable, min, max):
 		var count = cb.get_argument_count()
 		if min == max:
-			if count != max: return "Recieved invalid callable, needs to have exactly %s args but found %s" % [max,count]
+			if count != max: return "Callable needs to have exactly %s args but found %s" % [max,count]
 		if not(min <= count and count <= max):
-			return "Recieved invalid callable, needs to have between %s-%s args but found %s" % [min,max,count]
+			return "Callable needs to have between %s-%s args but found %s" % [min,max,count]
 		return null
 		
 static func assert_callable(cb:Callable, min:int = INF, max:int = INF):
