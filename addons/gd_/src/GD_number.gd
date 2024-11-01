@@ -35,28 +35,28 @@ static func in_range(a=0, b=0, c=0): not_implemented()
 ## Notes
 ##     >> @TODO guarded method by map, every, filter, mapValues, reject, some
 static func random(lower=0, upper=0, floating:bool=false):
-    # @TODO guarded method by map, every, filter, mapValues, reject, some
-    if not floating:
-        if upper is bool:
-            floating = upper
-            upper = null
-        elif lower is bool:
-            floating = lower
-            lower = null
-        
-    if not lower or lower != lower and not upper:
-        lower = 0
-        upper = 1
-    else:
-        upper = to_finite(upper)
-    
-    if lower > upper:
-        var temp = lower
-        lower = upper
-        upper = temp
-        
-    if floating or lower is float or upper is float:
-        var rand = randf()
-        var rand_length = str(rand).length() - 1
-        return float(min(lower + rand * (upper - lower + (1.0 * pow(10, 1))), upper))
-    return int(lower + floor(randf() * (upper - lower + 1)))
+	# @TODO guarded method by map, every, filter, mapValues, reject, some
+	if not floating:
+		if upper is bool:
+			floating = upper
+			upper = null
+		elif lower is bool:
+			floating = lower
+			lower = null
+		
+	if not lower or lower != lower and not upper:
+		lower = 0
+		upper = 1
+	else:
+		upper = to_finite(upper)
+	
+	if lower > upper:
+		var temp = lower
+		lower = upper
+		upper = temp
+		
+	if floating or lower is float or upper is float:
+		var rand = randf()
+		var rand_length = str(rand).length() - 1
+		return float(min(lower + rand * (upper - lower + (1.0 * pow(10, 1))), upper))
+	return int(lower + floor(randf() * (upper - lower + 1)))

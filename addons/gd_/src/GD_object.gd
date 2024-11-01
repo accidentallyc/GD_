@@ -85,7 +85,7 @@ static func find_key(collection, iteratee = GD_.identity):
     
     for key in keyed_iterable(collection):
         var val = collection[key]
-        if iter_func.call(val,key):
+        if __INTERNAL__.callc(iter_func,[val,key]):
             return key
             
 ## This method is like GD_.find_key except that it iterates over 
@@ -123,7 +123,7 @@ static func find_last_key(collection, iteratee = GD_.identity):
     for i in range(tmp.size()-1,-1,-1):
         var key = tmp[i]
         var val = collection[key]
-        if iter_func.call(val,key):
+        if __INTERNAL__.callc(iter_func,[val,key]):
             return key
 
 static func for_in(a=0, b=0, c=0): not_implemented()
@@ -271,5 +271,3 @@ static func values(collection):
     return []
 
 static func values_in(a=0, b=0, c=0): not_implemented()
-
-

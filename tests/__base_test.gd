@@ -47,3 +47,24 @@ func test_string_to_path_should_give_path():
 	expect( __INTERNAL__.string_to_path("a[\'\']") ).equal(["a",""], "Failed at splitting into empty string (single quote)")
 	expect( __INTERNAL__.string_to_path("a[\"\"]") ).equal(["a",""], "Failed at splitting into empty string (double quote)")
 	expect( __INTERNAL__.string_to_path("a/b/c") ).equal(["a","b","c"], "Failed at multi split")
+
+func test_validate_callable():
+	# Don't execute test on older versions
+	if not __INTERNAL__.is_version(">=4.3"):
+		return
+	
+	var tmp = func (b): return 2
+	expect(__INTERNAL__.validate_callable(tmp, 5,5))\
+		.equal("Callable needs to have exactly 5 args but found 1")
+	expect(__INTERNAL__.validate_callable(tmp, 2,3))\
+		.equal("Callable needs to have between 2-3 args but found 1")
+	
+	tmp = func (a,b,c,d,e): return 2
+	expect(__INTERNAL__.validate_callable(tmp, 5,5)).equal(null)
+
+	tmp = func (a,b): return 2
+	expect(__INTERNAL__.validate_callable(tmp, 2,3)).equal(null)
+	
+	tmp = func (a): return 2
+	__INTERNAL__.callf(tmp, [1,2,3,4,5]) 	# no error
+	__INTERNAL__.callf(tmp) 				# no error

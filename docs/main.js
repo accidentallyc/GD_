@@ -1,5 +1,6 @@
 const {createApp, ref} = Vue
 
+
 function main() {
     for(var group of window.data) {
         
@@ -29,12 +30,15 @@ function main() {
                         }
                     })
                     directoryItems.value = result
-                },150)
+                },150),
             }
         },
         created(){
             requestAnimationFrame(() => {
-                document.querySelector(window.location.hash)?.scrollIntoView()
+                var hash = window.location.hash
+                if(hash) {
+                    document.querySelector(hash)?.scrollIntoView()
+                }
             })
         },
         components: {
@@ -43,6 +47,7 @@ function main() {
         },
         template: `
         <div class="panel-container bg-panel" id="directory">
+            <div class="bg-dark" v-html="test"></div>
             <div class="panel">
                 <input type="text" id="search" @keyup="onSearchDirectory()" v-model="needle" class="bg-dark" placeholder="Search method name..."/>
                 <template v-for="group in directoryItems">
@@ -64,7 +69,8 @@ function main() {
                 <div v-for="(group) in data" :key="group.category" :id="group.category">
                     <h1 class="pad-p5">"<i class="magenta">{{ group.category }}</i>" methods</h1>
                     <template v-for="(d) in group.items" :key="d.name" >
-                        <h1 :id="d.name" class="bg-gray pad-p5">GD_.{{ d.name }}<span class="gray">( {{ d.display_args }} )</span></h1>
+                        <h1 :id="d.name" class="bg-gray pad-p5">
+                            <span class="hljs-literal">GD_</span>.{{ d.name }}<span class="gray">( {{ d.display_args }} )</span></h1>
                     
                         <ContentComponent v-if="!d.is_pending" :d="d" />
                         <div v-if="d.is_pending" class="pad-1">
@@ -81,6 +87,9 @@ function main() {
 
 const ContentComponent = {
     props: ['d'],
+    methods: {
+        asCodeElem: (codeStr) => hljs.highlight(codeStr, {language: 'gdscript'}).value
+    },
     template: `
         <div class="pad-1">
             <div v-if="d.descp" v-html="d.descp.join(' ')"></div>
@@ -116,7 +125,7 @@ const ContentComponent = {
             <template v-if="d.example">
                 <h2>Example</h2>
                 <div class="bg-dark pad-1">
-                    <pre><code><template v-for="(d) in d.example">{{d}}<br/></template></code></pre>
+                    <div v-for="(d) in d.example" v-html="asCodeElem(d)"></div>
                 </div>
             </template>
             

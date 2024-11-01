@@ -186,7 +186,6 @@ func called_n_times(n:int, description: String = &""):
 func value_in(thing, description: String = &""):
 	var result:bool
 	if thing is Dictionary:
-		var r = []
 		result = thing.values().find(thing)
 	else:
 		result = value in thing

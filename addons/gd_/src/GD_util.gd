@@ -26,8 +26,8 @@ static func conforms(a=0, b=0, c=0): not_implemented()
 ##      # => true
 ## 
 static func constant(value = null, _UNUSED_ = null): 
-    return func (a=GD_UNDEF,b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF): 
-        return value
+	return func (a=GD_UNDEF,b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF): 
+		return value
 
 ## Checks value to determine whether a default value should be returned 
 ## in its place. The defaultValue is returned if value is NaN or null
@@ -44,18 +44,18 @@ static func constant(value = null, _UNUSED_ = null):
 ##      GD_.default_to(null, 10)
 ##      # => 10
 static func default_to(a,b): 
-    match typeof(a):
-        TYPE_NIL:
-            return b
-        TYPE_INT:
-            return b if is_nan(a) else a
-        TYPE_FLOAT:
-            return b if is_nan(a) else a
-        TYPE_OBJECT:
-            return b if GD_UNDEF.is_undefined(a) or not(a) else a
-    return a
-    
-    
+	match typeof(a):
+		TYPE_NIL:
+			return b
+		TYPE_INT:
+			return b if is_nan(a) else a
+		TYPE_FLOAT:
+			return b if is_nan(a) else a
+		TYPE_OBJECT:
+			return b if GD_UNDEF.is_undefined(a) or not(a) else a
+	return a
+	
+	
 static func flow(a=0, b=0, c=0): not_implemented()
 static func flow_right(a=0, b=0, c=0): not_implemented()
 
@@ -71,8 +71,8 @@ static func flow_right(a=0, b=0, c=0): not_implemented()
 ##      print(is_same(GD_.identity(object),object))
 ##      # => true
 static func identity(value, _unused = null): 
-    return value
-    
+	return value
+	
 ## Converts shorthands to callables for use in other funcs
 ##
 ## Arguments
@@ -97,7 +97,7 @@ static func identity(value, _unused = null):
 ##      GD_.map(users, GD_.iteratee('user'))
 ##      # => ['barney', 'fred']
 static func iteratee(iteratee_val):
-    return __INTERNAL__.iteratee(iteratee_val)
+	return __INTERNAL__.iteratee(iteratee_val)
 
 ## Creates a function that perform a comparison between a 
 ## given object and source, returning true if the given object has equivalent 
@@ -116,7 +116,7 @@ static func iteratee(iteratee_val):
 ##      GD_.filter(objects, GD_.matches({ 'a': 4, 'c': 6 }))
 ##      # => [{ 'a': 4, 'b': 5, 'c': 6 }]
 static func matches(dict:Dictionary) -> Callable:
-    return __INTERNAL__.matches(dict)
+	return __INTERNAL__.matches(dict)
 
 
 ## Creates a function that performs a partial deep comparison between 
@@ -139,9 +139,9 @@ static func matches(dict:Dictionary) -> Callable:
 ##      GD_.find(objects, GD_.matches_property('a', 4))
 ##      # => { 'a': 4, 'b': 5, 'c': 6 }
 static func matches_property(string:String, v):
-    return __INTERNAL__.matches_property(string, v)
-        
-        
+	return __INTERNAL__.matches_property(string, v)
+		
+		
 static func method(a=0, b=0, c=0): not_implemented()
 static func method_of(a=0, b=0, c=0): not_implemented()
 static func mixin(a=0, b=0, c=0): not_implemented()
@@ -155,8 +155,8 @@ static func no_conflict(a=0, b=0, c=0): not_implemented()
 ##      GD_.times(2, GD_.noop)
 ##      # => [null, null]
 static func noop(a=0,b=0,c=0,d=0,e=0,f=0,g=0,h=0,i=0,j=0,k=0,l=0,m=0,n=0,o=0,p=0): 
-    return null
-            
+	return null
+			
 static func nth_arg(a=0, b=0, c=0): not_implemented()
 static func over(a=0, b=0, c=0): not_implemented()
 static func over_every(a=0, b=0, c=0): not_implemented()
@@ -184,9 +184,9 @@ static func over_some(a=0, b=0, c=0): not_implemented()
 ##     fn.call(node) 
 ##     # => 15
 static func property(path):
-    return __INTERNAL__.property(path)
-    
-        
+	return __INTERNAL__.property(path)
+	
+		
 static func property_of(a=0, b=0, c=0): not_implemented()
 
 ##  @TODO guarded method by map, every, filter, mapValues, reject, some
@@ -203,7 +203,7 @@ static func stub_false(a=0, b=0, c=0): not_implemented()
 static func stub_object(a=0, b=0, c=0): not_implemented()
 
 static func stub_string(a=0, b=0, c=0): not_implemented()
-    
+	
 static func stub_true(a=0, b=0, c=0): not_implemented()
 
 ## Invokes the iteratee n times, returning an array of the results of 
@@ -221,14 +221,14 @@ static func stub_true(a=0, b=0, c=0): not_implemented()
 ##      GD_.times(4, func (a,b): return 0)
 ##      # => [0, 0, 0, 0]
 static func times(n=0, iteratee = GD_.identity): 
-    var ary = []
-    var iter_func = iteratee(iteratee)
-    
-    for i in range(n):
-        ary.append(iter_func.call(i,null))
-        
-    return ary
-    
+	var ary = []
+	var iter_func = iteratee(iteratee)
+	
+	for i in range(n):
+		ary.append(__INTERNAL__.callc(iter_func,[i]))
+		
+	return ary
+	
 static func to_path(a=0, b=0, c=0): not_implemented()
 
 ## Generates a unique ID. If prefix is given, the ID is appended to it.
@@ -245,5 +245,5 @@ static func to_path(a=0, b=0, c=0): not_implemented()
 ##      GD_.unique_id()
 ##      # => '105'
 static func unique_id(prefix=&""): 
-    __INTERNAL__.id_ctr += 1
-    return str(prefix,__INTERNAL__.id_ctr)
+	__INTERNAL__.id_ctr += 1
+	return str(prefix,__INTERNAL__.id_ctr)

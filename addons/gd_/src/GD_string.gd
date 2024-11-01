@@ -13,8 +13,8 @@ static func escape_reg_exp(): not_implemented()
 static func kebab_case(): not_implemented()
 
 static func lower_case(str:String, _UNUSED_ = null): not_implemented()
-    
-    
+	
+	
 static func lower_first(): not_implemented()
 static func pad(): not_implemented()
 static func pad_end(): not_implemented()
@@ -53,7 +53,7 @@ static func template(): not_implemented()
 ## Notes
 ##     >> Though similar this is different from GD_.lower_case
 static func to_lower(a:String, _UNUSED_ = null): 
-    return a.to_lower()
+	return a.to_lower()
  
 ## Wrapper for "string".to_upper().
 ## Arguments
@@ -72,7 +72,7 @@ static func to_lower(a:String, _UNUSED_ = null):
 ## Notes
 ##     >> Though similar this is different from GD_.upper_case   
 static func to_upper(a:String, _UNUSED_ = null):
-    return a.to_upper()
+	return a.to_upper()
 
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func trim(): not_implemented() 
@@ -108,11 +108,11 @@ static func upper_first(): not_implemented()
 ##          match most uses cases. Please open a ticket if you find any
 ##          cases where the function does not correctly split it into words
 static func words(str, pattern = null): 
-    var rx:RegEx = __INTERNAL__.rx_words 
-    if pattern != null: 
-        rx = pattern if pattern is RegEx else RegEx.create_from_string(pattern)
-    
-    var results = []
-    for result in rx.search_all(str):
-        results.push_back(result.get_string())
-    return results
+	var rx:RegEx = __INTERNAL__.rx_words 
+	if pattern != null: 
+		rx = pattern if pattern is RegEx else RegEx.create_from_string(pattern)
+	
+	var results = []
+	for result in rx.search_all(str):
+		results.push_back(result.get_string())
+	return results
