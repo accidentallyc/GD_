@@ -25,18 +25,18 @@ CATEGORY: Array
 ##      https://www.reddit.com/r/godot/comments/e6ae27/comment/f9p3c2e
 ##      >> @TODO guarded method by map, every, filter, mapValues, reject, some
 static func chunk(array:Array,size=1): 
-	var new_array = []
-	var i = 0
-	var j = -1
-	for item in array:
-		if i % size == 0:
-			new_array.append([])
-			j += 1
-		new_array[j].append(item)
-		i += 1
-	return new_array
-				
-				
+    var new_array = []
+    var i = 0
+    var j = -1
+    for item in array:
+        if i % size == 0:
+            new_array.append([])
+            j += 1
+        new_array[j].append(item)
+        i += 1
+    return new_array
+                
+                
 ## Creates an array with all falsey values removed. 
 ## The falsiness is determined by a basic if statement.
 ## The values false, null, 0, "", [], and {} are falsey.
@@ -50,13 +50,13 @@ static func chunk(array:Array,size=1):
 ##      GD_.compact([0, 1, false, 2, '', 3])
 ##      # => [1, 2, 3]
 static func compact(array:Array, _UNUSED_ = null):
-	var new_array = []
-	for item in array:
-		if item:
-			new_array.append(item)
-	return new_array
-		
-		
+    var new_array = []
+    for item in array:
+        if item:
+            new_array.append(item)
+    return new_array
+        
+        
 ## Creates a new array concatenating array with any additional arrays and/or values.
 ## This func can receive up to 10 concat values. Hopefully thats enough
 ##
@@ -75,9 +75,9 @@ static func compact(array:Array, _UNUSED_ = null):
 ##      print(array)
 ##      # => [1]
 static func concat(array:Array, a=GD_UNDEF,b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF,k=GD_UNDEF):
-	return __INTERNAL__.base_concat(array,[a,b,c,d,e,f,g,h,i,j,k])
-				
-			
+    return __INTERNAL__.base_concat(array,[a,b,c,d,e,f,g,h,i,j,k])
+                
+            
 ## Creates an array of array values not included in the other given arrays 
 ## using == for comparisons. The order and references of result values 
 ## are determined by the first array.
@@ -91,13 +91,13 @@ static func concat(array:Array, a=GD_UNDEF,b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD
 ##      GD_.difference([2, 1], [2, 3])
 ##      # => [1]
 static func difference(array_left:Array, array_right:Array): 	
-	var new_array = []
-	new_array.append_array(array_left)
-	
-	for array_item_2 in array_right:
-		new_array.erase(array_item_2)
-		
-	return new_array
+    var new_array = []
+    new_array.append_array(array_left)
+    
+    for array_item_2 in array_right:
+        new_array.erase(array_item_2)
+        
+    return new_array
 
 ## This method is like GD_.difference except that it accepts iteratee which 
 ## is invoked for each element of array and values to generate the criterion 
@@ -119,27 +119,27 @@ static func difference(array_left:Array, array_right:Array):
 ##      GD_.difference_by([{ 'x': 2 }, { 'x': 1 }], [{ 'x': 1 }], 'x')
 ##      # => [{ 'x': 2 }]
 static func difference_by(array_left, array_right, iteratee = GD_.identity): 
-	var iter_func = iteratee(iteratee)
-		
-	# new return array
-	var new_array = []
-	
-	# store processed keyes here
-	var keys_to_remove_map = {}
-	for array_item_2 in array_right:
-		var key = __INTERNAL__.callc(iter_func,[array_item_2])
-		keys_to_remove_map[key] = true
-		
-	var array_right_max = array_left.size()
-	
-	for left_item in array_left:
-		var left_key = __INTERNAL__.callc(iter_func,[left_item])
-		if not(keys_to_remove_map.has(left_key)):
-			new_array.append(left_item)
-			
-	return new_array
-	
-	
+    var iter_func = iteratee(iteratee)
+        
+    # new return array
+    var new_array = []
+    
+    # store processed keyes here
+    var keys_to_remove_map = {}
+    for array_item_2 in array_right:
+        var key = __INTERNAL__.callc(iter_func,[array_item_2])
+        keys_to_remove_map[key] = true
+        
+    var array_right_max = array_left.size()
+    
+    for left_item in array_left:
+        var left_key = __INTERNAL__.callc(iter_func,[left_item])
+        if not(keys_to_remove_map.has(left_key)):
+            new_array.append(left_item)
+            
+    return new_array
+    
+    
 ## This method is like GD_.difference except that it accepts comparator 
 ## which is invoked to compare elements of array to values. 
 ## The order and references of result values are determined by the first array. 
@@ -157,18 +157,18 @@ static func difference_by(array_left, array_right, iteratee = GD_.identity):
 ##      GD_.difference_with(objects, [{ 'x': 1, 'y': 2 }], GD_.is_equal)
 ##      # => [{ 'x': 2, 'y': 1 }]
 static func difference_with(array_left, array_right, comparator:Callable): 
-	var new_array = []
-	var has_match = false
-	for left_item in array_left:
-		has_match = false
-		for right_item in array_right:
-			if __INTERNAL__.callc(comparator,[left_item,right_item]):
-				has_match = true
-				break
-		if not(has_match):
-			new_array.append(left_item)
-	return new_array
-	
+    var new_array = []
+    var has_match = false
+    for left_item in array_left:
+        has_match = false
+        for right_item in array_right:
+            if __INTERNAL__.callc(comparator,[left_item,right_item]):
+                has_match = true
+                break
+        if not(has_match):
+            new_array.append(left_item)
+    return new_array
+    
 
 ## Creates a slice of array with n elements dropped from the beginning.
 ##
@@ -191,15 +191,15 @@ static func difference_with(array_left, array_right, comparator:Callable):
 ##      # => [1, 2, 3]
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func drop(array:Array, n:int=1): 
-	var size = array.size()
-	var new_array = []
-	for i in range(n,size):
-		new_array.append(array[i])
-		i += 1
-		
-	return new_array
-	
-	
+    var size = array.size()
+    var new_array = []
+    for i in range(n,size):
+        new_array.append(array[i])
+        i += 1
+        
+    return new_array
+    
+    
 ## Creates a slice of array with n elements dropped from the beginning.
 ## 
 ## Arguments
@@ -221,15 +221,15 @@ static func drop(array:Array, n:int=1):
 ##      # => [1, 2, 3]
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func drop_right(array:Array, n:int=1): 
-	var size = array.size() - n
-	var new_array = []
-	var i = 0
-	while i < size:
-		new_array.append(array[i])
-		i += 1
-		
-	return new_array
-	
+    var size = array.size() - n
+    var new_array = []
+    var i = 0
+    while i < size:
+        new_array.append(array[i])
+        i += 1
+        
+    return new_array
+    
 
 ## Creates a slice of array excluding elements dropped from the end. 
 ## Elements are dropped until predicate returns falsey. 
@@ -262,24 +262,24 @@ static func drop_right(array:Array, n:int=1):
 ##      GD_.drop_right_while(users, 'active')
 ##      # => objects for ['barney', 'fred', 'pebbles']
 static func drop_right_while(array:Array, predicate = GD_.identity):
-	var new_array = []
-	var n = array.size()
-	var iter_func = iteratee(predicate)
-	while n >= 0:
-		n -= 1
-		
-		var result = __INTERNAL__.callc(iter_func,[array[n],n])
-		if not(__INTERNAL__.callc(iter_func,[array[n],n])):
-			break
-		
-	var i = 0
-	while i <= n:
-		new_array.append(array[i])
-		i += 1
-		
-	return new_array
-	
-	
+    var new_array = []
+    var n = array.size()
+    var iter_func = iteratee(predicate)
+    while n >= 0:
+        n -= 1
+        
+        var result = __INTERNAL__.callc(iter_func,[array[n],n])
+        if not(__INTERNAL__.callc(iter_func,[array[n],n])):
+            break
+        
+    var i = 0
+    while i <= n:
+        new_array.append(array[i])
+        i += 1
+        
+    return new_array
+    
+    
 ## Creates a slice of array excluding elements dropped from the beginning. 
 ## Elements are dropped until predicate returns falsey. 
 ## The predicate is invoked with two arguments: (value, index).
@@ -311,24 +311,24 @@ static func drop_right_while(array:Array, predicate = GD_.identity):
 ##      GD_.drop_while(users, 'active')
 ##      # => objects for ['barney', 'fred', 'pebbles']
 static func drop_while(array:Array, predicate = GD_.identity):
-	var new_array = []
-	var size = array.size()
-	var n = -1
-	var iter_func = iteratee(predicate)
-	while n < size:
-		n += 1
-		var result = __INTERNAL__.callc(iter_func,[array[n],n])
-		if not(__INTERNAL__.callc(iter_func,[array[n],n])):
-			break
-		
-	var i = n
-	while i < size:
-		new_array.append(array[i])
-		i += 1
-		
-	return new_array
-	
-	
+    var new_array = []
+    var size = array.size()
+    var n = -1
+    var iter_func = iteratee(predicate)
+    while n < size:
+        n += 1
+        var result = __INTERNAL__.callc(iter_func,[array[n],n])
+        if not(__INTERNAL__.callc(iter_func,[array[n],n])):
+            break
+        
+    var i = n
+    while i < size:
+        new_array.append(array[i])
+        i += 1
+        
+    return new_array
+    
+    
 ## Fills elements of array with value from start up to, but not including, end.
 ## Note: This method mutates array.
 ##
@@ -353,15 +353,15 @@ static func drop_while(array:Array, predicate = GD_.identity):
 ##      # => [4, '*', '*', 10]
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func fill(array:Array, value, start=0, end=-1): 
-	if end == -1 or end > array.size():
-		end = array.size()
+    if end == -1 or end > array.size():
+        end = array.size()
 
-	for i in range(start, end):
-		array[i] = value
+    for i in range(start, end):
+        array[i] = value
 
-	return array
-	
-	
+    return array
+    
+    
 ## This method is like GD_.find except that it returns the index of the first 
 ## element predicate returns truthy for instead of the element itself.
 ##
@@ -393,13 +393,13 @@ static func fill(array:Array, value, start=0, end=-1):
 ##      GD_.find_index(users, 'active')
 ##      # => 2
 static func find_index(array:Array, predicate = GD_.identity, from_index = 0):
-	var iteratee = iteratee(predicate)
-	for i in range(from_index, array.size()):
-		if __INTERNAL__.callc(iteratee,[array[i], null]):
-			return i
-	return -1
-	
-	
+    var iteratee = iteratee(predicate)
+    for i in range(from_index, array.size()):
+        if __INTERNAL__.callc(iteratee,[array[i], null]):
+            return i
+    return -1
+    
+    
 ## This method is like GD_.findIndex except that it iterates over 
 ## elements of collection from right to left.
 ##
@@ -431,20 +431,20 @@ static func find_index(array:Array, predicate = GD_.identity, from_index = 0):
 ##      GD_.find_last_index(users, 'active')
 ##      # => 0
 static func find_last_index(array:Array, predicate = GD_.identity, from_index=-1):
-	if from_index == -1 or from_index >= array.size():
-		from_index = array.size() - 1
+    if from_index == -1 or from_index >= array.size():
+        from_index = array.size() - 1
 
-	var iter_func = iteratee(predicate)
-	for i in range(from_index, -1, -1):
-		if __INTERNAL__.callc(iter_func,[array[i]]):
-			return i
-	return -1
-	
-	
+    var iter_func = iteratee(predicate)
+    for i in range(from_index, -1, -1):
+        if __INTERNAL__.callc(iter_func,[array[i]]):
+            return i
+    return -1
+    
+    
 ## Alias to head
 static func first(array):
-	gd_warn("GD_.first is an alias, prefer GD_.head to avoid overhead")
-	return head(array)
+    gd_warn("GD_.first is an alias, prefer GD_.head to avoid overhead")
+    return head(array)
 
 
 ## Flattens array a single level deep.
@@ -457,8 +457,8 @@ static func first(array):
 ##      GD_.flatten([1, [2, [3, [4]], 5]])
 ##      # => [1, 2, [3, [4]], 5]
 static func flatten(array:Array): 
-	return flatten_depth(array, 1)
-	
+    return flatten_depth(array, 1)
+    
 
 ## Recursively flattens array.
 ##
@@ -470,8 +470,8 @@ static func flatten(array:Array):
 ##     GD_.flatten_deep([1, [2, [3, [4]], 5]])
 ##     # => [1, 2, 3, 4, 5]
 static func flatten_deep(array:Array):
-	return flatten_depth(array, INF)
-	
+    return flatten_depth(array, INF)
+    
 
 ## Recursively flatten array up to depth times.
 ##
@@ -489,28 +489,28 @@ static func flatten_deep(array:Array):
 ##      GD_.flatten_depth(array, 2)
 ##      # => [1, 2, 3, [4], 5]
 static func flatten_depth(array:Array, depth = 1):
-	var new_array = array.duplicate()
-	var current_depth = 0
+    var new_array = array.duplicate()
+    var current_depth = 0
 
-	while current_depth < depth:
-		var is_flat = true
-		var tmp = []
+    while current_depth < depth:
+        var is_flat = true
+        var tmp = []
 
-		for item in new_array:
-			if item is Array:
-				tmp.append_array(item)
-				is_flat = false
-			else:
-				tmp.append(item)
-		
-		new_array = tmp
-		if is_flat:
-			break
-		current_depth += 1
+        for item in new_array:
+            if item is Array:
+                tmp.append_array(item)
+                is_flat = false
+            else:
+                tmp.append(item)
+        
+        new_array = tmp
+        if is_flat:
+            break
+        current_depth += 1
 
-	return new_array
-	
-	
+    return new_array
+    
+    
 ## The inverse of GD_.to_pairs.
 ## This method returns an object composed from key-value pairs.
 ##
@@ -522,16 +522,16 @@ static func flatten_depth(array:Array, depth = 1):
 ##     GD_.from_pairs([['a', 1], ['b', 2]])
 ##     # => { 'a': 1, 'b': 2 }
 static func from_pairs(array:Array): 
-	var obj = {}
-	for i in array:
-		if not(i is Array) or i.size() != 2:
-			gd_warn("GD_.from_pairs entry must follow this [k,v]. Received %s instead" % i )
-			continue
-			
-		obj[i[0]] = i[1]
-	return obj
-	
-	
+    var obj = {}
+    for i in array:
+        if not(i is Array) or i.size() != 2:
+            gd_warn("GD_.from_pairs entry must follow this [k,v]. Received %s instead" % i )
+            continue
+            
+        obj[i[0]] = i[1]
+    return obj
+    
+    
 ## Gets the first element of array.
 ## 
 ## Aliases
@@ -547,8 +547,8 @@ static func from_pairs(array:Array):
 ##     GD_.head([])
 ##     # => null
 static func head(array:Array):
-	return array[0] if array.size() else null
-	
+    return array[0] if array.size() else null
+    
 
 ## Gets the index at which the first occurrence of value is found in array 
 ## using == for equality comparisons. If fromIndex is negative, 
@@ -568,15 +568,15 @@ static func head(array:Array):
 ##     GD_.index_of([1, 2, 1, 2], 2, 2)
 ##     # => 3
 static func index_of(array:Array, search, from_index = 0 ): 
-	var size = array.size()
-	if from_index < 0:
-		from_index = max(size + from_index, 0)
-	
-	for i in range(from_index, size):
-		if array[i] == search:
-			return i
-	return -1
-	
+    var size = array.size()
+    if from_index < 0:
+        from_index = max(size + from_index, 0)
+    
+    for i in range(from_index, size):
+        if array[i] == search:
+            return i
+    return -1
+    
 ## Gets all but the last element of array.
 ##
 ## Arguments
@@ -587,10 +587,10 @@ static func index_of(array:Array, search, from_index = 0 ):
 ##     GD_.initial([1, 2, 3])
 ##     # => [1, 2]
 static func initial(array:Array):
-	var copy = array.duplicate() 
-	copy.pop_back()
-	return copy
-	
+    var copy = array.duplicate() 
+    copy.pop_back()
+    return copy
+    
 
 ## Creates an array of unique values that are included in all given 
 ## arrays using == for equality comparisons. The order and references of 
@@ -604,15 +604,15 @@ static func initial(array:Array):
 ##      GD_.intersection([2, 1], [2, 3])
 ##      # => [2]
 static func intersection(array_1:Array,array_2:Array,array_3 = null,array_4 = null,array_5 = null,array_6 = null,array_7 = null,array_8 = null,array_9 = null,array_10 = null,array_11 = null):
-	if not(array_1 is Array):
-		gd_warn("GD_.intersection received a non-array type value")
-		return null
-	if not array_2 is Array:
-		gd_warn("GD_.intersection received a non-array type value for array_2")
-		return null
-	return intersection_with(array_1,array_2,array_3,array_4,array_5,array_6,array_7,array_8,array_9,array_10,array_11)
+    if not(array_1 is Array):
+        gd_warn("GD_.intersection received a non-array type value")
+        return null
+    if not array_2 is Array:
+        gd_warn("GD_.intersection received a non-array type value for array_2")
+        return null
+    return intersection_with(array_1,array_2,array_3,array_4,array_5,array_6,array_7,array_8,array_9,array_10,array_11)
 
-	
+    
 ## This method is like GD_.intersection except that it accepts iteratee 
 ## which is invoked for each element of each arrays to generate the 
 ## criterion by which they're compared. The order and references of result 
@@ -632,38 +632,38 @@ static func intersection(array_1:Array,array_2:Array,array_3 = null,array_4 = nu
 ##     GD_.intersection_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
 ##     # => [{ 'x': 1 }]
 static func intersection_by(array_1:Array, array_2:Array, array_3 = null, array_4 = null, array_5 = null, array_6 = null, array_7 = null, array_8 = null, array_9 = null, array_10 = null):
-	if not array_1 is Array:
-		gd_warn("GD_.intersection_by received a non-array type value for array_1")
-		return null
-	if not array_2 is Array:
-		gd_warn("GD_.intersection_by received a non-array type value for array_2")
-		return null
+    if not array_1 is Array:
+        gd_warn("GD_.intersection_by received a non-array type value for array_1")
+        return null
+    if not array_2 is Array:
+        gd_warn("GD_.intersection_by received a non-array type value for array_2")
+        return null
 
-	var arrays = [array_2, array_3, array_4, array_5, array_6, array_7, array_8, array_9, array_10]
-	var iteratee = GD_.identity
-	var max = 1
+    var arrays = [array_2, array_3, array_4, array_5, array_6, array_7, array_8, array_9, array_10]
+    var iteratee = GD_.identity
+    var max = 1
 
-	for i in arrays.size():
-		max = i
-		if arrays[i] == null:
-			# Previous is the iteratee
-			iteratee = iteratee(arrays[i - 1])
-			max -= 1
-			break
+    for i in arrays.size():
+        max = i
+        if arrays[i] == null:
+            # Previous is the iteratee
+            iteratee = iteratee(arrays[i - 1])
+            max -= 1
+            break
 
-	var left_array = array_1
-	for i in max:
-		var right_array = arrays[i]
-		var tmp = []
-		for left_value in left_array:
-			var transformed_left = __INTERNAL__.callc(iteratee,[left_value])
-			for right_value in right_array:
-				var transformed_right = __INTERNAL__.callc(iteratee,[right_value])
-				if transformed_left == transformed_right and left_value not in tmp:
-					tmp.append(left_value)
-					break
-		left_array = tmp
-	return left_array
+    var left_array = array_1
+    for i in max:
+        var right_array = arrays[i]
+        var tmp = []
+        for left_value in left_array:
+            var transformed_left = __INTERNAL__.callc(iteratee,[left_value])
+            for right_value in right_array:
+                var transformed_right = __INTERNAL__.callc(iteratee,[right_value])
+                if transformed_left == transformed_right and left_value not in tmp:
+                    tmp.append(left_value)
+                    break
+        left_array = tmp
+    return left_array
 
 
 ## This method is like GD_.intersection except that it accepts comparator 
@@ -684,43 +684,43 @@ static func intersection_by(array_1:Array, array_2:Array, array_3 = null, array_
 ##      GD_.intersection_with(objects, others, GD_.is_equal)
 ##      # => [{ 'x': 1, 'y': 2 }]
 static func intersection_with(array_1:Array,array_2:Array,array_3 = null,array_4 = null,array_5 = null,array_6 = null,array_7 = null,array_8 = null,array_9 = null,array_10 = null,array_11 = null):
-	if not(array_1 is Array):
-		gd_warn("GD_.intersection_with received a non-array type value")
-		return null
-	if not(array_2 is Array):
-		gd_warn("GD_.intersection_with received a non-array type value")
-		return null
-		
-	var arrays = [array_2,array_3, array_4,array_5,array_6,array_7,
-			array_8,array_9,array_10,array_11 ]
-		
-	var comparator = GD_.is_equal
-	var max = 1
-	for i in arrays.size():
-		max = i
-		if arrays[i] is Callable:
-			comparator = arrays[i]
-			break
-		if arrays[i] == null:
-			break
-			
-	var all = []
-	for i in max:
-		all.append_array(arrays[i])
-	
-	var left_array = array_1
-	for i in max:
-		var right_array = arrays[i]
-		var tmp = []
-		for left_value in left_array:
-			for right_value in right_array:
-				if __INTERNAL__.callc(comparator,[left_value,right_value]) and left_value not in tmp:
-					tmp.append(left_value)
-					break
-		left_array = tmp
-	return left_array
-	
-	
+    if not(array_1 is Array):
+        gd_warn("GD_.intersection_with received a non-array type value")
+        return null
+    if not(array_2 is Array):
+        gd_warn("GD_.intersection_with received a non-array type value")
+        return null
+        
+    var arrays = [array_2,array_3, array_4,array_5,array_6,array_7,
+            array_8,array_9,array_10,array_11 ]
+        
+    var comparator = GD_.is_equal
+    var max = 1
+    for i in arrays.size():
+        max = i
+        if arrays[i] is Callable:
+            comparator = arrays[i]
+            break
+        if arrays[i] == null:
+            break
+            
+    var all = []
+    for i in max:
+        all.append_array(arrays[i])
+    
+    var left_array = array_1
+    for i in max:
+        var right_array = arrays[i]
+        var tmp = []
+        for left_value in left_array:
+            for right_value in right_array:
+                if __INTERNAL__.callc(comparator,[left_value,right_value]) and left_value not in tmp:
+                    tmp.append(left_value)
+                    break
+        left_array = tmp
+    return left_array
+    
+    
 ## Converts all elements in array into a string separated by separator.
 ## 
 ## Arguments
@@ -732,9 +732,9 @@ static func intersection_with(array_1:Array,array_2:Array,array_3 = null,array_4
 ##      GD_.join(['a', 'b', 'c'], '~')
 ##      # => 'a~b~c'
 static func join(array:Array, separator=&','):
-	return separator.join(array)
-		
-		
+    return separator.join(array)
+        
+        
 ## Gets the last element of array.
 ##
 ## Arguments
@@ -745,9 +745,9 @@ static func join(array:Array, separator=&','):
 ##      GD_.last([1, 2, 3])
 ##      # => 3
 static func last(array:Array):
-	return array.back()
-	
-	
+    return array.back()
+    
+    
 ## This method is like GD_.index_of except that it iterates 
 ## over elements of array from right to left.
 ##
@@ -765,16 +765,16 @@ static func last(array:Array):
 ##      GD_.last_index_of([1, 2, 1, 2], 2, 2)
 ##      # => 1
 static func last_index_of(array:Array, search, from_index = null ): 
-	var size = array.size()
-	from_index = super.default_to(from_index, size -1)
-	if from_index < 0:
-		from_index = max(size + from_index, 0)
-	
-	for i in range(from_index, -1, -1):
-		if array[i] == search:
-			return i
-	return -1
-	
+    var size = array.size()
+    from_index = super.default_to(from_index, size -1)
+    if from_index < 0:
+        from_index = max(size + from_index, 0)
+    
+    for i in range(from_index, -1, -1):
+        if array[i] == search:
+            return i
+    return -1
+    
 
 ## Gets the element at index n of array. 
 ## If n is negative, the nth element from the end is returned.
@@ -793,13 +793,13 @@ static func last_index_of(array:Array, search, from_index = null ):
 ##      GD_.nth(array, -2)
 ##      # => 'c'
 static func nth(array:Array, n=0):
-	var count = array.size()
-	var index =  count + n  if n < 0 else n
-	if index >= 0 and index < count:
-		return array[index]
-	return null
-		
-		
+    var count = array.size()
+    var index =  count + n  if n < 0 else n
+    if index >= 0 and index < count:
+        return array[index]
+    return null
+        
+        
 ## Removes all given values from array using == for equality comparisons.
 ##
 ## Note: Unlike _.without, this method mutates array. 
@@ -817,9 +817,9 @@ static func nth(array:Array, n=0):
 ##      print(array)
 ##      # => ['b', 'b']
 static func pull(array:Array, a=GD_UNDEF,b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF): 
-	var to_remove = super.filter([a,b,c,d,e,f,g,h,i,j], GD_UNDEF.is_defined)
-	return pull_all_by(array, to_remove)
-	
+    var to_remove = super.filter([a,b,c,d,e,f,g,h,i,j], GD_UNDEF.is_defined)
+    return pull_all_by(array, to_remove)
+    
 
 ## This method is like _.pull except that it accepts an array of values to remove.
 ## Note: Unlike _.difference, this method mutates array.
@@ -836,8 +836,8 @@ static func pull(array:Array, a=GD_UNDEF,b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_U
 ##      print(array)
 ##      # => ['b', 'b']
 static func pull_all(array:Array, values_to_remove:Array = _EMPTY_ARRAY_):           
-	return pull_all_by(array, values_to_remove)
-	
+    return pull_all_by(array, values_to_remove)
+    
 ## This method is like GD_.pull_all except that it accepts iteratee 
 ## which is invoked for each element of array and values to generate 
 ## the criterion by which they're compared. The iteratee is invoked 
@@ -856,26 +856,26 @@ static func pull_all(array:Array, values_to_remove:Array = _EMPTY_ARRAY_):
 ##      GD_.pull_all_by(array, [{ 'x': 1 }, { 'x': 3 }], 'x')
 ##      # => [{ 'x': 2 }]
 static func pull_all_by(array:Array, values_to_remove = _EMPTY_ARRAY_, iteratee = GD_.identity):
-	values_to_remove = super.cast_array(values_to_remove)
-	
-	var iter_func = iteratee(iteratee)
-	values_to_remove = values_to_remove \
-			if iter_func == GD_.identity \
-			else super.map(values_to_remove,iter_func)
-	
-	var index = 0
-	var max = array.size()
-	while index < max:
-		if __INTERNAL__.callc(iter_func,[array[index]]) in values_to_remove:
-			array.remove_at(index)
-			max -= 1
-		else:
-			# we only move 1 up  when theres no re-index inovlved 
-			# because items are shifted backward
-			index += 1
-						
-	return array
-	
+    values_to_remove = super.cast_array(values_to_remove)
+    
+    var iter_func = iteratee(iteratee)
+    values_to_remove = values_to_remove \
+            if iter_func == GD_.identity \
+            else super.map(values_to_remove,iter_func)
+    
+    var index = 0
+    var max = array.size()
+    while index < max:
+        if __INTERNAL__.callc(iter_func,[array[index]]) in values_to_remove:
+            array.remove_at(index)
+            max -= 1
+        else:
+            # we only move 1 up  when theres no re-index inovlved 
+            # because items are shifted backward
+            index += 1
+                        
+    return array
+    
 ## This method is like GD_.pull_all except that it accepts comparator which 
 ## is invoked to compare elements of array to values. The comparator is 
 ## invoked with two arguments: (arrVal, othVal).
@@ -894,28 +894,28 @@ static func pull_all_by(array:Array, values_to_remove = _EMPTY_ARRAY_, iteratee 
 ##      print(array)
 ##      # => [{ 'x': 1, 'y': 2 }, { 'x': 5, 'y': 6 }]
 static func pull_all_with(array:Array, values_to_remove, comparator:Callable = GD_.is_equal):
-	values_to_remove = cast_array(values_to_remove)
-	
-	var index = 0
-	var max = array.size()
-	while index < max:
-		var should_remove = false
-		
-		for removable in values_to_remove:
-			if __INTERNAL__.callc(comparator,[array[index], removable]):
-				should_remove = true
-				break
-				
-		if should_remove:
-				array.remove_at(index)
-				max -= 1
-		else:
-			# we only move 1 up  when theres no re-index inovlved 
-			# because items are shifted backward
-			index += 1
-						
-	return array
-	
+    values_to_remove = cast_array(values_to_remove)
+    
+    var index = 0
+    var max = array.size()
+    while index < max:
+        var should_remove = false
+        
+        for removable in values_to_remove:
+            if __INTERNAL__.callc(comparator,[array[index], removable]):
+                should_remove = true
+                break
+                
+        if should_remove:
+                array.remove_at(index)
+                max -= 1
+        else:
+            # we only move 1 up  when theres no re-index inovlved 
+            # because items are shifted backward
+            index += 1
+                        
+    return array
+    
 
 ## Removes elements from array corresponding to indexes and returns 
 ## an array of removed elements.
@@ -937,17 +937,17 @@ static func pull_all_with(array:Array, values_to_remove, comparator:Callable = G
 ##      print(pulled)
 ##      # => ['b', 'd']
 static func pull_at(array:Array, values_to_remove:Array):
-	var array_size = array.size()
-	var removed_array = []
-	for i in range( values_to_remove.size() - 1, -1, -1):
-		var index_to_remove = values_to_remove[i]
-		if index_to_remove is int \
-			and index_to_remove < array_size \
-			and index_to_remove >= 0:
-			removed_array.append(array.pop_at(index_to_remove))
-	removed_array.reverse()
-	return removed_array
-	
+    var array_size = array.size()
+    var removed_array = []
+    for i in range( values_to_remove.size() - 1, -1, -1):
+        var index_to_remove = values_to_remove[i]
+        if index_to_remove is int \
+            and index_to_remove < array_size \
+            and index_to_remove >= 0:
+            removed_array.append(array.pop_at(index_to_remove))
+    removed_array.reverse()
+    return removed_array
+    
 ## Removes all elements from array that predicate returns truthy for 
 ## and returns an array of the removed elements. The predicate is invoked 
 ## with two arguments: (value, index).
@@ -972,17 +972,17 @@ static func pull_at(array:Array, values_to_remove:Array):
 ##      print(evens)
 ##      # => [2, 4]
 static func remove(array:Array, predicate = GD_.identity):
-	var array_size = array.size()
-	var removed_array = []
-	var iter_func = iteratee(predicate)
-	
-	for i in range( array_size - 1, -1, -1):
-		var item = array[i]
-		if __INTERNAL__.callc(iter_func,[item,i]):
-			removed_array.append(array.pop_at(i))
-	removed_array.reverse()
-	return removed_array
-	
+    var array_size = array.size()
+    var removed_array = []
+    var iter_func = iteratee(predicate)
+    
+    for i in range( array_size - 1, -1, -1):
+        var item = array[i]
+        if __INTERNAL__.callc(iter_func,[item,i]):
+            removed_array.append(array.pop_at(i))
+    removed_array.reverse()
+    return removed_array
+    
 ## Reverses array so that the first element becomes the last, the second element 
 ## becomes the second to last, and so on.
 ## Note: This is a wrapper on Godot's Array.reverse()
@@ -1001,8 +1001,8 @@ static func remove(array:Array, predicate = GD_.identity):
 ##      print(array)
 ##      # => [3, 2, 1]
 static func reverse(array:Array):
-	array.reverse()
-	return array
+    array.reverse()
+    return array
 
 ## Creates a slice of array from start up to, but not including, end.
 ## 
@@ -1022,8 +1022,8 @@ static func reverse(array:Array):
 ##     # => [1,2,3]
 # @TODO guarded method by map, every, filter, mapValues, reject, some
 static func slice(array:Array, start=0,end = array.size()): 
-	return array.slice(start,end)
-	
+    return array.slice(start,end)
+    
 
 ## Uses a binary search to determine the lowest index at which 
 ## value should be inserted into array in order to maintain its sort order.
@@ -1038,11 +1038,11 @@ static func slice(array:Array, start=0,end = array.size()):
 ##      GD_.sorted_index([30, 50], 40)
 ##      # => 1
 static func sorted_index(array:Array, value):
-	if not(is_number(value)):
-		gd_warn("GD_.sorted_index received a non-number value")
-		return null
-		
-	return sorted_index_by(array,value)
+    if not(is_number(value)):
+        gd_warn("GD_.sorted_index received a non-number value")
+        return null
+        
+    return sorted_index_by(array,value)
 
 
 ## This method is like _.sortedIndex except that it accepts iteratee 
@@ -1067,21 +1067,21 @@ static func sorted_index(array:Array, value):
 ##      GD_.sorted_index_by(objects, { 'x': 4 }, 'x')
 ##      # => 0 
 static func sorted_index_by(array:Array, value, iteratee = GD_.identity): 
-	var iter_func = iteratee(iteratee)
-	var ceil = array.size()
-	var mid = floor(ceil / 2)
-	var floor = 0
-	var actual_value = __INTERNAL__.callc(iter_func,[value])
-	for _i in range(0, ceil): # we use a for loop cause its faster
-		if floor >= ceil:
-			break
-		
-		if __INTERNAL__.callc(iter_func,[array[mid]]) < actual_value:
-			floor = mid + 1
-		else:
-			ceil = mid
-		mid = floor((floor + ceil)/2)
-	return floor
+    var iter_func = iteratee(iteratee)
+    var ceil = array.size()
+    var mid = floor(ceil / 2)
+    var floor = 0
+    var actual_value = __INTERNAL__.callc(iter_func,[value])
+    for _i in range(0, ceil): # we use a for loop cause its faster
+        if floor >= ceil:
+            break
+        
+        if __INTERNAL__.callc(iter_func,[array[mid]]) < actual_value:
+            floor = mid + 1
+        else:
+            ceil = mid
+        mid = floor((floor + ceil)/2)
+    return floor
 
 
 ## This method is like _.indexOf except that it performs a binary 
@@ -1097,29 +1097,29 @@ static func sorted_index_by(array:Array, value, iteratee = GD_.identity):
 ##      GD _.sorted_index_of([4, 5, 5, 5, 6], 5)
 ##      # => 1	
 static func sorted_index_of(array:Array, value):
-	if not(super.is_number(value)):
-		gd_warn("GD_.sorted_index_of received a non-number value")
-		return -1
-		
-	var ceil = array.size()
-	var mid = floor(ceil / 2)
-	var floor = 0
-	var mid_val
-	
-	for _i in range(0, ceil): # we use a for loop cause its faster
-		if floor >= ceil:
-			break
-		mid_val = array[mid]
-			
-		if mid_val == value:
-			return mid
-		elif mid_val < value:
-			floor = mid + 1
-		else:
-			ceil = mid
-		mid = floor((floor + ceil)/2)
-	return -1
-	
+    if not(super.is_number(value)):
+        gd_warn("GD_.sorted_index_of received a non-number value")
+        return -1
+        
+    var ceil = array.size()
+    var mid = floor(ceil / 2)
+    var floor = 0
+    var mid_val
+    
+    for _i in range(0, ceil): # we use a for loop cause its faster
+        if floor >= ceil:
+            break
+        mid_val = array[mid]
+            
+        if mid_val == value:
+            return mid
+        elif mid_val < value:
+            floor = mid + 1
+        else:
+            ceil = mid
+        mid = floor((floor + ceil)/2)
+    return -1
+    
 
 ## This method is like GD_.sorted_index except that it returns the 
 ## highest index at which value should be inserted into array in 
@@ -1135,12 +1135,12 @@ static func sorted_index_of(array:Array, value):
 ##      GD_.sorted_last_index([4, 5, 5, 5, 6], 5)
 ##      # => 4
 static func sorted_last_index(array:Array, value):
-	if not(super.is_number(value)):
-		gd_warn("GD_.sorted_index received a non-number value")
-		return null
-		
-	return sorted_last_index_by(array,value)
-	
+    if not(super.is_number(value)):
+        gd_warn("GD_.sorted_index received a non-number value")
+        return null
+        
+    return sorted_last_index_by(array,value)
+    
 
 ## This method is like GD_.sorted_last_index except that it accepts iteratee 
 ## which is invoked for value and each element of array to compute 
@@ -1163,21 +1163,21 @@ static func sorted_last_index(array:Array, value):
 ##      GD_.sorted_last_index_by(objects, { 'x': 4 }, 'x')
 ##      # => 1
 static func sorted_last_index_by(array:Array, value, iteratee = GD_.identity): 
-	var iter_func = iteratee(iteratee)
-	var ceil = array.size()
-	var mid = floor(ceil / 2)
-	var floor = 0
-	var actual_value = __INTERNAL__.callc(iter_func,[value])
-	for _i in range(0, ceil): # we use a for loop cause its faster
-		if floor >= ceil:
-			break
-		
-		if __INTERNAL__.callc(iter_func,[array[mid]]) > actual_value:
-			ceil = mid
-		else:
-			floor = mid + 1
-		mid = floor((floor + ceil)/2)
-	return floor
+    var iter_func = iteratee(iteratee)
+    var ceil = array.size()
+    var mid = floor(ceil / 2)
+    var floor = 0
+    var actual_value = __INTERNAL__.callc(iter_func,[value])
+    for _i in range(0, ceil): # we use a for loop cause its faster
+        if floor >= ceil:
+            break
+        
+        if __INTERNAL__.callc(iter_func,[array[mid]]) > actual_value:
+            ceil = mid
+        else:
+            floor = mid + 1
+        mid = floor((floor + ceil)/2)
+    return floor
 
 
 ## This method is like _.lastIndexOf except that it performs a binary search on a sorted array.
@@ -1192,31 +1192,31 @@ static func sorted_last_index_by(array:Array, value, iteratee = GD_.identity):
 ##      GD_.sorted_last_index_of([4, 5, 5, 5, 6], 5)
 ##      # => 3
 static func sorted_last_index_of(array:Array, value): 
-	if not(super.is_number(value)):
-		gd_warn("GD_.sorted_last_index_of received a non-number value")
-		return -1
-		
-	var ceil = array.size()
-	var mid = floor(ceil / 2)
-	var floor = 0
-	var mid_val
-	var last_index = -1
-	
-	for _i in range(0, ceil): # we use a for loop cause its faster
-		if floor >= ceil:
-			break
-		mid_val = array[mid]
-			
-		if mid_val == value:
-			last_index = mid
-			floor = mid + 1
-		elif mid_val < value:
-			floor = mid + 1
-		else:
-			ceil = mid
-		mid = floor((floor + ceil)/2)
-	return last_index
-	
+    if not(super.is_number(value)):
+        gd_warn("GD_.sorted_last_index_of received a non-number value")
+        return -1
+        
+    var ceil = array.size()
+    var mid = floor(ceil / 2)
+    var floor = 0
+    var mid_val
+    var last_index = -1
+    
+    for _i in range(0, ceil): # we use a for loop cause its faster
+        if floor >= ceil:
+            break
+        mid_val = array[mid]
+            
+        if mid_val == value:
+            last_index = mid
+            floor = mid + 1
+        elif mid_val < value:
+            floor = mid + 1
+        else:
+            ceil = mid
+        mid = floor((floor + ceil)/2)
+    return last_index
+    
 ## This method is like GD_.uniq except that it's designed 
 ## and optimized for sorted arrays.
 ##
@@ -1229,8 +1229,8 @@ static func sorted_last_index_of(array:Array, value):
 ##      GD_.sorted_uniq([1, 1, 2])
 ##      # => [1, 2]
 static func sorted_uniq(array:Array):
-	return sorted_uniq_by(array)
-	
+    return sorted_uniq_by(array)
+    
 
 ## This method is like GD_.uniq_by except that it's designed and 
 ## optimized for sorted arrays.
@@ -1245,19 +1245,19 @@ static func sorted_uniq(array:Array):
 ##      GD_.sorted_uniq_by([1.1, 1.2, 2.3, 2.4], Math.floor)
 ##      # => [1.1, 2.3]
 static func sorted_uniq_by(array:Array, iteratee = GD_.identity): 
-	var iter_func = iteratee(iteratee)
-	var unique_array = []
-	
-	var prev_element = null
+    var iter_func = iteratee(iteratee)
+    var unique_array = []
+    
+    var prev_element = null
 
-	for element in array:
-		var curr_element = __INTERNAL__.callc(iter_func,[element])
-		if curr_element != prev_element:
-			unique_array.append(element)
-			prev_element = __INTERNAL__.callc(iter_func,[element])
+    for element in array:
+        var curr_element = __INTERNAL__.callc(iter_func,[element])
+        if curr_element != prev_element:
+            unique_array.append(element)
+            prev_element = __INTERNAL__.callc(iter_func,[element])
 
-	return unique_array
-	
+    return unique_array
+    
 ## Gets all but the first element of array.
 ## 
 ## 
@@ -1269,8 +1269,8 @@ static func sorted_uniq_by(array:Array, iteratee = GD_.identity):
 ##      GD_.tail([1, 2, 3])
 ##      # => [2, 3]
 static func tail(array:Array, _UNUSED_ = null): 
-	return array.slice(1)
-	
+    return array.slice(1)
+    
 
 ## Creates a slice of array with n elements taken from the beginning.
 ## 
@@ -1297,15 +1297,15 @@ static func tail(array:Array, _UNUSED_ = null):
 ##      When used with methods like map, every, filter, mapValues, reject, some
 ##      it is invoked with all the optionals set as null
 static func take(array:Array, n = GD_UNDEF): 
-	var size = array.size()
-	
-	var lo = GD_UNDEF.is_undefined(n)
-	if GD_UNDEF.is_undefined(n) or n == null: n = 1
-	elif not(super.is_number(n)): n = -INF
-	
-	return array.slice(0, max(min(n,size),0))
-	
-	
+    var size = array.size()
+    
+    var lo = GD_UNDEF.is_undefined(n)
+    if GD_UNDEF.is_undefined(n) or n == null: n = 1
+    elif not(super.is_number(n)): n = -INF
+    
+    return array.slice(0, max(min(n,size),0))
+    
+    
 ## Creates a slice of array with n elements taken from the end.
 ## 
 ## Arguments
@@ -1330,13 +1330,13 @@ static func take(array:Array, n = GD_UNDEF):
 ##      When used with methods like map, every, filter, mapValues, reject, some
 ##      it is invoked with all the optionals set as null
 static func take_right(array:Array, n = null): 
-	var size = array.size()
-	
-	if GD_UNDEF.is_undefined(n) or n == null: n = 1
-	elif not(super.is_number(n)): n = -INF # to
-	
-	return array.slice(clamp(size-n,0,size), size)
-	
+    var size = array.size()
+    
+    if GD_UNDEF.is_undefined(n) or n == null: n = 1
+    elif not(super.is_number(n)): n = -INF # to
+    
+    return array.slice(clamp(size-n,0,size), size)
+    
 
 ## Creates a slice of array with elements taken from the end. 
 ## Elements are taken until predicate returns falsey. The predicate is invoked 
@@ -1370,16 +1370,16 @@ static func take_right(array:Array, n = null):
 ##      GD_.take_right_while(users, 'active')
 ##      # => []
 static func take_right_while(array:Array, predicate = null):
-	var size = array.size()
-	
-	predicate = iteratee(predicate)
-	
-	var n = size
-	for i in range(size - 1, -1, -1):
-		if not __INTERNAL__.callc(predicate,[array[i], i]): break
-		n = i
-			
-	return take_right(array,n)
+    var size = array.size()
+    
+    predicate = iteratee(predicate)
+    
+    var n = size
+    for i in range(size - 1, -1, -1):
+        if not __INTERNAL__.callc(predicate,[array[i], i]): break
+        n = i
+            
+    return take_right(array,n)
 
 ## Creates a slice of array with elements taken from the beginning. 
 ## Elements are taken until predicate returns falsey. The predicate is 
@@ -1413,17 +1413,17 @@ static func take_right_while(array:Array, predicate = null):
 ##      GD_.take_while(users, 'active')
 ##      # => []  
 static func take_while(array:Array, predicate = null):
-	var size = array.size()
-	
-	predicate = iteratee(predicate)
-	
-	var n = 0
-	for i in range(0, size):
-		if not __INTERNAL__.callc(predicate,[array[i], i]): 
-			break
-		n = i
-			
-	return take(array,n + 1)
+    var size = array.size()
+    
+    predicate = iteratee(predicate)
+    
+    var n = 0
+    for i in range(0, size):
+        if not __INTERNAL__.callc(predicate,[array[i], i]): 
+            break
+        n = i
+            
+    return take(array,n + 1)
 
 ## Creates an array of unique values, in order, from all given arrays using 
 ## == for equality comparisons.
@@ -1447,13 +1447,13 @@ static func take_while(array:Array, predicate = null):
 ##      But in GD_ you can call at most up to 10 args
 ##      E.g. "GD_.union([1],[2],[3],[4],[5],[6],[7],[8],[9],[10])
 static func union(a:Array, b:Array, c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF):
-	var array = a.duplicate()
-	for arg in [b,c,d,e,f,g,h,i,j]:
-		if arg is Array:
-			array.append_array(arg)
-	return GD_.uniq_by(array)
-	
-	
+    var array = a.duplicate()
+    for arg in [b,c,d,e,f,g,h,i,j]:
+        if arg is Array:
+            array.append_array(arg)
+    return GD_.uniq_by(array)
+    
+    
 ## This method is like GD_.union except that it accepts iteratee which 
 ## is invoked for each element of each arrays to generate the criterion 
 ## by which uniqueness is computed. Result values are chosen from 
@@ -1474,9 +1474,9 @@ static func union(a:Array, b:Array, c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,
 ##      GD_.union_by([{ 'x': 1 }], [{ 'x': 2 }, { 'x': 1 }], 'x')
 ##      # => [{ 'x': 1 }, { 'x': 2 }]
 static func union_by(array_a:Array, array_b:Array, iteratee = GD_.identity):
-	var array_c = array_a.duplicate()
-	array_c.append_array(array_b)
-	return uniq_by(array_c, iteratee)
+    var array_c = array_a.duplicate()
+    array_c.append_array(array_b)
+    return uniq_by(array_c, iteratee)
 
 
 ## This method is like GD_.union except that it accepts comparator 
@@ -1497,9 +1497,9 @@ static func union_by(array_a:Array, array_b:Array, iteratee = GD_.identity):
 ##      GD_.union_with(objects, others, GD_.is_equal)
 ##      # => [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }, { 'x': 1, 'y': 1 }]     
 static func union_with(array_a:Array, array_b:Array, comparator:Callable):
-	var array_c = array_a.duplicate()
-	array_c.append_array(array_b)
-	return GD_.uniq_with(array_c, comparator)
+    var array_c = array_a.duplicate()
+    array_c.append_array(array_b)
+    return GD_.uniq_with(array_c, comparator)
 
 ## Creates a duplicate-free version of an array, using == for equality 
 ## comparisons, in which only the first occurrence of each element is kept. 
@@ -1515,7 +1515,7 @@ static func union_with(array_a:Array, array_b:Array, comparator:Callable):
 ##      GD_.uniq([2, 1, 2])
 ##      # => [2, 1]
 static func uniq(array:Array):
-	return uniq_by(array)
+    return uniq_by(array)
 
 
 ## This method is like GD_.uniq except that it accepts iteratee which 
@@ -1538,16 +1538,16 @@ static func uniq(array:Array):
 ##      GD_.uniq_by([{ 'x': 1 }, { 'x': 2 }, { 'x': 1 }], 'x')
 ##      # => [{ 'x': 1 }, { 'x': 2 }]
 static func uniq_by(array:Array, iteratee = GD_.identity):
-	var cache = {}
-	var new_array = []
-	var iter_func = iteratee(iteratee)
-	for _item in array:
-		var item = __INTERNAL__.callc(iter_func,[_item])
-		if item in cache: continue
-		
-		cache[item] = true
-		new_array.append(_item)
-	return new_array
+    var cache = {}
+    var new_array = []
+    var iter_func = iteratee(iteratee)
+    for _item in array:
+        var item = __INTERNAL__.callc(iter_func,[_item])
+        if item in cache: continue
+        
+        cache[item] = true
+        new_array.append(_item)
+    return new_array
 
 
 ## This method is like GD_.uniq except that it accepts comparator 
@@ -1566,37 +1566,37 @@ static func uniq_by(array:Array, iteratee = GD_.identity):
 ##      GD_.uniq_with(objects, GD_.is_equal)
 ##      # => [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]	
 static func uniq_with(array:Array, comparator:Callable):
-	var new_array = []
-	for old_item in array:
-		var should_insert = true
-		for new_item in new_array:
-			if __INTERNAL__.callc(comparator,[old_item,new_item]):
-				should_insert = false
-				break
-		if should_insert:
-			new_array.append(old_item)
-	return new_array
-	
+    var new_array = []
+    for old_item in array:
+        var should_insert = true
+        for new_item in new_array:
+            if __INTERNAL__.callc(comparator,[old_item,new_item]):
+                should_insert = false
+                break
+        if should_insert:
+            new_array.append(old_item)
+    return new_array
+    
 static func unzip(args:Array):
-	return unzip_with(args)
+    return unzip_with(args)
 
 static func unzip_with(args:Array, iter_func = null):
-	var biggest_size = __INTERNAL__.get_max_size_of_all_arrays(args)
-	var result = []
-	# Preconstructs results for easier accessing
-	for tmp in  range(0, biggest_size): result.append([])
-	
-	
-	for index in range(0, biggest_size):
-		var arg_set = result[index]
-		for arg_i in range(0, args.size()): 
-			var ary = args[arg_i]
-			var size = ary.size()
-			# Get the array
-			arg_set.append( null if index >= size else ary[index] )
-		var slice = iter_func.callv(arg_set) if iter_func else arg_set
-		result[index] = slice
-	return result
+    var biggest_size = __INTERNAL__.get_max_size_of_all_arrays(args)
+    var result = []
+    # Preconstructs results for easier accessing
+    for tmp in  range(0, biggest_size): result.append([])
+    
+    
+    for index in range(0, biggest_size):
+        var arg_set = result[index]
+        for arg_i in range(0, args.size()): 
+            var ary = args[arg_i]
+            var size = ary.size()
+            # Get the array
+            arg_set.append( null if index >= size else ary[index] )
+        var slice = iter_func.callv(arg_set) if iter_func else arg_set
+        result[index] = slice
+    return result
 
 
 ## Creates an array excluding all given values using == for equality comparisons.
@@ -1613,25 +1613,25 @@ static func unzip_with(args:Array, iter_func = null):
 ##      GD_.without([2, 1, 2, 3], 1, 2)
 ##      # => [3]
 static func without(array:Array, b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF):
-	var without_list = []
-	for arg in [b,c,d,e,f,g,h,i,j]:
-		if GD_UNDEF.is_undefined(arg): continue
-		without_list.append(arg)
-		
-	var new_array = []
-	var should_add
-	for tmp in array:
-		should_add = true
-		for to_remove in without_list:
-			if is_same(tmp, to_remove):
-				should_add = false
-				break
-				
-		if should_add:
-			new_array.append(tmp)
-		
-	return new_array
-		
+    var without_list = []
+    for arg in [b,c,d,e,f,g,h,i,j]:
+        if GD_UNDEF.is_undefined(arg): continue
+        without_list.append(arg)
+        
+    var new_array = []
+    var should_add
+    for tmp in array:
+        should_add = true
+        for to_remove in without_list:
+            if is_same(tmp, to_remove):
+                should_add = false
+                break
+                
+        if should_add:
+            new_array.append(tmp)
+        
+    return new_array
+        
 ## Creates an array of unique values that is the symmetric difference of the given arrays. The order of result values is determined by the order they occur in the arrays.
 ## 
 ## Arguments
@@ -1649,7 +1649,7 @@ static func without(array:Array, b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=G
 ##      But in GD_ you can call at most up to 10 args
 ##      E.g. GD_.xor([1], [2], [3], ... , [10])
 static func xor(arg1,arg2 = GD_UNDEF,arg3 = GD_UNDEF,arg4 = GD_UNDEF,arg5 = GD_UNDEF,arg6 = GD_UNDEF,arg7 = GD_UNDEF,arg8 = GD_UNDEF,arg9 = GD_UNDEF,arg10 = GD_UNDEF,arg11 = GD_UNDEF):
-	return xor_with(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11)
+    return xor_with(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11)
 
 ## This method is like GD_.xor except that it accepts iteratee which is 
 ## invoked for each element of each arrays to generate the criterion by which 
@@ -1677,46 +1677,46 @@ static func xor(arg1,arg2 = GD_UNDEF,arg3 = GD_UNDEF,arg4 = GD_UNDEF,arg5 = GD_U
 ##      But in GD_ you can call at most up to 10 args
 ##      E.g. GD_.xor_by([1], [2], [3], ... , [10],'x')
 static func xor_by(arg1,arg2 = GD_UNDEF,arg3 = GD_UNDEF,arg4 = GD_UNDEF,arg5 = GD_UNDEF,arg6 = GD_UNDEF,arg7 = GD_UNDEF,arg8 = GD_UNDEF,arg9 = GD_UNDEF,arg10 = GD_UNDEF,arg11 = GD_UNDEF):
-	var args = __INTERNAL_ARGS__.new()
-	args.last_is_iteratee(
-		[arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11],
-		GD_.is_equal
-	)
+    var args = __INTERNAL_ARGS__.new()
+    args.last_is_iteratee(
+        [arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11],
+        GD_.is_equal
+    )
 
-	var differences = []
-	var removed = []
-	var arrays := args.all as Array
-	var iter_func := super.iteratee(args.last_item) as Callable
-	# Loop through all arrays
-	for i in range(0,len(arrays)): 
-		var ary = arrays[i]
-		
-		if not(GD_.is_array(ary)):
-			gd_warn("GD_.intersection_with received a non-array type value")
-			continue
-		
-		var added_this_iteration = []
-		for item_raw in ary:
-			var item = __INTERNAL__.callc(iter_func,[item_raw])
-			# See if its saved in removed, and if it is we pluck it out
-			var item_index = super.map(differences, iter_func).find(item)
-			if item_index > -1:
-				# Item was added during this run - this means duplicate value
-				# e.g. [1,2,3,1,1,1] - lets do nothing and move on
-				if item in added_this_iteration: 
-					continue
-				
-				differences.remove_at(item_index)
-				# Add to "deleted list" to not re-add it later via a diff array
-				removed.append(item)
-				continue
-			elif item in removed:
-				continue
-			differences.append(item_raw) 
-			added_this_iteration.append(item)
-				
-	return differences
-	
+    var differences = []
+    var removed = []
+    var arrays := args.all as Array
+    var iter_func := super.iteratee(args.last_item) as Callable
+    # Loop through all arrays
+    for i in range(0,len(arrays)): 
+        var ary = arrays[i]
+        
+        if not(GD_.is_array(ary)):
+            gd_warn("GD_.intersection_with received a non-array type value")
+            continue
+        
+        var added_this_iteration = []
+        for item_raw in ary:
+            var item = __INTERNAL__.callc(iter_func,[item_raw])
+            # See if its saved in removed, and if it is we pluck it out
+            var item_index = super.map(differences, iter_func).find(item)
+            if item_index > -1:
+                # Item was added during this run - this means duplicate value
+                # e.g. [1,2,3,1,1,1] - lets do nothing and move on
+                if item in added_this_iteration: 
+                    continue
+                
+                differences.remove_at(item_index)
+                # Add to "deleted list" to not re-add it later via a diff array
+                removed.append(item)
+                continue
+            elif item in removed:
+                continue
+            differences.append(item_raw) 
+            added_this_iteration.append(item)
+                
+    return differences
+    
 ## This method is like GD_.xor except that it accepts comparator which is 
 ## invoked to compare elements of arrays. The order of result values is 
 ## determined by the order they occur in the arrays. The comparator is invoked 
@@ -1742,43 +1742,43 @@ static func xor_by(arg1,arg2 = GD_UNDEF,arg3 = GD_UNDEF,arg4 = GD_UNDEF,arg5 = G
 ##      But in GD_ you can call at most up to 10 args
 ##      E.g. GD_.xor_by([1], [2], [3], ... , [10],GD_.is_equal)
 static func xor_with(arg1:Array,arg2 = null,arg3 = null,arg4 = null,arg5 = null,arg6 = null,arg7 = null,arg8 = null,arg9 = null,arg10 = null,arg11 = null):
-	var args = __INTERNAL_ARGS__.new()
-	args.last_is_func(
-		[arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11],
-		GD_.is_equal
-	)
+    var args = __INTERNAL_ARGS__.new()
+    args.last_is_func(
+        [arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11],
+        GD_.is_equal
+    )
 
-	var differences = []
-	var removed = []
-	var arrays := args.all as Array
-	var comparator := args.last_item as Callable
-	# Loop through all arrays
-	for i in range(0,len(arrays)): 
-		var ary = arrays[i]
-		
-		if not(GD_.is_array(ary)):
-			gd_warn("GD_.intersection_with received a non-array type value")
-			continue
-		
-		var added_this_iteration = []
-		for item in ary:
-			# See if its saved in removed, and if it is we pluck it out
-			if __INTERNAL__.item_in(item,differences,comparator):
-				# Item was added during this run - this means duplicate value
-				# e.g. [1,2,3,1,1,1] - lets do nothing and move on
-				if __INTERNAL__.item_in(item,added_this_iteration,comparator): 
-					continue
-				
-				pull_all_with(differences, [item], comparator)
-				# Add to "deleted list" to not re-add it later via a diff array
-				removed.append(item)
-				continue
-			elif item in removed:
-				continue
-			differences.append(item) 
-			added_this_iteration.append(item)
-				
-	return differences
+    var differences = []
+    var removed = []
+    var arrays := args.all as Array
+    var comparator := args.last_item as Callable
+    # Loop through all arrays
+    for i in range(0,len(arrays)): 
+        var ary = arrays[i]
+        
+        if not(GD_.is_array(ary)):
+            gd_warn("GD_.intersection_with received a non-array type value")
+            continue
+        
+        var added_this_iteration = []
+        for item in ary:
+            # See if its saved in removed, and if it is we pluck it out
+            if __INTERNAL__.item_in(item,differences,comparator):
+                # Item was added during this run - this means duplicate value
+                # e.g. [1,2,3,1,1,1] - lets do nothing and move on
+                if __INTERNAL__.item_in(item,added_this_iteration,comparator): 
+                    continue
+                
+                pull_all_with(differences, [item], comparator)
+                # Add to "deleted list" to not re-add it later via a diff array
+                removed.append(item)
+                continue
+            elif item in removed:
+                continue
+            differences.append(item) 
+            added_this_iteration.append(item)
+                
+    return differences
 
 
 ## Creates an array of grouped elements, the first of which contains the first elements of the 
@@ -1800,7 +1800,7 @@ static func xor_with(arg1:Array,arg2 = null,arg3 = null,arg4 = null,arg5 = null,
 ##      But in GD_ you can call at most up to 10 args
 ##      E.g. GD_.zip([1], [2], [3], ... , [10])
 static func zip(a:Array, b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF): 
-	return zip_with(a,b,c,d,e,f,g,h,i,j)
+    return zip_with(a,b,c,d,e,f,g,h,i,j)
 
 
 ## This method is like _.fromPairs except that it accepts two arrays, one of property identifiers and one of corresponding values.
@@ -1822,11 +1822,11 @@ static func zip(a:Array, b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,
 ##      But in GD_ you can call at most up to 10 args
 ##      E.g. GD_.zip([1], [2], [3], ... , [10])
 static func zip_object(keys:Array, values:Array):
-	var dict = {}
-	for i in range(0, keys.size()):
-		dict[keys[i]] = __INTERNAL__.get_index(values,i)
-	return dict
-	
+    var dict = {}
+    for i in range(0, keys.size()):
+        dict[keys[i]] = __INTERNAL__.get_index(values,i)
+    return dict
+    
 ## This method is like _.zipObject except that it supports property paths.
 ## 
 ## 
@@ -1853,12 +1853,12 @@ static func zip_object(keys:Array, values:Array):
 ##      You can specify if you want a numeric key to act as a string by wrapping
 ##      it in a quoate (e.g.  in th_.zip_object_deep( ["0"], ["foo"]) )
 static func zip_object_deep(keys:Array, values:Array):
-	var dict = {}
-	for i in range(0, keys.size()):
-		var key = __INTERNAL__.string_to_path(keys[i])
-		var value = __INTERNAL__.get_index(values,i)
-		__INTERNAL__.set_dict_deep(dict, key, value)
-	return dict
+    var dict = {}
+    for i in range(0, keys.size()):
+        var key = __INTERNAL__.string_to_path(keys[i])
+        var value = __INTERNAL__.get_index(values,i)
+        __INTERNAL__.set_dict_deep(dict, key, value)
+    return dict
 
 ## This method is like GD_.zip except that it accepts iteratee to 
 ## specify how grouped values should be combined. The iteratee is 
@@ -1875,20 +1875,20 @@ static func zip_object_deep(keys:Array, values:Array):
 ##      GD_.zip_with([1, 2], [10, 20], [100, 200], iteratee)
 ##      # => [111, 222]
 static func zip_with(a:Array, b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF): 
-	var args = __INTERNAL__.to_clean_args(a,b,c,d,e,f,g,h,i,j)
-	var has_callable_arg = args[-1] is Callable
-	var iter_func = iteratee(args.pop_back()) if has_callable_arg else null
-	
-	var biggest_size = __INTERNAL__.get_max_size_of_all_arrays(args)
-	var result = []
-	
-	for index in range(0, biggest_size):
-		var arg_set = []
-		
-		for ary in args: # Get the current index of each array
-			var size = ary.size()
-			arg_set.append( null if index >= size else ary[index] )
-		var slice = iter_func.callv(arg_set) if iter_func else compact(arg_set)
-		result.append(slice)
-	return result
-			
+    var args = __INTERNAL__.to_clean_args(a,b,c,d,e,f,g,h,i,j)
+    var has_callable_arg = args[-1] is Callable
+    var iter_func = iteratee(args.pop_back()) if has_callable_arg else null
+    
+    var biggest_size = __INTERNAL__.get_max_size_of_all_arrays(args)
+    var result = []
+    
+    for index in range(0, biggest_size):
+        var arg_set = []
+        
+        for ary in args: # Get the current index of each array
+            var size = ary.size()
+            arg_set.append( null if index >= size else ary[index] )
+        var slice = iter_func.callv(arg_set) if iter_func else compact(arg_set)
+        result.append(slice)
+    return result
+            

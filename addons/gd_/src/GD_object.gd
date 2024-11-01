@@ -37,8 +37,8 @@ static func assign_with(a=0, b=0, c=0): not_implemented()
 ##      But in GD_ you can call at most up to 10 args
 ##      E.g. GD_.at([], 1,2,3,4,5,6,7,8,9)
 static func at(obj, a,b=GD_UNDEF,c=GD_UNDEF,d=GD_UNDEF,e=GD_UNDEF,f=GD_UNDEF,g=GD_UNDEF,h=GD_UNDEF,i=GD_UNDEF,j=GD_UNDEF):
-	return __INTERNAL__.base_at(obj, [a,b,c,d,e,f,g,h,i,j])
-	
+    return __INTERNAL__.base_at(obj, [a,b,c,d,e,f,g,h,i,j])
+    
 
 static func create(a=0, b=0, c=0): not_implemented()
 
@@ -81,13 +81,13 @@ static func to_pairs_in(a=0, b=0, c=0): not_implemented() # alias for entriesIn
 ##      GD_.find_key(users, 'active')
 ##      ## => 'barney'
 static func find_key(collection, iteratee = GD_.identity): 
-	var iter_func = iteratee(iteratee)
-	
-	for key in keyed_iterable(collection):
-		var val = collection[key]
-		if __INTERNAL__.callc(iter_func,[val,key]):
-			return key
-			
+    var iter_func = iteratee(iteratee)
+    
+    for key in keyed_iterable(collection):
+        var val = collection[key]
+        if __INTERNAL__.callc(iter_func,[val,key]):
+            return key
+            
 ## This method is like GD_.find_key except that it iterates over 
 ## elements of a collection in the opposite order.
 ## 
@@ -118,13 +118,13 @@ static func find_key(collection, iteratee = GD_.identity):
 ##      GD_.find_last_key(users, 'active')
 ##      ## => 'pebbles'
 static func find_last_key(collection, iteratee = GD_.identity): 
-	var tmp = keyed_iterable(collection)
-	var iter_func = iteratee(iteratee)
-	for i in range(tmp.size()-1,-1,-1):
-		var key = tmp[i]
-		var val = collection[key]
-		if __INTERNAL__.callc(iter_func,[val,key]):
-			return key
+    var tmp = keyed_iterable(collection)
+    var iter_func = iteratee(iteratee)
+    for i in range(tmp.size()-1,-1,-1):
+        var key = tmp[i]
+        var val = collection[key]
+        if __INTERNAL__.callc(iter_func,[val,key]):
+            return key
 
 static func for_in(a=0, b=0, c=0): not_implemented()
 
@@ -185,8 +185,8 @@ static func functions_in(a=0, b=0, c=0): not_implemented()
 ##      And in godot
 ##      _.get_prop( thing, "0") != (_.get_prop( thing, -0) == _.get_prop( thing, 0))
 static func get_prop(thing, path, default_value = null):
-	return __INTERNAL__.base_get_prop(thing, path, default_value)
-	
+    return __INTERNAL__.base_get_prop(thing, path, default_value)
+    
 static func has(a=0, b=0, c=0): not_implemented()
 
 static func has_in(a=0, b=0, c=0): not_implemented()
@@ -253,21 +253,21 @@ static func update_with(a=0, b=0, c=0): not_implemented()
 ##      GD_.values(dict)
 ##      # => [1,2,3,4]
 static func values(collection):
-	if is_string(collection):
-		return Array(collection.split())
-	if is_array_like(collection):
-		if not is_custom_iterator(collection):
-			return Array(collection) # Converts packed arys to arrays
-		#  Appending from a custom iterator is slow, so we avoid that if we can
-		var ary = []
-		for c in collection:
-			ary.append(c)
-		return ary
-		
-	if collection is Dictionary:
-		return collection.values()
-		
-	gd_warn("GD_.values received a non-collection")
-	return []
+    if is_string(collection):
+        return Array(collection.split())
+    if is_array_like(collection):
+        if not is_custom_iterator(collection):
+            return Array(collection) # Converts packed arys to arrays
+        #  Appending from a custom iterator is slow, so we avoid that if we can
+        var ary = []
+        for c in collection:
+            ary.append(c)
+        return ary
+        
+    if collection is Dictionary:
+        return collection.values()
+        
+    gd_warn("GD_.values received a non-collection")
+    return []
 
 static func values_in(a=0, b=0, c=0): not_implemented()
