@@ -1,4 +1,4 @@
-# GD_ (_126/289_ implemented) +2 godot specific
+# GD_ (_122/289_ implemented) +6 godot specific
 
 **Wanna jump into it? See [the api docs](https://accidentallyc.github.io/GD_/)**
 
@@ -52,19 +52,34 @@ GD_.get_prop(everything_everywhere_all_at_once, "array:1:global_position:y")
 
 ### Regarding callables and callbacks
 
-Because of the way GDScript treats callables, 
-> all callbacks should **always be constructed with 2 arguments.**
-
-
-This means that if in lodash you have a callback like in `_.drop_right_while`
-which is invoked with 3 arguments (value,index,array). We drop the 3rd arguments.
+*In version 4.2 and below*
+> all Callables supplied should **always be constructed with 2 arguments.**
+> This means that if in lodash you have a callback like in `_.drop_right_while`
+> which is invoked with 3 arguments (value,index,array). We drop the 3rd arguments.
 
 ```gdscript
-var callback_2_args = func (value, index): 
-  return value
+# Version 4.2, only the callable below with 2 args works
+GD_.drop_right_while(..., func(value,index): return true)
 
-GD_.drop_right_while(..., callback_2_args)
+# the rest of these will not work
+GD_.drop_right_while(..., func(): return true)
+GD_.drop_right_while(..., func(value): return true)
+GD_.drop_right_while(..., func(value,index,array): return true)
 ```
+
+*In version 4.3 and above*
+> callbacks can be of variable length, and GD_ ensures that all Callables
+> will be called irregardless of how many arguments are actually needed
+
+```gdscript
+# Version 4.3 and above, all of these work
+
+GD_.drop_right_while(..., func(): return true)
+GD_.drop_right_while(..., func(value): return true)
+GD_.drop_right_while(..., func(value,index): return true)
+GD_.drop_right_while(..., func(value,index,array): return true)
+```
+
 
 This also means that if in lodash a callback is invoked with only 1 argument like in `_.differenceBy`, we must supply a dummy arg.
 

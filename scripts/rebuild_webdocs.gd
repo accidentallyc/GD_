@@ -46,7 +46,8 @@ func _run():
 	html.store_string(content)
 	html.close()
 	
-	print("Succesful written to %s %s/%s" % [ html.get_path(),total-pending-nondash,total-nondash])
+	print("Succesful written to %s %s/%s (%s nondash)" % [ 
+		html.get_path(),total-pending-nondash,total-nondash,nondash])
 
 func extract_func_defs(category, fileName):
 	var script := FileAccess.open("res://addons/gd_/src/"+fileName, FileAccess.READ)
@@ -71,9 +72,10 @@ func extract_func_defs(category, fileName):
 			def.equivalent = func_name.to_camel_case()
 			def.is_pending = is_pending
 			
+			
 			total +=1
 			if is_pending:
-					pending +=1
+				pending +=1
 					
 			if not is_pending:
 				var i = index - 1
