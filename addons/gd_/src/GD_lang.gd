@@ -29,11 +29,11 @@ extends "./GD_base.gd"
 ##      print(GD_.cast_array(array) == array)
 ##      # => true
 static func cast_array(v = GD_UNDEF):
-    if GD_UNDEF.is_undefined(v):
-        return []
-    else:
-        return v if v is Array else [v]
-    
+	if GD_UNDEF.is_undefined(v):
+		return []
+	else:
+		return v if v is Array else [v]
+	
 ## Creates a shallow clone for most values.
 ## Creates a good-enough clone for values that cannot be cloned 
 ## by conventional means.
@@ -56,23 +56,23 @@ static func cast_array(v = GD_UNDEF):
 ##      preferring to rebuild a replica of an uncloneable class instead of
 ##      what would have been a "shallow" clone in js
 static func clone(thing):
-    if is_array(thing) \
-        or thing is Dictionary \
-        or has_method_safe(thing,'duplicate'):
-        return thing.duplicate()
-    elif is_immutable(thing):
-        # object is already done by copy, just return the thing again
-        return thing
-    elif thing is Object:
-        if thing is RegEx:
-            var tmp = RegEx.new()
-            tmp.compile(thing.get_pattern())
-            return tmp
-    gd_warn("Untested type being cloned - for safety reasons we will return a null instead. If you feel like this should be a cloneable type please open an issue")
-    return null
-        
-    
-    
+	if is_array(thing) \
+		or thing is Dictionary \
+		or has_method_safe(thing,'duplicate'):
+		return thing.duplicate()
+	elif is_immutable(thing):
+		# object is already done by copy, just return the thing again
+		return thing
+	elif thing is Object:
+		if thing is RegEx:
+			var tmp = RegEx.new()
+			tmp.compile(thing.get_pattern())
+			return tmp
+	gd_warn("Untested type being cloned - for safety reasons we will return a null instead. If you feel like this should be a cloneable type please open an issue")
+	return null
+		
+	
+	
 static func clone_deep(a=0, b=0, c=0): not_implemented()
 static func clone_deep_with(a=0, b=0, c=0): not_implemented()
 static func clone_with(a=0, b=0, c=0): not_implemented()
@@ -103,13 +103,13 @@ static func conforms_to(a=0, b=0, c=0): not_implemented()
 ##      GD_.eq('a', &'a');
 ##      # => true
 static func eq(l,r):
-    if ( \
-            (typeof(l) == typeof(r)) \
-            or (GD_.is_number(l) and GD_.is_number(r)) \
-            or (GD_.is_string(l) and GD_.is_string(r)) \
-        ): 
-        return l == r
-    return false
+	if ( \
+			(typeof(l) == typeof(r)) \
+			or (GD_.is_number(l) and GD_.is_number(r)) \
+			or (GD_.is_string(l) and GD_.is_string(r)) \
+		): 
+		return l == r
+	return false
 
 ## Checks if value is greater than other.
 ##
@@ -128,9 +128,9 @@ static func eq(l,r):
 ##      GD_.gt(1, 3)
 ##      # => false
 static func gt(a, b):
-    return a > b
-    
-    
+	return a > b
+	
+	
 ## Checks if value is greater than other.
 ##
 ##
@@ -149,13 +149,13 @@ static func gt(a, b):
 ##      GD_.gte(1, 3)
 ##      # => false
 static func gte(a,b):
-    return a >= b
-    
+	return a >= b
+	
 ## Same as has_method but checks the type first
 static func has_method_safe(o,method:String):
-    return o is Object and o.has_method(method)
-    
-    
+	return o is Object and o.has_method(method)
+	
+	
 static func is_arguments(a=0, b=0, c=0): not_implemented()
 
 
@@ -184,8 +184,8 @@ static func is_arguments(a=0, b=0, c=0): not_implemented()
 ##     >> JS Comparison
 ##      Theres are no "Packed" arrays in JS
 static func is_array(thing, __UNUSED__ = null):
-    return __INTERNAL__.base_is_array(thing, __UNUSED__)
-    
+	return __INTERNAL__.base_is_array(thing, __UNUSED__)
+	
 static func is_array_buffer(a=0, b=0, c=0): not_implemented()
 
 ## Checks if value implements a custom iterator.
@@ -206,7 +206,7 @@ static func is_array_buffer(a=0, b=0, c=0): not_implemented()
 ## Lodash Equivalent 
 ##     None
 static func is_custom_iterator(tmp):
-    return tmp is Object and tmp.has_method('_iter_next')
+	return tmp is Object and tmp.has_method('_iter_next')
 
 ## Checks if value is array-like. A value is considered 
 ## array-like if it can be used in a for loop.
@@ -229,10 +229,10 @@ static func is_custom_iterator(tmp):
 ##      GD_.is_array_like(GD_.noop)
 ##     # => false
 static func is_array_like(tmp): 
-    return is_array(tmp) \
-        or is_string(tmp) \
-        or is_custom_iterator(tmp)
-        
+	return is_array(tmp) \
+		or is_string(tmp) \
+		or is_custom_iterator(tmp)
+		
 static func is_array_like_object(a=0, b=0, c=0): not_implemented()
 
 ## Checks if value is classified as a boolean
@@ -248,7 +248,7 @@ static func is_array_like_object(a=0, b=0, c=0): not_implemented()
 ##      GD_.is_boolean(null);
 ##      # => false
 static func is_boolean(value, _UNUSED_ = null): 
-    return typeof(value) == TYPE_BOOL
+	return typeof(value) == TYPE_BOOL
 
 ## Checks if value is classified as a boolean
 ## 
@@ -283,10 +283,10 @@ static func is_buffer(a=0, b=0, c=0): not_implemented()
 ## Lodash Equivalent 
 ##     None
 static func is_collection(item):
-    return is_array_like(item) or item is Dictionary or is_string(item)
+	return is_array_like(item) or item is Dictionary or is_string(item)
 
 static func is_date(a=0, b=0, c=0): not_implemented()
-    
+	
 static func is_element(a=0, b=0, c=0): not_implemented()
 
 ## Checks if value is an empty object, collection, map, or set.
@@ -315,7 +315,7 @@ static func is_element(a=0, b=0, c=0): not_implemented()
 ##      GD_.is_empty({ 'a': 1 });
 ##      # => false
 static func is_empty(value, __UNUSED__ = null):
-    return size(value) <= 0
+	return size(value) <= 0
 
 ## Performs a deep comparison between two values to determine if they are equivalent.
 ## This equality method attempts to extract the "underlying" values of Variants
@@ -340,36 +340,36 @@ static func is_empty(value, __UNUSED__ = null):
 ##          • (array-like) = loop and compare
 ##          • (*) = cast to str
 static func is_equal(l,r): 
-    # Compare basic values
-    if GD_.is_number(l) and GD_.is_number(r): return l == r
-    elif GD_.is_string(l) and GD_.is_string(r): return l == r
-    # Loop through complex values
-    elif GD_.is_array_like(l) and GD_.is_array_like(r):
-        var size = GD_.size(l)
-        if size != GD_.size(r): return false
-        
-        # If any one element is not the same we short circuit
-        for i in range(0, size):
-            if not is_equal(l[i],r[i]): return false
-        return true
-    elif l is Dictionary and r is Dictionary: 
-        var size = GD_.size(l)
-        if size != GD_.size(r): return false
-        
-        # If any one element is not the same we short circuit
-        for key in l.keys():
-            if not(key in r) or not( is_equal(l[key],r[key]) ): 
-                return false
-        return true
-    
-    # We cast to str for 2 reasons
-    #   1: When the type is node, this gives us the node id Node<#21322>
-    #   2: When the types are mismatch (float vs int) it doesnt throw an err
-    return str(l) == str(r)
-        
-    
-    
-    
+	# Compare basic values
+	if GD_.is_number(l) and GD_.is_number(r): return l == r
+	elif GD_.is_string(l) and GD_.is_string(r): return l == r
+	# Loop through complex values
+	elif GD_.is_array_like(l) and GD_.is_array_like(r):
+		var size = GD_.size(l)
+		if size != GD_.size(r): return false
+		
+		# If any one element is not the same we short circuit
+		for i in range(0, size):
+			if not is_equal(l[i],r[i]): return false
+		return true
+	elif l is Dictionary and r is Dictionary: 
+		var size = GD_.size(l)
+		if size != GD_.size(r): return false
+		
+		# If any one element is not the same we short circuit
+		for key in l.keys():
+			if not(key in r) or not( is_equal(l[key],r[key]) ): 
+				return false
+		return true
+	
+	# We cast to str for 2 reasons
+	#   1: When the type is node, this gives us the node id Node<#21322>
+	#   2: When the types are mismatch (float vs int) it doesnt throw an err
+	return str(l) == str(r)
+		
+	
+	
+	
 static func is_equal_with(a=0, b=0, c=0): not_implemented()
 static func is_error(a=0, b=0, c=0): not_implemented()
 #static func is_finite(a=0, b=0, c=0): not_implemented()
@@ -392,11 +392,11 @@ static func is_function(a=0, b=0, c=0): not_implemented()
 ## Lodash Equivalent 
 ##     None
 static func is_immutable(thing, __UNUSED__ = null):
-    var is_mutable_type = is_array(thing) \
-            or thing is Object \
-            or thing is Dictionary
-    return not(is_mutable_type)
-    
+	var is_mutable_type = is_array(thing) \
+			or thing is Object \
+			or thing is Dictionary
+	return not(is_mutable_type)
+	
 static func is_integer(a=0, b=0, c=0): not_implemented()
 
 static func is_length(a=0, b=0, c=0): not_implemented()
@@ -431,8 +431,8 @@ static func is_null(a=0, b=0, c=0): not_implemented()
 ##      To exclude Infinity, -Infinity, and NaN, which are classified 
 ##      as numbers, use the GD_.is_finite method.
 static func is_number(a = null, _UNUSED_=null):
-    return __INTERNAL__.base_is_number(a)
-    
+	return __INTERNAL__.base_is_number(a)
+	
 static func is_object(a=0, b=0, c=0): not_implemented()
 static func is_object_like(a=0, b=0, c=0): not_implemented()
 
@@ -454,8 +454,8 @@ static func is_plain_object(a=0, b=0, c=0): not_implemented()
 ##      GD_.is_reg_exp('\\w+');
 ##      # => false
 static func is_regexp(a, _UNUSED_ = null):
-    return a is RegEx
-    
+	return a is RegEx
+	
 static func is_safe_integer(a=0, b=0, c=0): not_implemented()
 static func is_set(a=0, b=0, c=0): not_implemented()
 
@@ -473,8 +473,8 @@ static func is_set(a=0, b=0, c=0): not_implemented()
 ##      GD_.is_string(1)
 ##      # => false
 static func is_string(thing, __UNUSED__ = null):
-    return thing is String or thing is StringName
-    
+	return thing is String or thing is StringName
+	
 static func is_symbol(a=0, b=0, c=0): not_implemented()
 static func is_typed_array(a=0, b=0, c=0): not_implemented()
 static func is_undefined(a=0, b=0, c=0): not_implemented()
@@ -490,8 +490,8 @@ static func is_undefined(a=0, b=0, c=0): not_implemented()
 ## Example
 ##     	if GD_.is_version(">4"): print("hello")
 static func is_version(version) -> bool:
-    return __INTERNAL__.is_version(version)
-    
+	return __INTERNAL__.is_version(version)
+	
 static func is_weak_map(a=0, b=0, c=0): not_implemented()
 static func is_weak_set(a=0, b=0, c=0): not_implemented()
 
@@ -511,11 +511,11 @@ static func is_weak_set(a=0, b=0, c=0): not_implemented()
 ##      GD_.lt(3, 1)
 ##      # => false
 static func lt(a, b):
-    return a < b
-    
+	return a < b
+	
 static func lte(a=0, b=0, c=0):
-    return a <= b
-    
+	return a <= b
+	
 
 ## Gets the size of collection by returning its length for array-like values 
 ## or the number of own enumerable string keyed properties for objects.
@@ -541,24 +541,24 @@ static func lte(a=0, b=0, c=0):
 ##      size will use that and return it
 ##      >> This is categorized as collection in lodash
 static func size(thing, __UNUSED__ = null): 
-    if is_array(thing) or thing is Dictionary:
-            return thing.size()
-    elif is_string(thing):
-        return thing.length()
-    elif thing is Object:
-        if thing.has_method('length'):
-            return thing.length()
-        elif thing.has_method('size'):
-            return thing.size()
-        elif is_custom_iterator(thing):
-            gd_warn("GD_.size received a custom iterator that doesnt implement size or length. This will be expensive to calculate")
-            var ctr = 0
-            for i in thing: 
-                ctr += 1
-            return ctr
-    gd_warn("GD_.size received a non-collection type value")
-    return 0
-    
+	if is_array(thing) or thing is Dictionary:
+			return thing.size()
+	elif is_string(thing):
+		return thing.length()
+	elif thing is Object:
+		if thing.has_method('length'):
+			return thing.length()
+		elif thing.has_method('size'):
+			return thing.size()
+		elif is_custom_iterator(thing):
+			gd_warn("GD_.size received a custom iterator that doesnt implement size or length. This will be expensive to calculate")
+			var ctr = 0
+			for i in thing: 
+				ctr += 1
+			return ctr
+	gd_warn("GD_.size received a non-collection type value")
+	return 0
+	
 ## Converts value to an array.
 ## Works on any collection and custom iterators
 ## 
@@ -579,15 +579,15 @@ static func size(thing, __UNUSED__ = null):
 ##      GD_.to_array(null);
 ##      # => []
 static func to_array(thing):
-    var array = []
-    if is_custom_iterator(thing):
-        for i in thing:
-            array.append(i)
-    else:
-        for key in keyed_iterable(thing):
-            array.append(thing[key])
-    return array
-    
+	var array = []
+	if is_custom_iterator(thing):
+		for i in thing:
+			array.append(i)
+	else:
+		for key in keyed_iterable(thing):
+			array.append(thing[key])
+	return array
+	
 ## Converts value to a finite number.
 ##
 ## Arguments
@@ -604,19 +604,19 @@ static func to_array(thing):
 ##      GD_.to_finite('3.2');
 ##      # => 3.2
 static func to_finite(value, __UNUSED__ = null): 
-    if is_number(value):
-        # See https://docs.godotengine.org/en/stable/classes/class_int.html
-        var max_int_64 = 9223372036854775807
-        if INF == value:
-            return max_int_64
-        elif -INF == value:
-            return -max_int_64
-    var result = to_number(value)
-    
-    if is_nan(result):
-        return 0
-    return to_number(value)
-        
+	if is_number(value):
+		# See https://docs.godotengine.org/en/stable/classes/class_int.html
+		var max_int_64 = 9223372036854775807
+		if INF == value:
+			return max_int_64
+		elif -INF == value:
+			return -max_int_64
+	var result = to_number(value)
+	
+	if is_nan(result):
+		return 0
+	return to_number(value)
+		
 static func to_integer(a=0, b=0, c=0): not_implemented()
 
 static func to_length(a=0, b=0, c=0): not_implemented()
@@ -636,12 +636,12 @@ static func to_length(a=0, b=0, c=0): not_implemented()
 ##      GD_.to_number(&'-4.2') # -4.2
 ##      GD_.to_number(INF) # INF
 static func to_number(value, _dummy_ = null): 
-    if is_number(value):
-        return value
-    elif is_string(value) and value.is_valid_float():
-        return float(str(value))
-    return NAN
-    
+	if is_number(value):
+		return value
+	elif is_string(value) and value.is_valid_float():
+		return float(str(value))
+	return NAN
+	
 static func to_plain_object(a=0, b=0, c=0): not_implemented()
 
 static func to_safe_integer(a=0, b=0, c=0): not_implemented()
@@ -651,20 +651,20 @@ static func to_safe_integer(a=0, b=0, c=0): not_implemented()
 ## Lodash Equivalent 
 ##     None
 static func keyed_iterable(thing, from_index = 0):
-    if is_array_like(thing) or is_string(thing):
-        var size = len(thing)
-        if from_index >= 0:
-            var array = range(from_index, size)
-            return array
-        return range(size).slice(size + from_index)
-    if thing is Dictionary:
-        var keys =  thing.keys()
-        if from_index > 0:
-            return keys.slice(from_index)
-        elif from_index < 0:
-            return keys.slice(thing.size() + from_index)
-        else: 
-            return keys
-        
-    gd_warn("keyed_iterable received a non-collection")
-    return []
+	if is_array_like(thing) or is_string(thing):
+		var size = len(thing)
+		if from_index >= 0:
+			var array = range(from_index, size)
+			return array
+		return range(size).slice(size + from_index)
+	if thing is Dictionary:
+		var keys =  thing.keys()
+		if from_index > 0:
+			return keys.slice(from_index)
+		elif from_index < 0:
+			return keys.slice(thing.size() + from_index)
+		else: 
+			return keys
+		
+	gd_warn("keyed_iterable received a non-collection")
+	return []
