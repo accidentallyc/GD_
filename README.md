@@ -67,6 +67,15 @@ GD_.drop_right_while(..., func(value): return true)
 GD_.drop_right_while(..., func(value,index,array): return true)
 ```
 
+This also means that if in lodash a callback is invoked with only 1 argument like in `_.differenceBy`, we must supply a dummy arg.
+
+```
+var callback_1_arg =  func (value, _unused): 
+  return value
+
+GD_.difference_by(..., callback_1_arg)
+```
+
 *In version 4.3 and above*
 > callbacks can be of variable length, and GD_ ensures that all Callables
 > will be called irregardless of how many arguments are actually needed
@@ -78,16 +87,6 @@ GD_.drop_right_while(..., func(): return true)
 GD_.drop_right_while(..., func(value): return true)
 GD_.drop_right_while(..., func(value,index): return true)
 GD_.drop_right_while(..., func(value,index,array): return true)
-```
-
-
-This also means that if in lodash a callback is invoked with only 1 argument like in `_.differenceBy`, we must supply a dummy arg.
-
-```
-var callback_1_arg =  func (value, _unused): 
-  return value
-
-GD_.difference_by(..., callback_1_arg)
 ```
 
 ### Regarding equality
