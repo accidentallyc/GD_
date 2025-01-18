@@ -23,6 +23,6 @@ func it_can_accept_a_callable_with_N_args():
 	var cb_3:Callable = func(a,b,c): return GD_.floor(a)
 
 	expect(GD_.difference_by(ary_1, ary_2, cb_2)).equal(expected, "Should work with 2 args")
-	if GD_.is_version("<=4.3"):
+	if GD_.is_version(">=4.3"):
 		expect(GD_.difference_by(ary_1, ary_2, cb_1)).equal(expected, "Should work with 1 args")
 		expect(GD_.difference_by(ary_1, ary_2, cb_3)).equal(expected, "Should work with 3 args")
