@@ -10,9 +10,9 @@
 class_name GD_UNDEF
 
 static func is_undefined(v, _v = null):
-    return typeof(v) == typeof(GD_UNDEF) and GD_UNDEF == v
+	return typeof(v) == typeof(GD_UNDEF) and GD_UNDEF == v
 
 ## Inverse of is_undefined. Can be used as a predicate
 static func is_defined(v, _v = null):
-    return typeof(v) != typeof(GD_UNDEF) or GD_UNDEF != v
+	return typeof(v) != typeof(GD_UNDEF) or GD_UNDEF != v
 pass

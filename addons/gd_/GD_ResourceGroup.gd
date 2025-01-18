@@ -43,7 +43,8 @@ func _process(delta):
 		
 		if cursor.ref.get_ref() == null:
 			for tmp in cursor.entanglees:
-				tmp.queue_free()
+				if is_instance_valid(tmp): 
+					tmp.queue_free()
 			cursor.prev.next = tracked
 			cursor.free()
 			count -= 1
